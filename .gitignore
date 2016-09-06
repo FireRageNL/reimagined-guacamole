@@ -17,3 +17,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+*.bak_000f
+Documentation/~$quirments.docx
+*.bak_001d
