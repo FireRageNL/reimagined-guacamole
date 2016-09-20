@@ -20,3 +20,4 @@ nbdist/
 *.bak_0*
 Documentation/~$quirments.docx
 *.lck
+ReimaginedGuacamole/nbproject/private/private.xml
