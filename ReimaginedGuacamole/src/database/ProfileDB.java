@@ -5,6 +5,8 @@
  */
 package database;
 
+import reimaginedguacamole.Profile;
+
 /**
  *Class that handles all databaserequests for a user's profile
  * @author daan

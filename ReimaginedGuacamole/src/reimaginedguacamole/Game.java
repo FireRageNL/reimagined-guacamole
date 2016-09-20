@@ -50,7 +50,7 @@ public class Game {
      * Applies a powerup to the game.
      * @param powerup 
      */
-    public void applyPowerup(Powerup powerup){
+    public void applyPowerup(PowerUp powerup){
         
     }
 }
