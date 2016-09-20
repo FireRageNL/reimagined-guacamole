@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package database;
+package reimaginedguacamole.database;
 
-import reimaginedguacamole.Profile;
+import reimaginedguacamole.profile.Profile;
 
 /**
  *Class that handles all databaserequests for a user's profile

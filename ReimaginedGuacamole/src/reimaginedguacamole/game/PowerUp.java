@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reimaginedguacamole;
+package reimaginedguacamole.game;
 
 /**
  *
  * @author Marc
  */
-public class Achievement {
+public class PowerUp {
     
     private String description;
     private String name;
 
-    public Achievement(String description, String name) {
+    public PowerUp(String description, String name) {
         this.description = description;
         this.name = name;
     }

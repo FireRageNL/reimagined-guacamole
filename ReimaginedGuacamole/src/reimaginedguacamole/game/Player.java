@@ -3,33 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reimaginedguacamole;
-
-import java.util.Date;
+package reimaginedguacamole.game;
 
 /**
  *
  * @author Marc
  */
-public class GameInfo {
-
-    private Date date;
-    private int score;
+public class Player {
     
-    public GameInfo(Date date, int score) {
-        this.date = date;
+    private int score;
+
+    public void setScore(int score) {
         this.score = score;
-    }
-
-
-    public Date getDate() {
-        return date;
     }
 
     public int getScore() {
         return score;
     }
-
-   
+    
+    
     
 }

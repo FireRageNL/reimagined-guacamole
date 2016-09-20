@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reimaginedguacamole;
+package reimaginedguacamole.profile;
 
+import reimaginedguacamole.game.GameInfo;
+import reimaginedguacamole.game.Player;
 import java.util.List;
 
 /**

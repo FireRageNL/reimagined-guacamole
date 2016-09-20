@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package database;
+package reimaginedguacamole.database;
 
 import java.util.List;
-import reimaginedguacamole.Question;
+import reimaginedguacamole.game.Question;
 
 /**Class which handles all databaserequests for the Question class
  *
