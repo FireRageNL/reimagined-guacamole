@@ -19,3 +19,4 @@ nbdist/
 .nb-gradle/
 *.bak_0*
 Documentation/~$quirments.docx
+*.lck
