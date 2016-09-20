@@ -5,12 +5,23 @@
  */
 package database;
 
-/**Class for connecting to the database
- *
+/**
+ *Class for connecting to the database
  * @author daan
  */
 
 public class Database {
+    private String connectionString;
     
+    /**
+     * loads the properties from a file
+     */
+    public void loadProperties(){
+        
+    }
+    
+    public void setConnectionString(String connectionString){
+        this.connectionString = connectionString;
+    }
     
 }
