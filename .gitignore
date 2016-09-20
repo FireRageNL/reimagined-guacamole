@@ -22,3 +22,5 @@ Documentation/~$quirments.docx
 *.lck
 ReimaginedGuacamole/nbproject/private/private.xml
 /ReimaginedGuacamole/nbproject/private/
+ReimaginedGuacamole/.jacocoverage/
+/ReimaginedGuacamole/.jacocoverage/
