@@ -11,7 +11,7 @@ import reimaginedguacamole.profile.Profile;
  *Class that handles all databaserequests for a user's profile
  * @author daan
  */
-public class ProfileDB {
+public class ProfileDB extends Database {
     
     /**
      * checks if a user can login with the provided credentials
@@ -20,7 +20,8 @@ public class ProfileDB {
      * @return true when user can be logged in, else false.
      */
     public boolean login(String Email, String Password){
-        return false;
+        String dbPassword = this.ReadStringWithCondition("Password","Profile","Email",Email);
+        return Password.equals(dbPassword);
     }
     
     /**

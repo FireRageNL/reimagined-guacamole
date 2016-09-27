@@ -37,7 +37,12 @@ public class FXMLGameController implements Initializable {
         if (!password.isEmpty() && !username.isEmpty()) {
             Login log = new Login();
             boolean loggedin = log.tryLogin(username,password);
-            //label.setText(loggedin); //Debugging purposes so we can test if it works.
+            if(loggedin){
+                label.setText("LOGGED IN JONG");
+            }
+            else{
+                label.setText("FAILED KUT");
+            }
         }
     }
 
