@@ -11,25 +11,38 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import reimaginedguacamole.profile.Login;
 
 /**
  *
  * @author daan
  */
 public class FXMLGameController implements Initializable {
-    
+
     @FXML
     private Label label;
-    
+
+    @FXML
+    private TextField gebruikersnaam;
+
+    @FXML
+    private TextField wachtwoord;
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+        String username = gebruikersnaam.getText();
+        String password = wachtwoord.getText();
+        if (!password.isEmpty() && !username.isEmpty()) {
+            Login log = new Login();
+            String loggedin = log.tryLogin(password);
+            label.setText(loggedin); //Debugging purposes so we can test if it works.
+        }
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }
