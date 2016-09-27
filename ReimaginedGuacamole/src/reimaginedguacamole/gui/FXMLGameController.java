@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import reimaginedguacamole.profile.Login;
 
 /**
@@ -44,5 +45,8 @@ public class FXMLGameController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-
+    @FXML
+    private void clickRegister(MouseEvent event){
+        RegisterDialog regdialog = new RegisterDialog();
+    }
 }
