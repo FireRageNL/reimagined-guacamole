@@ -15,15 +15,18 @@ public class ProfileDB extends Database {
     
     /**
      * checks if a user can login with the provided credentials
-     * @param Email
-     * @param Password
+     * @param email
+     * @param password
      * @return true when user can be logged in, else false.
      */
-    public boolean login(String Email, String Password){
-        String dbPassword = this.ReadStringWithCondition("Password","Profile","Email",Email);
-        return Password.equals(dbPassword);
+    public boolean login(String email, String password){
+        String dbPassword = this.ReadStringWithCondition("Password","Profile","Email",email);
+        return password.equals(dbPassword);
     }
     
+    public void register(String email, String password, String username, String name){
+        //DO NOTHING
+    }
     /**
      * Gets profile data based on username
      * @return Profile object
