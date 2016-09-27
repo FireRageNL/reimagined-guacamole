@@ -7,10 +7,10 @@ package reimaginedguacamole.profile;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  *
@@ -19,6 +19,22 @@ import static org.junit.Assert.*;
 public class LoginTest {
     
     public LoginTest() {
+    }
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @After
+    public void tearDown() throws Exception {
     }
     
 
@@ -45,5 +61,18 @@ public class LoginTest {
         boolean expResult = false;
         boolean result = instance.tryLogin(email,password);
         assertEquals(expResult,result);
+    }
+
+    /**
+     * Test of getCurrentProfile method, of class Login.
+     */
+    @Test
+    public void testGetCurrentProfile() {
+        System.out.println("getCurrentProfile");
+        String email = "test@email.com";
+        Login instance = new Login();
+        int expWins = 30;
+        Profile result = instance.getCurrentProfile(email);
+        assertEquals(expWins, result.getWins());
     }
 }

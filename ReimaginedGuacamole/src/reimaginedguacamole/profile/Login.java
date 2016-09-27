@@ -29,8 +29,12 @@ public class Login {
      * @return true or false if combination is correct.
      */
     public boolean tryLogin(String email, String password) {
-
             ProfileDB pdb = new ProfileDB();
             return pdb.login(Hashing.hashPassword(password),email);
+    }
+    
+    public Profile getCurrentProfile(String email){
+        ProfileDB pdb = new ProfileDB();
+        return pdb.getProfileData(email);
     }
 }

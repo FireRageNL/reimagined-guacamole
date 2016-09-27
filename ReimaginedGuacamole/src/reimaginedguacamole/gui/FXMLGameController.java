@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import reimaginedguacamole.profile.Login;
+import reimaginedguacamole.profile.Profile;
 
 /**
  *
@@ -38,6 +39,7 @@ public class FXMLGameController implements Initializable {
             Login log = new Login();
             boolean loggedin = log.tryLogin(username,password);
             if(loggedin){
+                Profile user = log.getCurrentProfile(username);
                 label.setText("LOGGED IN JONG");
             }
             else{
