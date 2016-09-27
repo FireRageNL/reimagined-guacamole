@@ -5,12 +5,8 @@
  */
 package reimaginedguacamole.gui;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -18,7 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import reimaginedguacamole.database.ProfileDB;
-import reimaginedguacamole.profile.Login;
+import reimaginedguacamole.tooling.Hashing;
+
 
 /**
  *
@@ -26,7 +23,6 @@ import reimaginedguacamole.profile.Login;
  */
 public class RegisterDialog {
 
-    private MessageDigest md;
 
     public RegisterDialog() {
         Dialog<LinkedHashMap> dialog = new Dialog<>();
@@ -63,20 +59,9 @@ public class RegisterDialog {
         Platform.runLater(() -> email.requestFocus());
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == registerButtonType) {
-                StringBuilder sb = new StringBuilder();
-                try {
-                    this.md = MessageDigest.getInstance("SHA-256");
-                    byte[] result = md.digest(password.getText().getBytes());
-
-                    for (int i = 0; i < result.length; i++) {
-                        sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
-                    }
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }
                 LinkedHashMap hm = new LinkedHashMap();
                 hm.put("Email", email.getText());
-                hm.put("Password", sb.toString());
+                hm.put("Password", Hashing.hashPassword(password.getText()));
                 hm.put("Nickname", username.getText());
                 hm.put("Name", name.getText());
                 return hm;
@@ -88,6 +73,5 @@ public class RegisterDialog {
             ProfileDB pdb = new ProfileDB();
             pdb.Insert("Profile", result.get());
         }
-
     }
 }

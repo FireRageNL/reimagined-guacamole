@@ -19,7 +19,7 @@ public class ProfileDB extends Database {
      * @param password
      * @return true when user can be logged in, else false.
      */
-    public boolean login(String email, String password){
+    public boolean login(String password, String email){
         String dbPassword = this.ReadStringWithCondition("Password","Profile","Email",email);
         return password.equals(dbPassword);
     }

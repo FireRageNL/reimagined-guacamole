@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import reimaginedguacamole.database.ProfileDB;
+import reimaginedguacamole.tooling.Hashing;
 
 /**
  * This is the class that will handle user logins.
@@ -28,19 +29,8 @@ public class Login {
      * @return true or false if combination is correct.
      */
     public boolean tryLogin(String email, String password) {
-        try {
-            this.md = MessageDigest.getInstance("SHA-256");
-            String test = password;
-            byte[] result = md.digest(test.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < result.length; i++) {
-                sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
-            }
+
             ProfileDB pdb = new ProfileDB();
-            return pdb.login(email, sb.toString());
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+            return pdb.login(Hashing.hashPassword(password),email);
     }
 }
