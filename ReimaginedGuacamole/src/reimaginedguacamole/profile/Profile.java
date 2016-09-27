@@ -61,11 +61,11 @@ public class Profile extends Player {
     }
 
     public void addWin(){
-        
+        wins++;
     }
     
     public void addLoss(){
-        
+        losses++;
     }
     
     
