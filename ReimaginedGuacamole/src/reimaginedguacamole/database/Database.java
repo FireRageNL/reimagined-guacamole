@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,10 +33,12 @@ public class  Database {
     }
 
     public Database() {
-        initConnection();
+        
+        
     }
     
     public void Insert(String table, Map<String, String> data){
+        initConnection();
         try {
             int columnCount = 0;
             String columns = "";
@@ -60,6 +65,7 @@ public class  Database {
                 valuecount++;
             }
             pst.executeUpdate();
+            closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,6 +73,7 @@ public class  Database {
     
     public void Update(String table, Map<String, String> data, String where, String val){
         try {
+            initConnection();
             String columns = "";
             for (Map.Entry<String, String> entry : data.entrySet()) {
             columns += (entry.getKey()+" = ?, ");
@@ -84,6 +91,7 @@ public class  Database {
             }
             pst.setString(valuecount,val);
             pst.executeUpdate();
+            closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -94,6 +102,7 @@ public class  Database {
         String result = "";
         try 
         {
+            initConnection();
             String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, value);
@@ -101,11 +110,41 @@ public class  Database {
             if(rs.next()){
             result = rs.getString(column);
             }
+            closeConnection();
                     
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
         //System.out.println(result);
+        return result;
+    }
+    
+    public List<String> ReadStringWithCondition(List<String> columns,String table, String where, String value)
+    {
+        List<String> result = new ArrayList<String>(); 
+        String column = "";
+        try 
+        {
+            initConnection();
+            for (String c : columns) {
+                column += (c + ", ");
+            }
+            column = column.substring(0,column.length()-2);
+            String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, value);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            if(rs.next()){
+                for (int i = 1; i <( rsmd.getColumnCount() + 1); i++) {
+                    result.add(rs.getString(i));
+                }
+            }
+            closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return result;
     }
     
@@ -121,6 +160,7 @@ public class  Database {
     
     public void closeConnection() throws SQLException{
         conn.close();
+        System.out.println("Connection closed.");
     }
     
 }
