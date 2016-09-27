@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import reimaginedguacamole.profile.Login;
 
 /**
  *
@@ -23,7 +22,6 @@ public class ReimaginedGuacamole extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLGame.fxml"));
         
         Scene scene = new Scene(root);
-        Login login = new Login();
         stage.setScene(scene);
         stage.show();
     }
