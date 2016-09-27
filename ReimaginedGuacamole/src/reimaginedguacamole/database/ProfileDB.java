@@ -23,12 +23,10 @@ public class ProfileDB extends Database {
         String dbPassword = this.ReadStringWithCondition("Password","Profile","Email",email);
         return password.equals(dbPassword);
     }
-    
-    public void register(String email, String password, String username, String name){
-        //DO NOTHING
-    }
+
     /**
      * Gets profile data based on username
+     * @param username
      * @return Profile object
      */
     public Profile getProfileData(String username){
