@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @author daan
  */
 
-public final class  Database {
+public class  Database {
     private Connection conn;
     
     /**
