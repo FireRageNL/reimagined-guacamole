@@ -5,14 +5,11 @@
  */
 package reimaginedguacamole.database;
 
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +19,7 @@ import java.util.logging.Logger;
  * @author daan
  */
 
-public class  Database {
+public final class  Database {
     private Connection conn;
     
     /**
@@ -34,7 +31,6 @@ public class  Database {
 
     public Database() {
         initConnection();
-        ReadStringWithCondition("Name","Profile","Name","Henk");
     }
     
     public void Insert(String table, Map<String, String> data){
@@ -98,9 +94,10 @@ public class  Database {
         String result = "";
         try 
         {
-            Statement st = conn.createStatement();
-            String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = '" + value + "'";
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, value);
+            ResultSet rs = ps.executeQuery();
             if(rs.next()){
             result = rs.getString(column);
             }
