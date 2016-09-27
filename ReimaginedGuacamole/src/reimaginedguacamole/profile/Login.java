@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import reimaginedguacamole.database.ProfileDB;
 
 /**
  * This is the class that will handle user logins.
@@ -22,22 +23,24 @@ public class Login {
      * Simple tryLogin function that will try to login a user with the provided username and password
      * It will hash the password, compare the hash to the hash in the database and then return
      * true or false according to if the username -> hash combination is correct
-     * @param input is the password that has to be hashed,
-     * @return is the hash that gets generated
+     * @param email is the e-mail adress of the user that is to be checked
+     * @param password is the password in plain text to be checked
+     * @return true or false if combination is correct.
      */
-    public String tryLogin(String input) {
+    public boolean tryLogin(String email, String password) {
         try {
             this.md = MessageDigest.getInstance("SHA-256");
-            String test = input;
+            String test = password;
             byte[] result = md.digest(test.getBytes());
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < result.length; i++) {
                 sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
             }
-            return sb.toString();
+            ProfileDB pdb = new ProfileDB();
+            return pdb.login(email, sb.toString());
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            return false;
         }
     }
 }
