@@ -52,7 +52,7 @@ public class ProfileTest {
     public void testGetNickname() {
         System.out.println("getNickname");
         Profile instance = new Profile("test@email.com","test","Testie",3,10,20);
-        String expResult = "test";
+        String expResult = "Testie";
         String result = instance.getNickname();
         assertEquals(expResult, result);
     }

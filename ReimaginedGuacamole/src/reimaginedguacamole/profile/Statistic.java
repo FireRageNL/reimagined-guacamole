@@ -51,7 +51,10 @@ public class Statistic {
      * @return Percentage(int)
      */
     public int returnPercenntage(){
-        return 0;
+        int whole = right + wrong;
+        double percentage = (double)right/(double)whole * 100;
+        System.out.println(percentage);
+        return (int)percentage;
     }
 
     
