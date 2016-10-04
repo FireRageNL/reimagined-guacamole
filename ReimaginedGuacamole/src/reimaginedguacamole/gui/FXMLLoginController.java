@@ -85,6 +85,7 @@ public class FXMLLoginController implements Initializable {
     private Label lblLossSci;
 
     Game _game;
+    Profile user;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -94,7 +95,7 @@ public class FXMLLoginController implements Initializable {
             Login log = new Login();
             boolean loggedin = log.tryLogin(username, password);
             if (loggedin) {
-                Profile user = log.getCurrentProfile(username);
+                user = log.getCurrentProfile(username);
                 fillProfileData(user);
                 profilePane.setVisible(true);
                 loginPane.setVisible(false);
@@ -114,6 +115,10 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private void clickRegister(MouseEvent event) {
         RegisterDialog regdialog = new RegisterDialog();
+    }
+    @FXML
+    private void changeNickName(ActionEvent event){
+        user.setNickName(txtNickname.getText());
     }
 
     private void fillProfileData(Profile user) {

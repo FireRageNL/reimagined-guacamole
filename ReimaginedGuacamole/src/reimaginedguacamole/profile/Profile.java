@@ -8,6 +8,7 @@ package reimaginedguacamole.profile;
 import reimaginedguacamole.game.GameInfo;
 import reimaginedguacamole.game.Player;
 import java.util.List;
+import reimaginedguacamole.database.ProfileDB;
 
 /**
  *
@@ -72,6 +73,12 @@ public class Profile extends Player {
 
     public void setStatistics(List<Statistic> stat) {
         statistics = stat;
+    }
+
+    public void setNickName(String nick) {
+        this.nickname = nick;
+        ProfileDB pbd = new ProfileDB();
+        pbd.saveNickname(this);
     }
 
 }

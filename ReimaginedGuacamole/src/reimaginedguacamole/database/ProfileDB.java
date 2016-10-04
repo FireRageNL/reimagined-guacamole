@@ -77,8 +77,20 @@ public class ProfileDB extends Database {
         }
     }
 
-    public void saveProfileData(Profile toSave) {
-
+    public void saveNickname(Profile toSave) {
+        try{
+            this.initConnection();
+            String sql = "UPDATE Profile SET Nickname = ? WHERE ProfileID = ?";
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+            ps.setString(1, toSave.getNickname());
+            ps.setInt(2, toSave.getPid());
+            ps.executeUpdate();
+            this.closeConnection();
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        
     }
 
     public void newUserRegistration(String profile, LinkedHashMap profileData) {
