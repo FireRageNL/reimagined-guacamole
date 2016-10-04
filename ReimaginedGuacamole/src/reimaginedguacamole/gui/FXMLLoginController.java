@@ -20,7 +20,7 @@ import reimaginedguacamole.profile.Profile;
  *
  * @author daan
  */
-public class FXMLGameController implements Initializable {
+public class FXMLLoginController implements Initializable {
 
     @FXML
     private Label label;
