@@ -91,7 +91,7 @@ public class StatisticTest {
         System.out.println("returnPercenntage");
         Statistic instance = new Statistic(Category.Art,20,20);
         int expResult = 50;
-        int result = instance.returnPercenntage();
+        int result = instance.returnPercentage();
         assertEquals(expResult, result);
     }
     

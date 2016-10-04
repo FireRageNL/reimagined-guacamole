@@ -50,7 +50,7 @@ public class Statistic {
      * Percentage of category questions anwsered right
      * @return Percentage(int)
      */
-    public int returnPercenntage(){
+    public int returnPercentage(){
         int whole = right + wrong;
         double percentage = (double)right/(double)whole * 100;
         System.out.println(percentage);

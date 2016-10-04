@@ -16,9 +16,11 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import reimaginedguacamole.game.Category;
 import reimaginedguacamole.game.Game;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
+import reimaginedguacamole.profile.Statistic;
 
 /**
  *
@@ -39,10 +41,10 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private Pane gamePane;
-    @FXML ProgressBar pbRoundTimer;
+    @FXML
+    ProgressBar pbRoundTimer;
     double seconds;
-    
-    
+
     @FXML
     private Pane profilePane;
     @FXML
@@ -82,9 +84,8 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private Label lblLossSci;
 
-    
     Game _game;
-    
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         String username = txtUsername.getText();
@@ -102,16 +103,14 @@ public class FXMLLoginController implements Initializable {
             }
         }
     }
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         gamePane.setVisible(false);
         loginPane.setVisible(true);
         profilePane.setVisible(false);
     }
-    
-    
+
     @FXML
     private void clickRegister(MouseEvent event) {
         RegisterDialog regdialog = new RegisterDialog();
@@ -122,35 +121,69 @@ public class FXMLLoginController implements Initializable {
         lblEmail.setText(user.getEmail());
         lblWins.setText(Integer.toString(user.getWins()));
         lblLoss.setText(Integer.toString(user.getLosses()));
+        for (Statistic s : user.getStatistics()) {
+            switch (s.getCategory()) {
+                case History:
+                    lblWinHis.setText(Integer.toString(s.getRight()));
+                    lblLossHis.setText(Integer.toString(s.getWrong()));
+                    break;
+                case Art:
+                    lblWinArt.setText(Integer.toString(s.getRight()));
+                    lblLossArt.setText(Integer.toString(s.getWrong()));
+                    break;
+                case Music:
+                    lblWinMus.setText(Integer.toString(s.getRight()));
+                    lblLossMus.setText(Integer.toString(s.getWrong()));
+                    break;
+                case Entertainment:
+                    lblWinEnt.setText(Integer.toString(s.getRight()));
+                    lblLossEnt.setText(Integer.toString(s.getWrong()));
+                    break;
+                case Games:
+                    lblWinGame.setText(Integer.toString(s.getRight()));
+                    lblLossGame.setText(Integer.toString(s.getWrong()));
+                    break;
+                case Sport:
+                    lblWinSpr.setText(Integer.toString(s.getRight()));
+                    lblLossSpr.setText(Integer.toString(s.getWrong()));
+                    break;
+                case Science:
+                    lblWinSci.setText(Integer.toString(s.getRight()));
+                    lblLossSci.setText(Integer.toString(s.getWrong()));
+                    break;
+            }
+        }
+
     }
-    
-    private void startRound(){
+
+    private void startRound() {
         seconds = 1;
-        AnimationTimer gameTimer = new AnimationTimer(){
+        AnimationTimer gameTimer = new AnimationTimer() {
             private long prevUpdate;
 
             @Override
-            public void handle(long now){
+            public void handle(long now) {
                 long lag = now - prevUpdate;
                 if (lag >= 20000000) {
-                    if(seconds > 0){
-                    seconds-= 0.0033;
-                    pbRoundTimer.setProgress(seconds);
-                    System.out.println(seconds);
-                    }
-                else{
+                    if (seconds > 0) {
+                        seconds -= 0.0033;
+                        pbRoundTimer.setProgress(seconds);
+                        System.out.println(seconds);
+                    } else {
                         seconds = 1;
                     }
                     prevUpdate = now;
                 }
             }
-            @Override public void start(){
+
+            @Override
+            public void start() {
                 prevUpdate = System.nanoTime();
                 super.start();
             }
         };
-        
+
         gameTimer.start();
     }
-    
+
 }
