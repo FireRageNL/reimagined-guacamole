@@ -60,6 +60,9 @@ public class RegisterDialog {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == registerButtonType) {
                 LinkedHashMap hm = new LinkedHashMap();
+                if(email.getText().isEmpty() || password.getText().isEmpty() || username.getText().isEmpty() || name.getText().isEmpty()){
+                    return null;
+                }
                 hm.put("Email", email.getText());
                 hm.put("Password", Hashing.hashPassword(password.getText()));
                 hm.put("Nickname", username.getText());
@@ -72,6 +75,9 @@ public class RegisterDialog {
         if (result.isPresent()) {
             ProfileDB pdb = new ProfileDB();
             pdb.Insert("Profile", result.get());
+        }
+        else{
+            
         }
     }
 }
