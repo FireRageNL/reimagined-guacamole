@@ -131,8 +131,8 @@ public class Database {
             ps.setString(1, value);
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
-            if (rs.next()) {
-                for (int i = 1; i < (rsmd.getColumnCount() + 1); i++) {
+            while(rs.next()){
+                for (int i = 1; i <( rsmd.getColumnCount() + 1); i++) {
                     result.add(rs.getString(i));
                 }
             }
