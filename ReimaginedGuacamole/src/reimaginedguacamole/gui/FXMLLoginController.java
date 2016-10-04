@@ -12,7 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
 
@@ -22,25 +24,30 @@ import reimaginedguacamole.profile.Profile;
  */
 public class FXMLLoginController implements Initializable {
 
-    @FXML
-    private Label label;
+    @FXML private Label label;
 
-    @FXML
-    private TextField gebruikersnaam;
+    @FXML private TextField txtUsername;
+    @FXML private TextField txtPassword;
+    
 
-    @FXML
-    private TextField wachtwoord;
-
+    @FXML private Pane loginPane;
+    @FXML private Pane gamePane;
+    @FXML private Pane profilePane;
+    
+    
+    
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        String username = gebruikersnaam.getText();
-        String password = wachtwoord.getText();
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
         if (!password.isEmpty() && !username.isEmpty()) {
             Login log = new Login();
             boolean loggedin = log.tryLogin(username,password);
             if(loggedin){
                 Profile user = log.getCurrentProfile(username);
                 label.setText("LOGGED IN JONG");
+                gamePane.setVisible(true);
+                loginPane.setVisible(false);
             }
             else{
                 label.setText("FAILED KUT");
@@ -50,7 +57,10 @@ public class FXMLLoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        gamePane.setVisible(false);
+        loginPane.setVisible(false);
+        profilePane.setVisible(true);
+        
     }
     @FXML
     private void clickRegister(MouseEvent event){
