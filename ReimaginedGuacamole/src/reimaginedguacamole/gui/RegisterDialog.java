@@ -22,6 +22,7 @@ import reimaginedguacamole.tooling.Hashing;
 
 /**
  * TODO: niet laten crashen met een cancel maar netjes proberen af te handelen.
+ *
  * @author roy_v
  */
 public class RegisterDialog {
@@ -63,8 +64,8 @@ public class RegisterDialog {
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(() -> email.requestFocus());
         dialog.setResultConverter(dialogButton -> {
+            LinkedHashMap hm = new LinkedHashMap();
             if (dialogButton == registerButtonType) {
-                LinkedHashMap hm = new LinkedHashMap();
                 if (email.getText().isEmpty() || password.getText().isEmpty() || username.getText().isEmpty() || name.getText().isEmpty()) {
                     error.setText("Niet alle velden zijn ingevuld");
                     hm.put("Error", "1");
@@ -84,16 +85,22 @@ public class RegisterDialog {
             return null;
         });
         Optional<LinkedHashMap> result = dialog.showAndWait();
-
-        while (result.get().size() < 3) {
-            if (!result.isPresent()) {
-                dialog.close();
+        while (result.isPresent()) {
+            if(result.get().size() == 4){
+                break;
             }
-            result = dialog.showAndWait();
+            while (result.get().size() < 3) {
+                if (result.get().containsKey("Close")) {
+                    dialog.hide();
+                } else {
+                    result = dialog.showAndWait();
+                }
+            }
         }
+        if(result.isPresent() && result.get().size() == 4){
         ProfileDB pdb = new ProfileDB();
         pdb.Insert("Profile", result.get());
-    }
+    }}
 
     public boolean verifyEmail(String email) {
         Pattern pattern = Pattern.compile("^.+@.+\\..+$");
