@@ -6,6 +6,7 @@
 package reimaginedguacamole.database;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import reimaginedguacamole.profile.Profile;
 
@@ -52,5 +53,17 @@ public class ProfileDB extends Database {
 
     public void saveProfileData(Profile toSave) {
 
+    }
+
+    public void newUserRegistration(String profile, LinkedHashMap profileData) {
+        this.Insert(profile, profileData);
+        String email = (String) profileData.get("Email");
+        int userID = Integer.parseInt(this.ReadStringWithCondition("ProfileID", "Profile", "Email", email));
+        LinkedHashMap hm = new LinkedHashMap();
+        hm.put("Profile_ProfileID",Integer.toString(userID));
+        for(int i = 1; i <=7; i++){
+            hm.put("Category_CategoryID",Integer.toString(i));
+            this.Insert("Statistic", hm);
+        }
     }
 }

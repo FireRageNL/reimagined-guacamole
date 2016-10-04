@@ -20,7 +20,7 @@ public class ReimaginedGuacamole extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLGame.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLLogin.fxml"));
         
         Scene scene = new Scene(root);
         Login login = new Login();

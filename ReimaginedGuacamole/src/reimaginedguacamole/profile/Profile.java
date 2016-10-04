@@ -22,7 +22,7 @@ public class Profile extends Player {
     private int wins;
     private int losses;
     private List<Achievement> Achievements;
-    private List<Statistic> Statistics;
+    private List<Statistic> statistics;
     private List<GameInfo> GameHistory;
     
     public Profile(String email, String name, String nickname, int pid, int wins, int losses) {
@@ -68,6 +68,9 @@ public class Profile extends Player {
         losses++;
     }
     
+    public List<Statistic> getStatistics(){
+        return statistics;
+    }
     
     
 }
