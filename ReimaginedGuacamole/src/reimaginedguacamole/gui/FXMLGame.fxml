@@ -11,7 +11,7 @@
         <Button fx:id="button" layoutX="178.0" layoutY="117.0" onAction="#handleButtonAction" text="Dont Click Me!" />
         <Label fx:id="label" layoutX="14.0" layoutY="155.0" minHeight="16" minWidth="69" prefHeight="17.0" prefWidth="430.0" textAlignment="CENTER" />
       <TextField fx:id="gebruikersnaam" layoutX="130.0" layoutY="50.0" prefHeight="25.0" prefWidth="190.0" promptText="Gebruikersnaam" />
-      <PasswordField fx:id="wachtwoord" accessibleRole="PASSWORD_FIELD" layoutX="130.0" layoutY="75.0" prefHeight="25.0" prefWidth="190.0" promptText="Wachtwoord" />
+      <PasswordField fx:id="wachtwoord" layoutX="130.0" layoutY="75.0" prefHeight="25.0" prefWidth="190.0" promptText="Wachtwoord" />
       <Label layoutX="152.0" layoutY="164.0" onMouseClicked="#clickRegister" prefHeight="17.0" prefWidth="147.0" text="Registreer nieuwe account" underline="true" />
     </children>
 </AnchorPane>
