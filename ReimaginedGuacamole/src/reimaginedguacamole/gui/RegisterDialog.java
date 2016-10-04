@@ -99,7 +99,7 @@ public class RegisterDialog {
         }
         if(result.isPresent() && result.get().size() == 4){
         ProfileDB pdb = new ProfileDB();
-        pdb.Insert("Profile", result.get());
+        pdb.newUserRegistration("Profile", result.get());
     }}
 
     public boolean verifyEmail(String email) {
