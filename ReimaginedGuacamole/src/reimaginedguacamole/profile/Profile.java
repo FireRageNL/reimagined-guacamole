@@ -24,7 +24,7 @@ public class Profile extends Player {
     private List<Achievement> Achievements;
     private List<Statistic> statistics;
     private List<GameInfo> GameHistory;
-    
+
     public Profile(String email, String name, String nickname, int pid, int wins, int losses) {
         this.email = email;
         this.name = name;
@@ -33,8 +33,6 @@ public class Profile extends Player {
         this.wins = wins;
         this.losses = losses;
     }
-    
-
 
     public String getEmail() {
         return email;
@@ -60,17 +58,20 @@ public class Profile extends Player {
         return losses;
     }
 
-    public void addWin(){
+    public void addWin() {
         wins++;
     }
-    
-    public void addLoss(){
+
+    public void addLoss() {
         losses++;
     }
-    
-    public List<Statistic> getStatistics(){
+
+    public List<Statistic> getStatistics() {
         return statistics;
     }
-    
-    
+
+    public void setStatistics(List<Statistic> stat) {
+        statistics = stat;
+    }
+
 }

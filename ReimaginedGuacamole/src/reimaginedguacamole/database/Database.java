@@ -18,47 +18,47 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *Class for connecting to the database
+ * Class for connecting to the database
+ *
  * @author daan
  */
+public class Database {
 
-public class  Database {
-    private Connection conn;
-    
+    protected Connection conn;
+
     /**
      * loads the properties from a file
      */
-    public void loadProperties(){
-        
+    public void loadProperties() {
+
     }
 
     public Database() {
-        
-        
+
     }
-    
-    public void Insert(String table, Map<String, String> data){
-        initConnection();
+
+    public void Insert(String table, Map<String, String> data) {
         try {
+            initConnection();
             int columnCount = 0;
             String columns = "";
             String values = "";
-            
+
             for (Map.Entry<String, String> entry : data.entrySet()) {
-            columns += (entry.getKey()+",");
-            columnCount++;
+                columns += (entry.getKey() + ",");
+                columnCount++;
             }
             for (int i = 0; i < columnCount; i++) {
                 values += "?,";
             }
-            
-            values = values.substring(0,values.length()-1);
-            columns = columns.substring(0,columns.length()-1);
 
-            String statement = "INSERT INTO "+table+" ("+ columns +") VALUES ("+values+")";
+            values = values.substring(0, values.length() - 1);
+            columns = columns.substring(0, columns.length() - 1);
+
+            String statement = "INSERT INTO " + table + " (" + columns + ") VALUES (" + values + ")";
             PreparedStatement pst = conn.prepareStatement(statement);
             System.out.println(statement);
-            
+
             int valuecount = 1;
             for (Map.Entry<String, String> entry : data.entrySet()) {
                 pst.setString(valuecount, entry.getValue());
@@ -70,73 +70,69 @@ public class  Database {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void Update(String table, Map<String, String> data, String where, String val){
+
+    public void Update(String table, Map<String, String> data, String where, String val) {
         try {
             initConnection();
             String columns = "";
             for (Map.Entry<String, String> entry : data.entrySet()) {
-            columns += (entry.getKey()+" = ?, ");
+                columns += (entry.getKey() + " = ?, ");
             }
-            columns = columns.substring(0,columns.length()-2);
+            columns = columns.substring(0, columns.length() - 2);
 
-            String statement = ("UPDATE " +table +" SET " + columns + " WHERE " + where + " = ?");
+            String statement = ("UPDATE " + table + " SET " + columns + " WHERE " + where + " = ?");
             PreparedStatement pst = conn.prepareStatement(statement);
             System.out.println(statement);
-            
+
             int valuecount = 1;
             for (Map.Entry<String, String> entry : data.entrySet()) {
                 pst.setString(valuecount, entry.getValue());
                 valuecount++;
             }
-            pst.setString(valuecount,val);
+            pst.setString(valuecount, val);
             pst.executeUpdate();
             closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public String ReadStringWithCondition(String column,String table, String where, String value)
-    {
+
+    public String ReadStringWithCondition(String column, String table, String where, String value) {
         String result = "";
-        try 
-        {
+        try {
             initConnection();
             String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, value);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-            result = rs.getString(column);
+            if (rs.next()) {
+                result = rs.getString(column);
             }
             closeConnection();
-                    
+
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
         //System.out.println(result);
         return result;
     }
-    
-    public List<String> ReadStringWithCondition(List<String> columns,String table, String where, String value)
-    {
-        List<String> result = new ArrayList<String>(); 
+
+    public List<String> ReadStringWithCondition(List<String> columns, String table, String where, String value) {
+        List<String> result = new ArrayList<String>();
         String column = "";
-        try 
-        {
+        try {
             initConnection();
             for (String c : columns) {
                 column += (c + ", ");
             }
-            column = column.substring(0,column.length()-2);
+            column = column.substring(0, column.length() - 2);
             String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, value);
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
-            if(rs.next()){
-                for (int i = 1; i <( rsmd.getColumnCount() + 1); i++) {
+            if (rs.next()) {
+                for (int i = 1; i < (rsmd.getColumnCount() + 1); i++) {
                     result.add(rs.getString(i));
                 }
             }
@@ -144,23 +140,23 @@ public class  Database {
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return result;
     }
-    
-    public void initConnection(){
+
+    public void initConnection() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://daantuller.nl:3306/mydb","Guacamole","Guacamole01");
+            conn = DriverManager.getConnection("jdbc:mysql://daantuller.nl:3306/mydb", "Guacamole", "Guacamole01");
             System.out.println("Connection ok.");
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void closeConnection() throws SQLException{
+
+    public void closeConnection() throws SQLException {
         conn.close();
         System.out.println("Connection closed.");
     }
-    
+
 }

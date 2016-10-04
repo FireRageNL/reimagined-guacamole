@@ -5,10 +5,14 @@
  */
 package reimaginedguacamole.database;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.Profile;
+import reimaginedguacamole.profile.Statistic;
 
 /**
  * Class that handles all databaserequests for a user's profile
@@ -47,8 +51,30 @@ public class ProfileDB extends Database {
         int pid = Integer.parseInt(results.get(3));
         int wins = Integer.parseInt(results.get(4));
         int losses = Integer.parseInt(results.get(5));
-        Profile ret = new Profile(results.get(1),results.get(0),results.get(2),pid,wins,losses);
+        Profile ret = new Profile(results.get(1), results.get(0), results.get(2), pid, wins, losses);
+        List<Statistic> list = getStatistics(ret.getPid());
+        ret.setStatistics(list);
         return ret;
+    }
+
+    public List<Statistic> getStatistics(int userID) {
+        List<Statistic> list = new ArrayList<Statistic>();
+        try {
+            this.initConnection();
+            String sql = "SELECT Rights,Wrong,Category_CategoryID FROM Statistic WHERE Profile_ProfileID = ?";
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+            ps.setString(1, Integer.toString(userID));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Statistic add = new Statistic(Category.values()[((rs.getInt(3))-1)],rs.getInt(1),rs.getInt(2));
+                list.add(add);
+            }
+            this.closeConnection();
+            return list;
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
     }
 
     public void saveProfileData(Profile toSave) {
@@ -60,9 +86,9 @@ public class ProfileDB extends Database {
         String email = (String) profileData.get("Email");
         int userID = Integer.parseInt(this.ReadStringWithCondition("ProfileID", "Profile", "Email", email));
         LinkedHashMap hm = new LinkedHashMap();
-        hm.put("Profile_ProfileID",Integer.toString(userID));
-        for(int i = 1; i <=7; i++){
-            hm.put("Category_CategoryID",Integer.toString(i));
+        hm.put("Profile_ProfileID", Integer.toString(userID));
+        for (int i = 1; i <= 7; i++) {
+            hm.put("Category_CategoryID", Integer.toString(i));
             this.Insert("Statistic", hm);
         }
     }

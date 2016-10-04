@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLLoginController">
   <children>
-    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="0.0" prefHeight="625.0" prefWidth="906.0">
+    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0">
       <children>
         <TextField id="gebruikersnaam" fx:id="txtUsername" layoutX="354.0" layoutY="235.0" prefHeight="25.0" prefWidth="190.0" promptText="Gebruikersnaam" />
         <PasswordField id="wachtwoord" fx:id="txtPassword" layoutX="354.0" layoutY="260.0" prefHeight="25.0" prefWidth="190.0" promptText="Wachtwoord" />
@@ -227,7 +227,7 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="0.0" prefHeight="624.9998779296875" prefWidth="908.0">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="615.0" prefWidth="906.0">
           <children>
