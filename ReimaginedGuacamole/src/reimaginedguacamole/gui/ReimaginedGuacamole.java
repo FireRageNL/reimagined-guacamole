@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import reimaginedguacamole.database.Database;
 import reimaginedguacamole.profile.Login;
 
 /**
@@ -25,7 +24,6 @@ public class ReimaginedGuacamole extends Application {
         
         Scene scene = new Scene(root);
         Login login = new Login();
-        Database db = new Database();
         stage.setScene(scene);
         stage.show();
     }

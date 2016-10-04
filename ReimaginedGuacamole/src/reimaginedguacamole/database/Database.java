@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 
 public class  Database {
-    private Connection conn;
+    protected Connection conn;
     
     /**
      * loads the properties from a file
@@ -135,7 +135,7 @@ public class  Database {
             ps.setString(1, value);
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
-            if(rs.next()){
+            while(rs.next()){
                 for (int i = 1; i <( rsmd.getColumnCount() + 1); i++) {
                     result.add(rs.getString(i));
                 }
