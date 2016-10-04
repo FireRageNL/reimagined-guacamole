@@ -5,6 +5,8 @@
  */
 package reimaginedguacamole.game;
 
+import java.util.Timer;
+
 /**
  *Class that handles all game activity
  * @author daan
@@ -36,6 +38,10 @@ public class Game {
      * starts the game
      */
     public void startGame(){
+
+    }
+    
+    public void startRound(Round round){
         
     }
     /**
