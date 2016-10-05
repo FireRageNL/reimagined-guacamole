@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.util.ArrayList;
 import reimaginedguacamole.game.GameInfo;
 import reimaginedguacamole.game.Player;
 import java.util.List;
@@ -22,9 +23,10 @@ public class Profile extends Player {
     private int pid;
     private int wins;
     private int losses;
-    private List<Achievement> Achievements;
+    private List<Achievement> achievements;
     private List<Statistic> statistics;
     private List<GameInfo> GameHistory;
+    private final ProfileDB pdb;
 
     public Profile(String email, String name, String nickname, int pid, int wins, int losses) {
         this.email = email;
@@ -33,6 +35,9 @@ public class Profile extends Player {
         this.pid = pid;
         this.wins = wins;
         this.losses = losses;
+        pdb = new ProfileDB();
+        achievements = new ArrayList<>();
+
     }
 
     public String getEmail() {
@@ -61,10 +66,12 @@ public class Profile extends Player {
 
     public void addWin() {
         wins++;
+        pdb.addWin(this);
     }
 
     public void addLoss() {
         losses++;
+        pdb.addLoss(this);
     }
 
     public List<Statistic> getStatistics() {
@@ -77,8 +84,15 @@ public class Profile extends Player {
 
     public void setNickName(String nick) {
         this.nickname = nick;
-        ProfileDB pbd = new ProfileDB();
-        pbd.saveNickname(this);
+        pdb.saveNickname(this);
+    }
+    
+    public List<Achievement> getAchievements(){
+        return achievements;
+    }
+    public void addAchievement(Achievement toAdd){
+        achievements.add(toAdd);
+        pdb.storeAchievement(toAdd,this);
     }
 
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import reimaginedguacamole.game.Category;
+import reimaginedguacamole.profile.Achievement;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Statistic;
 
@@ -66,7 +67,7 @@ public class ProfileDB extends Database {
             ps.setString(1, Integer.toString(userID));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Statistic add = new Statistic(Category.values()[((rs.getInt(3))-1)],rs.getInt(1),rs.getInt(2));
+                Statistic add = new Statistic(Category.values()[((rs.getInt(3)) - 1)], rs.getInt(1), rs.getInt(2));
                 list.add(add);
             }
             this.closeConnection();
@@ -78,7 +79,7 @@ public class ProfileDB extends Database {
     }
 
     public void saveNickname(Profile toSave) {
-        try{
+        try {
             this.initConnection();
             String sql = "UPDATE Profile SET Nickname = ? WHERE ProfileID = ?";
             PreparedStatement ps = this.conn.prepareStatement(sql);
@@ -86,11 +87,10 @@ public class ProfileDB extends Database {
             ps.setInt(2, toSave.getPid());
             ps.executeUpdate();
             this.closeConnection();
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        
+
     }
 
     public void newUserRegistration(String profile, LinkedHashMap profileData) {
@@ -103,5 +103,22 @@ public class ProfileDB extends Database {
             hm.put("Category_CategoryID", Integer.toString(i));
             this.Insert("Statistic", hm);
         }
+    }
+
+    public void addWin(Profile toSave) {
+        LinkedHashMap hm = new LinkedHashMap();
+        hm.put("Wins", Integer.toString(toSave.getWins()));
+        this.Update("Profile", hm, "ProfileID", Integer.toString(toSave.getPid()));
+    }
+
+    public void addLoss(Profile toSave) {
+        LinkedHashMap hm = new LinkedHashMap();
+        hm.put("Losses", Integer.toString(toSave.getLosses()));
+        this.Update("Profile", hm, "ProfileID", Integer.toString(toSave.getPid()));
+    }
+
+    public void storeAchievement(Achievement toAdd, Profile aThis) {
+//Should have desunyaaa
+
     }
 }

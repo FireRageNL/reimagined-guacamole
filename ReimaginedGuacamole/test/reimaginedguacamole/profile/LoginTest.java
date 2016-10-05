@@ -71,8 +71,8 @@ public class LoginTest {
         System.out.println("getCurrentProfile");
         String email = "test@email.com";
         Login instance = new Login();
-        int expWins = 30;
+        String expResult = "Test";
         Profile result = instance.getCurrentProfile(email);
-        assertEquals(expWins, result.getWins());
+        assertEquals(expResult, result.getName());
     }
 }
