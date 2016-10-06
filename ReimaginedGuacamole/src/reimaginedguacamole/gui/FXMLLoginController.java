@@ -16,7 +16,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import reimaginedguacamole.game.Category;
 import reimaginedguacamole.game.Game;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
@@ -187,7 +186,6 @@ public class FXMLLoginController implements Initializable {
                 super.start();
             }
         };
-
         gameTimer.start();
     }
 
