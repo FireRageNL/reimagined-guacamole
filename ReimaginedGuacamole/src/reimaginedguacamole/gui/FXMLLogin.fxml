@@ -223,11 +223,6 @@
                 </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Achievements">
-              <content>
-                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
             <Tab text="Game">
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -239,6 +234,11 @@
                     </Button>
                   </children>
                 </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Achievements">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
           </tabs>
@@ -274,7 +274,7 @@
                             <Image url="@Images/Pijl.png" />
                           </image>
                         </ImageView>
-                        <ImageView fx:id="wheel" fitHeight="281.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="wheel" fitHeight="281.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" style="">
                           <image>
                             <Image url="@Images/rad.png" />
                           </image>

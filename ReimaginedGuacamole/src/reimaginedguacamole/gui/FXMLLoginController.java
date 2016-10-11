@@ -8,6 +8,7 @@ package reimaginedguacamole.gui;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import javafx.animation.AnimationTimer;
@@ -25,6 +26,7 @@ import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Statistic;
+import reimaginedguacamole.timertasks.SpinTimerTask;
 import reimaginedguacamole.timertasks.WaitingForCategoryTimerTask;
 
 /**
@@ -200,7 +202,7 @@ public class FXMLLoginController implements Initializable, Observer{
     
     @FXML
     private void startGame(){
-        gameController = new GameController(10,1);
+        gameController = new GameController(10,10);
         gameController.addObserver(this);
         gameController.startNextRound();
         gameController.setGameState(GameState.WaitingForCategory);
@@ -219,6 +221,15 @@ public class FXMLLoginController implements Initializable, Observer{
             case Spinning:
                 System.out.println("Start Spinning");
                 spinWheel();
+                waitTimer = new Timer(true);
+                Random r = new Random();
+                int time =  (int)((8+r.nextDouble())*1000);
+                System.out.println(time);
+                waitTimer.schedule(new SpinTimerTask(gameController), time);
+                break;
+            case SpinningFinished:
+                animationTimer.stop();
+                System.out.println("ANIMATION STOPPED!");
                 break;
             case GameFinished:
                 break;
@@ -244,7 +255,7 @@ public class FXMLLoginController implements Initializable, Observer{
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
                     if(x < 360){
-                        x+=5;
+                        x+=8;
                     }
                     else{
                         x = 0;

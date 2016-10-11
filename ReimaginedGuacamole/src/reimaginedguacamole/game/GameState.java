@@ -15,5 +15,6 @@ public enum GameState {
     GameRunning,
     GameFinished,
     Spinning,
+    SpinningFinished,
     Waiting
 }
