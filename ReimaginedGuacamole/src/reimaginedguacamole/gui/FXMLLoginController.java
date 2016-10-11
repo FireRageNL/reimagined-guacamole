@@ -5,7 +5,6 @@
  */
 package reimaginedguacamole.gui;
 
-import static java.lang.Math.round;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -18,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import reimaginedguacamole.game.GameController;
@@ -89,6 +89,13 @@ public class FXMLLoginController implements Initializable, Observer{
     @FXML
     private Label lblLossSci;
 
+    
+    //GAME OBJECTS
+    @FXML
+    private ImageView wheel;
+    
+    
+    
     //Global variables
     GameController gameController;
     Profile user;
@@ -236,8 +243,13 @@ public class FXMLLoginController implements Initializable, Observer{
 
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
-                        x++;
-                        System.out.println(x);
+                    if(x < 360){
+                        x+=5;
+                    }
+                    else{
+                        x = 0;
+                    }
+                        wheel.setRotate(x);
 			prevUpdate = now;
                 }
 

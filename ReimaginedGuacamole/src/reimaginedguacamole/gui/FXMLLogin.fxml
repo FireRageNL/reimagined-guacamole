@@ -274,7 +274,7 @@
                             <Image url="@Images/Pijl.png" />
                           </image>
                         </ImageView>
-                        <ImageView fitHeight="281.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="wheel" fitHeight="281.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@Images/rad.png" />
                           </image>
