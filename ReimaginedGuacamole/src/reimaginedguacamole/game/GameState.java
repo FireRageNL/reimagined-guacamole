@@ -13,5 +13,7 @@ package reimaginedguacamole.game;
 public enum GameState {
     ChoosingCategory,
     GameRunning,
-    GameFinished
+    GameFinished,
+    Spinning,
+    Waiting
 }

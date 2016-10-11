@@ -223,6 +223,19 @@
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
+            <Tab text="Game">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <Button layoutX="279.0" layoutY="177.0" mnemonicParsing="false" prefHeight="178.0" prefWidth="316.0" text="Start Game">
+                      <font>
+                        <Font name="System Bold" size="40.0" fx:id="x3" />
+                      </font>
+                    </Button>
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
           </tabs>
         </TabPane>
       </children>
@@ -231,71 +244,70 @@
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="615.0" prefWidth="906.0">
           <children>
-            <Label text="Quiz Trivia Crack">
-              <font>
-                <Font name="System Bold" size="40.0" />
-              </font>
-            </Label>
-            <HBox prefHeight="618.0" prefWidth="907.0000999999975">
-              <children>
-                <VBox alignment="TOP_CENTER" minWidth="70.0" prefHeight="561.0" prefWidth="282.0">
+            <Label font="$x3" text="Quiz Trivia Crack">
+              <graphic>
+                <HBox prefHeight="618.0" prefWidth="907.0000999999975">
                   <children>
-                    <Label alignment="CENTER" text="Name">
-                      <font>
-                        <Font name="Arial Black" size="36.0" fx:id="x1" />
-                      </font>
-                      <VBox.margin>
-                        <Insets top="60.0" />
-                      </VBox.margin>
-                    </Label>
-                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <VBox alignment="TOP_CENTER" minWidth="70.0" prefHeight="561.0" prefWidth="282.0">
                       <children>
-                        <Label alignment="CENTER" font="$x1" text="Score:" />
-                        <Label alignment="CENTER" font="$x1" text="100" />
+                        <Label alignment="CENTER" text="Name">
+                          <font>
+                            <Font name="Arial Black" size="36.0" fx:id="x1" />
+                          </font>
+                          <VBox.margin>
+                            <Insets top="60.0" />
+                          </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                          <children>
+                            <Label alignment="CENTER" font="$x1" text="Score:" />
+                            <Label alignment="CENTER" font="$x1" text="100" />
+                          </children>
+                        </HBox>
+                        <ImageView fitHeight="233.0" fitWidth="281.3333435058594" pickOnBounds="true" preserveRatio="false" />
                       </children>
-                    </HBox>
-                    <ImageView fitHeight="233.0" fitWidth="281.3333435058594" pickOnBounds="true" preserveRatio="false" />
+                    </VBox>
+                    <VBox alignment="TOP_CENTER" prefHeight="561.0" prefWidth="585.0">
+                      <children>
+                        <Label alignment="CENTER" font="$x2" prefWidth="603.0" text="Hier komt straks de vraag!">
+                          <VBox.margin>
+                            <Insets bottom="30.0" top="20.0" />
+                          </VBox.margin>
+                        </Label>
+                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 1">
+                          <VBox.margin>
+                            <Insets top="20.0" />
+                          </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 2">
+                          <VBox.margin>
+                            <Insets top="20.0" />
+                          </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 3">
+                          <VBox.margin>
+                            <Insets top="20.0" />
+                          </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="antwoord 4">
+                          <VBox.margin>
+                            <Insets top="20.0" />
+                          </VBox.margin>
+                        </Button>
+                        <ProgressBar fx:id="pbRoundTimer" prefHeight="100.0" prefWidth="768.0" progress="0.0">
+                          <VBox.margin>
+                            <Insets top="80.0" />
+                          </VBox.margin>
+                        </ProgressBar>
+                      </children>
+                      <HBox.margin>
+                        <Insets left="20.0" />
+                      </HBox.margin>
+                    </VBox>
                   </children>
-                </VBox>
-                <VBox alignment="TOP_CENTER" prefHeight="561.0" prefWidth="585.0">
-                  <children>
-                    <Label alignment="CENTER" font="$x2" prefWidth="603.0" text="Hier komt straks de vraag!">
-                      <VBox.margin>
-                        <Insets bottom="30.0" top="20.0" />
-                      </VBox.margin>
-                    </Label>
-                    <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 1">
-                      <VBox.margin>
-                        <Insets top="20.0" />
-                      </VBox.margin>
-                    </Button>
-                    <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 2">
-                      <VBox.margin>
-                        <Insets top="20.0" />
-                      </VBox.margin>
-                    </Button>
-                    <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 3">
-                      <VBox.margin>
-                        <Insets top="20.0" />
-                      </VBox.margin>
-                    </Button>
-                    <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="antwoord 4">
-                      <VBox.margin>
-                        <Insets top="20.0" />
-                      </VBox.margin>
-                    </Button>
-                    <ProgressBar fx:id="pbRoundTimer" prefHeight="100.0" prefWidth="768.0" progress="0.0">
-                      <VBox.margin>
-                        <Insets top="80.0" />
-                      </VBox.margin>
-                    </ProgressBar>
-                  </children>
-                  <HBox.margin>
-                    <Insets left="20.0" />
-                  </HBox.margin>
-                </VBox>
-              </children>
-            </HBox>
+                </HBox>
+              </graphic>
+            </Label>
           </children>
         </VBox>
       </children>
