@@ -35,6 +35,10 @@ public class GameController extends Observable{
         currentRound = rounds.get(currentRoundIndex);
         
     }
+
+    public Round getCurrentRound() {
+        return currentRound;
+    }
     
     public void giveRoundQuestion(Category category){
         for(Question q : game.getQuestionsList()){

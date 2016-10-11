@@ -15,6 +15,7 @@ import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
@@ -23,6 +24,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.GameState;
+import static reimaginedguacamole.game.GameState.Answered;
+import static reimaginedguacamole.game.GameState.GameFinished;
+import static reimaginedguacamole.game.GameState.GameRunning;
+import static reimaginedguacamole.game.GameState.Spinning;
+import static reimaginedguacamole.game.GameState.SpinningFinished;
+import static reimaginedguacamole.game.GameState.Waiting;
+import static reimaginedguacamole.game.GameState.WaitingForCategory;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Statistic;
@@ -95,7 +103,14 @@ public class FXMLLoginController implements Initializable, Observer{
     //GAME OBJECTS
     @FXML
     private ImageView wheel;
-    
+    @FXML
+    private Button btnAnswer1;
+    @FXML
+    private Button btnAnswer2;
+    @FXML
+    private Button btnAnswer3;
+    @FXML
+    private Button btnAnswer4;
     
     
     //Global variables
@@ -204,7 +219,6 @@ public class FXMLLoginController implements Initializable, Observer{
     private void startGame(){
         gameController = new GameController(10,10);
         gameController.addObserver(this);
-        gameController.startNextRound();
         gameController.setGameState(GameState.WaitingForCategory);
     }
     
@@ -230,11 +244,15 @@ public class FXMLLoginController implements Initializable, Observer{
             case SpinningFinished:
                 animationTimer.stop();
                 System.out.println("ANIMATION STOPPED!");
+                gameController.startNextRound();
+                
                 break;
-            case GameFinished:
+            case Answered:
                 break;
             case GameRunning:
                 break;   
+            case GameFinished:
+                break;
         }
     }
 
