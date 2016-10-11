@@ -143,6 +143,44 @@ public class Database {
 
         return result;
     }
+    
+     public List<String> ReadWithInCondition(List<String> columns, String table, String where, List<String> value, int amount) {
+        List<String> result = new ArrayList<String>();
+        String column = "";
+        String parameters = "";
+        
+         for (int i = 1; i <= amount; i++) {
+             parameters += "?,";
+         }
+         parameters = parameters.substring(0, parameters.length() - 1);
+         
+        try {
+            initConnection();
+            for (String c : columns) {
+                column += (c + ", ");
+            }
+            
+            column = column.substring(0, column.length() - 2);
+            String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " IN ("+parameters+")";
+            PreparedStatement ps = conn.prepareStatement(sql);
+             for (int i = 0; i < amount; i++) {
+             ps.setString((i + 1), value.get(i));
+         }
+            
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            while(rs.next()){
+                for (int i = 1; i <( rsmd.getColumnCount() + 1); i++) {
+                    result.add(rs.getString(i));
+                }
+            }
+            closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
 
     public void initConnection() {
         try {
