@@ -118,7 +118,7 @@ public class ProfileDB extends Database {
     }
 
     public void storeAchievement(Achievement toAdd, Profile aThis) {
-//Should have desunyaaa
+//Should have so is not implemented yet
 
     }
 }

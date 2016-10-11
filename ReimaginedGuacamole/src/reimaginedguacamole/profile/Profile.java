@@ -7,7 +7,6 @@ package reimaginedguacamole.profile;
 
 import java.util.ArrayList;
 import reimaginedguacamole.game.GameInfo;
-import reimaginedguacamole.game.Player;
 import java.util.List;
 import reimaginedguacamole.database.ProfileDB;
 
@@ -15,7 +14,7 @@ import reimaginedguacamole.database.ProfileDB;
  *
  * @author Marc
  */
-public class Profile extends Player {
+public class Profile {
 
     private String email;
     private String name;
