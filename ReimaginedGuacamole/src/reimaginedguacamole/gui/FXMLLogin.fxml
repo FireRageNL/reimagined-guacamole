@@ -264,7 +264,16 @@
                             <Label alignment="CENTER" font="$x1" text="100" />
                           </children>
                         </HBox>
-                        <ImageView fitHeight="233.0" fitWidth="281.3333435058594" pickOnBounds="true" preserveRatio="false" />
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="false">
+                          <image>
+                            <Image url="@Images/Pijl.png" />
+                          </image>
+                        </ImageView>
+                        <ImageView fitHeight="281.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="@Images/rad.png" />
+                          </image>
+                        </ImageView>
                       </children>
                     </VBox>
                     <VBox alignment="TOP_CENTER" prefHeight="561.0" prefWidth="585.0">
