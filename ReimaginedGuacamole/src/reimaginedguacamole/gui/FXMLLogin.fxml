@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLLoginController">
   <children>
-    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0">
+    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="false">
       <children>
         <TextField id="gebruikersnaam" fx:id="txtUsername" layoutX="354.0" layoutY="235.0" prefHeight="25.0" prefWidth="190.0" promptText="Gebruikersnaam" />
         <PasswordField id="wachtwoord" fx:id="txtPassword" layoutX="354.0" layoutY="260.0" prefHeight="25.0" prefWidth="190.0" promptText="Wachtwoord" />
@@ -23,7 +23,7 @@
         <Label layoutX="376.0" layoutY="349.0" onMouseClicked="#clickRegister" prefHeight="17.0" prefWidth="147.0" text="Registreer nieuwe account" underline="true" />
       </children>
     </Pane>
-    <Pane fx:id="profilePane" layoutX="13.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0">
+    <Pane fx:id="profilePane" layoutX="13.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="false">
       <children>
         <TabPane layoutX="14.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE">
           <tabs>
@@ -92,7 +92,7 @@
                               <children>
                                 <ImageView fx:id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
-                                    <Image url="@../../../wetenschap.jpg" />
+                                    <Image url="@Images/geschiedenis.png" />
                                   </image>
                                   <HBox.margin>
                                     <Insets right="50.0" />
@@ -108,7 +108,7 @@
                               <children>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
-                                    <Image url="@../../../wetenschap.png" />
+                                    <Image url="@Images/kunst.png" />
                                   </image>
                                   <HBox.margin>
                                     <Insets right="50.0" />
@@ -124,7 +124,7 @@
                               <children>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
-                                    <Image url="@../../../wetenschap.png" />
+                                    <Image url="@Images/games.png" />
                                   </image>
                                   <HBox.margin>
                                     <Insets right="50.0" />
@@ -140,7 +140,7 @@
                               <children>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
-                                    <Image url="@../../../wetenschap.png" />
+                                    <Image url="@Images/entertaintment.png" />
                                   </image>
                                   <HBox.margin>
                                     <Insets right="50.0" />
@@ -156,7 +156,7 @@
                               <children>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
-                                    <Image url="@../../../wetenschap.png" />
+                                    <Image url="@Images/music.png" />
                                   </image>
                                   <HBox.margin>
                                     <Insets right="50.0" />
@@ -172,7 +172,7 @@
                               <children>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
-                                    <Image url="@../../../wetenschap.png" />
+                                    <Image url="@Images/sport.png" />
                                   </image>
                                   <HBox.margin>
                                     <Insets right="50.0" />
@@ -188,7 +188,7 @@
                               <children>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
-                                    <Image url="@../../../wetenschap.png" />
+                                    <Image url="@Images/wetenschap.png" />
                                   </image>
                                   <HBox.margin>
                                     <Insets right="50.0" />
@@ -227,7 +227,7 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="615.0" prefWidth="906.0">
           <children>
@@ -254,7 +254,16 @@
                         <Label alignment="CENTER" font="$x1" text="100" />
                       </children>
                     </HBox>
-                    <ImageView fitHeight="233.0" fitWidth="281.3333435058594" pickOnBounds="true" preserveRatio="false" />
+                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="false" x="0.0">
+                      <image>
+                        <Image url="@Images/Pijl.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="281.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@Images/rad.png" />
+                      </image>
+                    </ImageView>
                   </children>
                 </VBox>
                 <VBox alignment="TOP_CENTER" prefHeight="561.0" prefWidth="585.0">

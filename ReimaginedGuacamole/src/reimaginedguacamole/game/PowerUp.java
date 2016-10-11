@@ -25,12 +25,5 @@ public class PowerUp {
 
     public String getName() {
         return name;
-    }
-
-    
-
-    
-
-    
-    
+    }    
 }
