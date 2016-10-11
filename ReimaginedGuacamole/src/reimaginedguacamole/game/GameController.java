@@ -6,12 +6,13 @@
 package reimaginedguacamole.game;
 
 import java.util.List;
+import java.util.Observable;
 
 /**
  *
  * @author daan
  */
-public class GameController {
+public class GameController extends Observable{
     
     private Game game;
     private List<Round> rounds;
@@ -19,18 +20,31 @@ public class GameController {
     private GameState gameState;
     private Round  currentRound;
     
-    public GameController(Game game){
-        this.game = game;
-        currentRoundIndex = 0;
+    public GameController(int duration, int amountOfRounds){
+        game = new Game(amountOfRounds, duration);
+        for(int i =0; i < amountOfRounds; i++){
+            rounds.add(new Round());
+        }
+        currentRoundIndex = -1;
     }
     
     public void startNextRound(){
         currentRoundIndex++;
         currentRound = rounds.get(currentRoundIndex);
+        
     }
     
-    public Question giveRoundQuestion(Category category, List<Question> questions){
-        
+    public void giveRoundQuestion(Category category){
+        for(Question q : game.getQuestionsList()){
+            if(q.getCategory() == category){
+                currentRound.setQuestion(q);
+                break;
+            }
+        }
+    }
+    
+    public Game getGame(){
+        return game;
     }
     
     public GameState getGameState(){
@@ -39,6 +53,8 @@ public class GameController {
     
     public void setGameState(GameState gameState){
         this.gameState = gameState;
+        this.setChanged();
+        this.notifyObservers(gameState);
     }
     
     public int getCorrectAnswer(){

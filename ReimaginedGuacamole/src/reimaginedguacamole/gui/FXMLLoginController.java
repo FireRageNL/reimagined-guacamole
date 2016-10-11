@@ -6,8 +6,10 @@
 package reimaginedguacamole.gui;
 
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
-import javafx.animation.AnimationTimer;
+import java.util.Timer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,15 +19,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import reimaginedguacamole.game.Game;
+import reimaginedguacamole.game.GameController;
+import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Statistic;
+import reimaginedguacamole.timertasks.WaitingForCategoryTimerTask;
 
 /**
  *
  * @author daan
  */
-public class FXMLLoginController implements Initializable {
+public class FXMLLoginController implements Initializable, Observer{
 
     @FXML
     private Label label;
@@ -83,8 +88,13 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private Label lblLossSci;
 
-    Game _game;
+    //Global variables
+    GameController gameController;
     Profile user;
+    
+    
+    // TIMERS
+    Timer waitTimer;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -159,6 +169,35 @@ public class FXMLLoginController implements Initializable {
         }
 
     }
+    
+    private void startGame(){
+        gameController = new GameController(10,15);
+        gameController.addObserver(this);
+        gameController.startNextRound();
+        gameController.setGameState(GameState.WaitingForCategory);
+    }
+    
+    private void checkGameState(){
+        switch(gameController.getGameState()){
+            case Waiting:
+                break;
+            case WaitingForCategory:
+                waitTimer.schedule(new WaitingForCategoryTimerTask(gameController), 20000);
+                break;
+            case Spinning:
+                break;
+            case GameFinished:
+                break;
+            case GameRunning:
+                break;   
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        checkGameState();
+    }
+    
 
 
 }
