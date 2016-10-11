@@ -5,10 +5,56 @@
  */
 package reimaginedguacamole.database;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import reimaginedguacamole.game.Category;
+import reimaginedguacamole.profile.Profile;
+import reimaginedguacamole.profile.Statistic;
+
 /**
  *
  * @author daan
  */
-public class GameDB {
-    
+public class GameDB extends Database {
+
+    public void updateStats(Profile prof, Category cat, boolean right) {
+        Statistic toUpdate = null;
+        for (Statistic s : prof.getStatistics()) {
+            if (s.getCategory() == cat) {
+                toUpdate = s;
+            }
+        }
+        if (right) {
+            toUpdate.setRight(1 + toUpdate.getRight());
+        } else {
+            toUpdate.setWrong(1 + toUpdate.getWrong());
+        }
+        prof.updateStatistics(toUpdate);
+        try{
+        this.initConnection();
+        String sql;
+        if (right) {
+            sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
+        } else {
+            sql = "UPDATE Statistic SET Wrongs = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
+        }
+        PreparedStatement ps = this.conn.prepareStatement(sql);
+        
+        if(right){
+            ps.setInt(1, toUpdate.getRight());
+        }
+        else{
+            ps.setInt(1, toUpdate.getWrong());
+        }
+        ps.setInt(2, cat.ordinal());
+        ps.setInt(3,prof.getPid());
+        ps.executeUpdate();
+        this.closeConnection();
+        }
+        catch(SQLException ex){
+         System.out.println(ex.getMessage()); 
+        }
+        
+    }
+
 }

@@ -80,6 +80,15 @@ public class Profile {
     public void setStatistics(List<Statistic> stat) {
         statistics = stat;
     }
+    
+    public void updateStatistics(Statistic stat){
+        for(Statistic s : statistics){
+            if(s.getCategory() == stat.getCategory()){
+                statistics.remove(s);
+                statistics.add(stat);
+            }
+        }
+    }
 
     public void setNickName(String nick) {
         this.nickname = nick;
