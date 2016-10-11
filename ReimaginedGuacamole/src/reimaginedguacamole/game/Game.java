@@ -19,12 +19,17 @@ public class Game {
     private int amountOfRounds;
     private int roundDuration;
     private QuestionDB QDB = new QuestionDB();
+    List<Question> questionsList;
     
     public Game(int rounds, int duration){
         this.amountOfRounds = rounds;
         this.roundDuration = duration;
-        List<Question> questionsList = QDB.getQuestions(rounds);
+        questionsList = QDB.getQuestions(rounds);
         
+    }
+
+    public List<Question> getQuestionsList() {
+        return questionsList;
     }
 
     public int getRoundDuration() {

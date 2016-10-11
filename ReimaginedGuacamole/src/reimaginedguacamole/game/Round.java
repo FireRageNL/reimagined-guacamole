@@ -13,8 +13,8 @@ public class Round {
     private Question question;
     private int givenAnswer;
     
-    public Round(Question question){
-        this.question = question;
+    public Round(){
+
     }
 
     public Question getQuestion() {
@@ -26,7 +26,6 @@ public class Round {
     public void setGivenAnswer(int answer){
         this.givenAnswer = answer;
     }
-    
     public int getGivenAnswer(){
         return givenAnswer;
     }
