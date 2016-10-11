@@ -28,7 +28,7 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" layoutX="13.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="true">
+    <Pane fx:id="profilePane" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="true">
       <children>
         <TabPane layoutX="14.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE">
           <tabs>
@@ -84,125 +84,137 @@
                         </HBox>
                       </children>
                     </VBox>
-                    <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="187.0" prefHeight="391.0" prefWidth="887.0">
+                    <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="153.0" prefHeight="393.0" prefWidth="888.0">
                       <children>
                         <Label alignment="CENTER_LEFT" text="Statistieken">
                           <font>
                             <Font name="System Bold" size="30.0" />
                           </font>
                         </Label>
-                        <GridPane prefHeight="324.0" prefWidth="887.0">
+                        <HBox prefHeight="34.0" prefWidth="888.0">
                           <children>
-                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <Label font="$x2" text="Correct">
+                              <HBox.margin>
+                                <Insets left="100.0" fx:id="x4" />
+                              </HBox.margin>
+                            </Label>
+                            <Label font="$x2" prefWidth="94.0" text="Incorrect" HBox.margin="$x4" />
+                            <Label font="$x2" text="Correct">
+                              <HBox.margin>
+                                <Insets left="175.0" />
+                              </HBox.margin>
+                            </Label>
+                            <Label font="$x2" prefWidth="94.0" text="Incorrect" HBox.margin="$x4" />
+                          </children>
+                        </HBox>
+                        <GridPane prefHeight="321.0" prefWidth="355.0">
+                          <children>
+                            <HBox alignment="CENTER" minWidth="89.0" prefHeight="81.0" prefWidth="89.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                               <children>
+                                <Label id="lblLossSci" fx:id="lblWinHis" font="$x2" text="5">
+                                  <HBox.margin>
+                                    <Insets right="50.0" fx:id="x5" />
+                                  </HBox.margin>
+                                </Label>
                                 <ImageView fx:id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/geschiedenis.png" />
                                   </image>
                                   <HBox.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="50.0" fx:id="x5" />
                                   </HBox.margin>
                                 </ImageView>
-                                <Label id="lblLossSci" fx:id="lblWinHis" font="$x2" text="5" />
-                                <Label font="$x2" text="W/" />
                                 <Label fx:id="lblLossHis" font="$x2" text="7" />
-                                <Label font="$x2" text="L" />
                               </children>
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
                               <children>
+                                <Label fx:id="lblWinArt" font="$x2" text="5" HBox.margin="$x5" />
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/kunst.png" />
                                   </image>
                                   <HBox.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="50.0" fx:id="x5" />
                                   </HBox.margin>
                                 </ImageView>
-                                <Label fx:id="lblWinArt" font="$x2" text="5" />
-                                <Label font="$x2" text="W/" />
                                 <Label fx:id="lblLossArt" font="$x2" text="7" />
-                                <Label font="$x2" text="L" />
+                                <Label font="$x2" text="" />
                               </children>
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
                               <children>
+                                <Label fx:id="lblWinGame" font="$x2" text="5" HBox.margin="$x5" />
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/games.png" />
                                   </image>
                                   <HBox.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="50.0" fx:id="x5" />
                                   </HBox.margin>
                                 </ImageView>
-                                <Label fx:id="lblWinGame" font="$x2" text="5" />
-                                <Label font="$x2" text="W/" />
                                 <Label fx:id="lblLossGame" font="$x2" text="7" />
-                                <Label font="$x2" text="L" />
+                                <Label font="$x2" text="" />
                               </children>
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
                               <children>
+                                <Label fx:id="lblWinEnt" font="$x2" text="5" HBox.margin="$x5" />
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/entertaintment.png" />
                                   </image>
                                   <HBox.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="50.0" fx:id="x5" />
                                   </HBox.margin>
                                 </ImageView>
-                                <Label fx:id="lblWinEnt" font="$x2" text="5" />
-                                <Label font="$x2" text="W/" />
                                 <Label fx:id="lblLossEnt" font="$x2" text="7" />
-                                <Label font="$x2" text="L" />
+                                <Label font="$x2" text="" />
                               </children>
                             </HBox>
-                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <HBox alignment="CENTER" prefHeight="81.0" prefWidth="370.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                               <children>
+                                <Label fx:id="lblWinMus" font="$x2" text="5" HBox.margin="$x5" />
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/music.png" />
                                   </image>
                                   <HBox.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="50.0" fx:id="x5" />
                                   </HBox.margin>
                                 </ImageView>
-                                <Label fx:id="lblWinMus" font="$x2" text="5" />
-                                <Label font="$x2" text="W/" />
                                 <Label fx:id="lblLossMus" font="$x2" text="7" />
-                                <Label font="$x2" text="L" />
+                                <Label font="$x2" text="" />
                               </children>
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                               <children>
+                                <Label fx:id="lblWinSpr" font="$x2" text="5" HBox.margin="$x5" />
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/sport.png" />
                                   </image>
                                   <HBox.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="50.0" fx:id="x5" />
                                   </HBox.margin>
                                 </ImageView>
-                                <Label fx:id="lblWinSpr" font="$x2" text="5" />
-                                <Label font="$x2" text="W/" />
                                 <Label fx:id="lblLossSpr" font="$x2" text="7" />
-                                <Label font="$x2" text="L" />
+                                <Label font="$x2" text="" />
                               </children>
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                               <children>
+                                <Label fx:id="lblWinSci" font="$x2" text="5" HBox.margin="$x5" />
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/wetenschap.png" />
                                   </image>
                                   <HBox.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="50.0" fx:id="x5" />
                                   </HBox.margin>
                                 </ImageView>
-                                <Label fx:id="lblWinSci" font="$x2" text="5" />
-                                <Label font="$x2" text="W/" />
                                 <Label fx:id="lblLossSci" font="$x2" text="7" />
-                                <Label font="$x2" text="L" />
+                                <Label font="$x2" text="" />
                               </children>
                             </HBox>
                           </children>
