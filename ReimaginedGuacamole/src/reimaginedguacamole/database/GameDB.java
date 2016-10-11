@@ -7,6 +7,7 @@ package reimaginedguacamole.database;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Statistic;
@@ -56,5 +57,10 @@ public class GameDB extends Database {
         }
         
     }
-
+    public void endGame(int userid, int score){
+        LinkedHashMap hm = new LinkedHashMap();
+        hm.put("Score", Integer.toString(score));
+        hm.put("Profile_ProfileID", Integer.toString(userid));
+        this.Insert("GameInfo", hm);
+    }
 }
