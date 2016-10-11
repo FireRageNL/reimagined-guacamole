@@ -6,6 +6,7 @@
 package reimaginedguacamole.timertasks;
 
 import java.util.TimerTask;
+import javafx.application.Platform;
 import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.GameState;
 
@@ -23,7 +24,14 @@ public class SpinTimerTask extends TimerTask
     @Override
     public void run() {
         System.out.println("spinTimer finished");
-        _game.setGameState(GameState.SpinningFinished);
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                _game.setGameState(GameState.SpinningFinished);
+            }
+            
+        });
+        
         
     }
     

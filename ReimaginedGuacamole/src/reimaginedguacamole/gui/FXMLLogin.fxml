@@ -144,7 +144,11 @@
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
                               <children>
-                                <Label fx:id="lblWinGame" font="$x2" text="5" HBox.margin="$x5" />
+                                <Label fx:id="lblWinGame" font="$x2" text="5">
+                                  <HBox.margin>
+                                    <Insets right="50.0" fx:id="x5" />
+                                  </HBox.margin>
+                                </Label>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/games.png" />
@@ -159,7 +163,11 @@
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
                               <children>
-                                <Label fx:id="lblWinEnt" font="$x2" text="5" HBox.margin="$x5" />
+                                <Label fx:id="lblWinEnt" font="$x2" text="5">
+                                  <HBox.margin>
+                                    <Insets right="50.0" fx:id="x5" />
+                                  </HBox.margin>
+                                </Label>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/entertaintment.png" />
@@ -174,7 +182,11 @@
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="81.0" prefWidth="370.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                               <children>
-                                <Label fx:id="lblWinMus" font="$x2" text="5" HBox.margin="$x5" />
+                                <Label fx:id="lblWinMus" font="$x2" text="5">
+                                  <HBox.margin>
+                                    <Insets right="50.0" fx:id="x5" />
+                                  </HBox.margin>
+                                </Label>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/music.png" />
@@ -189,7 +201,11 @@
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                               <children>
-                                <Label fx:id="lblWinSpr" font="$x2" text="5" HBox.margin="$x5" />
+                                <Label fx:id="lblWinSpr" font="$x2" text="5">
+                                  <HBox.margin>
+                                    <Insets right="50.0" fx:id="x5" />
+                                  </HBox.margin>
+                                </Label>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/sport.png" />
@@ -204,7 +220,11 @@
                             </HBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                               <children>
-                                <Label fx:id="lblWinSci" font="$x2" text="5" HBox.margin="$x5" />
+                                <Label fx:id="lblWinSci" font="$x2" text="5">
+                                  <HBox.margin>
+                                    <Insets right="50.0" fx:id="x5" />
+                                  </HBox.margin>
+                                </Label>
                                 <ImageView id="imgTest" disable="false" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="false">
                                   <image>
                                     <Image url="@Images/wetenschap.png" />
@@ -291,31 +311,32 @@
                             <Image url="@Images/rad.png" />
                           </image>
                         </ImageView>
+                        <Button fx:id="btnSpin" mnemonicParsing="false" onAction="#btnSpinClicked" text="Spin" />
                       </children>
                     </VBox>
                     <VBox alignment="TOP_CENTER" prefHeight="561.0" prefWidth="585.0">
                       <children>
-                        <Label alignment="CENTER" font="$x2" prefWidth="603.0" text="Hier komt straks de vraag!">
+                        <Label fx:id="lblQuestion" alignment="CENTER" font="$x2" prefWidth="603.0" text="Hier komt straks de vraag!">
                           <VBox.margin>
                             <Insets bottom="30.0" top="20.0" />
                           </VBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 1">
+                        <Button fx:id="btnAnswer1" mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 1">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 2">
+                        <Button fx:id="btnAnswer2" mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 2">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 3">
+                        <Button fx:id="btnAnswer3" mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 3">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="antwoord 4">
+                        <Button fx:id="btnAnswer4" mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="antwoord 4">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>

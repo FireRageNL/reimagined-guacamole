@@ -31,6 +31,7 @@ import static reimaginedguacamole.game.GameState.Spinning;
 import static reimaginedguacamole.game.GameState.SpinningFinished;
 import static reimaginedguacamole.game.GameState.Waiting;
 import static reimaginedguacamole.game.GameState.WaitingForCategory;
+import reimaginedguacamole.game.Round;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Statistic;
@@ -111,13 +112,16 @@ public class FXMLLoginController implements Initializable, Observer{
     private Button btnAnswer3;
     @FXML
     private Button btnAnswer4;
-    
+    @FXML
+    private Label lblQuestion;
+    @FXML
+    private Button btnSpin;
     
     //Global variables
     GameController gameController;
     Profile user;
-    
-    
+    Random rng;
+    int wheelSpeed;
     // TIMERS
     private Timer waitTimer;
     private AnimationTimer animationTimer;
@@ -145,6 +149,7 @@ public class FXMLLoginController implements Initializable, Observer{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setWindows(1);
+        rng = new Random();
     }
 
     
@@ -233,18 +238,28 @@ public class FXMLLoginController implements Initializable, Observer{
                 setWindows(0);
                 break;
             case Spinning:
+                btnSpin.setDisable(true);
                 System.out.println("Start Spinning");
                 spinWheel();
                 waitTimer = new Timer(true);
-                Random r = new Random();
-                int time =  (int)((8+r.nextDouble())*1000);
+                int time =  5000+ rng.nextInt(3000);
                 System.out.println(time);
                 waitTimer.schedule(new SpinTimerTask(gameController), time);
                 break;
             case SpinningFinished:
+                btnSpin.setDisable(false);
                 animationTimer.stop();
                 System.out.println("ANIMATION STOPPED!");
                 gameController.startNextRound();
+                gameController.giveRoundQuestion(gameController.chooseCategory(wheel.getRotate()));
+                
+                Round round = gameController.getCurrentRound();
+                System.out.println(round.getQuestion().getCategory());
+                lblQuestion.setText(round.getQuestion().getQuestionContents());
+                btnAnswer1.setText(round.getQuestion().getAnswer1());
+                btnAnswer2.setText(round.getQuestion().getAnswer2());
+                btnAnswer3.setText(round.getQuestion().getAnswer3());
+                btnAnswer4.setText(round.getQuestion().getAnswer4());
                 
                 break;
             case Answered:
@@ -256,14 +271,22 @@ public class FXMLLoginController implements Initializable, Observer{
         }
     }
 
+    
+
+    
     @Override
     public void update(Observable o, Object arg) {
         checkGameState();
     }
     
+    @FXML
+    public void btnSpinClicked(){
+        waitTimer.cancel();
+        gameController.setGameState(Spinning);
+    }
     
     public void spinWheel(){
-        
+        wheelSpeed = 13 + rng.nextInt(6);
         animationTimer = new AnimationTimer() {
             private long prevUpdate;
 
@@ -273,10 +296,11 @@ public class FXMLLoginController implements Initializable, Observer{
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
                     if(x < 360){
-                        x+=8;
+                        x+= wheelSpeed;
                     }
                     else{
-                        x = 0;
+                        x+= wheelSpeed;
+                        x= x -360;
                     }
                         wheel.setRotate(x);
 			prevUpdate = now;
