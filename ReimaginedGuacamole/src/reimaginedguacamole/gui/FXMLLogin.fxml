@@ -28,7 +28,7 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" layoutX="13.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="false">
+    <Pane fx:id="profilePane" layoutX="13.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="true">
       <children>
         <TabPane layoutX="14.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE">
           <tabs>
@@ -232,7 +232,7 @@
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                    <Button layoutX="279.0" layoutY="177.0" mnemonicParsing="false" prefHeight="178.0" prefWidth="316.0" text="Start Game">
+                    <Button layoutX="279.0" layoutY="177.0" mnemonicParsing="false" onAction="#startGame" prefHeight="178.0" prefWidth="316.0" text="Start Game">
                       <font>
                         <Font name="System Bold" size="40.0" fx:id="x3" />
                       </font>

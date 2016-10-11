@@ -22,7 +22,9 @@ public class WaitingForCategoryTimerTask extends TimerTask{
     }
     @Override
     public void run() {
+        System.out.println("Timer 1 finished");
         _game.setGameState(GameState.Spinning);
+        
     }
     
 }

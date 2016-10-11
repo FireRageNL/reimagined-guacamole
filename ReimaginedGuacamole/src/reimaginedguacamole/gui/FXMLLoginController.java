@@ -5,11 +5,13 @@
  */
 package reimaginedguacamole.gui;
 
+import static java.lang.Math.round;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.Timer;
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +20,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import reimaginedguacamole.game.Game;
 import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.profile.Login;
@@ -94,8 +95,12 @@ public class FXMLLoginController implements Initializable, Observer{
     
     
     // TIMERS
-    Timer waitTimer;
-
+    private Timer waitTimer;
+    private AnimationTimer animationTimer;
+    public static final int NANO_TICKS = 20000000;
+    int x = 0;
+    
+    
     @FXML
     private void handleButtonAction(ActionEvent event) {
         String username = txtUsername.getText();
@@ -106,8 +111,7 @@ public class FXMLLoginController implements Initializable, Observer{
             if (loggedin) {
                 user = log.getCurrentProfile(username);
                 fillProfileData(user);
-                profilePane.setVisible(true);
-                loginPane.setVisible(false);
+                setWindows(2);
             } else {
                 label.setText("Gebruikersnaam/Wachtwoord fout");
             }
@@ -116,11 +120,28 @@ public class FXMLLoginController implements Initializable, Observer{
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        gamePane.setVisible(false);
-        loginPane.setVisible(true);
-        profilePane.setVisible(false);
+        setWindows(1);
     }
 
+    
+    public void setWindows(int index){
+        gamePane.setVisible(false);
+        loginPane.setVisible(false);
+        profilePane.setVisible(false);
+        switch(index){
+            case 0:
+                gamePane.setVisible(true);
+                break;
+            case 1:
+                loginPane.setVisible(true);
+                break;
+            case 2:
+                profilePane.setVisible(true);
+                break;
+        }
+    }
+    
+    
     @FXML
     private void clickRegister(MouseEvent event) {
         RegisterDialog regdialog = new RegisterDialog();
@@ -170,21 +191,27 @@ public class FXMLLoginController implements Initializable, Observer{
 
     }
     
+    @FXML
     private void startGame(){
-        gameController = new GameController(10,15);
+        gameController = new GameController(10,1);
         gameController.addObserver(this);
         gameController.startNextRound();
         gameController.setGameState(GameState.WaitingForCategory);
     }
+    
     
     private void checkGameState(){
         switch(gameController.getGameState()){
             case Waiting:
                 break;
             case WaitingForCategory:
-                waitTimer.schedule(new WaitingForCategoryTimerTask(gameController), 20000);
+                waitTimer = new Timer(true);
+                waitTimer.schedule(new WaitingForCategoryTimerTask(gameController), 2000);
+                setWindows(0);
                 break;
             case Spinning:
+                System.out.println("Start Spinning");
+                spinWheel();
                 break;
             case GameFinished:
                 break;
@@ -198,6 +225,32 @@ public class FXMLLoginController implements Initializable, Observer{
         checkGameState();
     }
     
+    
+    public void spinWheel(){
+        
+        animationTimer = new AnimationTimer() {
+            private long prevUpdate;
+
+            @Override
+            public void handle(long now) {
+
+                long lag = now - prevUpdate;
+                if (lag >= NANO_TICKS) {
+                        x++;
+                        System.out.println(x);
+			prevUpdate = now;
+                }
+
+            }
+            @Override
+            public void start() {
+                prevUpdate = System.nanoTime();
+                super.start();
+            }
+        };
+        
+        animationTimer.start();
+    }
 
 
 }

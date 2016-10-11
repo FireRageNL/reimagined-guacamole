@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -22,6 +23,7 @@ public class GameController extends Observable{
     
     public GameController(int duration, int amountOfRounds){
         game = new Game(amountOfRounds, duration);
+        rounds = new ArrayList<>();
         for(int i =0; i < amountOfRounds; i++){
             rounds.add(new Round());
         }
@@ -69,5 +71,7 @@ public class GameController extends Observable{
             return false;
         }
     }
+    
+    
    
 }
