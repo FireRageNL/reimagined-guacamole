@@ -16,7 +16,13 @@ public class Round {
     public Round(Question question){
         this.question = question;
     }
-    
+
+    public Question getQuestion() {
+        return question;
+    }
+    public void setQuestion(Question question){
+        this.question = question;
+    }
     public void setGivenAnswer(int answer){
         this.givenAnswer = answer;
     }

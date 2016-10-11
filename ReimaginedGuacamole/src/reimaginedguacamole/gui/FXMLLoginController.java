@@ -160,33 +160,5 @@ public class FXMLLoginController implements Initializable {
 
     }
 
-    private void startRound() {
-        seconds = 1;
-        AnimationTimer gameTimer = new AnimationTimer() {
-            private long prevUpdate;
-
-            @Override
-            public void handle(long now) {
-                long lag = now - prevUpdate;
-                if (lag >= 20000000) {
-                    if (seconds > 0) {
-                        seconds -= 0.0033;
-                        pbRoundTimer.setProgress(seconds);
-                        System.out.println(seconds);
-                    } else {
-                        seconds = 1;
-                    }
-                    prevUpdate = now;
-                }
-            }
-
-            @Override
-            public void start() {
-                prevUpdate = System.nanoTime();
-                super.start();
-            }
-        };
-        gameTimer.start();
-    }
 
 }

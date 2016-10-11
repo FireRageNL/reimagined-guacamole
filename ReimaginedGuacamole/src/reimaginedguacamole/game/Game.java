@@ -38,31 +38,5 @@ public class Game {
     public int getAmountOfRounds() {
         return amountOfRounds;
     }
-    
-    
-    /**
-     * starts the game
-     */
-    public void startGame(){
 
-    }
-    
-    public void startRound(Round round){
-        
-    }
-    /**
-     * updates the player's score based on parameter score
-     * @param score 
-     */
-    public void updateScore(int score){
-        
-    }
-    
-    /**
-     * Applies a powerup to the game.
-     * @param powerup 
-     */
-    public void applyPowerup(PowerUp powerup){
-        
-    }
 }
