@@ -8,6 +8,7 @@ Waarvoor staat de afkorting VOC?;Verenigde Onderdrukkings Compagnie;Verenigde Oo
 In welke Griekse stad werden vroeger door de Grieken de Olympische spelen gehouden?;Athene;Olympia;Olympus;Sparta;2;1
 Welke dictator werd op 30 december 2006 in Bagdad geëxecuteerd?;Osama Bin Laden;Mohammed Atta;Saddam Hussein;George Bush;3;1
 Welk land stuurde de eerste mens de ruimte in?;USA;USSR;Noord-Korea;Trinidag & Tobago;2;1
+Wie was in 2008 premier van Nederland?;Jan-Peter Balkenende;Wim Kok;Mark Rutte;Pim Fortuyn;1;1
 Wie schilderde de Schreeuw?;Edvard Munch;Karel Appel;Rembrandt;Van Gogh;1;2
 Wie schreef de Illias?;Plato;Vergillius;Homerus;Archimedes;3;2
 Welk merk soep gebruikte Andy Warhol voor zijn kunstwerk?;Uncle Ben's;Cup-a-Soup;Unox;Campbell;4;2
