@@ -105,11 +105,11 @@ public class GameController extends Observable{
         int score = 50 + (200 - (int)(timeTaken * 100));
         if(currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer){
             currentScore += score;
-            //gdb.updateStats(profile, currentRound.getQuestion().getCategory(), true);
+            gdb.updateStats(profile, currentRound.getQuestion().getCategory(), true);
             return true;
         }
         else{
-            //gdb.updateStats(profile, currentRound.getQuestion().getCategory(), false);
+            gdb.updateStats(profile, currentRound.getQuestion().getCategory(), false);
             return false;
         }
         

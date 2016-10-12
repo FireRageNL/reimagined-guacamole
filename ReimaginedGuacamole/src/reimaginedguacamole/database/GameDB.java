@@ -30,14 +30,15 @@ public class GameDB extends Database {
         } else {
             toUpdate.setWrong(1 + toUpdate.getWrong());
         }
-        prof.updateStatistics(toUpdate);
         try{
         this.initConnection();
         String sql;
         if (right) {
+            System.out.println("Setting new rights statistic : "+ toUpdate.getRight());
             sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
         } else {
-            sql = "UPDATE Statistic SET Wrongs = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
+            System.out.println("Setting new wrong statistic: "+ toUpdate.getWrong());
+            sql = "UPDATE Statistic SET Wrong = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
         }
         PreparedStatement ps = this.conn.prepareStatement(sql);
         
