@@ -8,6 +8,8 @@ package reimaginedguacamole.game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import reimaginedguacamole.database.GameDB;
+import reimaginedguacamole.profile.Profile;
 
 /**
  *
@@ -20,6 +22,7 @@ public class GameController extends Observable{
     private int currentRoundIndex;
     private GameState gameState;
     private Round  currentRound;
+    private int currentAnswer;
     
     public GameController(int duration, int amountOfRounds){
         game = new Game(amountOfRounds, duration);
@@ -76,18 +79,29 @@ public class GameController extends Observable{
         this.setChanged();
         this.notifyObservers(gameState);
     }
+
+    public int getCurrentAnswer() {
+        return currentAnswer;
+    }
+
+    public void setCurrentAnswer(int currentAnswer) {
+        this.currentAnswer = currentAnswer;
+    }
     
     public int getCorrectAnswer(){
         return currentRound.getQuestion().getCorrectAnswer();
     }
     
-    public boolean checkAnswer(int answer){
-        if(currentRound.getQuestion().getCorrectAnswer() == answer){
-            return true;
+    public int checkAnswer(Profile profile){
+        GameDB gdb = new GameDB();
+        if(currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer){
+            
+            gdb.updateStats(profile, currentRound.getQuestion().getCategory(), true);
         }
         else{
-            return false;
+            gdb.updateStats(profile, currentRound.getQuestion().getCategory(), false);
         }
+        return this.getCorrectAnswer();
     }
     
     

@@ -35,7 +35,7 @@ public class GameDB extends Database {
         this.initConnection();
         String sql;
         if (right) {
-            sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
+            sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
         } else {
             sql = "UPDATE Statistic SET Wrongs = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
         }

@@ -24,20 +24,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.GameState;
-import static reimaginedguacamole.game.GameState.Answered;
-import static reimaginedguacamole.game.GameState.GameFinished;
-import static reimaginedguacamole.game.GameState.GameRunning;
-import static reimaginedguacamole.game.GameState.Spinning;
-import static reimaginedguacamole.game.GameState.SpinningFinished;
-import static reimaginedguacamole.game.GameState.Waiting;
-import static reimaginedguacamole.game.GameState.WaitingForCategory;
+import static reimaginedguacamole.game.GameState.*;
 import reimaginedguacamole.game.Round;
-import reimaginedguacamole.profile.Login;
-import reimaginedguacamole.profile.Profile;
-import reimaginedguacamole.profile.Statistic;
-import reimaginedguacamole.timertasks.SpinTimerTask;
-import reimaginedguacamole.timertasks.WaitForQuestionTimerTask;
-import reimaginedguacamole.timertasks.WaitingForCategoryTimerTask;
+import reimaginedguacamole.profile.*;
+import reimaginedguacamole.timertasks.*;
 
 /**
  *
@@ -231,21 +221,31 @@ public class FXMLLoginController implements Initializable, Observer{
     }
     
     
+    private void EnableButtons(){
+        btnAnswer1.setDisable(!btnAnswer1.isDisabled());
+        btnAnswer2.setDisable(!btnAnswer2.isDisabled());
+        btnAnswer3.setDisable(!btnAnswer3.isDisabled());
+        btnAnswer4.setDisable(!btnAnswer4.isDisabled());
+    }
+    
     private void checkGameState(){
         
         Round round;
-        resetQuestionUI();
+        
         
         switch(gameController.getGameState()){
             case Waiting:
                 break;
             case WaitingForCategory:
+                EnableButtons();
+                btnSpin.setDisable(false);
                 waitTimer = new Timer(true);
                 lblAnnouncement.setText("Ben je er Klaar voor? Spin het wiel!");
                 waitTimer.schedule(new WaitingForCategoryTimerTask(gameController), 20000);
                 setWindows(0);
                 break;
             case Spinning:
+                resetQuestionUI();
                 btnSpin.setDisable(true);
                 lblAnnouncement.setText("Welke categorie zul je krijgen?");
                 System.out.println("Start Spinning");
@@ -253,10 +253,10 @@ public class FXMLLoginController implements Initializable, Observer{
                 waitTimer = new Timer(true);
                 int time =  5000+ rng.nextInt(3000);
                 System.out.println(time);
+                
                 waitTimer.schedule(new SpinTimerTask(gameController), time);
                 break;
             case SpinningFinished:
-                btnSpin.setDisable(false);
                 animationTimer.stop();
                 System.out.println("ANIMATION STOPPED!");
                 gameController.startNextRound();
@@ -264,11 +264,12 @@ public class FXMLLoginController implements Initializable, Observer{
                 
                 round = gameController.getCurrentRound();
                 pbRoundTimer.setProgress(-1);
-                lblAnnouncement.setText("De categorie is "+round.getQuestion().getCategory() + "\n Hier komt de vraag!");
+                lblAnnouncement.setText("De categorie is "+round.getQuestion().getCategory() + "\n");
                 waitTimer = new Timer(true);
                 waitTimer.schedule(new WaitForQuestionTimerTask(gameController), 5000);
                 break;
             case GameRunning:
+                EnableButtons();
                 round = gameController.getCurrentRound();
                 lblQuestion.setText(round.getQuestion().getQuestionContents());
                 btnAnswer1.setText(round.getQuestion().getAnswer1());
@@ -279,6 +280,10 @@ public class FXMLLoginController implements Initializable, Observer{
                 break; 
                 
             case Answered:
+                EnableButtons();
+                int i = gameController.checkAnswer(user);
+                setButtonCorrect(i);
+                btnSpin.setDisable(false);
                 break;
               
             case GameFinished:
@@ -288,10 +293,14 @@ public class FXMLLoginController implements Initializable, Observer{
 
     private void resetQuestionUI(){
                 lblQuestion.setText("Hier komt straks de vraag");
-                btnAnswer1.setText("Answer 1");
-                btnAnswer2.setText("Answer 2");
-                btnAnswer3.setText("Answer 4");
-                btnAnswer4.setText("Answer 5");
+                btnAnswer1.setText("");
+                btnAnswer2.setText("");
+                btnAnswer3.setText("");
+                btnAnswer4.setText("");
+                btnAnswer1.setStyle("");
+                btnAnswer2.setStyle("");
+                btnAnswer3.setStyle("");
+                btnAnswer4.setStyle("");
     }
     
 
@@ -372,5 +381,51 @@ public class FXMLLoginController implements Initializable, Observer{
         animationTimer.start();
     }
 
+    private void setButtonCorrect(int i){
+        btnAnswer1.setStyle("-fx-base: #ff3300;");
+        btnAnswer2.setStyle("-fx-base: #ff3300;");
+        btnAnswer3.setStyle("-fx-base: #ff3300;");
+        btnAnswer4.setStyle("-fx-base: #ff3300;");
+        switch(i){
+            case 1:
+                btnAnswer1.setStyle("-fx-base: #00cc00;");
+                System.out.println("1 GROEN");
+                break;
+            case 2:
+                btnAnswer2.setStyle("-fx-base: #00cc00;");
+                System.out.println("2 GROEN");
+                break;
+            case 3:
+                btnAnswer3.setStyle("-fx-base: #00cc00;");
+                System.out.println("3 GROEN");
+                break;
+            case 4:
+                btnAnswer4.setStyle("-fx-base: #00cc00;");
+                System.out.println("4 GROEN");
+                break;
+            
+        }
+    }
+    
+    @FXML
+    private void setAnswer(ActionEvent event){
+        animationTimer.stop();
+        Button B = (Button)event.getSource();
+        
+        if(B.getId().contains("1")){
+            gameController.setCurrentAnswer(1);
+        }
+        else if(B.getId().contains("2")){
+             gameController.setCurrentAnswer(2);
+        }
+        else if(B.getId().contains("3")){
+            gameController.setCurrentAnswer(3);
+        }
+        else if(B.getId().contains("4")){
+            gameController.setCurrentAnswer(4);
+        }
+        System.out.println(gameController.getCurrentAnswer());
+        gameController.setGameState(Answered);
+    }
 
 }

@@ -1,7 +1,7 @@
 In welk jaar was de slag bij Waterloo?;1789;1800;1812;1815;4;1
 Naar wie is Amerika vernoemd?;Amerika Belluci;Amerigo Vespucci;Amerika Bertutti;Uncle Sam;2;1
 Hoe heten de twee stichters van Rome volgens de legende?;Ceasar en Augustus; Nero en Constantijn; Romulus en Remus; Julius en Brutus;3;1
-Wat is de voornaam van de ontwerper van de Eiffeltoren?;Jean-pierre;Eiffel;Gustav;Ludovico;2;1
+Wat is de voornaam van de ontwerper van de Eiffeltoren?;Jean-pierre;Eiffel;Gustav;Ludovico;3;1
 Hoe heet de zus van Anne Frank?;Marietje;Dennis;Margot;Yentl;3;1
 Wanneer eindigde de Eerste Wereldoorlog?;1918;1917;1945;1939;1;1
 Waarvoor staat de afkorting VOC?;Verenigde Onderdrukkings Compagnie;Verenigde Oost-indische Compagnie;Verenigde Oost-Aziatische Compagnie;Vijandige onderdrukker Counterstrike;2;1

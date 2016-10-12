@@ -329,22 +329,22 @@
                             <Insets bottom="10.0" />
                           </VBox.margin>
                         </Label>
-                        <Button fx:id="btnAnswer1" mnemonicParsing="false" prefHeight="44.0" prefWidth="484.0" text="Antwoord 1">
+                        <Button fx:id="btnAnswer1" mnemonicParsing="false" onAction="#setAnswer" prefHeight="44.0" prefWidth="484.0" text="Antwoord 1">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>
                         </Button>
-                        <Button fx:id="btnAnswer2" mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 2">
+                        <Button fx:id="btnAnswer2" mnemonicParsing="false" onAction="#setAnswer" prefHeight="51.0" prefWidth="484.0" text="Antwoord 2">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>
                         </Button>
-                        <Button fx:id="btnAnswer3" mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 3">
+                        <Button fx:id="btnAnswer3" mnemonicParsing="false" onAction="#setAnswer" prefHeight="51.0" prefWidth="484.0" text="Antwoord 3">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>
                         </Button>
-                        <Button fx:id="btnAnswer4" mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="antwoord 4">
+                        <Button fx:id="btnAnswer4" mnemonicParsing="false" onAction="#setAnswer" prefHeight="51.0" prefWidth="484.0" text="antwoord 4">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>
