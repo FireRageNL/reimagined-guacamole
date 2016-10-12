@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLLoginController">
   <children>
-    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="true">
+    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="false">
       <children>
         <TextField id="gebruikersnaam" fx:id="txtUsername" layoutX="354.0" layoutY="235.0" prefHeight="25.0" prefWidth="190.0" promptText="Gebruikersnaam" />
         <PasswordField id="wachtwoord" fx:id="txtPassword" layoutX="354.0" layoutY="260.0" prefHeight="25.0" prefWidth="190.0" promptText="Wachtwoord" />
@@ -28,7 +28,7 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="true">
+    <Pane fx:id="profilePane" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="false">
       <children>
         <TabPane layoutX="14.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE">
           <tabs>
@@ -277,7 +277,7 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="false">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="615.0" prefWidth="906.0">
           <children>
@@ -285,14 +285,14 @@
               <graphic>
                 <HBox prefHeight="618.0" prefWidth="907.0000999999975">
                   <children>
-                    <VBox alignment="TOP_CENTER" minWidth="70.0" prefHeight="561.0" prefWidth="282.0">
+                    <VBox alignment="TOP_CENTER" minWidth="70.0" prefHeight="618.0" prefWidth="302.0">
                       <children>
                         <Label alignment="CENTER" text="Name">
                           <font>
                             <Font name="Arial Black" size="36.0" fx:id="x1" />
                           </font>
                           <VBox.margin>
-                            <Insets top="60.0" />
+                            <Insets top="10.0" />
                           </VBox.margin>
                         </Label>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -316,12 +316,20 @@
                     </VBox>
                     <VBox alignment="TOP_CENTER" prefHeight="561.0" prefWidth="585.0">
                       <children>
-                        <Label fx:id="lblQuestion" alignment="CENTER" font="$x2" prefWidth="603.0" text="Hier komt straks de vraag!">
+                        <Label fx:id="lblAnnouncement" alignment="CENTER" font="$x1" prefHeight="149.0" prefWidth="585.0" text="Ben je er klaar voor?" textAlignment="CENTER" wrapText="true">
                           <VBox.margin>
-                            <Insets bottom="30.0" top="20.0" />
+                            <Insets top="20.0" />
                           </VBox.margin>
                         </Label>
-                        <Button fx:id="btnAnswer1" mnemonicParsing="false" prefHeight="51.0" prefWidth="484.0" text="Antwoord 1">
+                        <Label fx:id="lblQuestion" alignment="CENTER" prefHeight="127.0" prefWidth="585.0" text="Hier komt straks de vraag!" textAlignment="CENTER" wrapText="true">
+                          <font>
+                            <Font name="System Bold" size="24.0" />
+                          </font>
+                          <VBox.margin>
+                            <Insets bottom="10.0" />
+                          </VBox.margin>
+                        </Label>
+                        <Button fx:id="btnAnswer1" mnemonicParsing="false" prefHeight="44.0" prefWidth="484.0" text="Antwoord 1">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>
@@ -343,7 +351,7 @@
                         </Button>
                         <ProgressBar fx:id="pbRoundTimer" prefHeight="100.0" prefWidth="768.0" progress="0.0">
                           <VBox.margin>
-                            <Insets top="80.0" />
+                            <Insets top="30.0" />
                           </VBox.margin>
                         </ProgressBar>
                       </children>

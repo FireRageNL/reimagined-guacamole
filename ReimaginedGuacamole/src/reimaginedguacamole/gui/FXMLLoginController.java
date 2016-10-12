@@ -36,6 +36,7 @@ import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Statistic;
 import reimaginedguacamole.timertasks.SpinTimerTask;
+import reimaginedguacamole.timertasks.WaitForQuestionTimerTask;
 import reimaginedguacamole.timertasks.WaitingForCategoryTimerTask;
 
 /**
@@ -116,6 +117,8 @@ public class FXMLLoginController implements Initializable, Observer{
     private Label lblQuestion;
     @FXML
     private Button btnSpin;
+    @FXML
+    private Label lblAnnouncement;
     
     //Global variables
     GameController gameController;
@@ -126,8 +129,8 @@ public class FXMLLoginController implements Initializable, Observer{
     private Timer waitTimer;
     private AnimationTimer animationTimer;
     public static final int NANO_TICKS = 20000000;
-    int x = 0;
-    
+    int wheelRotation = 0;
+    double progress;
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -229,16 +232,22 @@ public class FXMLLoginController implements Initializable, Observer{
     
     
     private void checkGameState(){
+        
+        Round round;
+        resetQuestionUI();
+        
         switch(gameController.getGameState()){
             case Waiting:
                 break;
             case WaitingForCategory:
                 waitTimer = new Timer(true);
-                waitTimer.schedule(new WaitingForCategoryTimerTask(gameController), 2000);
+                lblAnnouncement.setText("Ben je er Klaar voor? Spin het wiel!");
+                waitTimer.schedule(new WaitingForCategoryTimerTask(gameController), 20000);
                 setWindows(0);
                 break;
             case Spinning:
                 btnSpin.setDisable(true);
+                lblAnnouncement.setText("Welke categorie zul je krijgen?");
                 System.out.println("Start Spinning");
                 spinWheel();
                 waitTimer = new Timer(true);
@@ -253,24 +262,37 @@ public class FXMLLoginController implements Initializable, Observer{
                 gameController.startNextRound();
                 gameController.giveRoundQuestion(gameController.chooseCategory(wheel.getRotate()));
                 
-                Round round = gameController.getCurrentRound();
-                System.out.println(round.getQuestion().getCategory());
+                round = gameController.getCurrentRound();
+                pbRoundTimer.setProgress(-1);
+                lblAnnouncement.setText("De categorie is "+round.getQuestion().getCategory() + "\n Hier komt de vraag!");
+                waitTimer = new Timer(true);
+                waitTimer.schedule(new WaitForQuestionTimerTask(gameController), 5000);
+                break;
+            case GameRunning:
+                round = gameController.getCurrentRound();
                 lblQuestion.setText(round.getQuestion().getQuestionContents());
                 btnAnswer1.setText(round.getQuestion().getAnswer1());
                 btnAnswer2.setText(round.getQuestion().getAnswer2());
                 btnAnswer3.setText(round.getQuestion().getAnswer3());
                 btnAnswer4.setText(round.getQuestion().getAnswer4());
+                startGameTimer();
+                break; 
                 
-                break;
             case Answered:
                 break;
-            case GameRunning:
-                break;   
+              
             case GameFinished:
                 break;
         }
     }
 
+    private void resetQuestionUI(){
+                lblQuestion.setText("Hier komt straks de vraag");
+                btnAnswer1.setText("Answer 1");
+                btnAnswer2.setText("Answer 2");
+                btnAnswer3.setText("Answer 4");
+                btnAnswer4.setText("Answer 5");
+    }
     
 
     
@@ -295,15 +317,48 @@ public class FXMLLoginController implements Initializable, Observer{
 
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
-                    if(x < 360){
-                        x+= wheelSpeed;
+                    if(wheelRotation < 360){
+                        wheelRotation+= wheelSpeed;
                     }
                     else{
-                        x+= wheelSpeed;
-                        x= x -360;
+                        wheelRotation+= wheelSpeed;
+                        wheelRotation= wheelRotation -360;
                     }
-                        wheel.setRotate(x);
+                        wheel.setRotate(wheelRotation);
 			prevUpdate = now;
+                }
+
+            }
+            @Override
+            public void start() {
+                prevUpdate = System.nanoTime();
+                super.start();
+            }
+        };
+        
+        animationTimer.start();
+    }
+    
+    public void startGameTimer(){
+        progress = 1;
+        animationTimer = new AnimationTimer() {
+            private long prevUpdate;
+
+            @Override
+            public void handle(long now) {
+
+                long lag = now - prevUpdate;
+                if (lag >= NANO_TICKS) {
+                    System.out.println(progress);
+                    if(progress > 0){
+                        progress-=0.003;
+                    }
+                    else{
+                        progress = 0;
+                    }
+                    pbRoundTimer.setProgress(progress);
+                    prevUpdate = now;
+                    
                 }
 
             }
