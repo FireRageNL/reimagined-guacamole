@@ -23,6 +23,7 @@ public class GameController extends Observable{
     private GameState gameState;
     private Round  currentRound;
     private int currentAnswer;
+    private int currentScore;
     
     public GameController(int duration, int amountOfRounds){
         game = new Game(amountOfRounds, duration);
@@ -31,6 +32,7 @@ public class GameController extends Observable{
             rounds.add(new Round());
         }
         currentRoundIndex = -1;
+        currentScore = 0;
     }
     
     public void startNextRound(){
@@ -91,17 +93,26 @@ public class GameController extends Observable{
     public int getCorrectAnswer(){
         return currentRound.getQuestion().getCorrectAnswer();
     }
+
+    public int getCurrentScore() {
+        return currentScore;
+    }
     
-    public int checkAnswer(Profile profile){
+    
+    
+    public boolean checkAnswer(Profile profile, double timeTaken){
         GameDB gdb = new GameDB();
+        int score = 50 + (200 - (int)(timeTaken * 100));
         if(currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer){
-            
-            gdb.updateStats(profile, currentRound.getQuestion().getCategory(), true);
+            currentScore += score;
+            //gdb.updateStats(profile, currentRound.getQuestion().getCategory(), true);
+            return true;
         }
         else{
-            gdb.updateStats(profile, currentRound.getQuestion().getCategory(), false);
+            //gdb.updateStats(profile, currentRound.getQuestion().getCategory(), false);
+            return false;
         }
-        return this.getCorrectAnswer();
+        
     }
     
     

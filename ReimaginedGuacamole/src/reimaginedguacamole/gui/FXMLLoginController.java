@@ -109,6 +109,10 @@ public class FXMLLoginController implements Initializable, Observer{
     private Button btnSpin;
     @FXML
     private Label lblAnnouncement;
+    @FXML
+    private Label lblGameName;
+    @FXML
+    private Label lblScore;
     
     //Global variables
     GameController gameController;
@@ -238,6 +242,7 @@ public class FXMLLoginController implements Initializable, Observer{
                 break;
             case WaitingForCategory:
                 EnableButtons();
+                lblGameName.setText(user.getNickname());
                 btnSpin.setDisable(false);
                 waitTimer = new Timer(true);
                 lblAnnouncement.setText("Ben je er Klaar voor? Spin het wiel!");
@@ -251,7 +256,7 @@ public class FXMLLoginController implements Initializable, Observer{
                 System.out.println("Start Spinning");
                 spinWheel();
                 waitTimer = new Timer(true);
-                int time =  5000+ rng.nextInt(3000);
+                int time =  5000 + rng.nextInt(3000);
                 System.out.println(time);
                 
                 waitTimer.schedule(new SpinTimerTask(gameController), time);
@@ -281,8 +286,14 @@ public class FXMLLoginController implements Initializable, Observer{
                 
             case Answered:
                 EnableButtons();
-                int i = gameController.checkAnswer(user);
-                setButtonCorrect(i);
+                if(gameController.checkAnswer(user, pbRoundTimer.getProgress())){
+                    lblAnnouncement.setText("Goed gedaan!");
+                }
+                else{
+                    lblAnnouncement.setText("Jammer!");
+                }
+                lblScore.setText(String.valueOf(gameController.getCurrentScore()));
+                setButtonCorrect(gameController.getCurrentRound().getQuestion().getCorrectAnswer());
                 btnSpin.setDisable(false);
                 break;
               
