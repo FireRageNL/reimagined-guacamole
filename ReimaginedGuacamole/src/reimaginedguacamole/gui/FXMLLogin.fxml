@@ -271,8 +271,8 @@
                       </font>
                     </Label>
                     <Slider fx:id="sliderAmountOfRounds" layoutX="169.0" layoutY="417.0" majorTickUnit="1.0" max="15.0" min="5.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-                    <Label font="$x6" layoutX="533.0" layoutY="400.0" text="Tijd per Ronde" />
-                    <Slider fx:id="sliderTimePerRound" blockIncrement="10.0" layoutX="485.0" layoutY="412.0" majorTickUnit="1.0" max="20.0" min="10.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                    <Label font="$x6" layoutX="533.0" layoutY="405.0" text="Tijd per Ronde" />
+                    <Slider fx:id="sliderTimePerRound" blockIncrement="10.0" layoutX="485.0" layoutY="417.0" majorTickUnit="1.0" max="20.0" min="10.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                   </children>
                 </AnchorPane>
               </content>
@@ -286,6 +286,20 @@
                         <TableColumn id="colRank" maxWidth="5000.0" minWidth="10.0" prefWidth="297.0" text="Rank" fx:id="colRank" />
                         <TableColumn id="colNick" maxWidth="5000.0" minWidth="10.0" prefWidth="297.0" text="Nickname" fx:id="colNick" />
                         <TableColumn id="colScore" maxWidth="5000.0" minWidth="10.0" prefWidth="295.0" text="Score" fx:id="colScore" />
+                      </columns>
+                    </TableView>
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Spelhistorie">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <TableView fx:id="tableHistory" layoutX="0.0" layoutY="0.0" prefHeight="580.0" prefWidth="247.0">
+                      <columns>
+                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="123.0" text="Datum" fx:id="colDate" />
+                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="123.0" text="Score" fx:id="colScores" />
                       </columns>
                     </TableView>
                   </children>

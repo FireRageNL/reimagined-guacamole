@@ -99,4 +99,8 @@ public class Profile {
        return pdb.getRankings();
     }
 
+    public ObservableList<History> getHistory() {
+        return pdb.getHistory(pid);
+    }
+
 }

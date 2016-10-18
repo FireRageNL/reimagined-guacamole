@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.Achievement;
+import reimaginedguacamole.profile.History;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Ranking;
 import reimaginedguacamole.profile.Statistic;
@@ -139,8 +140,27 @@ public class ProfileDB extends Database {
                 rank++;
             }
             this.closeConnection();
-            return (ObservableList<Ranking>) rankings;
+            return rankings;
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    public ObservableList<History> getHistory(int username){
+        ObservableList<History> history =FXCollections.observableArrayList();
+        try{
+            this.initConnection();
+            String sql = "SELECT Score, Date FROM GameInfo WHERE Profile_ProfileID = ?";
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+            ps.setInt(1, username);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                History add = new History(rs.getTimestamp(2).toString(),rs.getInt(1));
+                history.add(add);
+            }
+            this.closeConnection();
+            return history;
+        } catch(Exception ex){
             System.out.println(ex.getMessage());
             return null;
         }
