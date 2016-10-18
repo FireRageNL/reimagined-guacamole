@@ -40,6 +40,11 @@ public class GameController extends Observable{
         currentRound = rounds.get(currentRoundIndex);
         
     }
+    
+    public void endGame(Profile user){
+        GameDB gdb = new GameDB();
+        gdb.endGame(user.getPid(), currentScore);
+    }
 
     public Category chooseCategory(double wheel){
         double rotation = 360 - wheel;
@@ -96,6 +101,10 @@ public class GameController extends Observable{
 
     public int getCurrentScore() {
         return currentScore;
+    }
+
+    public int getCurrentRoundIndex() {
+        return currentRoundIndex;
     }
     
     

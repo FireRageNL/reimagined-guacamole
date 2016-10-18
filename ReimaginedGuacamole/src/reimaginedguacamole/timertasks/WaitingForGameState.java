@@ -14,25 +14,24 @@ import reimaginedguacamole.game.GameState;
  *
  * @author daan
  */
-public class WaitForQuestionTimerTask extends TimerTask{
-
+public class WaitingForGameState extends TimerTask{
+    
     GameController _game;
-
-    public WaitForQuestionTimerTask(GameController g){
+    GameState _gamestate;
+    
+    public WaitingForGameState(GameController g, GameState gamestate){
         _game = g;
+        _gamestate = gamestate;
     }
     @Override
     public void run() {
-        System.out.println("spinTimer finished");
         Platform.runLater(new Runnable(){
             @Override
             public void run() {
-                _game.setGameState(GameState.GameRunning);
+                _game.setGameState(_gamestate);
             }
             
         });
-        
-        
     }
     
 }
