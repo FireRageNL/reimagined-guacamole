@@ -14,7 +14,7 @@ public class PowerUp {
     private String description;
     private String name;
 
-    public PowerUp(String description, String name) {
+    public PowerUp(String name, String description) {
         this.description = description;
         this.name = name;
     }
