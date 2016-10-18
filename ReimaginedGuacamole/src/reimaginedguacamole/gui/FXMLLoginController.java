@@ -12,12 +12,15 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import javafx.animation.AnimationTimer;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
@@ -120,6 +123,10 @@ public class FXMLLoginController implements Initializable, Observer {
     @FXML
     private Label lblAnnouncement;
     @FXML
+    private ListView lvChat;
+    @FXML
+    private TextField txtChat;
+    @FXML
     private Label lblGameName;
     @FXML
     private Label lblScore;
@@ -146,6 +153,8 @@ public class FXMLLoginController implements Initializable, Observer {
     private Random rng;
     private int wheelSpeed;
     private int roundDuration, amountOfRounds;
+    
+    private ObservableList<String> chatList;
     // TIMERS
     private Timer waitTimer;
     private AnimationTimer animationTimer;
@@ -173,6 +182,16 @@ public class FXMLLoginController implements Initializable, Observer {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setWindows(1);
+        chatList = FXCollections.observableArrayList();
+        lvChat.setFixedCellSize(20);
+        lvChat.setItems(chatList);
+        lvChat.getItems().addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(ListChangeListener.Change c) {
+                lvChat.scrollTo(chatList.size()-1);
+                
+            }
+        });
         rng = new Random();
     }
 
@@ -284,7 +303,7 @@ public class FXMLLoginController implements Initializable, Observer {
                 lblGameName.setText(user.getNickname());
                 btnSpin.setDisable(false);
                 waitTimer = new Timer(true);
-                lblAnnouncement.setText("Ben je er Klaar voor? Spin het wiel!");
+                chatList.add("GAME: Ben je er Klaar voor? Spin het wiel!");
                 waitTimer.schedule(new WaitingForGameState(gameController, GameState.Spinning), 15000);
                 setWindows(0);
                 break;
@@ -292,7 +311,7 @@ public class FXMLLoginController implements Initializable, Observer {
                 waitTimer = null;
                 resetQuestionUI();
                 btnSpin.setDisable(true);
-                lblAnnouncement.setText("Welke categorie zul je krijgen?");
+                chatList.add("GAME: Welke categorie zul je krijgen?");
                 System.out.println("Start Spinning");
                 spinWheel();
                 waitTimer = new Timer(true);
@@ -308,7 +327,8 @@ public class FXMLLoginController implements Initializable, Observer {
 
                 round = gameController.getCurrentRound();
                 pbRoundTimer.setProgress(-1);
-                lblAnnouncement.setText("De categorie is " + round.getQuestion().getCategory() + "\n");
+                lblQuestion.setText(round.getQuestion().getCategory().toString());
+                chatList.add("GAME: De categorie is " + round.getQuestion().getCategory() + "\n");
                 waitTimer = new Timer(true);
                 waitTimer.schedule(new WaitingForGameState(gameController, GameState.GameRunning), 3500);
                 break;
@@ -328,9 +348,9 @@ public class FXMLLoginController implements Initializable, Observer {
                 int score = gameController.getCurrentScore();
                 if (gameController.checkAnswer(user, pbRoundTimer.getProgress())) {
                     score = gameController.getCurrentScore() - score;
-                    lblAnnouncement.setText("Goed gedaan! je krijgt " + score + " punten!");
+                    chatList.add("GAME: Goed gedaan! je krijgt " + score + " punten!");
                 } else {
-                    lblAnnouncement.setText("Jammer!");
+                    chatList.add("GAME: Jammer!");
                 }
                 lblScore.setText(String.valueOf(gameController.getCurrentScore()));
                 setButtonCorrect(gameController.getCorrectAnswer());
@@ -345,7 +365,7 @@ public class FXMLLoginController implements Initializable, Observer {
 
             case GameFinished:
                 gameController.endGame(user);
-                lblAnnouncement.setText("De Game is afgelopen! \n Je score is " + gameController.getCurrentScore() + "! Goed Bezig!");
+                chatList.add("GAME:  De Game is afgelopen! \n Je score is " + gameController.getCurrentScore() + "! Goed Bezig!");
                 break;
         }
     }
@@ -368,6 +388,14 @@ public class FXMLLoginController implements Initializable, Observer {
         checkGameState();
     }
 
+    
+    @FXML
+    public void btnChatClicked(){
+        String chatLine = txtChat.getText();
+        chatList.add(user.getNickname()+": " + chatLine);
+        txtChat.setText("");
+    }
+    
     @FXML
     public void btnSpinClicked() {
         waitTimer.cancel();
