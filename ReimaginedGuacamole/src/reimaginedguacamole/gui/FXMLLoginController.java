@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -94,6 +95,13 @@ public class FXMLLoginController implements Initializable, Observer {
     @FXML
     private Label lblLossSci;
 
+    
+    //Game Start Objects
+    @FXML
+    private Slider sliderAmountOfRounds;
+    @FXML
+    private Slider sliderTimePerRound;
+    
     //GAME OBJECTS
     @FXML
     private ImageView wheel;
@@ -230,8 +238,10 @@ public class FXMLLoginController implements Initializable, Observer {
     }
 
     @FXML
-    private void startGame() {
-        gameController = new GameController(roundDuration, amountOfRounds);
+    private void startGame(){
+        roundDuration = (int)sliderTimePerRound.getValue();
+        amountOfRounds = (int)sliderAmountOfRounds.getValue();
+        gameController = new GameController(roundDuration,amountOfRounds);
         gameController.addObserver(this);
         gameController.setGameState(GameState.WaitingForCategory);
     }
@@ -377,9 +387,10 @@ public class FXMLLoginController implements Initializable, Observer {
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
                     System.out.println(progress);
-                    if (progress > 0) {
-                        progress -= 0.003;
-                    } else {
+                    if(progress > 0){
+                        progress-=0.003/(roundDuration/10);
+                    }
+                    else{
                         progress = 0;
                     }
                     pbRoundTimer.setProgress(progress);
@@ -443,4 +454,12 @@ public class FXMLLoginController implements Initializable, Observer {
         gameController.setGameState(Answered);
     }
 
+    
+    
+    @FXML
+    public void logOut(){
+       user = null;
+       gameController = null;
+       setWindows(1);
+    }
 }
