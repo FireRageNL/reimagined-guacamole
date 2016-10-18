@@ -25,7 +25,7 @@ public class GameDBTest {
      * Test of updateStats method, of class GameDB.
      */
     @Test
-    public void testUpdateStats() {
+    public void testUpdateStatsWrong() {
         System.out.println("updateStats");
         Profile prof;
         Category cat = Category.Art;
@@ -50,6 +50,37 @@ public class GameDBTest {
         }
         assertEquals(expResult,result);
     }
+    
+     /**
+     * Test of updateStats method, of class GameDB.
+     */
+    @Test
+    public void testUpdateStatsRight() {
+        System.out.println("updateStats");
+        Profile prof;
+        Category cat = Category.Art;
+        boolean right = true;
+        GameDB instance = new GameDB();
+        ProfileDB test = new ProfileDB();
+        prof = test.getProfileData("test@test.test");
+        int expResult = 0;
+        List<Statistic> stats = prof.getStatistics();
+        for(Statistic s : stats){
+            if(s.getCategory() == Category.Art){
+                expResult = s.getRight() + 1;
+            }
+        }
+        int result = 0;
+        instance.updateStats(prof, cat, right);
+        List<Statistic> updatedStats = test.getStatistics(prof.getPid());
+        for(Statistic s: updatedStats){
+            if(s.getCategory() == Category.Art){
+                result = s.getRight();
+            }
+        }
+        assertEquals(expResult,result);
+    }
+    
 
     /**
      * Test of endGame method, of class GameDB.
