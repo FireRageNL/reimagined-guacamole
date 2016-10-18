@@ -156,7 +156,7 @@ public class FXMLLoginController implements Initializable, Observer{
             boolean loggedin = log.tryLogin(username, password);
             if (loggedin) {
                 user = log.getCurrentProfile(username);
-                fillProfileData(user);
+                fillProfileData();
                 setWindows(2);
             } else {
                 label.setText("Gebruikersnaam/Wachtwoord fout");
@@ -196,9 +196,10 @@ public class FXMLLoginController implements Initializable, Observer{
     @FXML
     private void changeNickName(ActionEvent event){
         user.setNickName(txtNickname.getText());
+        fillProfileData();
     }
 
-    private void fillProfileData(Profile user) {
+    private void fillProfileData() {
         txtNickname.setText(user.getNickname());
         lblEmail.setText(user.getEmail());
         lblWins.setText(Integer.toString(user.getWins()));
@@ -480,7 +481,7 @@ public class FXMLLoginController implements Initializable, Observer{
 
     @FXML
     public void quitGame(){
-        fillProfileData(user);
+        fillProfileData();
         if(animationTimer != null){
             animationTimer.stop();
         }
