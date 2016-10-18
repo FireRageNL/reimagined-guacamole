@@ -14,11 +14,11 @@
 
 <AnchorPane id="AnchorPane" opacity="1.0" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLLoginController">
   <children>
-    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="false">
+    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="true">
       <children>
         <TextField id="gebruikersnaam" fx:id="txtUsername" layoutX="354.0" layoutY="235.0" prefHeight="25.0" prefWidth="190.0" promptText="Gebruikersnaam" />
         <PasswordField id="wachtwoord" fx:id="txtPassword" layoutX="354.0" layoutY="260.0" prefHeight="25.0" prefWidth="190.0" promptText="Wachtwoord" />
-        <Button fx:id="button" layoutX="414.0" layoutY="306.0" minHeight="17.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="70.0" text="Login" />
+        <Button fx:id="button" defaultButton="true" layoutX="414.0" layoutY="306.0" minHeight="17.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="70.0" text="Login" />
         <Label fx:id="label" layoutX="238.0" layoutY="340.0" minHeight="16.0" minWidth="69.0" prefHeight="17.0" prefWidth="430.0" textAlignment="CENTER" />
         <Label layoutX="376.0" layoutY="349.0" onMouseClicked="#clickRegister" prefHeight="17.0" prefWidth="147.0" text="Registreer nieuwe account" underline="true" />
         <ImageView fitHeight="189.82078880896935" fitWidth="331.0" layoutX="284.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
@@ -28,9 +28,9 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="true">
+    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="false">
       <children>
-        <TabPane layoutX="14.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE" visible="true">
+        <TabPane layoutX="16.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE" visible="true">
           <tabs>
             <Tab text="Profiel">
               <content>
@@ -251,6 +251,7 @@
                         </GridPane>
                       </children>
                     </VBox>
+                    <Button layoutX="822.0" layoutY="13.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
                   </children>
                 </AnchorPane>
               </content>
@@ -264,6 +265,14 @@
                         <Font name="System Bold" size="40.0" fx:id="x3" />
                       </font>
                     </Button>
+                    <Label layoutX="218.0" layoutY="405.0" text="Aantal Rondes">
+                      <font>
+                        <Font name="System Bold" size="18.0" fx:id="x6" />
+                      </font>
+                    </Label>
+                    <Slider fx:id="sliderAmountOfRounds" layoutX="169.0" layoutY="417.0" majorTickUnit="1.0" max="15.0" min="5.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                    <Label font="$x6" layoutX="533.0" layoutY="400.0" text="Tijd per Ronde" />
+                    <Slider fx:id="sliderTimePerRound" blockIncrement="10.0" layoutX="485.0" layoutY="412.0" majorTickUnit="1.0" max="20.0" min="10.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                   </children>
                 </AnchorPane>
               </content>
