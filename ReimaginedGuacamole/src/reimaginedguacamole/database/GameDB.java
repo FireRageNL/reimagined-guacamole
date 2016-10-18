@@ -45,12 +45,13 @@ public class GameDB extends Database {
         if(right){
             ps.setInt(1, toUpdate.getRight());
         }
-        else{
+        else if(!right){
             ps.setInt(1, toUpdate.getWrong());
         }
-        ps.setInt(2, cat.ordinal());
+        ps.setInt(2, (cat.ordinal() + 1));
         ps.setInt(3,prof.getPid());
         ps.executeUpdate();
+        System.out.println("I has executed ze update");
         this.closeConnection();
         }
         catch(SQLException ex){

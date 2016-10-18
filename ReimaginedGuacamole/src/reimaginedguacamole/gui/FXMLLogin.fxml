@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLLoginController">
+<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLLoginController">
   <children>
     <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="false">
       <children>
@@ -28,9 +28,9 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="false">
+    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="true">
       <children>
-        <TabPane layoutX="14.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE">
+        <TabPane layoutX="14.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE" visible="true">
           <tabs>
             <Tab text="Profiel">
               <content>
@@ -111,7 +111,7 @@
                           <children>
                             <HBox alignment="CENTER" minWidth="89.0" prefHeight="81.0" prefWidth="89.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                               <children>
-                                <Label id="lblLossSci" fx:id="lblWinHis" font="$x2" text="5">
+                                <Label fx:id="lblWinHis" font="$x2" text="5">
                                   <HBox.margin>
                                     <Insets right="50.0" fx:id="x5" />
                                   </HBox.margin>
@@ -277,7 +277,7 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="false">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="615.0" prefWidth="906.0">
           <children>
