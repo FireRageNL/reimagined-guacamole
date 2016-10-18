@@ -28,7 +28,7 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="false">
+    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="true">
       <children>
         <TabPane layoutX="16.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE" visible="true">
           <tabs>
@@ -281,11 +281,11 @@
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                    <TableView fx:id="tableRank" layoutX="0.0" layoutY="0.0" prefHeight="580.0" prefWidth="226.0">
+                    <TableView fx:id="tableRank" layoutX="0.0" layoutY="0.0" prefHeight="580.0" prefWidth="890.0">
                       <columns>
-                        <TableColumn id="colRank" prefWidth="75.0" text="Rank" fx:id="colRank" />
-                        <TableColumn id="colNick" prefWidth="75.0" text="Nickname" fx:id="colNick" />
-                        <TableColumn id="colScore" prefWidth="75.0" text="Score" fx:id="colScore" />
+                        <TableColumn id="colRank" maxWidth="5000.0" minWidth="10.0" prefWidth="297.0" text="Rank" fx:id="colRank" />
+                        <TableColumn id="colNick" maxWidth="5000.0" minWidth="10.0" prefWidth="297.0" text="Nickname" fx:id="colNick" />
+                        <TableColumn id="colScore" maxWidth="5000.0" minWidth="10.0" prefWidth="295.0" text="Score" fx:id="colScore" />
                       </columns>
                     </TableView>
                   </children>

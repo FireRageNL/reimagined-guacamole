@@ -126,7 +126,7 @@ public class ProfileDB extends Database {
     }
 
     public ObservableList<Ranking> getRankings() {
-        ArrayList<Ranking> rankings = new ArrayList<>();
+        ObservableList<Ranking> rankings = FXCollections.observableArrayList();
         try {
             this.initConnection();
             String sql = "SELECT SUM(Score) AS Score, (SELECT Nickname FROM Profile WHERE ProfileID = Profile_ProfileID ) as Nickname FROM `GameInfo` GROUP BY Profile_ProfileID ";
