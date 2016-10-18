@@ -279,7 +279,17 @@
             </Tab>
             <Tab text="Achievements">
               <content>
-                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <TableView fx:id="tableRank" layoutX="0.0" layoutY="0.0" prefHeight="580.0" prefWidth="226.0">
+                      <columns>
+                        <TableColumn id="colRank" prefWidth="75.0" text="Rank" fx:id="colRank" />
+                        <TableColumn id="colNick" prefWidth="75.0" text="Nickname" fx:id="colNick" />
+                        <TableColumn id="colScore" prefWidth="75.0" text="Score" fx:id="colScore" />
+                      </columns>
+                    </TableView>
+                  </children>
+                </AnchorPane>
               </content>
             </Tab>
           </tabs>
