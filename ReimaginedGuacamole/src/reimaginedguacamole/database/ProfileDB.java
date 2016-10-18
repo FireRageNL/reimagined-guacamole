@@ -10,9 +10,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.Achievement;
 import reimaginedguacamole.profile.Profile;
+import reimaginedguacamole.profile.Ranking;
 import reimaginedguacamole.profile.Statistic;
 
 /**
@@ -120,5 +123,26 @@ public class ProfileDB extends Database {
     public void storeAchievement(Achievement toAdd, Profile aThis) {
 //Should have so is not implemented yet
 
+    }
+
+    public ObservableList<Ranking> getRankings() {
+        ArrayList<Ranking> rankings = new ArrayList<>();
+        try {
+            this.initConnection();
+            String sql = "SELECT SUM(Score) AS Score, (SELECT Nickname FROM Profile WHERE ProfileID = Profile_ProfileID ) as Nickname FROM `GameInfo` GROUP BY Profile_ProfileID ";
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            int rank = 1;
+            while (rs.next()) {
+                Ranking add = new Ranking(rank,rs.getString(2),rs.getInt(1));
+                rankings.add(add);
+                rank++;
+            }
+            this.closeConnection();
+            return (ObservableList<Ranking>) rankings;
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
     }
 }

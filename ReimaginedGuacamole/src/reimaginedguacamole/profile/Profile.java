@@ -8,6 +8,7 @@ package reimaginedguacamole.profile;
 import java.util.ArrayList;
 import reimaginedguacamole.game.GameInfo;
 import java.util.List;
+import javafx.collections.ObservableList;
 import reimaginedguacamole.database.ProfileDB;
 
 /**
@@ -92,6 +93,10 @@ public class Profile {
     public void addAchievement(Achievement toAdd){
         achievements.add(toAdd);
         pdb.storeAchievement(toAdd,this);
+    }
+    
+    public ObservableList<Ranking> getRankings(){
+       return pdb.getRankings();
     }
 
 }
