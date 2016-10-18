@@ -129,7 +129,7 @@ public class ProfileDB extends Database {
         ObservableList<Ranking> rankings = FXCollections.observableArrayList();
         try {
             this.initConnection();
-            String sql = "SELECT SUM(Score) AS Score, (SELECT Nickname FROM Profile WHERE ProfileID = Profile_ProfileID ) as Nickname FROM `GameInfo` GROUP BY Profile_ProfileID ";
+            String sql = "SELECT SUM(Score) AS Score, (SELECT Nickname FROM Profile WHERE ProfileID = Profile_ProfileID ) as Nickname FROM `GameInfo` GROUP BY Profile_ProfileID ORDER BY Score DESC";
             PreparedStatement ps = this.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             int rank = 1;
