@@ -28,7 +28,7 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="true">
+    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="false">
       <children>
         <TabPane layoutX="16.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE" visible="true">
           <tabs>
@@ -310,7 +310,7 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="false">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="615.0" prefWidth="906.0">
           <children>
@@ -368,7 +368,7 @@
                         </Label>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                           <children>
-                            <Button fx:id="btnAnswer1" maxHeight="-Infinity" minHeight="25.0" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="">
+                            <Button fx:id="btnAnswer1" maxHeight="-Infinity" minHeight="25.0" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="" wrapText="true">
                               <font>
                                 <Font name="System Bold" size="20.0" fx:id="x7" />
                               </font>
@@ -376,13 +376,13 @@
                                 <Insets right="10.0" fx:id="x8" />
                               </HBox.margin>
                             </Button>
-                            <Button fx:id="btnAnswer2" font="$x7" maxHeight="-Infinity" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="" />
+                            <Button fx:id="btnAnswer2" font="$x7" maxHeight="-Infinity" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="" wrapText="true" />
                           </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                           <children>
-                            <Button fx:id="btnAnswer3" font="$x7" maxHeight="-Infinity" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="" HBox.margin="$x8" />
-                            <Button fx:id="btnAnswer4" font="$x7" maxHeight="-Infinity" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="" />
+                            <Button fx:id="btnAnswer3" font="$x7" maxHeight="-Infinity" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="" wrapText="true" HBox.margin="$x8" />
+                            <Button fx:id="btnAnswer4" font="$x7" maxHeight="-Infinity" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="" wrapText="true" />
                           </children>
                         </HBox>
                         <ProgressBar fx:id="pbRoundTimer" prefHeight="100.0" prefWidth="768.0" progress="0.0">

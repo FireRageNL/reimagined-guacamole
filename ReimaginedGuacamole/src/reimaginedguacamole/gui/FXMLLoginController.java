@@ -285,7 +285,7 @@ public class FXMLLoginController implements Initializable, Observer {
                 btnSpin.setDisable(false);
                 waitTimer = new Timer(true);
                 lblAnnouncement.setText("Ben je er Klaar voor? Spin het wiel!");
-                waitTimer.schedule(new WaitingForGameState(gameController, GameState.Spinning), 20000);
+                waitTimer.schedule(new WaitingForGameState(gameController, GameState.Spinning), 15000);
                 setWindows(0);
                 break;
             case Spinning:
@@ -310,7 +310,7 @@ public class FXMLLoginController implements Initializable, Observer {
                 pbRoundTimer.setProgress(-1);
                 lblAnnouncement.setText("De categorie is " + round.getQuestion().getCategory() + "\n");
                 waitTimer = new Timer(true);
-                waitTimer.schedule(new WaitingForGameState(gameController, GameState.GameRunning), 5000);
+                waitTimer.schedule(new WaitingForGameState(gameController, GameState.GameRunning), 3500);
                 break;
             case GameRunning:
                 disableButtons(false);
@@ -333,7 +333,7 @@ public class FXMLLoginController implements Initializable, Observer {
                     lblAnnouncement.setText("Jammer!");
                 }
                 lblScore.setText(String.valueOf(gameController.getCurrentScore()));
-                setButtonCorrect(gameController.getCurrentRound().getQuestion().getCorrectAnswer());
+                setButtonCorrect(gameController.getCorrectAnswer());
                 waitTimer = new Timer(true);
                 if (gameController.getCurrentRoundIndex() + 1 == gameController.getGame().getAmountOfRounds()) {
 
@@ -421,6 +421,9 @@ public class FXMLLoginController implements Initializable, Observer {
                         progress -= 0.003 / (roundDuration / 10);
                     } else {
                         progress = 0;
+                        animationTimer.stop();
+                        gameController.setCurrentAnswer(0);
+                        gameController.setGameState(Answered);
                     }
                     pbRoundTimer.setProgress(progress);
                     prevUpdate = now;
