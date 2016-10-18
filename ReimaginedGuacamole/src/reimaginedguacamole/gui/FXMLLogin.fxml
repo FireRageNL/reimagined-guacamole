@@ -18,7 +18,7 @@
       <children>
         <TextField id="gebruikersnaam" fx:id="txtUsername" layoutX="354.0" layoutY="235.0" prefHeight="25.0" prefWidth="190.0" promptText="Gebruikersnaam" />
         <PasswordField id="wachtwoord" fx:id="txtPassword" layoutX="354.0" layoutY="260.0" prefHeight="25.0" prefWidth="190.0" promptText="Wachtwoord" />
-        <Button fx:id="button" defaultButton="true" layoutX="414.0" layoutY="306.0" minHeight="17.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="70.0" text="Login" />
+        <Button fx:id="button" defaultButton="false" layoutX="414.0" layoutY="306.0" minHeight="17.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="70.0" text="Login" />
         <Label fx:id="label" layoutX="238.0" layoutY="340.0" minHeight="16.0" minWidth="69.0" prefHeight="17.0" prefWidth="430.0" textAlignment="CENTER" />
         <Label layoutX="376.0" layoutY="349.0" onMouseClicked="#clickRegister" prefHeight="17.0" prefWidth="147.0" text="Registreer nieuwe account" underline="true" />
         <ImageView fitHeight="189.82078880896935" fitWidth="331.0" layoutX="284.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
@@ -312,7 +312,7 @@
     </Pane>
     <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
       <children>
-        <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="615.0" prefWidth="906.0">
+        <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="638.9998779296875" prefWidth="906.0">
           <children>
             <Label font="$x3" text="Quiz Trivia Crack">
               <graphic>
@@ -351,13 +351,8 @@
                         </Button>
                       </children>
                     </VBox>
-                    <VBox alignment="TOP_CENTER" prefHeight="561.0" prefWidth="585.0">
+                    <VBox alignment="TOP_CENTER" prefHeight="625.0" prefWidth="585.0">
                       <children>
-                        <Label fx:id="lblAnnouncement" alignment="CENTER" font="$x1" prefHeight="149.0" prefWidth="585.0" text="Ben je er klaar voor?" textAlignment="CENTER" wrapText="true">
-                          <VBox.margin>
-                            <Insets top="20.0" />
-                          </VBox.margin>
-                        </Label>
                         <Label fx:id="lblQuestion" alignment="CENTER" prefHeight="127.0" prefWidth="585.0" text="Hier komt straks de vraag!" textAlignment="CENTER" wrapText="true">
                           <font>
                             <Font name="System Bold" size="24.0" />
@@ -384,12 +379,29 @@
                             <Button fx:id="btnAnswer3" font="$x7" maxHeight="-Infinity" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="" wrapText="true" HBox.margin="$x8" />
                             <Button fx:id="btnAnswer4" font="$x7" maxHeight="-Infinity" mnemonicParsing="false" onAction="#setAnswer" prefHeight="89.0" prefWidth="287.0" text="" wrapText="true" />
                           </children>
+                          <VBox.margin>
+                            <Insets top="10.0" />
+                          </VBox.margin>
                         </HBox>
                         <ProgressBar fx:id="pbRoundTimer" prefHeight="100.0" prefWidth="768.0" progress="0.0">
                           <VBox.margin>
                             <Insets top="30.0" />
                           </VBox.margin>
                         </ProgressBar>
+                        <ListView fx:id="lvChat" disable="false" orientation="VERTICAL" prefHeight="136.0" prefWidth="585.0" style="-fx-font: 8pt &quot;Arial&quot;;">
+                          <VBox.margin>
+                            <Insets top="20.0" />
+                          </VBox.margin>
+                        </ListView>
+                        <HBox prefHeight="37.9609375" prefWidth="585.0">
+                          <children>
+                            <TextField fx:id="txtChat" prefHeight="37.9609375" prefWidth="511.0" />
+                            <Button defaultButton="true" minHeight="25.0" mnemonicParsing="false" onAction="#btnChatClicked" prefHeight="37.9609375" prefWidth="74.0" text="...." />
+                          </children>
+                          <VBox.margin>
+                            <Insets top="5.0" />
+                          </VBox.margin>
+                        </HBox>
                       </children>
                       <HBox.margin>
                         <Insets left="20.0" />
