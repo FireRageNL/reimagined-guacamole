@@ -115,10 +115,11 @@ public class FXMLLoginController implements Initializable, Observer{
     private Label lblScore;
     
     //Global variables
-    GameController gameController;
-    Profile user;
-    Random rng;
-    int wheelSpeed;
+    private GameController gameController;
+    private Profile user;
+    private Random rng;
+    private int wheelSpeed;
+    private int roundDuration,amountOfRounds;
     // TIMERS
     private Timer waitTimer;
     private AnimationTimer animationTimer;
@@ -219,7 +220,7 @@ public class FXMLLoginController implements Initializable, Observer{
     
     @FXML
     private void startGame(){
-        gameController = new GameController(10,10);
+        gameController = new GameController(roundDuration,amountOfRounds);
         gameController.addObserver(this);
         gameController.setGameState(GameState.WaitingForCategory);
     }
