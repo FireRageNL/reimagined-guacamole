@@ -5,6 +5,9 @@
  */
 package reimaginedguacamole.database;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,8 +15,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,16 +30,35 @@ import java.util.logging.Logger;
 public class Database {
 
     protected Connection conn;
-
+    private String password;
+    private String host;
+    private String databasename;
+    private String username;
     /**
      * loads the properties from a file
      */
     public void loadProperties() {
-
+try {
+            Properties prop = new Properties();
+            try (InputStream in = new FileInputStream("database.properties")) {
+                prop.load(in);
+                Enumeration<?> e = prop.propertyNames();
+                String key = (String) e.nextElement();
+                password = prop.getProperty(key);
+                key = (String) e.nextElement();
+                host = prop.getProperty(key);
+                key = (String) e.nextElement();
+                databasename = prop.getProperty(key);
+                key = (String) e.nextElement();
+                username = prop.getProperty(key);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Database() {
-
+        loadProperties();
     }
 
     public void Insert(String table, Map<String, String> data) {
@@ -184,7 +208,7 @@ public class Database {
 
     public void initConnection() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://daantuller.nl:3306/mydb", "Guacamole", "Guacamole01");
+            conn = DriverManager.getConnection("jdbc:mysql://"+host+":3306/"+databasename, username, password);
             System.out.println("Connection ok.");
 
         } catch (SQLException ex) {
