@@ -232,6 +232,7 @@ public class FXMLLoginController implements Initializable, Observer{
         gameController = new GameController(roundDuration,amountOfRounds);
         gameController.addObserver(this);
         gameController.setGameState(GameState.WaitingForCategory);
+        EnableButtons();
     }
     
     
@@ -251,12 +252,11 @@ public class FXMLLoginController implements Initializable, Observer{
             case Waiting:
                 break;
             case WaitingForCategory:
-                EnableButtons();
                 lblGameName.setText(user.getNickname());
                 btnSpin.setDisable(false);
                 waitTimer = new Timer(true);
                 lblAnnouncement.setText("Ben je er Klaar voor? Spin het wiel!");
-                waitTimer.schedule(new WaitingForCategoryTimerTask(gameController), 20000);
+                waitTimer.schedule(new WaitingForGameState(gameController, GameState.Spinning), 20000);
                 setWindows(0);
                 break;
             case Spinning:
@@ -268,7 +268,6 @@ public class FXMLLoginController implements Initializable, Observer{
                 waitTimer = new Timer(true);
                 int time =  5000 + rng.nextInt(3000);
                 System.out.println(time);
-                
                 waitTimer.schedule(new SpinTimerTask(gameController), time);
                 break;
             case SpinningFinished:
@@ -281,7 +280,7 @@ public class FXMLLoginController implements Initializable, Observer{
                 pbRoundTimer.setProgress(-1);
                 lblAnnouncement.setText("De categorie is "+round.getQuestion().getCategory() + "\n");
                 waitTimer = new Timer(true);
-                waitTimer.schedule(new WaitForQuestionTimerTask(gameController), 5000);
+                waitTimer.schedule(new WaitingForGameState(gameController,GameState.GameRunning), 5000);
                 break;
             case GameRunning:
                 EnableButtons();
@@ -296,18 +295,29 @@ public class FXMLLoginController implements Initializable, Observer{
                 
             case Answered:
                 EnableButtons();
+                int score = gameController.getCurrentScore();
                 if(gameController.checkAnswer(user, pbRoundTimer.getProgress())){
-                    lblAnnouncement.setText("Goed gedaan!");
+                    score = gameController.getCurrentScore() - score;
+                    lblAnnouncement.setText("Goed gedaan! je krijgt " + score + " punten!");
                 }
                 else{
                     lblAnnouncement.setText("Jammer!");
                 }
                 lblScore.setText(String.valueOf(gameController.getCurrentScore()));
                 setButtonCorrect(gameController.getCurrentRound().getQuestion().getCorrectAnswer());
-                btnSpin.setDisable(false);
+                waitTimer = new Timer(true);
+                if(gameController.getCurrentRoundIndex() + 1 == gameController.getGame().getAmountOfRounds()){
+                    
+                    waitTimer.schedule(new WaitingForGameState(gameController,GameState.GameFinished), 2500);
+                }
+                else{
+                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.WaitingForCategory), 2500);
+                }
                 break;
               
             case GameFinished:
+                gameController.endGame(user);
+                lblAnnouncement.setText("De Game is afgelopen! \n Je score is "+ gameController.getCurrentScore() + "! Goed Bezig!");
                 break;
         }
     }
