@@ -6,11 +6,13 @@
 package reimaginedguacamole.database;
 
 import java.util.LinkedHashMap;
+import javafx.collections.ObservableList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import reimaginedguacamole.profile.Achievement;
+import reimaginedguacamole.profile.History;
 import reimaginedguacamole.profile.Profile;
-import reimaginedguacamole.profile.Statistic;
+import reimaginedguacamole.profile.Ranking;
 import reimaginedguacamole.tooling.Hashing;
 
 /**
@@ -83,5 +85,90 @@ public class ProfileDBTest {
         String expResult = "WhatAWeirdNick";
         String result = instance.getProfileData(email).getNickname();
         assertEquals(expResult,result);
+    }
+
+    /**
+     * Test of login method, of class ProfileDB.
+     */
+    @Test
+    public void testLogin() {
+        System.out.println("login");
+        String password = "";
+        String email = "";
+        ProfileDB instance = new ProfileDB();
+        boolean expResult = false;
+        boolean result = instance.login(password, email);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addWin method, of class ProfileDB.
+     */
+    @Test
+    public void testAddWin() {
+        System.out.println("addWin");
+        Profile toSave = null;
+        ProfileDB instance = new ProfileDB();
+        instance.addWin(toSave);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addLoss method, of class ProfileDB.
+     */
+    @Test
+    public void testAddLoss() {
+        System.out.println("addLoss");
+        Profile toSave = null;
+        ProfileDB instance = new ProfileDB();
+        instance.addLoss(toSave);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of storeAchievement method, of class ProfileDB.
+     */
+    @Test
+    public void testStoreAchievement() {
+        System.out.println("storeAchievement");
+        Achievement toAdd = null;
+        Profile aThis = null;
+        ProfileDB instance = new ProfileDB();
+        instance.storeAchievement(toAdd, aThis);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRankings method, of class ProfileDB.
+     */
+    @Test
+    public void testGetRankings() {
+        System.out.println("getRankings");
+        ProfileDB instance = new ProfileDB();
+        ObservableList<Ranking> expResult = null;
+        ObservableList<Ranking> result = instance.getRankings();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getHistory method, of class ProfileDB.
+     */
+    @Test
+    public void testGetHistory() {
+        System.out.println("getHistory");
+        int username = 0;
+        ProfileDB instance = new ProfileDB();
+        ObservableList<History> expResult = null;
+        ObservableList<History> result = instance.getHistory(username);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }
