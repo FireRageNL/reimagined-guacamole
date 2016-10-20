@@ -5,10 +5,8 @@
  */
 package reimaginedguacamole.game;
 
-import java.util.ArrayList;
 import java.util.List;
 import reimaginedguacamole.database.QuestionDB;
-import java.util.Timer;
 
 /**
  *Class that handles all game activity

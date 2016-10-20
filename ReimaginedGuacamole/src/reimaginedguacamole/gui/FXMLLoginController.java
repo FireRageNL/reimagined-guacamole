@@ -387,8 +387,8 @@ public class FXMLLoginController implements Initializable, Observer {
     public void update(Observable o, Object arg) {
         checkGameState();
     }
-
     
+
     @FXML
     public void btnChatClicked(){
         String chatLine = txtChat.getText();
