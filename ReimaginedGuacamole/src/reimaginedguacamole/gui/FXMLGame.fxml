@@ -18,8 +18,8 @@
       <children>
         <TextField id="gebruikersnaam" fx:id="txtUsername" layoutX="354.0" layoutY="235.0" prefHeight="25.0" prefWidth="190.0" promptText="Gebruikersnaam" />
         <PasswordField id="wachtwoord" fx:id="txtPassword" layoutX="354.0" layoutY="260.0" prefHeight="25.0" prefWidth="190.0" promptText="Wachtwoord" />
-        <Button fx:id="button" defaultButton="false" layoutX="414.0" layoutY="306.0" minHeight="17.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="70.0" text="Login" />
-        <Label fx:id="label" layoutX="238.0" layoutY="340.0" minHeight="16.0" minWidth="69.0" prefHeight="17.0" prefWidth="430.0" textAlignment="CENTER" />
+        <Button fx:id="button" defaultButton="false" layoutX="414.0" layoutY="306.0" minHeight="17.0" onAction="#loginUser" prefHeight="25.0" prefWidth="70.0" text="Login" />
+        <Label id="label" fx:id="errorlabel" layoutX="238.0" layoutY="340.0" minHeight="16.0" minWidth="69.0" prefHeight="17.0" prefWidth="430.0" textAlignment="CENTER" />
         <Label layoutX="376.0" layoutY="349.0" onMouseClicked="#clickRegister" prefHeight="17.0" prefWidth="147.0" text="Registreer nieuwe account" underline="true" />
         <ImageView fitHeight="189.82078880896935" fitWidth="331.0" layoutX="284.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
           <image>
