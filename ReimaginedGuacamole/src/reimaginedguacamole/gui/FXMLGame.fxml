@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLLoginController">
+<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLController">
   <children>
     <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="false">
       <children>

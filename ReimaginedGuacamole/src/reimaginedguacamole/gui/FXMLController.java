@@ -41,7 +41,7 @@ import reimaginedguacamole.timertasks.*;
  *
  * @author daan
  */
-public class FXMLLoginController implements Initializable, Observer {
+public class FXMLController implements Initializable, Observer {
 
     @FXML
     private Label label;

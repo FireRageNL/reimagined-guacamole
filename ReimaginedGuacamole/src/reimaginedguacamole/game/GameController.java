@@ -12,7 +12,8 @@ import reimaginedguacamole.database.GameDB;
 import reimaginedguacamole.profile.Profile;
 
 /**
- *
+ *This class holds all the importent information for playing the game.
+ * It is an observable class with the FXMLController as its observer.
  * @author daan
  */
 public class GameController extends Observable{
@@ -35,17 +36,31 @@ public class GameController extends Observable{
         currentScore = 0;
     }
     
+    /**
+     * Starts the next round and sets currentRound to the new Round object
+     */
     public void startNextRound(){
         currentRoundIndex++;
         currentRound = rounds.get(currentRoundIndex);
         
     }
     
+    /**
+     * Ends the game and uploads the game information to the database
+     * @param user Logged in profile
+     */
     public void endGame(Profile user){
         GameDB gdb = new GameDB();
         gdb.endGame(user.getPid(), currentScore);
     }
 
+    
+    /**
+     * Chooses a category based on the rotation of the wheel.
+     * categories are divided in 7 equal parts.
+     * @param wheel rotation of the wheel at this time
+     * @return Category enum type
+     */
     public Category chooseCategory(double wheel){
         double rotation = 360 - wheel;
         if(rotation >= 0 && rotation <= 51){return Category.Sport;}
@@ -57,11 +72,16 @@ public class GameController extends Observable{
         else{return Category.History;}        
     }
     
-    
+
     public Round getCurrentRound() {
         return currentRound;
     }
     
+    /**
+     * Inserts a question into the round object based on the chosen category 
+     * then removes this question from the orgiinal list.
+     * @param category 
+     */
     public void giveRoundQuestion(Category category){
         for(Question q : game.getQuestionsList()){
             if(q.getCategory() == category){
@@ -81,6 +101,10 @@ public class GameController extends Observable{
         return gameState;
     }
     
+    /**
+     * Sets the gamestate and notifies the Observer so the game can update.
+     * @param gameState 
+     */
     public void setGameState(GameState gameState){
         this.gameState = gameState;
         this.setChanged();
@@ -108,16 +132,25 @@ public class GameController extends Observable{
     }
     
     
-    
-    public boolean checkAnswer(Profile profile, double timeTaken){
+    /**
+     * Checks the answer given and adds the score based on time.
+     * @param profile
+     * @param timeLeft
+     * @return 
+     */
+    public boolean checkAnswer(Profile profile, double timeLeft){
         GameDB gdb = new GameDB();
-        int score = 50 + (200 - (int)(timeTaken * 100));
+        //Score is based on time, basic score = 50
+        int score = 50 + (200 - (int)(timeLeft * 100));
+        //Checks if the correct answer is the same as givenanswer
         if(currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer){
             currentScore += score;
+            //Update the stats for this category and user with a +1 to the correct field.
             gdb.updateStats(profile, currentRound.getQuestion().getCategory(), true);
             return true;
         }
         else{
+            //Update the stats for this category and user with a +1 to the Wrong field.
             gdb.updateStats(profile, currentRound.getQuestion().getCategory(), false);
             return false;
         }
