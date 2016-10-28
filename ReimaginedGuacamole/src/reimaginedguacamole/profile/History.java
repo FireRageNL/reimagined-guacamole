@@ -8,7 +8,7 @@ package reimaginedguacamole.profile;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- *
+ * Class that holds the game history objects
  * @author roy_v
  */
 public class History {

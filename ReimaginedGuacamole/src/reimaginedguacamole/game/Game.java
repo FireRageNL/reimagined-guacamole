@@ -9,7 +9,7 @@ import java.util.List;
 import reimaginedguacamole.database.QuestionDB;
 
 /**
- *Class that handles all game activity
+ *Class that holds all important game information
  * @author daan
  */
 public class Game {

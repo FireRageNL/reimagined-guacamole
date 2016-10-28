@@ -11,7 +11,7 @@ import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.GameState;
 
 /**
- *
+ *Timer to set a new gamestate after a set time. 
  * @author daan
  */
 public class WaitingForGameState extends TimerTask{

@@ -347,16 +347,19 @@ public class FXMLController implements Initializable, Observer {
     
     /**
      * Our main Game Controller. it fires everytime the gamestate in gamecontroller is changed. 
-     * It fires all necesarry gamecontroller methods and shows the correct information on the UI.
+     * It fires all necessary gamecontroller methods and shows the correct information on the UI.
      */
     private void checkGameState() {
 
         Round round;
 
         switch (gameController.getGameState()) {
+            //Waiting is not used in this version yet. future version will wait for other players
             case Waiting:
                 break;
             case WaitingForCategory:
+                //Game is now waiting for user to start spinning the wheel. if not done after 15 seconds it will start automically.
+                //Disables all necessary buttons and gives feedback to user.
                 lblGameName.setText(user.getNickname());
                 btnSpin.setDisable(false);
                 waitTimer = new Timer(true);
@@ -365,6 +368,7 @@ public class FXMLController implements Initializable, Observer {
                 setWindows(0);
                 break;
             case Spinning:
+                //this state will start spinning the wheel. also it resets the ui to an empty gamescreen 
                 waitTimer = null;
                 resetQuestionUI();
                 btnSpin.setDisable(true);
@@ -374,22 +378,27 @@ public class FXMLController implements Initializable, Observer {
                 waitTimer = new Timer(true);
                 int time = 5000 + rng.nextInt(3000);
                 System.out.println(time);
-                waitTimer.schedule(new SpinTimerTask(gameController), time);
+                waitTimer.schedule(new WaitingForGameState(gameController,GameState.SpinningFinished), time);
                 break;
             case SpinningFinished:
+                //Stops the spinning and starts the new round with a question from the chosen category
                 animationTimer.stop();
                 System.out.println("ANIMATION STOPPED!");
                 gameController.startNextRound();
                 gameController.giveRoundQuestion(gameController.chooseCategory(wheel.getRotate()));
-
+                
+                //Sets the appriopriate round and shows a loading bar.
                 round = gameController.getCurrentRound();
                 pbRoundTimer.setProgress(-1);
                 lblQuestion.setText(round.getQuestion().getCategory().toString());
                 chatList.add("GAME: De categorie is " + round.getQuestion().getCategory() + "\n");
+                
+                //Waits a few seconds before showing the question.
                 waitTimer = new Timer(true);
                 waitTimer.schedule(new WaitingForGameState(gameController, GameState.GameRunning), 3500);
                 break;
             case GameRunning:
+                //Gamestate where question can be answered. starts the gametimer which is set to a specific time.
                 disableButtons(false);
                 round = gameController.getCurrentRound();
                 lblQuestion.setText(round.getQuestion().getQuestionContents());
@@ -401,6 +410,8 @@ public class FXMLController implements Initializable, Observer {
                 break;
 
             case Answered:
+                //Gamestate where question has been answered or time has run out(answer will be 0).
+                //checks what the user did and gives correct feedback to user.
                 disableButtons(true);
                 int score = gameController.getCurrentScore();
                 if (gameController.checkAnswer(user, pbRoundTimer.getProgress())) {
@@ -412,8 +423,9 @@ public class FXMLController implements Initializable, Observer {
                 lblScore.setText(String.valueOf(gameController.getCurrentScore()));
                 setButtonCorrect(gameController.getCorrectAnswer());
                 waitTimer = new Timer(true);
+                
+                //Checks if game is over and continuesaccording to this check
                 if (gameController.getCurrentRoundIndex() + 1 == gameController.getGame().getAmountOfRounds()) {
-
                     waitTimer.schedule(new WaitingForGameState(gameController, GameState.GameFinished), 2500);
                 } else {
                     waitTimer.schedule(new WaitingForGameState(gameController, GameState.WaitingForCategory), 2500);
@@ -421,6 +433,7 @@ public class FXMLController implements Initializable, Observer {
                 break;
 
             case GameFinished:
+                //Game has ended. upload all information and show user game has ended.
                 gameController.endGame(user);
                 chatList.add("GAME:  De Game is afgelopen! \n Je score is " + gameController.getCurrentScore() + "! Goed Bezig!");
                 break;

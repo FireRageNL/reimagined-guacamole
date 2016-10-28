@@ -20,7 +20,7 @@ public class Login {
     /**
      * Simple tryLogin function that will try to login a user with the provided username and password
      * It will hash the password, compare the hash to the hash in the database and then return
-     * true or false according to if the username -> hash combination is correct
+     * true or false according to if the username and hash combination is correct
      * @param email is the e-mail adress of the user that is to be checked
      * @param password is the password in plain text to be checked
      * @return true or false if combination is correct.

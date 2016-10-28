@@ -6,7 +6,7 @@
 package reimaginedguacamole.game;
 
 /**
- *
+ *Enum for different gamestates
  * @author daan
  */
 

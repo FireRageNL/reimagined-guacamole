@@ -8,7 +8,7 @@ package reimaginedguacamole.profile;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- *
+ *Class that holds a certain ranking in the world ranking list.
  * @author roy_v
  */
 public class Ranking {

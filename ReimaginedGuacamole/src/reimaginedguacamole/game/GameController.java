@@ -12,7 +12,7 @@ import reimaginedguacamole.database.GameDB;
 import reimaginedguacamole.profile.Profile;
 
 /**
- *This class holds all the importent information for playing the game.
+ *This class handles all game mechanics
  * It is an observable class with the FXMLController as its observer.
  * @author daan
  */

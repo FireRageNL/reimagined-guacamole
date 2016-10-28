@@ -6,7 +6,7 @@
 package reimaginedguacamole.game;
 
 /**
- *
+ *Enum for different categories in the game
  * @author Marc
  */
 public enum Category {

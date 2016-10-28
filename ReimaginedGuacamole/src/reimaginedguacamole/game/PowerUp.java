@@ -6,7 +6,7 @@
 package reimaginedguacamole.game;
 
 /**
- *
+ *class that holds information about the powerups.
  * @author Marc
  */
 public class PowerUp {

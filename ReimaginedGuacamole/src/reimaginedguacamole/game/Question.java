@@ -6,7 +6,7 @@
 package reimaginedguacamole.game;
 
 /**
- *
+ *Class that holds necessary information for a question
  * @author daan
  */
 public class Question {

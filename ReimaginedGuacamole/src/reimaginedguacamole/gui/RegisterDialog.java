@@ -22,7 +22,7 @@ import reimaginedguacamole.tooling.Hashing;
 
 /**
  * TODO: niet laten crashen met een cancel maar netjes proberen af te handelen.
- *
+ *Class that creates a dialog for registering a user.
  * @author roy_v
  */
 public class RegisterDialog {

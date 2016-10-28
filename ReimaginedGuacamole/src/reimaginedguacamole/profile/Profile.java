@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 import reimaginedguacamole.database.ProfileDB;
 
 /**
- *
+ *Class that holds important profile information.
  * @author Marc
  */
 public class Profile {

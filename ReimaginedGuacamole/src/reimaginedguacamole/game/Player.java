@@ -9,7 +9,7 @@ import reimaginedguacamole.profile.Profile;
 
 
 /**
- *
+ *Player is a player in the game. in this version still obsolete because we only need the profile class
  * @author Marc
  */
 public class Player extends Profile{

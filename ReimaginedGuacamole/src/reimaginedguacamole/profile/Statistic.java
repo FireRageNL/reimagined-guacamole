@@ -10,7 +10,7 @@ import java.util.List;
 import reimaginedguacamole.game.Category;
 
 /**
- *
+ * Class that holds information about right or wrong answers per category.
  * @author Marc
  */
 public class Statistic {

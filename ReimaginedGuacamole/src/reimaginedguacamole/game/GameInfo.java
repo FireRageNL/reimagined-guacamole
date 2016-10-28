@@ -8,7 +8,7 @@ package reimaginedguacamole.game;
 import java.util.Date;
 
 /**
- *
+ *Holds information for history of games
  * @author Marc
  */
 public class GameInfo {
