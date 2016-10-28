@@ -43,7 +43,6 @@ import reimaginedguacamole.timertasks.*;
  */
 public class FXMLController implements Initializable, Observer {
 
-    
     @FXML
     private Label errorlabel;
     @FXML
@@ -54,7 +53,6 @@ public class FXMLController implements Initializable, Observer {
     private Pane loginPane;
     @FXML
     private Pane gamePane;
-
 
     //PROFILE INFORMATION OBJECTS
     @FXML
@@ -127,8 +125,7 @@ public class FXMLController implements Initializable, Observer {
     private Label lblGameName;
     @FXML
     private Label lblScore;
-    
-    
+
     //RANKING PAGE OBEJCTS
     @FXML
     private TableView tableRank;
@@ -138,7 +135,7 @@ public class FXMLController implements Initializable, Observer {
     private TableColumn colNick;
     @FXML
     private TableColumn colScore;
-    
+
     //HISTORY PAGE OBJECTS
     @FXML
     private TableView tableHistory;
@@ -156,30 +153,28 @@ public class FXMLController implements Initializable, Observer {
     private ObservableList<String> chatList;
     int wheelRotation = 0;
     double progress;
-    
-    
+
     // TIMERS
     private Timer waitTimer;
     private AnimationTimer animationTimer;
     public static final int NANO_TICKS = 20000000;
 
-
     /**
-     * checks usercredentials with database. 
-     * Sends user to profile page when succesull, else error message is displayed.
+     * checks usercredentials with database. Sends user to profile page when
+     * succesull, else error message is displayed.
      */
     @FXML
     private void loginUser() {
         //Gets information from textfields
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-        
+
         //Checks if textfields are not empty
         if (!password.isEmpty() && !username.isEmpty()) {
             Login log = new Login();
             //Tries to log in
             boolean loggedin = log.tryLogin(username, password);
-            
+
             if (loggedin) {
                 //gets user date from database and sets the window to the profile page.
                 user = log.getCurrentProfile(username);
@@ -191,7 +186,6 @@ public class FXMLController implements Initializable, Observer {
         }
     }
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Set window to loginpage
@@ -203,21 +197,20 @@ public class FXMLController implements Initializable, Observer {
         lvChat.getItems().addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change c) {
-                lvChat.scrollTo(chatList.size()-1);
-                
+                lvChat.scrollTo(chatList.size() - 1);
+
             }
         });
-        
+
         //creates the pseudorandom generation object
         rng = new Random();
     }
 
     /**
      * sets all windows to invisible and then sets the correct pane to visible.
-     * 0 = gamepane
-     * 1 = loginpane
-     * 2 = profilepane
-     * @param index 
+     * 0 = gamepane 1 = loginpane 2 = profilepane
+     *
+     * @param index
      */
     public void setWindows(int index) {
         gamePane.setVisible(false);
@@ -238,7 +231,8 @@ public class FXMLController implements Initializable, Observer {
 
     /**
      * Opens register dialog so user can register.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void clickRegister(MouseEvent event) {
@@ -246,8 +240,10 @@ public class FXMLController implements Initializable, Observer {
     }
 
     /**
-     * sets the new nickname for the user and reloads the page so new information is shown.
-     * @param event 
+     * sets the new nickname for the user and reloads the page so new
+     * information is shown.
+     *
+     * @param event
      */
     @FXML
     private void changeNickName(ActionEvent event) {
@@ -255,7 +251,6 @@ public class FXMLController implements Initializable, Observer {
         fillProfileData();
     }
 
-    
     /**
      * Refreshes all UI elements with the correct user information.
      */
@@ -265,7 +260,7 @@ public class FXMLController implements Initializable, Observer {
         lblEmail.setText(user.getEmail());
         lblWins.setText(Integer.toString(user.getWins()));
         lblLoss.setText(Integer.toString(user.getLosses()));
-        
+
         //Sets the labels with the amount of correct and wrong answers based on statistic
         for (Statistic s : user.getStatistics()) {
             switch (s.getCategory()) {
@@ -308,7 +303,7 @@ public class FXMLController implements Initializable, Observer {
                 new PropertyValueFactory<>("Score"));
         colNick.setCellValueFactory(new PropertyValueFactory<>("Nickname"));
         tableRank.setItems(ranks);
-        
+
         //Sets the listview for the history with the games user has played.
         ObservableList<History> history = user.getHistory();
         colDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
@@ -317,10 +312,11 @@ public class FXMLController implements Initializable, Observer {
     }
 
     /**
-     * Starts a new game with the set parameters. duration being time per question,
-     * and amount of rounds being the amount of questions being played.
-     * it resets the game UI. and disables the buttons so user cant answer an empty field.
-     * Also sets this controller as an observer for the GameController Object.
+     * Starts a new game with the set parameters. duration being time per
+     * question, and amount of rounds being the amount of questions being
+     * played. it resets the game UI. and disables the buttons so user cant
+     * answer an empty field. Also sets this controller as an observer for the
+     * GameController Object.
      */
     @FXML
     private void startGame() {
@@ -335,7 +331,8 @@ public class FXMLController implements Initializable, Observer {
 
     /**
      * Disables or enables the buttons based on given param
-     * @param state 
+     *
+     * @param state
      */
     private void disableButtons(boolean state) {
         btnAnswer1.setDisable(state);
@@ -344,10 +341,10 @@ public class FXMLController implements Initializable, Observer {
         btnAnswer4.setDisable(state);
     }
 
-    
     /**
-     * Our main Game Controller. it fires everytime the gamestate in gamecontroller is changed. 
-     * It fires all necessary gamecontroller methods and shows the correct information on the UI.
+     * Our main Game Controller. it fires everytime the gamestate in
+     * gamecontroller is changed. It fires all necessary gamecontroller methods
+     * and shows the correct information on the UI.
      */
     private void checkGameState() {
 
@@ -378,7 +375,7 @@ public class FXMLController implements Initializable, Observer {
                 waitTimer = new Timer(true);
                 int time = 5000 + rng.nextInt(3000);
                 System.out.println(time);
-                waitTimer.schedule(new WaitingForGameState(gameController,GameState.SpinningFinished), time);
+                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SpinningFinished), time);
                 break;
             case SpinningFinished:
                 //Stops the spinning and starts the new round with a question from the chosen category
@@ -386,13 +383,13 @@ public class FXMLController implements Initializable, Observer {
                 System.out.println("ANIMATION STOPPED!");
                 gameController.startNextRound();
                 gameController.giveRoundQuestion(gameController.chooseCategory(wheel.getRotate()));
-                
+
                 //Sets the appriopriate round and shows a loading bar.
                 round = gameController.getCurrentRound();
                 pbRoundTimer.setProgress(-1);
                 lblQuestion.setText(round.getQuestion().getCategory().toString());
                 chatList.add("GAME: De categorie is " + round.getQuestion().getCategory() + "\n");
-                
+
                 //Waits a few seconds before showing the question.
                 waitTimer = new Timer(true);
                 waitTimer.schedule(new WaitingForGameState(gameController, GameState.GameRunning), 3500);
@@ -423,7 +420,7 @@ public class FXMLController implements Initializable, Observer {
                 lblScore.setText(String.valueOf(gameController.getCurrentScore()));
                 setButtonCorrect(gameController.getCorrectAnswer());
                 waitTimer = new Timer(true);
-                
+
                 //Checks if game is over and continuesaccording to this check
                 if (gameController.getCurrentRoundIndex() + 1 == gameController.getGame().getAmountOfRounds()) {
                     waitTimer.schedule(new WaitingForGameState(gameController, GameState.GameFinished), 2500);
@@ -440,9 +437,9 @@ public class FXMLController implements Initializable, Observer {
         }
     }
 
-    
     /**
-     * Resets the game UI to the standard empty playing field so next round can start.
+     * Resets the game UI to the standard empty playing field so next round can
+     * start.
      */
     private void resetQuestionUI() {
         lblScore.setText(String.valueOf(gameController.getCurrentScore()));
@@ -459,27 +456,28 @@ public class FXMLController implements Initializable, Observer {
 
     /**
      * Fires when the gamecontroller object uses method setGameState.
+     *
      * @param o gameController
-     * @param arg 
+     * @param arg
      */
     @Override
     public void update(Observable o, Object arg) {
         checkGameState();
     }
-    
 
     /**
      * Adds text user typed to the chatlistview
      */
     @FXML
-    public void btnChatClicked(){
+    public void btnChatClicked() {
         String chatLine = txtChat.getText();
-        chatList.add(user.getNickname()+": " + chatLine);
+        chatList.add(user.getNickname() + ": " + chatLine);
         txtChat.setText("");
     }
-    
+
     /**
-     * fires when the button Spin is clicked. cancels the wait timer and starts the spinning gamestate.
+     * fires when the button Spin is clicked. cancels the wait timer and starts
+     * the spinning gamestate.
      */
     @FXML
     public void btnSpinClicked() {
@@ -488,7 +486,7 @@ public class FXMLController implements Initializable, Observer {
     }
 
     /**
-     * Starts an animation timer to spin the wheel. 
+     * Starts an animation timer to spin the wheel.
      */
     public void spinWheel() {
         //wheelspeed is random between 13 and 19 pixels per tick.
@@ -524,7 +522,6 @@ public class FXMLController implements Initializable, Observer {
         animationTimer.start();
     }
 
-    
     /**
      * Starts the game timer
      */
@@ -566,7 +563,9 @@ public class FXMLController implements Initializable, Observer {
     }
 
     /**
-     * Sets the button which represents the correct answer to green. Rest is set to red.
+     * Sets the button which represents the correct answer to green. Rest is set
+     * to red.
+     *
      * @param buttonIndex index of button which corresponds with correct answer
      */
     private void setButtonCorrect(int buttonIndex) {
@@ -593,7 +592,8 @@ public class FXMLController implements Initializable, Observer {
 
     /**
      * Sets the answer based on the button clicked.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void setAnswer(ActionEvent event) {
@@ -614,7 +614,8 @@ public class FXMLController implements Initializable, Observer {
     }
 
     /**
-     * Quit game. reset all timers and controllers to null. reset windows to Profile page
+     * Quit game. reset all timers and controllers to null. reset windows to
+     * Profile page
      */
     @FXML
     public void quitGame() {

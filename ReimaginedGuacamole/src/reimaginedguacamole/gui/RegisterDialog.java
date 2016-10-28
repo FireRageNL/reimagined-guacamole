@@ -28,6 +28,7 @@ import reimaginedguacamole.tooling.Hashing;
 public class RegisterDialog {
 
     public RegisterDialog() {
+        //Set all UI elements
         Dialog<LinkedHashMap> dialog = new Dialog<>();
         dialog.setTitle("Registreren");
         dialog.setHeaderText("Maak een nieuwe account aan");
@@ -58,6 +59,9 @@ public class RegisterDialog {
         grid.add(error, 1, 4);
         Node registerButton = dialog.getDialogPane().lookupButton(registerButtonType);
         registerButton.setDisable(true);
+        
+        
+        
         email.textProperty().addListener((observable, oldValue, newValue) -> {
             registerButton.setDisable(newValue.trim().isEmpty());
         });
@@ -66,6 +70,7 @@ public class RegisterDialog {
         dialog.setResultConverter(dialogButton -> {
             LinkedHashMap hm = new LinkedHashMap();
             if (dialogButton == registerButtonType) {
+                //Check if correct information has been provided
                 if (email.getText().isEmpty() || password.getText().isEmpty() || username.getText().isEmpty() || name.getText().isEmpty()) {
                     error.setText("Niet alle velden zijn ingevuld");
                     hm.put("Error", "1");
@@ -84,6 +89,7 @@ public class RegisterDialog {
             }
             return null;
         });
+        //Open the dialog and wait for result
         Optional<LinkedHashMap> result = dialog.showAndWait();
         while (result.isPresent()) {
             if(result.get().size() == 4){
@@ -98,10 +104,12 @@ public class RegisterDialog {
             }
         }
         if(result.isPresent() && result.get().size() == 4){
+        //If result is ok, insert into database.
         ProfileDB pdb = new ProfileDB();
         pdb.newUserRegistration("Profile", result.get());
     }}
 
+    //method that checks email.
     public boolean verifyEmail(String email) {
         Pattern pattern = Pattern.compile("^.+@.+\\..+$");
         Matcher matcher = pattern.matcher(email);
