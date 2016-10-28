@@ -140,8 +140,9 @@ public class GameController extends Observable{
      */
     public boolean checkAnswer(Profile profile, double timeLeft){
         GameDB gdb = new GameDB();
-        //Score is based on time, basic score = 50
-        int score = 50 + (200 - (int)(timeLeft * 100));
+        //Score is based on time, min score = 150
+        System.out.println("TIMELEFT:" + timeLeft);
+        int score = 50 + (100 + (int)(timeLeft * 100));
         //Checks if the correct answer is the same as givenanswer
         if(currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer){
             currentScore += score;

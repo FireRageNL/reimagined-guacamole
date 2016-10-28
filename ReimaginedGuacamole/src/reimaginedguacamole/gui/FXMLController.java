@@ -525,7 +525,7 @@ public class FXMLController implements Initializable, Observer {
 
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
-                    System.out.println(progress);
+                    //System.out.println(progress);
                     if (progress > 0) {
                         progress -= 0.003 / (roundDuration / 10);
                     } else {
