@@ -270,7 +270,7 @@
                         <Font name="System Bold" size="18.0" fx:id="x6" />
                       </font>
                     </Label>
-                    <Slider fx:id="sliderAmountOfRounds" layoutX="169.0" layoutY="417.0" majorTickUnit="1.0" max="15.0" min="5.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                    <Slider fx:id="sliderAmountOfRounds" layoutX="169.0" layoutY="417.0" majorTickUnit="1.0" max="10.0" min="5.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                     <Label font="$x6" layoutX="533.0" layoutY="405.0" text="Tijd per Ronde" />
                     <Slider fx:id="sliderTimePerRound" blockIncrement="10.0" layoutX="485.0" layoutY="417.0" majorTickUnit="1.0" max="20.0" min="10.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                   </children>
