@@ -6,7 +6,6 @@
 package reimaginedguacamole.profile;
 
 import java.util.ArrayList;
-import reimaginedguacamole.game.GameInfo;
 import java.util.List;
 import javafx.collections.ObservableList;
 import reimaginedguacamole.database.ProfileDB;
@@ -25,7 +24,6 @@ public class Profile {
     private int losses;
     private List<Achievement> achievements;
     private List<Statistic> statistics;
-    private List<GameInfo> GameHistory;
     private final ProfileDB pdb;
 
     public Profile(String email, String name, String nickname, int pid, int wins, int losses) {

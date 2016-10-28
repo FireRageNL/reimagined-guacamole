@@ -5,8 +5,6 @@
  */
 package reimaginedguacamole.profile;
 
-import reimaginedguacamole.game.GameInfo;
-import java.util.List;
 import reimaginedguacamole.game.Category;
 
 /**
@@ -18,7 +16,6 @@ public class Statistic {
     private Category category;
     private int right;
     private int wrong;
-    private List<GameInfo> QuestionStatistics;
     
     public Statistic(Category category, int right, int wrong) {
         this.category = category;
