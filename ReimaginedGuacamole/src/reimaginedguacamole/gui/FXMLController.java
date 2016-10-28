@@ -324,6 +324,8 @@ public class FXMLController implements Initializable, Observer {
         amountOfRounds = (int) sliderAmountOfRounds.getValue();
         gameController = new GameController(roundDuration, amountOfRounds);
         resetQuestionUI();
+        pbRoundTimer.setProgress(0);
+        chatList.clear();
         disableButtons(true);
         gameController.addObserver(this);
         gameController.setGameState(GameState.WaitingForCategory);
