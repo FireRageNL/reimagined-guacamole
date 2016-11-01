@@ -638,6 +638,7 @@ public class FXMLController implements Initializable, Observer {
     @FXML
     public void logOut() {
         user = null;
+        errorlabel.setText("");
         gameController = null;
         setWindows(1);
     }
