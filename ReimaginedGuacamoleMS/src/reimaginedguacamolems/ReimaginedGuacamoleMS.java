@@ -5,9 +5,9 @@
  */
 package reimaginedguacamolems;
 
+import reimaginedguacamolems.database.QuestionDB;
 import java.sql.SQLException;
 import java.util.List;
-import reimaginedguacamole.database.*;
 import reimaginedguacamole.game.Question;
 
 

@@ -8,7 +8,7 @@ package reimaginedguacamole.profile;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.ObservableList;
-import reimaginedguacamole.database.ProfileDB;
+import reimaginedguacamolems.database.ProfileDB;
 
 /**
  *Class that holds important profile information.
