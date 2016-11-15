@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" opacity="1.0" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLController">
   <children>
-    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="true">
+    <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="false">
       <children>
         <TextField id="gebruikersnaam" fx:id="txtUsername" layoutX="354.0" layoutY="235.0" prefHeight="25.0" prefWidth="190.0" promptText="Email" />
         <PasswordField id="wachtwoord" fx:id="txtPassword" layoutX="354.0" layoutY="260.0" prefHeight="25.0" prefWidth="190.0" promptText="Wachtwoord" />
@@ -256,23 +256,62 @@
                 </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Game">
+            <Tab text="Lobby">
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                    <Button layoutX="279.0" layoutY="177.0" mnemonicParsing="false" onAction="#startGame" prefHeight="178.0" prefWidth="316.0" text="Start Game">
-                      <font>
-                        <Font name="System Bold" size="40.0" fx:id="x3" />
-                      </font>
-                    </Button>
-                    <Label layoutX="218.0" layoutY="405.0" text="Aantal Rondes">
-                      <font>
-                        <Font name="System Bold" size="18.0" fx:id="x6" />
-                      </font>
-                    </Label>
-                    <Slider fx:id="sliderAmountOfRounds" layoutX="169.0" layoutY="417.0" majorTickUnit="1.0" max="10.0" min="5.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-                    <Label font="$x6" layoutX="533.0" layoutY="405.0" text="Tijd per Ronde" />
-                    <Slider fx:id="sliderTimePerRound" blockIncrement="10.0" layoutX="485.0" layoutY="417.0" majorTickUnit="1.0" max="20.0" min="10.0" minorTickCount="0" prefHeight="80.0" prefWidth="221.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                    <VBox layoutX="17.0" layoutY="11.0" prefHeight="559.0" prefWidth="827.0">
+                      <children>
+                        <Label text="Games" textAlignment="CENTER">
+                          <font>
+                            <Font name="System Bold" size="24.0" fx:id="x9" />
+                          </font>
+                          <VBox.margin>
+                            <Insets left="320.0" />
+                          </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="309.0" prefWidth="827.0">
+                          <children>
+                            <ListView prefHeight="452.0" prefWidth="695.0">
+                              <HBox.margin>
+                                <Insets right="10.0" fx:id="x8" />
+                              </HBox.margin>
+                            </ListView>
+                            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                              <children>
+                                <Button minHeight="25.0" minWidth="95.0" mnemonicParsing="false" onAction="#startGame" prefHeight="25.0" prefWidth="95.0" text="Create Game">
+                                  <font>
+                                    <Font name="System Bold" size="12.0" fx:id="x1" />
+                                  </font>
+                                </Button>
+                                <Button font="$x1" minHeight="25.0" minWidth="95.0" mnemonicParsing="false" onAction="#startGame" prefHeight="25.0" prefWidth="95.0" text="Join game">
+                                  <VBox.margin>
+                                    <Insets top="10.0" />
+                                  </VBox.margin>
+                                </Button>
+                                <Label font="$x1" text="Players" textAlignment="CENTER">
+                                  <VBox.margin>
+                                    <Insets bottom="5.0" top="30.0" />
+                                  </VBox.margin>
+                                </Label>
+                                <ListView prefHeight="195.0" prefWidth="100.0" />
+                              </children>
+                            </VBox>
+                          </children>
+                        </HBox>
+                        <ListView prefHeight="160.0" prefWidth="827.0">
+                          <VBox.margin>
+                            <Insets top="20.0" />
+                          </VBox.margin>
+                        </ListView>
+                        <HBox prefHeight="49.0" prefWidth="827.0">
+                          <children>
+                            <TextField prefHeight="46.0" prefWidth="717.0" />
+                            <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="110.0" text="Send" />
+                          </children>
+                        </HBox>
+                      </children>
+                    </VBox>
                   </children>
                 </AnchorPane>
               </content>
@@ -310,28 +349,61 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="false">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="638.9998779296875" prefWidth="906.0">
           <children>
-            <Label font="$x3" text="Quiz Trivia Crack">
+            <Label text="Quiz Trivia Crack">
+              <font>
+                <Font name="System Bold" size="40.0" fx:id="x3" />
+              </font>
               <graphic>
                 <HBox prefHeight="618.0" prefWidth="907.0000999999975">
                   <children>
                     <VBox alignment="TOP_CENTER" minWidth="70.0" prefHeight="618.0" prefWidth="302.0">
                       <children>
-                        <Label fx:id="lblGameName" alignment="CENTER" prefWidth="315.0" text="Name">
-                          <font>
-                            <Font name="Arial Black" size="36.0" fx:id="x1" />
-                          </font>
-                          <VBox.margin>
-                            <Insets top="10.0" />
-                          </VBox.margin>
-                        </Label>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label alignment="CENTER" font="$x1" text="Score:" />
-                            <Label fx:id="lblScore" alignment="CENTER" font="$x1" text="0" />
+                            <Label text="Player 1:">
+                              <font>
+                                <Font size="25.0" fx:id="x6" />
+                              </font>
+                            </Label>
+                            <Label font="$x6" text="100">
+                              <HBox.margin>
+                                <Insets left="20.0" />
+                              </HBox.margin>
+                            </Label>
+                          </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
+                          <children>
+                            <Label font="$x6" text="Player 2:" />
+                            <Label font="$x6" text="100">
+                              <HBox.margin>
+                                <Insets left="20.0" />
+                              </HBox.margin>
+                            </Label>
+                          </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
+                          <children>
+                            <Label font="$x6" text="Player 3:" />
+                            <Label font="$x6" text="100">
+                              <HBox.margin>
+                                <Insets left="20.0" />
+                              </HBox.margin>
+                            </Label>
+                          </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
+                          <children>
+                            <Label font="$x6" text="Player 4:" />
+                            <Label font="$x6" text="100">
+                              <HBox.margin>
+                                <Insets left="20.0" />
+                              </HBox.margin>
+                            </Label>
                           </children>
                         </HBox>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="false">
@@ -353,10 +425,7 @@
                     </VBox>
                     <VBox alignment="TOP_CENTER" prefHeight="625.0" prefWidth="585.0">
                       <children>
-                        <Label fx:id="lblQuestion" alignment="CENTER" prefHeight="127.0" prefWidth="585.0" text="Hier komt straks de vraag!" textAlignment="CENTER" wrapText="true">
-                          <font>
-                            <Font name="System Bold" size="24.0" />
-                          </font>
+                        <Label fx:id="lblQuestion" alignment="CENTER" font="$x9" prefHeight="127.0" prefWidth="585.0" text="Hier komt straks de vraag!" textAlignment="CENTER" wrapText="true">
                           <VBox.margin>
                             <Insets bottom="10.0" />
                           </VBox.margin>
