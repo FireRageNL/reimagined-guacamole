@@ -5,8 +5,14 @@
  */
 package reimaginedguacamole.gui;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.LinkedHashMap;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
@@ -17,12 +23,13 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-//import reimaginedguacamole.database.ProfileDB;
+import reimaginedguacamole.profile.IRegister;
 import reimaginedguacamole.tooling.Hashing;
 
 /**
  * TODO: niet laten crashen met een cancel maar netjes proberen af te handelen.
- *Class that creates a dialog for registering a user.
+ * Class that creates a dialog for registering a user.
+ *
  * @author roy_v
  */
 public class RegisterDialog {
@@ -59,9 +66,7 @@ public class RegisterDialog {
         grid.add(error, 1, 4);
         Node registerButton = dialog.getDialogPane().lookupButton(registerButtonType);
         registerButton.setDisable(true);
-        
-        
-        
+
         email.textProperty().addListener((observable, oldValue, newValue) -> {
             registerButton.setDisable(newValue.trim().isEmpty());
         });
@@ -92,7 +97,7 @@ public class RegisterDialog {
         //Open the dialog and wait for result
         Optional<LinkedHashMap> result = dialog.showAndWait();
         while (result.isPresent()) {
-            if(result.get().size() == 4){
+            if (result.get().size() == 4) {
                 break;
             }
             while (result.get().size() < 3) {
@@ -103,11 +108,17 @@ public class RegisterDialog {
                 }
             }
         }
-        if(result.isPresent() && result.get().size() == 4){
-        //If result is ok, insert into database.
-        //ProfileDB pdb = new ProfileDB();
-        //pdb.newUserRegistration("Profile", result.get());
-    }}
+        if (result.isPresent() && result.get().size() == 4) {
+            try {
+                //If result is ok, insert into database.
+                Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
+                IRegister register = (IRegister) reg2.lookup("Register");
+                register.registerNewUser(result.get());
+            } catch (RemoteException | NotBoundException ex) {
+                Logger.getLogger(RegisterDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     //method that checks email.
     public boolean verifyEmail(String email) {

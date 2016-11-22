@@ -123,8 +123,8 @@ public class ProfileDB extends Database {
 
     }
 
-    public void newUserRegistration(String profile, LinkedHashMap profileData) {
-        this.Insert(profile, profileData);
+    public void newUserRegistration(LinkedHashMap profileData) {
+        this.Insert("Profile", profileData);
         //gets the email from the profile and sets it in a string
         String email = (String) profileData.get("Email");
         //sets the userid

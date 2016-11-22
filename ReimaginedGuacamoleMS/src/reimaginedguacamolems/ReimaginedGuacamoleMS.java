@@ -12,6 +12,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import reimaginedguacamole.profile.Login;
+import reimaginedguacamole.profile.Register;
 
 /**
  *
@@ -30,9 +31,11 @@ public class ReimaginedGuacamoleMS {
         System.out.println("Starting uuup!");
         try {
             Login log = new Login();
+            Register register = new Register();
             Registry reg;
             reg = LocateRegistry.createRegistry(666);
             reg.rebind("Login",log);
+            reg.rebind("Register", register);
         } catch (RemoteException ex) {
             Logger.getLogger(ReimaginedGuacamoleMS.class.getName()).log(Level.SEVERE, null, ex);
         }
