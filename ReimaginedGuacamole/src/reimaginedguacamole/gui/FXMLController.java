@@ -36,6 +36,12 @@ import static reimaginedguacamole.game.GameState.*;
 import reimaginedguacamole.game.Round;
 import reimaginedguacamole.profile.*;
 import reimaginedguacamole.timertasks.*;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import reimaginedguacamole.tooling.Hashing;
 
 /**
  *
@@ -167,23 +173,30 @@ public class FXMLController implements Initializable, Observer {
     private void loginUser() {
         //Gets information from textfields
         String username = txtUsername.getText();
-        String password = txtPassword.getText();
+        String pass = txtPassword.getText();
 
         //Checks if textfields are not empty
-        if (!password.isEmpty() && !username.isEmpty()) {
-            Login log = new Login();
-            //Tries to log in
-            boolean loggedin = log.tryLogin(username, password);
+        if (!pass.isEmpty() && !username.isEmpty()) {
+            try {
+                Registry reg = LocateRegistry.getRegistry("145.93.105.128", 666);
+                ILogin log = (ILogin) reg.lookup("Login");
+                //Tries to log in
+                String password = Hashing.hashPassword(pass);
+                boolean loggedin = log.tryLogin(username, password);
 
-            if (loggedin) {
-                //gets user date from database and sets the window to the profile page.
-                user = log.getCurrentProfile(username);
-                fillProfileData();
-                setWindows(2);
-            } else {
-                errorlabel.setText("Gebruikersnaam/Wachtwoord fout");
+                if (loggedin) {
+                    //gets user date from database and sets the window to the profile page.
+                    user = log.getCurrentProfile(username);
+                    fillProfileData();
+                    setWindows(2);
+                } else {
+                    errorlabel.setText("Gebruikersnaam/Wachtwoord fout");
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null,ex);
             }
         }
+
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import reimaginedguacamole.profile.Login;
+
 
 /**
  *
@@ -28,7 +28,7 @@ public class Hashing {
             }
             return sb.toString();
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Hashing.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
