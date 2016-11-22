@@ -7,6 +7,8 @@ package reimaginedguacamole.profile;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import reimaginedguacamolems.database.ProfileDB;
 
 /**
@@ -22,7 +24,12 @@ public class Login extends UnicastRemoteObject implements ILogin {
     public boolean tryLogin(String username, String password) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
         boolean login = pdb.login(password, username);
-        System.out.println(login);
+        if (!login) {
+            Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try Failed");
+        } else {
+            Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try Succeded");
+
+        }
         return login;
     }
 
