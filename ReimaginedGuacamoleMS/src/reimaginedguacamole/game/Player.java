@@ -15,7 +15,15 @@ import reimaginedguacamole.profile.Profile;
 public class Player extends Profile{
     
     private int score;
-
+    /**
+     * Default constructor for player, adds all data to the right variables and sets score to 0
+     * @param email 
+     * @param name
+     * @param nickname
+     * @param pid
+     * @param wins
+     * @param losses 
+     */
     public Player(String email, String name, String nickname, int pid, int wins, int losses) {
         super(email, name, nickname, pid, wins, losses);
         score = 0;

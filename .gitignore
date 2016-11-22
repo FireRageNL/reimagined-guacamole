@@ -27,3 +27,5 @@ ReimaginedGuacamole/.jacocoverage/
 /ReimaginedGuacamoleMS/nbproject/private/
 ReimaginedGuacamoleMS/.jacocoverage/
 /ReimaginedGuacamoleMS/.jacocoverage/
+*.sonar_lock
+ReimaginedGuacamole/.sonar/report-task.txt

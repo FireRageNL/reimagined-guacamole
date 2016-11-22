@@ -16,16 +16,17 @@ public class Question {
     private String answer3;
     private String answer4;
     private int correctAnswer;
-    private Category Category;
-
-    public Question(String questionContents, String answer1, String answer2, String answer3, String answer4, int correctAnswer, Category Category) {
+    private Category category;
+    
+    //Constructor for a default question, contains the anwser, the right anwser, the question itself and what category it belongs to
+    public Question(String questionContents, String answer1, String answer2, String answer3, String answer4, int correctAnswer, Category category) {
         this.questionContents = questionContents;
         this.answer1 = answer1;
         this.answer2 = answer2;
         this.answer3 = answer3;
         this.answer4 = answer4;
         this.correctAnswer = correctAnswer;
-        this.Category = Category;
+        this.category = category;
     }
 
     public String getQuestionContents() {
@@ -53,7 +54,7 @@ public class Question {
     }
 
     public Category getCategory() {
-        return Category;
+        return category;
     }
     
     

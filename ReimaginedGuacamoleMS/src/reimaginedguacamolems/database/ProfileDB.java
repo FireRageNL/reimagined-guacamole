@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import reimaginedguacamole.game.Category;
@@ -33,7 +35,6 @@ public class ProfileDB extends Database {
      * @param password
      * @return true when user can be logged in, else false.
      */
-    
     //checks the login
     public boolean login(String password, String email) {
         //gets the password for the inserted email
@@ -97,7 +98,7 @@ public class ProfileDB extends Database {
             //returns the list
             return list;
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -117,7 +118,7 @@ public class ProfileDB extends Database {
             //closes the connection
             this.closeConnection();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -136,12 +137,14 @@ public class ProfileDB extends Database {
             this.Insert("Statistic", hm);
         }
     }
+
     //add a win to the profile
     public void addWin(Profile toSave) {
         LinkedHashMap hm = new LinkedHashMap();
         hm.put("Wins", Integer.toString(toSave.getWins()));
         this.Update("Profile", hm, "ProfileID", Integer.toString(toSave.getPid()));
     }
+
     //add a loss to the profile
     public void addLoss(Profile toSave) {
         LinkedHashMap hm = new LinkedHashMap();
@@ -167,7 +170,7 @@ public class ProfileDB extends Database {
             int rank = 1;
             //loops through results and adds it to the list
             while (rs.next()) {
-                Ranking add = new Ranking(rank,rs.getString(2),rs.getInt(1));
+                Ranking add = new Ranking(rank, rs.getString(2), rs.getInt(1));
                 rankings.add(add);
                 rank++;
             }
@@ -176,13 +179,14 @@ public class ProfileDB extends Database {
             //returns the list
             return rankings;
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
-    public ObservableList<History> getHistory(int username){
-        ObservableList<History> history =FXCollections.observableArrayList();
-        try{
+
+    public ObservableList<History> getHistory(int username) {
+        ObservableList<History> history = FXCollections.observableArrayList();
+        try {
             //opens the connection
             this.initConnection();
             //sets the statement
@@ -193,16 +197,16 @@ public class ProfileDB extends Database {
             //executes the query and puts restults in the resultset
             ResultSet rs = ps.executeQuery();
             //loops through the results and adds it to the list
-            while(rs.next()){
-                History add = new History(rs.getTimestamp(2).toString(),rs.getInt(1));
+            while (rs.next()) {
+                History add = new History(rs.getTimestamp(2).toString(), rs.getInt(1));
                 history.add(add);
             }
             //closes the connection
             this.closeConnection();
             //returns the list
             return history;
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

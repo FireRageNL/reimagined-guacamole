@@ -7,6 +7,8 @@ package reimaginedguacamolems.database;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.LinkedHashMap;
 import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.Profile;
@@ -27,48 +29,59 @@ public class GameDB extends Database {
                 toUpdate = s;
             }
         }
+        if(toUpdate!= null){
         //checks of question is right or wrong
-        if (right) {
-            toUpdate.setRight(1 + toUpdate.getRight());
-        } else {
-            toUpdate.setWrong(1 + toUpdate.getWrong());
+        try {
+            if (right) {
+                toUpdate.setRight(1 + toUpdate.getRight());
+            } else {
+                toUpdate.setWrong(1 + toUpdate.getWrong());
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
+
         }
-        try{
-        //opens the connection
-        this.initConnection();
-        //string to store the sql statement
-        String sql;
-        //sets the sql statement
-        if (right) {
-            System.out.println("Setting new rights statistic : "+ toUpdate.getRight());
-            sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
-        } else {
-            System.out.println("Setting new wrong statistic: "+ toUpdate.getWrong());
-            sql = "UPDATE Statistic SET Wrong = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
+        try {
+            //opens the connection
+            this.initConnection();
+            //string to store the sql statement
+            String sql;
+            //sets the sql statement
+            if (right) {
+                System.out.println("Setting new rights statistic : " + toUpdate.getRight());
+                sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
+            } else {
+                System.out.println("Setting new wrong statistic: " + toUpdate.getWrong());
+                sql = "UPDATE Statistic SET Wrong = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
+            }
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+            //sets the parameters
+            try {
+                if (right) {
+                    ps.setInt(1, toUpdate.getRight());
+                } else {
+                    ps.setInt(1, toUpdate.getWrong());
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+            ps.setInt(2, (cat.ordinal() + 1));
+            ps.setInt(3, prof.getPid());
+            //executes the query
+            ps.executeUpdate();
+            System.out.println("I has executed ze update");
+            //closes the connection
+            this.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        PreparedStatement ps = this.conn.prepareStatement(sql);
-        //sets the parameters
-        if(right){
-            ps.setInt(1, toUpdate.getRight());
         }
-        else if(!right){
-            ps.setInt(1, toUpdate.getWrong());
-        }
-        ps.setInt(2, (cat.ordinal() + 1));
-        ps.setInt(3,prof.getPid());
-        //executes the query
-        ps.executeUpdate();
-        System.out.println("I has executed ze update");
-        //closes the connection
-        this.closeConnection();
-        }
-        catch(SQLException ex){
-         System.out.println(ex.getMessage()); 
-        }
-        
+
     }
+
     //ends the game
-    public void endGame(int userid, int score){
+    public void endGame(int userid, int score) {
         //list to store profile and score
         LinkedHashMap hm = new LinkedHashMap();
         hm.put("Score", Integer.toString(score));

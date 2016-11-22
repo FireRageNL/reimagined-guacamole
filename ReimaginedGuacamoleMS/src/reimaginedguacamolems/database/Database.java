@@ -100,6 +100,7 @@ try {
             }
             //executes the query
             pst.executeUpdate();
+            pst.close();
             //closes the connection
             closeConnection();
         } catch (SQLException ex) {
@@ -135,6 +136,7 @@ try {
             //executes the query
             pst.executeUpdate();
             //closes the connection
+            pst.close();
             closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -158,6 +160,7 @@ try {
                 result = rs.getString(column);
             }
             //closes the connection
+            ps.close();
             closeConnection();
 
         } catch (SQLException ex) {
@@ -198,6 +201,7 @@ try {
                 }
             }
             //closes the connection
+            ps.close();
             closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -247,6 +251,7 @@ try {
                 }
             }
             closeConnection();
+            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }

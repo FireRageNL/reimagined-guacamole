@@ -26,6 +26,7 @@ public class Profile {
     private List<Statistic> statistics;
     private final ProfileDB pdb;
 
+    //Default constructor for 
     public Profile(String email, String name, String nickname, int pid, int wins, int losses) {
         this.email = email;
         this.name = name;
