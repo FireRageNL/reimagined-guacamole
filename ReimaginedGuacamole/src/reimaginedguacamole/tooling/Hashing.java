@@ -33,5 +33,3 @@ public class Hashing {
         }
     }
 }
-
-//test commit
