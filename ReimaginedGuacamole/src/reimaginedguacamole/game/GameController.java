@@ -8,7 +8,7 @@ package reimaginedguacamole.game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import reimaginedguacamole.database.GameDB;
+//import reimaginedguacamole.database.GameDB;
 import reimaginedguacamole.profile.Profile;
 
 /**
@@ -50,8 +50,8 @@ public class GameController extends Observable{
      * @param user Logged in profile
      */
     public void endGame(Profile user){
-        GameDB gdb = new GameDB();
-        gdb.endGame(user.getPid(), currentScore);
+        //GameDB gdb = new GameDB();
+        //gdb.endGame(user.getPid(), currentScore);
     }
 
     
@@ -139,7 +139,7 @@ public class GameController extends Observable{
      * @return 
      */
     public boolean checkAnswer(Profile profile, double timeLeft){
-        GameDB gdb = new GameDB();
+        //GameDB gdb = new GameDB();
         //Score is based on time, min score = 150
         System.out.println("TIMELEFT:" + timeLeft);
         int score = 50 + (100 + (int)(timeLeft * 100));
@@ -147,12 +147,12 @@ public class GameController extends Observable{
         if(currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer){
             currentScore += score;
             //Update the stats for this category and user with a +1 to the correct field.
-            gdb.updateStats(profile, currentRound.getQuestion().getCategory(), true);
+            //gdb.updateStats(profile, currentRound.getQuestion().getCategory(), true);
             return true;
         }
         else{
             //Update the stats for this category and user with a +1 to the Wrong field.
-            gdb.updateStats(profile, currentRound.getQuestion().getCategory(), false);
+            //gdb.updateStats(profile, currentRound.getQuestion().getCategory(), false);
             return false;
         }
         

@@ -17,7 +17,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import reimaginedguacamole.database.ProfileDB;
+//import reimaginedguacamole.database.ProfileDB;
 import reimaginedguacamole.tooling.Hashing;
 
 /**
@@ -105,8 +105,8 @@ public class RegisterDialog {
         }
         if(result.isPresent() && result.get().size() == 4){
         //If result is ok, insert into database.
-        ProfileDB pdb = new ProfileDB();
-        pdb.newUserRegistration("Profile", result.get());
+        //ProfileDB pdb = new ProfileDB();
+        //pdb.newUserRegistration("Profile", result.get());
     }}
 
     //method that checks email.

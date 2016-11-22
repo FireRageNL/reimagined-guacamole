@@ -8,7 +8,7 @@ package reimaginedguacamole.profile;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.ObservableList;
-import reimaginedguacamole.database.ProfileDB;
+//import reimaginedguacamole.database.ProfileDB;
 
 /**
  *Class that holds important profile information.
@@ -24,7 +24,7 @@ public class Profile {
     private int losses;
     private List<Achievement> achievements;
     private List<Statistic> statistics;
-    private final ProfileDB pdb;
+    //private final ProfileDB pdb;
 
     public Profile(String email, String name, String nickname, int pid, int wins, int losses) {
         this.email = email;
@@ -33,7 +33,7 @@ public class Profile {
         this.pid = pid;
         this.wins = wins;
         this.losses = losses;
-        pdb = new ProfileDB();
+        //pdb = new ProfileDB();
         achievements = new ArrayList<>();
 
     }
@@ -64,12 +64,12 @@ public class Profile {
 
     public void addWin() {
         wins++;
-        pdb.addWin(this);
+        //pdb.addWin(this);
     }
 
     public void addLoss() {
         losses++;
-        pdb.addLoss(this);
+        //pdb.addLoss(this);
     }
 
     public List<Statistic> getStatistics() {
@@ -82,7 +82,7 @@ public class Profile {
 
     public void setNickName(String nick) {
         this.nickname = nick;
-        pdb.saveNickname(this);
+        //pdb.saveNickname(this);
     }
     
     public List<Achievement> getAchievements(){
@@ -90,15 +90,17 @@ public class Profile {
     }
     public void addAchievement(Achievement toAdd){
         achievements.add(toAdd);
-        pdb.storeAchievement(toAdd,this);
+        //pdb.storeAchievement(toAdd,this);
     }
     
     public ObservableList<Ranking> getRankings(){
-       return pdb.getRankings();
+       //return pdb.getRankings();
+       return null;
     }
 
     public ObservableList<History> getHistory() {
-        return pdb.getHistory(pid);
+        //return pdb.getHistory(pid);
+        return null;
     }
 
 }

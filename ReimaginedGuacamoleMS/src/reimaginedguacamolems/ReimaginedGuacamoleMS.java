@@ -5,11 +5,13 @@
  */
 package reimaginedguacamolems;
 
-import reimaginedguacamolems.database.QuestionDB;
-import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import reimaginedguacamole.game.Question;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import reimaginedguacamole.profile.Login;
 
 /**
  *
@@ -25,17 +27,16 @@ public class ReimaginedGuacamoleMS {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Pulling random questions from db to test if code works");
-        QuestionDB db = new QuestionDB();
+        System.out.println("Starting uuup!");
         try {
-            List<String> list = db.GetQuestionsCategory(5);
-            List<Question> properList = db.GetQuestions(list);
-            properList.stream().forEach((s) -> {
-                System.out.println(s.getQuestionContents());
-            });
-        } catch (Exception ex) {
+            Login log = new Login();
+            Registry reg;
+            reg = LocateRegistry.createRegistry(666);
+            reg.rebind("Login",log);
+        } catch (RemoteException ex) {
             Logger.getLogger(ReimaginedGuacamoleMS.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
 }

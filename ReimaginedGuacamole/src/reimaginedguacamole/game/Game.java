@@ -6,7 +6,7 @@
 package reimaginedguacamole.game;
 
 import java.util.List;
-import reimaginedguacamole.database.QuestionDB;
+///import reimaginedguacamole.database.QuestionDB;
 
 /**
  *Class that holds all important game information
@@ -16,13 +16,13 @@ public class Game {
     
     private int amountOfRounds;
     private int roundDuration;
-    private QuestionDB QDB = new QuestionDB();
+    ///private QuestionDB QDB = new QuestionDB();
     List<Question> questionsList;
     
     public Game(int rounds, int duration){
         this.amountOfRounds = rounds;
         this.roundDuration = duration;
-        questionsList = QDB.getQuestions(rounds);
+        //questionsList = QDB.getQuestions(rounds);
         
     }
 
