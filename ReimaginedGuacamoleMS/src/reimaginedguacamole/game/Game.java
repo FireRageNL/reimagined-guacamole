@@ -19,7 +19,7 @@ public class Game extends UnicastRemoteObject implements IGame{
     private int amountOfRounds;
     private int roundDuration;
     ///private QuestionDB QDB = new QuestionDB();
-    List<Question> questionsList;
+    private List<Question> questionsList;
     
     public Game(int rounds, int duration)throws RemoteException {
         this.amountOfRounds = rounds;

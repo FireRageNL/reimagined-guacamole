@@ -90,7 +90,6 @@ public class GameController extends Observable{
                 break;
             }
         }
-        
     }
     
     public IGame getGame(){

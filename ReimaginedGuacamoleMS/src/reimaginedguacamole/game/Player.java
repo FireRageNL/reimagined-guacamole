@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.game;
 
+import java.rmi.RemoteException;
 import reimaginedguacamole.profile.Profile;
 
 
@@ -24,7 +25,7 @@ public class Player extends Profile implements IPlayer{
      * @param wins
      * @param losses 
      */
-    public Player(String email, String name, String nickname, int pid, int wins, int losses) {
+    public Player(String email, String name, String nickname, int pid, int wins, int losses) throws RemoteException {
         super(email, name, nickname, pid, wins, losses);
         score = 0;
     }
