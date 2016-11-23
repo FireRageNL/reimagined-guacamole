@@ -5,28 +5,40 @@
  */
 package reimaginedguacamole.game;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 /**
- *Class which contains the information about the current round
+ * Class which contains the information about the current round
+ *
  * @author daan
  */
-public class Round {
+public class Round extends UnicastRemoteObject implements IRound {
+
     private Question question;
     private int givenAnswer;
-    
-    public Round(){
+
+    public Round() throws RemoteException{
 
     }
 
+    @Override
     public Question getQuestion() {
         return question;
     }
-    public void setQuestion(Question question){
+
+    @Override
+    public void setQuestion(Question question) {
         this.question = question;
     }
-    public void setGivenAnswer(int answer){
+
+    @Override
+    public void setGivenAnswer(int answer) {
         this.givenAnswer = answer;
     }
-    public int getGivenAnswer(){
+
+    @Override
+    public int getGivenAnswer() {
         return givenAnswer;
     }
 }

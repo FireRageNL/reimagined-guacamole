@@ -18,19 +18,19 @@ import reimaginedguacamole.profile.Profile;
  */
 public class GameController extends Observable{
     
-    private Game game;
-    private List<Round> rounds;
+    private IGame game;
+    private List<IRound> rounds;
     private int currentRoundIndex;
     private GameState gameState;
-    private Round  currentRound;
+    private IRound  currentRound;
     private int currentAnswer;
     private int currentScore;
     
     public GameController(int duration, int amountOfRounds){
-        game = new Game(amountOfRounds, duration);
+//        game = new IGame(amountOfRounds, duration);
         rounds = new ArrayList<>();
         for(int i =0; i < amountOfRounds; i++){
-            rounds.add(new Round());
+//            rounds.add(new Round());
         }
         currentRoundIndex = -1;
         currentScore = 0;
@@ -73,7 +73,7 @@ public class GameController extends Observable{
     }
     
 
-    public Round getCurrentRound() {
+    public IRound getCurrentRound() {
         return currentRound;
     }
     
@@ -93,7 +93,7 @@ public class GameController extends Observable{
         
     }
     
-    public Game getGame(){
+    public IGame getGame(){
         return game;
     }
     

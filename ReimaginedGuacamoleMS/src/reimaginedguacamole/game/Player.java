@@ -12,7 +12,7 @@ import reimaginedguacamole.profile.Profile;
  *Player is a player in the game. in this version still obsolete because we only need the profile class
  * @author Marc
  */
-public class Player extends Profile{
+public class Player extends Profile implements IPlayer{
     
     private int score;
     /**
@@ -29,10 +29,12 @@ public class Player extends Profile{
         score = 0;
     }
 
+    @Override
     public void setScore(int score) {
         this.score = score;
     }
 
+    @Override
     public int getScore() {
         return score;
     }

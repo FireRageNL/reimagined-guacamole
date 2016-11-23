@@ -5,24 +5,34 @@
  */
 package reimaginedguacamole.game;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 /**
  *class that holds information about the powerups.
  * @author Marc
  */
-public class PowerUp {
+public class PowerUp extends UnicastRemoteObject implements IPowerUp{
     
     private String description;
     private String name;
 
-    public PowerUp(String name, String description) {
+    /**
+     *
+     * @param name
+     * @param description
+     */
+    public PowerUp(String name, String description) throws RemoteException{
         this.description = description;
         this.name = name;
     }
         
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public String getName() {
         return name;
     }    

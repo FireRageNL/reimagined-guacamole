@@ -34,7 +34,7 @@ import javafx.scene.layout.Pane;
 import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.GameState;
 import static reimaginedguacamole.game.GameState.*;
-import reimaginedguacamole.game.Round;
+import reimaginedguacamole.game.IRound;
 import reimaginedguacamole.profile.*;
 import reimaginedguacamole.timertasks.*;
 import java.rmi.RemoteException;
@@ -365,7 +365,7 @@ public class FXMLController implements Initializable, Observer {
      */
     private void checkGameState() {
 
-        Round round;
+        IRound round;
 
         switch (gameController.getGameState()) {
             //Waiting is not used in this version yet. future version will wait for other players
