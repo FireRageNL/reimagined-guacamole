@@ -54,7 +54,6 @@ public class Statistic {
         return (int)percentage;
     }
 
-    
-
+    //test commit
     
 }
