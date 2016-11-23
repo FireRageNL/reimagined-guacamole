@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.Achievement;
 import reimaginedguacamole.profile.History;
@@ -183,7 +181,7 @@ public class ProfileDB extends Database {
  * Function to get all the rankings
  * @return A list of all the rankings in the DB
  */
-    public ArrayList<Ranking> getRankings() {
+    public List<Ranking> getRankings() {
         ArrayList<Ranking> rankings = new ArrayList();
         try {
             //opens the connection
@@ -206,7 +204,7 @@ public class ProfileDB extends Database {
             return rankings;
         } catch (Exception ex) {
             Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            return new ArrayList<Ranking>();
         }
     }
     /**
@@ -214,7 +212,7 @@ public class ProfileDB extends Database {
      * @param username is the user to get the gamehistory from
      * @return The gamehistory in the DB
      */
-    public ArrayList<History> getHistory(int username) {
+    public List<History> getHistory(int username) {
         ArrayList<History> history = new ArrayList();
         try {
             //opens the connection
@@ -237,7 +235,7 @@ public class ProfileDB extends Database {
             return history;
         } catch (Exception ex) {
             Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            return new ArrayList<History>();
         }
     }
 }

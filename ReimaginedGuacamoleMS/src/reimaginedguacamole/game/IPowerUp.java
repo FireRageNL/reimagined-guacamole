@@ -14,7 +14,19 @@ import java.rmi.RemoteException;
  */
 public interface IPowerUp extends Remote {
 
-    public String getDescription()throws RemoteException;
+    /**
+     * Get the description of the powerup
+     *
+     * @return the description of the powerup
+     * @throws RemoteException
+     */
+    public String getDescription() throws RemoteException;
 
-    public String getName()throws RemoteException;
+    /**
+     * Get the name of the powerup
+     *
+     * @return the name of the powerup
+     * @throws RemoteException
+     */
+    public String getName() throws RemoteException;
 }

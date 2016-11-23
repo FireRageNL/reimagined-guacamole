@@ -15,103 +15,114 @@ import java.util.Observable;
 import reimaginedguacamole.profile.IProfile;
 
 /**
- *This class handles all game mechanics
- * It is an observable class with the FXMLController as its observer.
+ * This class handles all game mechanics It is an observable class with the
+ * FXMLController as its observer.
+ *
  * @author daan
  */
-public class GameController extends Observable{
-    
+public class GameController extends Observable {
+
     private IGame game;
     private List<IRound> rounds;
     private int currentRoundIndex;
     private GameState gameState;
-    private IRound  currentRound;
+    private IRound currentRound;
     private int currentAnswer;
     private int currentScore;
-    
-    public GameController(int duration, int amountOfRounds) throws RemoteException, NotBoundException{
+
+    public GameController(int duration, int amountOfRounds) throws RemoteException, NotBoundException {
         Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
         game = (IGame) reg.lookup("Game");
         game.setAmountOfRounds(amountOfRounds);
         game.setRoundDuration(duration);
         rounds = new ArrayList<>();
         IRound temp = (IRound) reg.lookup("Round");
-        for(int i =0; i < amountOfRounds; i++){
+        for (int i = 0; i < amountOfRounds; i++) {
             rounds.add(temp.createRound());
         }
         currentRoundIndex = -1;
         currentScore = 0;
     }
-    
+
     /**
      * Starts the next round and sets currentRound to the new Round object
      */
-    public void startNextRound(){
+    public void startNextRound() {
         currentRoundIndex++;
         currentRound = rounds.get(currentRoundIndex);
-        
+
     }
-    
+
     /**
      * Ends the game and uploads the game information to the database
+     *
      * @param user Logged in profile
      */
-    public void endGame(IProfile user) throws RemoteException{
-        
+    public void endGame(IProfile user) throws RemoteException {
+
         game.endGame(user.getPid(), currentScore);
     }
 
-    
     /**
-     * Chooses a category based on the rotation of the wheel.
-     * categories are divided in 7 equal parts.
+     * Chooses a category based on the rotation of the wheel. categories are
+     * divided in 7 equal parts.
+     *
      * @param wheel rotation of the wheel at this time
      * @return Category enum type
      */
-    public Category chooseCategory(double wheel){
+    public Category chooseCategory(double wheel) {
         double rotation = 360 - wheel;
-        if(rotation >= 0 && rotation <= 51){return Category.SPORT;}
-        else if(rotation > 51 && rotation <= 103){return Category.ENTERTAINMENT;}
-        else if(rotation > 103 && rotation <= 155){return Category.ART;}
-        else if(rotation > 155 && rotation <= 207){return Category.SCIENCE;}
-        else if(rotation > 207 && rotation <= 259){return Category.MUSIC;}
-        else if(rotation > 259 && rotation <= 311){return Category.GAMES;}
-        else{return Category.HISTORY;}        
+        if (rotation >= 0 && rotation <= 51) {
+            return Category.SPORT;
+        } else if (rotation > 51 && rotation <= 103) {
+            return Category.ENTERTAINMENT;
+        } else if (rotation > 103 && rotation <= 155) {
+            return Category.ART;
+        } else if (rotation > 155 && rotation <= 207) {
+            return Category.SCIENCE;
+        } else if (rotation > 207 && rotation <= 259) {
+            return Category.MUSIC;
+        } else if (rotation > 259 && rotation <= 311) {
+            return Category.GAMES;
+        } else {
+            return Category.HISTORY;
+        }
     }
-    
 
     public IRound getCurrentRound() {
         return currentRound;
     }
-    
+
     /**
-     * Inserts a question into the round object based on the chosen category 
+     * Inserts a question into the round object based on the chosen category
      * then removes this question from the orgiinal list.
-     * @param category 
+     *
+     * @param category
      */
-    public void giveRoundQuestion(Category category) throws RemoteException{
-        for(IQuestion q : game.getQuestionsList()){
-            if(q.getCategory() == category){
+    public void giveRoundQuestion(Category category) throws RemoteException {
+        for (IQuestion q : game.getQuestionsList()) {
+            if (q.getCategory() == category) {
                 currentRound.setQuestion(q);
                 game.getQuestionsList().remove(q);
                 break;
             }
         }
     }
-    
-    public IGame getGame(){
+
+    public IGame getGame() {
         return game;
     }
-    
-    public GameState getGameState(){
+
+    public GameState getGameState() {
         return gameState;
     }
-    
+
     /**
      * Sets the gamestate and notifies the Observer so the game can update.
-     * @param gameState 
+     *
+     * @param gameState
      */
-    public void setGameState(GameState gameState){
+    public void setGameState(GameState gameState) {
         this.gameState = gameState;
         this.setChanged();
         this.notifyObservers(gameState);
@@ -124,8 +135,8 @@ public class GameController extends Observable{
     public void setCurrentAnswer(int currentAnswer) {
         this.currentAnswer = currentAnswer;
     }
-    
-    public int getCorrectAnswer() throws RemoteException{
+
+    public int getCorrectAnswer() throws RemoteException {
         return currentRound.getQuestion().getCorrectAnswer();
     }
 
@@ -136,33 +147,30 @@ public class GameController extends Observable{
     public int getCurrentRoundIndex() {
         return currentRoundIndex;
     }
-    
-    
+
     /**
      * Checks the answer given and adds the score based on time.
+     *
      * @param profile
      * @param timeLeft
-     * @return 
+     * @return
      */
-    public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException{
+    public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException {
         //Score is based on time, min score = 150
         System.out.println("TIMELEFT:" + timeLeft);
-        int score = 50 + (100 + (int)(timeLeft * 100));
+        int score = 50 + (100 + (int) (timeLeft * 100));
         //Checks if the correct answer is the same as givenanswer
-        if(currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer){
+        if (currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer) {
             currentScore += score;
             //Update the stats for this category and user with a +1 to the correct field.
             game.updateStats(profile, currentRound.getQuestion().getCategory(), true);
             return true;
-        }
-        else{
+        } else {
             //Update the stats for this category and user with a +1 to the Wrong field.
             game.updateStats(profile, currentRound.getQuestion().getCategory(), false);
             return false;
         }
-        
+
     }
-    
-    
-   
+
 }

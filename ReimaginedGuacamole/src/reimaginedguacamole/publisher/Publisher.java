@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Shared;
+package reimaginedguacamole.publisher;
 
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
@@ -241,7 +241,7 @@ public class Publisher {
      */
     public void registerProperty(String property) {
         if (property.equals("")) {
-            throw new RuntimeException("a property cannot be an empty string");
+            throw new IllegalArgumentException("a property cannot be an empty string");
         }
         
         if (propertyListeners.containsKey(property)) {
@@ -309,9 +309,9 @@ public class Publisher {
 
     // Check whether property is registered
     private void checkInBehalfOfProgrammer(String property)
-            throws RuntimeException {
+            throws IllegalArgumentException {
         if (!propertyListeners.containsKey(property)) {
-            throw new RuntimeException("property " + property + " is not a "
+            throw new IllegalArgumentException("property " + property + " is not a "
                     + "published property, please make a choice out of: "
                     + propertiesString);
         }

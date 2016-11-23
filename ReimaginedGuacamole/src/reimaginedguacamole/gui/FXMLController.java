@@ -312,7 +312,7 @@ public class FXMLController implements Initializable, Observer {
         }
 
         //Sets the rankings retrieved from the database
-        ArrayList<IRanking> ranks = user.getRankings();
+        ArrayList<IRanking> ranks = (ArrayList) user.getRankings();
         colRank.setCellValueFactory(
                 new PropertyValueFactory<>("Rank"));
         colScore.setCellValueFactory(
@@ -321,7 +321,7 @@ public class FXMLController implements Initializable, Observer {
         tableRank.setItems(FXCollections.observableArrayList(ranks));
 
         //Sets the listview for the history with the games user has played.
-        ArrayList<IHistory> history = user.getHistory();
+        ArrayList<IHistory> history = (ArrayList) user.getHistory();
         colDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
         colScores.setCellValueFactory(new PropertyValueFactory<>("Score"));
         tableHistory.setItems(FXCollections.observableArrayList(history));

@@ -23,17 +23,16 @@ public class Game extends UnicastRemoteObject implements IGame {
     
     private int amountOfRounds;
     private int roundDuration;
-    private QuestionDB QDB = new QuestionDB();
-    private GameDB GDB = new GameDB();
+    private QuestionDB qDB = new QuestionDB();
+    private GameDB gDB = new GameDB();
     private List<IQuestion> questionsList;
-    
-    public Game(int rounds, int duration) throws RemoteException {
-        this.amountOfRounds = rounds;
-        this.roundDuration = duration;
-        questionsList = QDB.getQuestions(rounds);
-    }
-    
+
+    /**
+     * Default public constructor to create a empty game
+     * @throws RemoteException 
+     */
     public Game() throws RemoteException {
+        //Default constructor
     }
     
     @Override
@@ -60,18 +59,18 @@ public class Game extends UnicastRemoteObject implements IGame {
     @Override
     public void setAmountOfRounds(int amount) throws RemoteException {
         this.amountOfRounds = amount;
-        questionsList = QDB.getQuestions(amount);
+        questionsList = qDB.getQuestions(amount);
         Logger.getLogger(Game.class.getName()).log(Level.INFO, "Amount of rounds set as: " + amount);
     }
     
     @Override
     public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException {
-        GDB.updateStats(prof, cat, right);
+        gDB.updateStats(prof, cat, right);
     }
     
     @Override
     public void endGame(int userID, int score) throws RemoteException {
-        GDB.endGame(userID, score);
+        gDB.endGame(userID, score);
         Logger.getLogger(Game.class.getCanonicalName()).log(Level.INFO,"Game for user "+ userID+" finished with a score of "+ score);
     }
     

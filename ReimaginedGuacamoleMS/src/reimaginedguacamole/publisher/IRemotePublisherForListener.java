@@ -7,7 +7,6 @@ package reimaginedguacamole.publisher;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
 
 /**
  * IRemotePublisherForListener. Interface to remote publisher in order to subscribe 

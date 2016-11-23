@@ -14,8 +14,20 @@ import java.rmi.RemoteException;
  */
 public interface IPlayer extends Remote {
 
-    public void setScore(int score)throws RemoteException;
+    /**
+     * Set the score of the player
+     *
+     * @param score the score to be set
+     * @throws RemoteException
+     */
+    public void setScore(int score) throws RemoteException;
 
-    public int getScore()throws RemoteException;
+    /**
+     * Get the score of a player
+     *
+     * @return the score of the player
+     * @throws RemoteException
+     */
+    public int getScore() throws RemoteException;
 
 }
