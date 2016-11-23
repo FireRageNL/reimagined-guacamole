@@ -6,6 +6,7 @@
 package reimaginedguacamole.gui;
 
 import java.net.URL;
+import java.rmi.NotBoundException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
@@ -178,7 +179,7 @@ public class FXMLController implements Initializable, Observer {
         //Checks if textfields are not empty
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
-                Registry reg = LocateRegistry.getRegistry("145.93.105.128", 666);
+                Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
                 ILogin log = (ILogin) reg.lookup("Login");
                 //Tries to log in
                 String password = Hashing.hashPassword(pass);
@@ -193,7 +194,7 @@ public class FXMLController implements Initializable, Observer {
                     errorlabel.setText("Gebruikersnaam/Wachtwoord fout");
                 }
             } catch (Exception ex) {
-                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null,ex);
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -201,6 +202,7 @@ public class FXMLController implements Initializable, Observer {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         //Set window to loginpage
         setWindows(1);
         //initializes the chatlist for later usage and sets the style.
@@ -248,7 +250,7 @@ public class FXMLController implements Initializable, Observer {
      * @param event
      */
     @FXML
-    private void clickRegister(MouseEvent event) {
+    private void clickRegister(MouseEvent event) throws RemoteException, NotBoundException {
         RegisterDialog regdialog = new RegisterDialog();
     }
 

@@ -29,3 +29,4 @@ ReimaginedGuacamoleMS/.jacocoverage/
 /ReimaginedGuacamoleMS/.jacocoverage/
 *.sonar_lock
 ReimaginedGuacamole/.sonar/report-task.txt
+ReimaginedGuacamoleMS/.sonar/report-task.txt

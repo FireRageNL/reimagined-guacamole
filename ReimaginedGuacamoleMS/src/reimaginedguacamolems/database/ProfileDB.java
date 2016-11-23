@@ -38,7 +38,7 @@ public class ProfileDB extends Database {
     //checks the login
     public boolean login(String password, String email) {
         //gets the password for the inserted email
-        String dbPassword = this.ReadStringWithCondition("Password", "Profile", "Email", email);
+        String dbPassword = this.readStringWithCondition("Password", "Profile", "Email", email);
         //checks if input is the same as in the database
         return password.equals(dbPassword);
     }
@@ -60,7 +60,7 @@ public class ProfileDB extends Database {
         Columns.add("Wins");
         Columns.add("Losses");
         //gets the result for the user with current email
-        List<String> results = this.ReadStringWithCondition(Columns, "Profile", "Email", email);
+        List<String> results = this.readStringWithCondition(Columns, "Profile", "Email", email);
         //sets profileID 
         int pid = Integer.parseInt(results.get(3));
         // sets wins
@@ -123,18 +123,18 @@ public class ProfileDB extends Database {
 
     }
 
-    public void newUserRegistration(String profile, LinkedHashMap profileData) {
-        this.Insert(profile, profileData);
+    public void newUserRegistration(LinkedHashMap profileData) {
+        this.insert("Profile", profileData);
         //gets the email from the profile and sets it in a string
         String email = (String) profileData.get("Email");
         //sets the userid
-        int userID = Integer.parseInt(this.ReadStringWithCondition("ProfileID", "Profile", "Email", email));
+        int userID = Integer.parseInt(this.readStringWithCondition("ProfileID", "Profile", "Email", email));
         //list to store profile id and category statistics
         LinkedHashMap hm = new LinkedHashMap();
         hm.put("Profile_ProfileID", Integer.toString(userID));
         for (int i = 1; i <= 7; i++) {
             hm.put("Category_CategoryID", Integer.toString(i));
-            this.Insert("Statistic", hm);
+            this.insert("Statistic", hm);
         }
     }
 
@@ -142,14 +142,14 @@ public class ProfileDB extends Database {
     public void addWin(Profile toSave) {
         LinkedHashMap hm = new LinkedHashMap();
         hm.put("Wins", Integer.toString(toSave.getWins()));
-        this.Update("Profile", hm, "ProfileID", Integer.toString(toSave.getPid()));
+        this.update("Profile", hm, "ProfileID", Integer.toString(toSave.getPid()));
     }
 
     //add a loss to the profile
     public void addLoss(Profile toSave) {
         LinkedHashMap hm = new LinkedHashMap();
         hm.put("Losses", Integer.toString(toSave.getLosses()));
-        this.Update("Profile", hm, "ProfileID", Integer.toString(toSave.getPid()));
+        this.update("Profile", hm, "ProfileID", Integer.toString(toSave.getPid()));
     }
 
     public void storeAchievement(Achievement toAdd, Profile aThis) {

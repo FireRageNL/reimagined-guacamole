@@ -87,6 +87,6 @@ public class GameDB extends Database {
         hm.put("Score", Integer.toString(score));
         hm.put("Profile_ProfileID", Integer.toString(userid));
         //updates the score of the profile
-        this.Insert("GameInfo", hm);
+        this.insert("GameInfo", hm);
     }
 }

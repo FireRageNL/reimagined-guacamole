@@ -24,19 +24,16 @@ public class QuestionDB extends Database {
      * @return List of Question objects
      */
     public List<Question> getQuestions(int amount){
-        List<Question> Questions = GetQuestions(GetQuestionsCategory(amount));
-        return Questions;
+        return GetQuestions(GetQuestionsCategory(amount));
     }
     //gets a single question 
-    public Question GetSingleQuestion(String QuestionID){
+    public Question getSingleQuestion(String QuestionID){
         //sets the data to get
-        List<String> Data = new ArrayList<>(Arrays.asList("Question","Answer1","Answer2","Answer3","Answer4","CorrectAnswer","Category_CategoryID"));
+        List<String> data = new ArrayList<>(Arrays.asList("Question","Answer1","Answer2","Answer3","Answer4","CorrectAnswer","Category_CategoryID"));
        //gets the question by id
-        List<String> QuestionContent = this.ReadStringWithCondition(Data, "Question", "QuestionID", QuestionID);
-        //makes the question
-        Question q = new Question(QuestionContent.get(0),QuestionContent.get(1),QuestionContent.get(2),QuestionContent.get(3),QuestionContent.get(4),Integer.parseInt(QuestionContent.get(5)),(Category.values()[(Integer.parseInt(QuestionContent.get(6))-1)]));
-        //returns the question
-        return q;
+        List<String> questionContent = this.readStringWithCondition(data, "Question", "QuestionID", QuestionID);
+        //makes the question and returns it
+        return new Question(questionContent.get(0),questionContent.get(1),questionContent.get(2),questionContent.get(3),questionContent.get(4),Integer.parseInt(questionContent.get(5)),Category.values()[Integer.parseInt(questionContent.get(6))-1]);
     }
     //gets list of questions by question id's
     public List<Question> GetQuestions(List<String> QuestionIDs){
@@ -48,7 +45,7 @@ public class QuestionDB extends Database {
         List<String> QuestionContent = this.ReadWithInCondition(Data, "Question", "QuestionID", QuestionIDs,QuestionIDs.size());
         //loops through results and makes the questions
         for (int i = 0; i < QuestionContent.size(); i+=7) {
-             Questions.add(new Question(QuestionContent.get(i),QuestionContent.get(i+1),QuestionContent.get(i+2),QuestionContent.get(i+3),QuestionContent.get(i+4),Integer.parseInt(QuestionContent.get(i+5)),(Category.values()[(Integer.parseInt(QuestionContent.get(i+6))-1)])));
+             Questions.add(new Question(QuestionContent.get(i),QuestionContent.get(i+1),QuestionContent.get(i+2),QuestionContent.get(i+3),QuestionContent.get(i+4),Integer.parseInt(QuestionContent.get(i+5)),Category.values()[Integer.parseInt(QuestionContent.get(i+6))-1]));
         } 
         //returns the questions
         return Questions;
@@ -64,7 +61,7 @@ public class QuestionDB extends Database {
             //creates a list with questionID as content
              List<String> Data = new ArrayList<>(Arrays.asList("QuestionID"));
              //list that contains all questions for the current category
-             List<String> QuestionContent = this.ReadStringWithCondition(Data, "Question", "Category_CategoryID",(Integer.toString(i)));
+             List<String> QuestionContent = this.readStringWithCondition(Data, "Question", "Category_CategoryID",(Integer.toString(i)));
              //loops for the amount of questions wanted
              for (int j = 1; j <= amount; j++) {
                  //selects random id from the list
