@@ -5,6 +5,7 @@
  */
 package reimaginedguacamolems.database;
 
+import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class ProfileDB extends Database {
      * @return Profile object
      */
     //gets the user profile
-    public Profile getProfileData(String email) {
+    public Profile getProfileData(String email) throws RemoteException {
         //list for the columns to get from the database
         List<String> columns = new ArrayList<>();
         columns.add("Name");
