@@ -28,7 +28,6 @@ public class Login extends UnicastRemoteObject implements ILogin {
             Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try Failed");
         } else {
             Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try Succeded");
-
         }
         return login;
     }
