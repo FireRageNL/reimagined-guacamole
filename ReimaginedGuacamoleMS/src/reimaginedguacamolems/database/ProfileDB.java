@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -52,15 +53,15 @@ public class ProfileDB extends Database {
     //gets the user profile
     public Profile getProfileData(String email) {
         //list for the columns to get from the database
-        List<String> Columns = new ArrayList<>();
-        Columns.add("Name");
-        Columns.add("Email");
-        Columns.add("Nickname");
-        Columns.add("ProfileID");
-        Columns.add("Wins");
-        Columns.add("Losses");
+        List<String> columns = new ArrayList<>();
+        columns.add("Name");
+        columns.add("Email");
+        columns.add("Nickname");
+        columns.add("ProfileID");
+        columns.add("Wins");
+        columns.add("Losses");
         //gets the result for the user with current email
-        List<String> results = this.readStringWithCondition(Columns, "Profile", "Email", email);
+        List<String> results = this.readStringWithCondition(columns, "Profile", "Email", email);
         //sets profileID 
         int pid = Integer.parseInt(results.get(3));
         // sets wins
@@ -75,9 +76,13 @@ public class ProfileDB extends Database {
         ret.setStatistics(list);
         return ret;
     }
-
+    /**
+     * Gets the statistics from a certain user
+     * @param userID the user to get the ID from
+     * @return all the statistics from said user
+     */
     public List<Statistic> getStatistics(int userID) {
-        List<Statistic> list = new ArrayList<Statistic>();
+        List<Statistic> list = new ArrayList<>();
         try {
             //opens the connection
             this.initConnection();
@@ -90,7 +95,7 @@ public class ProfileDB extends Database {
             ResultSet rs = ps.executeQuery();
             // loops through the results and creates and adds the statistics to the list
             while (rs.next()) {
-                Statistic add = new Statistic(Category.values()[((rs.getInt(3)) - 1)], rs.getInt(1), rs.getInt(2));
+                Statistic add = new Statistic(Category.values()[(rs.getInt(3)) - 1], rs.getInt(1), rs.getInt(2));
                 list.add(add);
             }
             //closes the connection
@@ -99,10 +104,13 @@ public class ProfileDB extends Database {
             return list;
         } catch (Exception ex) {
             Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            return new ArrayList<>();
         }
     }
-
+    /**
+     * Change the nickname in the database from a certain profile.
+     * @param toSave Profile to change and save.
+     */
     public void saveNickname(Profile toSave) {
         try {
             //opens the connection
@@ -122,8 +130,11 @@ public class ProfileDB extends Database {
         }
 
     }
-
-    public void newUserRegistration(LinkedHashMap profileData) {
+    /**
+     * Function to save a new registered user
+     * @param profileData Data to enter into database to save the user
+     */
+    public void newUserRegistration(Map profileData) {
         this.insert("Profile", profileData);
         //gets the email from the profile and sets it in a string
         String email = (String) profileData.get("Email");
@@ -138,25 +149,38 @@ public class ProfileDB extends Database {
         }
     }
 
-    //add a win to the profile
+    /**
+     * Function that is called when someone wins a game
+     * @param toSave The profile to alter
+     */
     public void addWin(Profile toSave) {
         LinkedHashMap hm = new LinkedHashMap();
         hm.put("Wins", Integer.toString(toSave.getWins()));
         this.update("Profile", hm, "ProfileID", Integer.toString(toSave.getPid()));
     }
 
-    //add a loss to the profile
+    /**
+     * Function that is called when someone loses a game
+     * @param toSave The profile to alter
+     */
     public void addLoss(Profile toSave) {
         LinkedHashMap hm = new LinkedHashMap();
         hm.put("Losses", Integer.toString(toSave.getLosses()));
         this.update("Profile", hm, "ProfileID", Integer.toString(toSave.getPid()));
     }
-
+    /**
+     * Function to add an achievement to a profile
+     * @param toAdd The achievement to add
+     * @param aThis The profile that gained the achievement
+     */
     public void storeAchievement(Achievement toAdd, Profile aThis) {
 //Should have so is not implemented yet
 
     }
-
+/**
+ * Function to get all the rankings
+ * @return A list of all the rankings in the DB
+ */
     public ObservableList<Ranking> getRankings() {
         ObservableList<Ranking> rankings = FXCollections.observableArrayList();
         try {
@@ -183,7 +207,11 @@ public class ProfileDB extends Database {
             return null;
         }
     }
-
+    /**
+     * Function to get all the played games by a user
+     * @param username is the user to get the gamehistory from
+     * @return The gamehistory in the DB
+     */
     public ObservableList<History> getHistory(int username) {
         ObservableList<History> history = FXCollections.observableArrayList();
         try {

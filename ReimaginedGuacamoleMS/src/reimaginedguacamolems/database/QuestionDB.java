@@ -24,54 +24,66 @@ public class QuestionDB extends Database {
      * @return List of Question objects
      */
     public List<Question> getQuestions(int amount){
-        return GetQuestions(GetQuestionsCategory(amount));
+        return getQuestions(getQuestionsCategory(amount));
     }
-    //gets a single question 
-    public Question getSingleQuestion(String QuestionID){
+    /**
+     * Get a single question from the database
+     * @param questionID The ID of the question to get
+     * @return the question retrieved from the database
+     */
+    public Question getSingleQuestion(String questionID){
         //sets the data to get
         List<String> data = new ArrayList<>(Arrays.asList("Question","Answer1","Answer2","Answer3","Answer4","CorrectAnswer","Category_CategoryID"));
        //gets the question by id
-        List<String> questionContent = this.readStringWithCondition(data, "Question", "QuestionID", QuestionID);
+        List<String> questionContent = this.readStringWithCondition(data, "Question", "QuestionID", questionID);
         //makes the question and returns it
         return new Question(questionContent.get(0),questionContent.get(1),questionContent.get(2),questionContent.get(3),questionContent.get(4),Integer.parseInt(questionContent.get(5)),Category.values()[Integer.parseInt(questionContent.get(6))-1]);
     }
-    //gets list of questions by question id's
-    public List<Question> GetQuestions(List<String> QuestionIDs){
+    /**
+     * Get a list of questions by QuestionID's
+     * @param questionIDs to retrieve from the database
+     * @return The list of questions retrieved from the database
+     */
+    public List<Question> getQuestions(List<String> questionIDs){
         //list of questions
-        List<Question> Questions = new ArrayList<>();
+        List<Question> questions = new ArrayList<>();
         //sets the data to get
-        List<String> Data = new ArrayList<>(Arrays.asList("Question","Answer1","Answer2","Answer3","Answer4","CorrectAnswer","Category_CategoryID"));
+        List<String> data = new ArrayList<>(Arrays.asList("Question","Answer1","Answer2","Answer3","Answer4","CorrectAnswer","Category_CategoryID"));
         //gets the questions content by ids
-        List<String> QuestionContent = this.ReadWithInCondition(Data, "Question", "QuestionID", QuestionIDs,QuestionIDs.size());
+        List<String> questionContent = this.readWithInCondition(data, "Question", "QuestionID", questionIDs,questionIDs.size());
         //loops through results and makes the questions
-        for (int i = 0; i < QuestionContent.size(); i+=7) {
-             Questions.add(new Question(QuestionContent.get(i),QuestionContent.get(i+1),QuestionContent.get(i+2),QuestionContent.get(i+3),QuestionContent.get(i+4),Integer.parseInt(QuestionContent.get(i+5)),Category.values()[Integer.parseInt(QuestionContent.get(i+6))-1]));
+        for (int i = 0; i < questionContent.size(); i+=7) {
+             questions.add(new Question(questionContent.get(i),questionContent.get(i+1),questionContent.get(i+2),questionContent.get(i+3),questionContent.get(i+4),Integer.parseInt(questionContent.get(i+5)),Category.values()[Integer.parseInt(questionContent.get(i+6))-1]));
         } 
         //returns the questions
-        return Questions;
+        return questions;
     }
     
-    //gets the id of the questions for each category
-    public List<String> GetQuestionsCategory(int amount){
+    /**
+     * Gets a list of ID's for all the questions per category
+     * @param amount The amount of questions per category to get
+     * @return a list of questionID's
+     */
+    public List<String> getQuestionsCategory(int amount){
         List<String> idsToReturn = new ArrayList<>();
         //randomizer
         Random rn = new Random();
          //loops for each category
         for (int i = 1; i <= 7; i++) {
             //creates a list with questionID as content
-             List<String> Data = new ArrayList<>(Arrays.asList("QuestionID"));
+             List<String> data = new ArrayList<>(Arrays.asList("QuestionID"));
              //list that contains all questions for the current category
-             List<String> QuestionContent = this.readStringWithCondition(Data, "Question", "Category_CategoryID",(Integer.toString(i)));
+             List<String> questionContent = this.readStringWithCondition(data, "Question", "Category_CategoryID",Integer.toString(i));
              //loops for the amount of questions wanted
              for (int j = 1; j <= amount; j++) {
                  //selects random id from the list
-                 int id = rn.nextInt(QuestionContent.size());
+                 int id = rn.nextInt(questionContent.size());
                  //if list already contains the question it gets another one
-                 while(idsToReturn.contains(QuestionContent.get(id))) {
-                     id = rn.nextInt(QuestionContent.size());
+                 while(idsToReturn.contains(questionContent.get(id))) {
+                     id = rn.nextInt(questionContent.size());
                  }
                  //adds the id to the list
-                 idsToReturn.add(QuestionContent.get(id));
+                 idsToReturn.add(questionContent.get(id));
              }   
         }//returns the list with question ids
         return idsToReturn;

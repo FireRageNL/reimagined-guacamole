@@ -245,17 +245,26 @@ public class Database {
         return result;
     }
 
-    public List<String> ReadWithInCondition(List<String> columns, String table, String where, List<String> value, int amount) {
+    /**
+     * Function to use a "IN" statement in a SQL select query
+     *
+     * @param columns the columns to get
+     * @param table the table to get the columns from
+     * @param where the X part of "Where X = Y"
+     * @param value the Y part of "Where X = Y"
+     * @param amount the amount of parameters
+     * @return the data read from the database
+     */
+    public List<String> readWithInCondition(List<String> columns, String table, String where, List<String> value, int amount) {
         //list to store the results in
-        List<String> result = new ArrayList<String>();
-        //string for the column names
-        String column = "";
-        //string for the parameters
-        String parameters = "";
+        List<String> result = new ArrayList<>();
         //sets a ?, for every parameter to the string parametes
+        StringBuilder bld = new StringBuilder();
         for (int i = 1; i <= amount; i++) {
-            parameters += "?,";
+            bld.append("?,");
         }
+        //string for the parameters
+        String parameters = bld.toString();
         //remove the last , from the string
         parameters = parameters.substring(0, parameters.length() - 1);
 
@@ -263,9 +272,12 @@ public class Database {
             // opens the connection
             initConnection();
             //loops through te list to add the column names
+            StringBuilder bld2 = new StringBuilder();
             for (String c : columns) {
-                column += (c + ", ");
+                bld2.append(c).append(", ");
             }
+            //string for the column names
+            String column = bld2.toString();
             //removes the last 2 characters from the string
             column = column.substring(0, column.length() - 2);
             //sets the statament
