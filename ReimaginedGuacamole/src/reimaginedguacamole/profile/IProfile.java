@@ -22,11 +22,11 @@ public interface IProfile  extends Remote{
     public int getLosses() throws RemoteException;
     public void addWin() throws RemoteException;
     public void addLoss() throws RemoteException;
-    public List<Statistic> getStatistics() throws RemoteException;
-    public void setStatistics(List<Statistic> stat) throws RemoteException;
+    public List<IStatistic> getStatistics() throws RemoteException;
+    public void setStatistics(List<IStatistic> stat) throws RemoteException;
     public void setNickName(String nick) throws RemoteException;
-    public List<Achievement> getAchievements() throws RemoteException;
-    public void addAchievement(Achievement toAdd) throws RemoteException;
-    public ObservableList<Ranking> getRankings() throws RemoteException;
-    public ObservableList<History> getHistory() throws RemoteException;
+    public List<IAchievement> getAchievements() throws RemoteException;
+    public void addAchievement(IAchievement toAdd) throws RemoteException;
+    public ObservableList<IRanking> getRankings() throws RemoteException;
+    public ObservableList<IHistory> getHistory() throws RemoteException;
 }

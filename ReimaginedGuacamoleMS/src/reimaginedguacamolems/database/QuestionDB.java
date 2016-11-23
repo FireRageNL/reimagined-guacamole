@@ -5,6 +5,7 @@
  */
 package reimaginedguacamolems.database;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +24,7 @@ public class QuestionDB extends Database {
      * @param amount
      * @return List of Question objects
      */
-    public List<Question> getQuestions(int amount){
+    public List<Question> getQuestions(int amount) throws RemoteException{
         return getQuestions(getQuestionsCategory(amount));
     }
     /**
@@ -31,7 +32,7 @@ public class QuestionDB extends Database {
      * @param questionID The ID of the question to get
      * @return the question retrieved from the database
      */
-    public Question getSingleQuestion(String questionID){
+    public Question getSingleQuestion(String questionID) throws RemoteException{
         //sets the data to get
         List<String> data = new ArrayList<>(Arrays.asList("Question","Answer1","Answer2","Answer3","Answer4","CorrectAnswer","Category_CategoryID"));
        //gets the question by id
@@ -44,7 +45,7 @@ public class QuestionDB extends Database {
      * @param questionIDs to retrieve from the database
      * @return The list of questions retrieved from the database
      */
-    public List<Question> getQuestions(List<String> questionIDs){
+    public List<Question> getQuestions(List<String> questionIDs) throws RemoteException{
         //list of questions
         List<Question> questions = new ArrayList<>();
         //sets the data to get

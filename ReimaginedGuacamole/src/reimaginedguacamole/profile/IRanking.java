@@ -12,10 +12,11 @@ import java.rmi.RemoteException;
  *
  * @author roy_v
  */
-public interface ILogin extends Remote{
-    
-    public boolean tryLogin(String username,String password) throws RemoteException;
-    
-    public IProfile getCurrentProfile(String email) throws RemoteException;
-    
+public interface IRanking extends Remote {
+
+    public String getNickname() throws RemoteException;
+
+    public int getRank() throws RemoteException;
+
+    public int getScore() throws RemoteException;
 }

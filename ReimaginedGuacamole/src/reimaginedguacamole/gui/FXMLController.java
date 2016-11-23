@@ -153,7 +153,7 @@ public class FXMLController implements Initializable, Observer {
 
     //Global variables
     private GameController gameController;
-    private Profile user;
+    private IProfile user;
     private Random rng;
     private int wheelSpeed;
     private int roundDuration, amountOfRounds;
@@ -261,7 +261,7 @@ public class FXMLController implements Initializable, Observer {
      * @param event
      */
     @FXML
-    private void changeNickName(ActionEvent event) {
+    private void changeNickName(ActionEvent event) throws RemoteException {
         user.setNickName(txtNickname.getText());
         fillProfileData();
     }
@@ -269,7 +269,7 @@ public class FXMLController implements Initializable, Observer {
     /**
      * Refreshes all UI elements with the correct user information.
      */
-    private void fillProfileData() {
+    private void fillProfileData() throws RemoteException {
         // Sets all textboxes and labels.
         txtNickname.setText(user.getNickname());
         lblEmail.setText(user.getEmail());
@@ -277,7 +277,7 @@ public class FXMLController implements Initializable, Observer {
         lblLoss.setText(Integer.toString(user.getLosses()));
 
         //Sets the labels with the amount of correct and wrong answers based on statistic
-        for (Statistic s : user.getStatistics()) {
+        for (IStatistic s : user.getStatistics()) {
             switch (s.getCategory()) {
                 case History:
                     lblWinHis.setText(Integer.toString(s.getRight()));
@@ -311,7 +311,7 @@ public class FXMLController implements Initializable, Observer {
         }
 
         //Sets the rankings retrieved from the database
-        ObservableList<Ranking> ranks = user.getRankings();
+        ObservableList<IRanking> ranks = user.getRankings();
         colRank.setCellValueFactory(
                 new PropertyValueFactory<>("Rank"));
         colScore.setCellValueFactory(
@@ -320,7 +320,7 @@ public class FXMLController implements Initializable, Observer {
         tableRank.setItems(ranks);
 
         //Sets the listview for the history with the games user has played.
-        ObservableList<History> history = user.getHistory();
+        ObservableList<IHistory> history = user.getHistory();
         colDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
         colScores.setCellValueFactory(new PropertyValueFactory<>("Score"));
         tableHistory.setItems(history);
@@ -363,7 +363,7 @@ public class FXMLController implements Initializable, Observer {
      * gamecontroller is changed. It fires all necessary gamecontroller methods
      * and shows the correct information on the UI.
      */
-    private void checkGameState() {
+    private void checkGameState() throws RemoteException {
 
         IRound round;
 
@@ -479,14 +479,18 @@ public class FXMLController implements Initializable, Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        checkGameState();
+        try {
+            checkGameState();
+        } catch (RemoteException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
      * Adds text user typed to the chatlistview
      */
     @FXML
-    public void btnChatClicked() {
+    public void btnChatClicked() throws RemoteException {
         String chatLine = txtChat.getText();
         chatList.add(user.getNickname() + ": " + chatLine);
         txtChat.setText("");
@@ -635,7 +639,7 @@ public class FXMLController implements Initializable, Observer {
      * Profile page
      */
     @FXML
-    public void quitGame() {
+    public void quitGame() throws RemoteException {
         fillProfileData();
         if (animationTimer != null) {
             animationTimer.stop();

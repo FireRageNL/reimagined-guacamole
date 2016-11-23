@@ -5,11 +5,11 @@
  */
 package reimaginedguacamole.game;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-//import reimaginedguacamole.database.GameDB;
-import reimaginedguacamole.profile.Profile;
+import reimaginedguacamole.profile.IProfile;
 
 /**
  *This class handles all game mechanics
@@ -49,7 +49,7 @@ public class GameController extends Observable{
      * Ends the game and uploads the game information to the database
      * @param user Logged in profile
      */
-    public void endGame(Profile user){
+    public void endGame(IProfile user){
         //GameDB gdb = new GameDB();
         //gdb.endGame(user.getPid(), currentScore);
     }
@@ -82,8 +82,8 @@ public class GameController extends Observable{
      * then removes this question from the orgiinal list.
      * @param category 
      */
-    public void giveRoundQuestion(Category category){
-        for(Question q : game.getQuestionsList()){
+    public void giveRoundQuestion(Category category) throws RemoteException{
+        for(IQuestion q : game.getQuestionsList()){
             if(q.getCategory() == category){
                 currentRound.setQuestion(q);
                 game.getQuestionsList().remove(q);
@@ -118,7 +118,7 @@ public class GameController extends Observable{
         this.currentAnswer = currentAnswer;
     }
     
-    public int getCorrectAnswer(){
+    public int getCorrectAnswer() throws RemoteException{
         return currentRound.getQuestion().getCorrectAnswer();
     }
 
@@ -137,7 +137,7 @@ public class GameController extends Observable{
      * @param timeLeft
      * @return 
      */
-    public boolean checkAnswer(Profile profile, double timeLeft){
+    public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException{
         //GameDB gdb = new GameDB();
         //Score is based on time, min score = 150
         System.out.println("TIMELEFT:" + timeLeft);

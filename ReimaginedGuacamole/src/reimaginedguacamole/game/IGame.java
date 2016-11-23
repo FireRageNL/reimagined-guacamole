@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface IGame extends Remote{
 
-    public List<Question> getQuestionsList()throws RemoteException;
+    public List<IQuestion> getQuestionsList()throws RemoteException;
 
     public int getRoundDuration()throws RemoteException;
 
