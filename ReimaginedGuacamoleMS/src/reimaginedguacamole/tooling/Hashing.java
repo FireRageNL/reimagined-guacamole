@@ -16,6 +16,14 @@ import java.util.logging.Logger;
  */
 public class Hashing {
 
+    private Hashing(){
+        
+    }
+    /**
+     * Function to hash a password with SHA-256
+     * @param input the password to hash
+     * @return the hashed password
+     */
     public static String hashPassword(String input) {
         StringBuilder sb = new StringBuilder();
         MessageDigest md;

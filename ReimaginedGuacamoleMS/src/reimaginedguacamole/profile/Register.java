@@ -7,7 +7,7 @@ package reimaginedguacamole.profile;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import reimaginedguacamolems.database.ProfileDB;
@@ -22,7 +22,7 @@ public class Register extends UnicastRemoteObject implements IRegister {
     }
 
     @Override
-    public void registerNewUser(LinkedHashMap profileData) throws RemoteException {
+    public void registerNewUser(Map profileData) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
         pdb.newUserRegistration(profileData);
         Logger.getLogger(Register.class.getName()).log(Level.INFO, "User regsitration!");

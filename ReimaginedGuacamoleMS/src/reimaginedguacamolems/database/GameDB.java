@@ -48,10 +48,8 @@ public class GameDB extends Database {
             String sql;
             //sets the sql statement
             if (right) {
-                System.out.println("Setting new rights statistic : " + toUpdate.getRight());
                 sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
             } else {
-                System.out.println("Setting new wrong statistic: " + toUpdate.getWrong());
                 sql = "UPDATE Statistic SET Wrong = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
             }
             PreparedStatement ps = this.conn.prepareStatement(sql);
@@ -70,7 +68,6 @@ public class GameDB extends Database {
             ps.setInt(3, prof.getPid());
             //executes the query
             ps.executeUpdate();
-            System.out.println("I has executed ze update");
             //closes the connection
             this.closeConnection();
         } catch (SQLException ex) {

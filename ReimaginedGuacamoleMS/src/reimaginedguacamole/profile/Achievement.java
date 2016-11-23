@@ -13,7 +13,11 @@ public class Achievement {
     
     private String description;
     private String name;
-
+    /**
+     * Default constructor for an Achievement
+     * @param description the description of an achievement
+     * @param name the name of an achievement
+     */
     public Achievement(String description, String name) {
         this.description = description;
         this.name = name;

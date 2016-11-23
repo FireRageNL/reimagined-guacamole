@@ -15,7 +15,11 @@ public class History {
 
     private final SimpleStringProperty date;
     private final SimpleStringProperty score;
-
+/**
+ * Default constructor for a GameHistory object
+ * @param date the date the game was played
+ * @param score the score that the player had in this game
+ */
     public History(String date, int score) {
         this.date = new SimpleStringProperty(date);
         this.score = new SimpleStringProperty(String.valueOf(score));

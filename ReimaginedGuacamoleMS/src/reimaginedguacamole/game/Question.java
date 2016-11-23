@@ -18,7 +18,16 @@ public class Question {
     private int correctAnswer;
     private Category category;
     
-    //Constructor for a default question, contains the anwser, the right anwser, the question itself and what category it belongs to
+    /**
+     * Object that holds the question and its anwsers
+     * @param questionContents the question itself
+     * @param answer1 the first anwser
+     * @param answer2 the second anwser
+     * @param answer3 the third anwser
+     * @param answer4 the fourht anwser
+     * @param correctAnswer the correct anwser
+     * @param category  the category the question belongs to
+     */
     public Question(String questionContents, String answer1, String answer2, String answer3, String answer4, int correctAnswer, Category category) {
         this.questionContents = questionContents;
         this.answer1 = answer1;

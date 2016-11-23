@@ -14,8 +14,21 @@ import java.rmi.RemoteException;
  */
 public interface ILogin extends Remote{
     
+    /**
+     * Function to test username and password provided
+     * @param username is the username provided
+     * @param password is the password provided
+     * @return True or false if the user and password combination is correct
+     * @throws RemoteException 
+     */
     public boolean tryLogin(String username,String password) throws RemoteException;
     
+    /**
+     * Function to get all the profile information of a user when they're logged in
+     * @param email The email of user to get the profile information from
+     * @return The profile of said user
+     * @throws RemoteException 
+     */
     public Profile getCurrentProfile(String email) throws RemoteException;
     
 }
