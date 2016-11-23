@@ -34,14 +34,14 @@ public class QuestionDBTest {
     }
 
     /**
-     * Test of GetSingleQuestion method, of class QuestionDB.
+     * Test of getSingleQuestion method, of class QuestionDB.
      */
     @Test
     public void testGetSingleQuestion() {
         System.out.println("GetSingleQuestion");
         String QuestionID = "52";
         QuestionDB instance = new QuestionDB();
-        Question result = instance.GetSingleQuestion(QuestionID);
+        Question result = instance.getSingleQuestion(QuestionID);
         assertEquals("Geschiedenis", result.getCategory().toString());
         assertEquals("In welk jaar was de slag bij Waterloo?", result.getQuestionContents());
         assertEquals("1789", result.getAnswer1());
@@ -60,8 +60,8 @@ public class QuestionDBTest {
         List<String> QuestionIDs = new ArrayList<>(Arrays.asList("52","53"));
         QuestionDB instance = new QuestionDB();
         List<Question> expResult = new ArrayList<>();
-        expResult.add(instance.GetSingleQuestion("52"));
-        expResult.add(instance.GetSingleQuestion("53"));
+        expResult.add(instance.getSingleQuestion("52"));
+        expResult.add(instance.getSingleQuestion("53"));
         List<Question> result = instance.GetQuestions(QuestionIDs);
         assertEquals(result.get(0).getQuestionContents(),expResult.get(0).getQuestionContents());
         assertEquals(result.get(1).getQuestionContents(),expResult.get(1).getQuestionContents());
