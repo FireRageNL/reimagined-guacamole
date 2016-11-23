@@ -364,12 +364,12 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label text="Player 1:">
+                            <Label fx:id="lblGameName" text="Player 1:">
                               <font>
                                 <Font size="25.0" fx:id="x6" />
                               </font>
                             </Label>
-                            <Label font="$x6" text="100">
+                            <Label fx:id="lblScore" font="$x6" text="100">
                               <HBox.margin>
                                 <Insets left="20.0" />
                               </HBox.margin>

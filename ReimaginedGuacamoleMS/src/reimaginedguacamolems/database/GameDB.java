@@ -5,14 +5,16 @@
  */
 package reimaginedguacamolems.database;
 
+import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.LinkedHashMap;
 import reimaginedguacamole.game.Category;
-import reimaginedguacamole.profile.Profile;
-import reimaginedguacamole.profile.Statistic;
+import reimaginedguacamole.profile.IProfile;
+import reimaginedguacamole.profile.IStatistic;
+
 
 /**
  *
@@ -20,11 +22,11 @@ import reimaginedguacamole.profile.Statistic;
  */
 public class GameDB extends Database {
 
-    public void updateStats(Profile prof, Category cat, boolean right) {
+    public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException {
         //Statistic to store the statistic that needs to be updated
-        Statistic toUpdate = null;
+        IStatistic toUpdate = null;
         //loops through profile statistics until it has the right category and stores it in the statistic
-        for (Statistic s : prof.getStatistics()) {
+        for (IStatistic s : prof.getStatistics()) {
             if (s.getCategory() == cat) {
                 toUpdate = s;
             }
@@ -73,6 +75,9 @@ public class GameDB extends Database {
         } catch (SQLException ex) {
             Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
+        else{
+            Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, "No statistics have been updated for Profile "+ prof.getPid());
         }
 
     }

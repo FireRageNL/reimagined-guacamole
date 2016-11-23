@@ -13,8 +13,9 @@ import java.rmi.RemoteException;
  * @author Marc
  */
 public interface IRound extends Remote{
-    public Question getQuestion()throws RemoteException;
-    public void setQuestion(Question question)throws RemoteException;
+    public IQuestion getQuestion()throws RemoteException;
+    public void setQuestion(IQuestion question)throws RemoteException;
     public void setGivenAnswer(int answer)throws RemoteException;
     public int getGivenAnswer()throws RemoteException;
+    public IRound createRound() throws RemoteException;
 }

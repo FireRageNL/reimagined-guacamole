@@ -335,9 +335,9 @@ public class FXMLController implements Initializable, Observer {
      * GameController Object.
      */
     @FXML
-    private void startGame() {
-        roundDuration = (int) sliderTimePerRound.getValue();
-        amountOfRounds = (int) sliderAmountOfRounds.getValue();
+    private void startGame() throws RemoteException, NotBoundException {
+        roundDuration = 10;
+        amountOfRounds = 5;
         gameController = new GameController(roundDuration, amountOfRounds);
         resetQuestionUI();
         pbRoundTimer.setProgress(0);

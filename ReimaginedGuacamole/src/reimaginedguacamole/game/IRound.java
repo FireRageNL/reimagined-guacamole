@@ -17,4 +17,5 @@ public interface IRound extends Remote{
     public void setQuestion(IQuestion question)throws RemoteException;
     public void setGivenAnswer(int answer)throws RemoteException;
     public int getGivenAnswer()throws RemoteException;
+    public IRound createRound() throws RemoteException;
 }

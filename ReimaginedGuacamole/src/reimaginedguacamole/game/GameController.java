@@ -5,7 +5,10 @@
  */
 package reimaginedguacamole.game;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -26,11 +29,15 @@ public class GameController extends Observable{
     private int currentAnswer;
     private int currentScore;
     
-    public GameController(int duration, int amountOfRounds){
-//        game = new IGame(amountOfRounds, duration);
+    public GameController(int duration, int amountOfRounds) throws RemoteException, NotBoundException{
+        Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
+        game = (IGame) reg.lookup("Game");
+        game.setAmountOfRounds(amountOfRounds);
+        game.setRoundDuration(duration);
         rounds = new ArrayList<>();
+        IRound temp = (IRound) reg.lookup("Round");
         for(int i =0; i < amountOfRounds; i++){
-//            rounds.add(new Round());
+            rounds.add(temp.createRound());
         }
         currentRoundIndex = -1;
         currentScore = 0;
@@ -49,9 +56,9 @@ public class GameController extends Observable{
      * Ends the game and uploads the game information to the database
      * @param user Logged in profile
      */
-    public void endGame(IProfile user){
-        //GameDB gdb = new GameDB();
-        //gdb.endGame(user.getPid(), currentScore);
+    public void endGame(IProfile user) throws RemoteException{
+        
+        game.endGame(user.getPid(), currentScore);
     }
 
     
@@ -138,7 +145,6 @@ public class GameController extends Observable{
      * @return 
      */
     public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException{
-        //GameDB gdb = new GameDB();
         //Score is based on time, min score = 150
         System.out.println("TIMELEFT:" + timeLeft);
         int score = 50 + (100 + (int)(timeLeft * 100));
@@ -146,12 +152,12 @@ public class GameController extends Observable{
         if(currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer){
             currentScore += score;
             //Update the stats for this category and user with a +1 to the correct field.
-            //gdb.updateStats(profile, currentRound.getQuestion().getCategory(), true);
+            game.updateStats(profile, currentRound.getQuestion().getCategory(), true);
             return true;
         }
         else{
             //Update the stats for this category and user with a +1 to the Wrong field.
-            //gdb.updateStats(profile, currentRound.getQuestion().getCategory(), false);
+            game.updateStats(profile, currentRound.getQuestion().getCategory(), false);
             return false;
         }
         

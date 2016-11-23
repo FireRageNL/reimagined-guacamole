@@ -124,6 +124,7 @@ public class ProfileDB extends Database {
             ps.setInt(2, toSave.getPid());
             //executes the query
             ps.executeUpdate();
+            Logger.getLogger(ProfileDB.class.getName()).log(Level.INFO, "Nickname for user " + "{0}" + " changed", toSave.getPid());
             //closes the connection
             this.closeConnection();
         } catch (Exception ex) {
