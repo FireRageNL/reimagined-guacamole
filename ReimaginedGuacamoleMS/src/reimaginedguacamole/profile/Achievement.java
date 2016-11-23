@@ -5,11 +5,14 @@
  */
 package reimaginedguacamole.profile;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 /**
  *
  * @author Marc
  */
-public class Achievement {
+public class Achievement extends UnicastRemoteObject implements IAchievement {
     
     private String description;
     private String name;
@@ -17,16 +20,19 @@ public class Achievement {
      * Default constructor for an Achievement
      * @param description the description of an achievement
      * @param name the name of an achievement
+     * @throws RemoteException
      */
-    public Achievement(String description, String name) {
+    public Achievement(String description, String name) throws RemoteException {
         this.description = description;
         this.name = name;
     }
         
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public String getName() {
         return name;
     }

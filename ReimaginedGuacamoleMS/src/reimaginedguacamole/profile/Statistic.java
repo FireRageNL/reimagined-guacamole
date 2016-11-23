@@ -5,40 +5,47 @@
  */
 package reimaginedguacamole.profile;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import reimaginedguacamole.game.Category;
 
 /**
  * Class that holds information about right or wrong answers per category.
  * @author Marc
  */
-public class Statistic {
+public class Statistic extends UnicastRemoteObject implements IStatistic {
 
     private Category category;
     private int right;
     private int wrong;
     
-    public Statistic(Category category, int right, int wrong) {
+    public Statistic(Category category, int right, int wrong) throws RemoteException {
         this.category = category;
         this.right = right;
         this.wrong = wrong;
     }
 
+    @Override
     public Category getCategory() {
         return category;
     }
         
+    @Override
     public int getRight() {
         return right;
     }
 
+    @Override
     public void setRight(int right) {
         this.right = right;
     }
 
+    @Override
     public int getWrong() {
         return wrong;
     }
 
+    @Override
     public void setWrong(int wrong) {
         this.wrong = wrong;
     }
@@ -47,6 +54,7 @@ public class Statistic {
      * Percentage of category questions anwsered right
      * @return Percentage(int)
      */
+    @Override
     public int returnPercentage(){
         int whole = right + wrong;
         double percentage = (double)right/(double)whole * 100;
