@@ -74,7 +74,7 @@ public class ProfileDB extends Database {
         //gets the statistics for the current user
         List<Statistic> list = getStatistics(ret.getPid());
         //sets the statistics for the current user
-        ret.setStatistics(list);
+        ret.setStatistics((ArrayList<Statistic>) list);
         return ret;
     }
     /**
@@ -182,8 +182,8 @@ public class ProfileDB extends Database {
  * Function to get all the rankings
  * @return A list of all the rankings in the DB
  */
-    public ObservableList<Ranking> getRankings() {
-        ObservableList<Ranking> rankings = FXCollections.observableArrayList();
+    public ArrayList<Ranking> getRankings() {
+        ArrayList<Ranking> rankings = new ArrayList();
         try {
             //opens the connection
             this.initConnection();
@@ -213,8 +213,8 @@ public class ProfileDB extends Database {
      * @param username is the user to get the gamehistory from
      * @return The gamehistory in the DB
      */
-    public ObservableList<History> getHistory(int username) {
-        ObservableList<History> history = FXCollections.observableArrayList();
+    public ArrayList<History> getHistory(int username) {
+        ArrayList<History> history = new ArrayList();
         try {
             //opens the connection
             this.initConnection();

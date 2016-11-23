@@ -7,6 +7,7 @@ package reimaginedguacamole.profile;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.ObservableList;
 /**
@@ -23,10 +24,10 @@ public interface IProfile  extends Remote{
     public void addWin() throws RemoteException;
     public void addLoss() throws RemoteException;
     public List<IStatistic> getStatistics() throws RemoteException;
-    public void setStatistics(List<IStatistic> stat) throws RemoteException;
+    public void setStatistics(ArrayList<IStatistic> stat) throws RemoteException;
     public void setNickName(String nick) throws RemoteException;
     public List<IAchievement> getAchievements() throws RemoteException;
     public void addAchievement(IAchievement toAdd) throws RemoteException;
-    public ObservableList<IRanking> getRankings() throws RemoteException;
-    public ObservableList<IHistory> getHistory() throws RemoteException;
+    public ArrayList<IRanking> getRankings() throws RemoteException;
+    public ArrayList<IHistory> getHistory() throws RemoteException;
 }

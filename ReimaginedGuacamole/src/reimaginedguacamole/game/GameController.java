@@ -63,13 +63,13 @@ public class GameController extends Observable{
      */
     public Category chooseCategory(double wheel){
         double rotation = 360 - wheel;
-        if(rotation >= 0 && rotation <= 51){return Category.Sport;}
-        else if(rotation > 51 && rotation <= 103){return Category.Entertainment;}
-        else if(rotation > 103 && rotation <= 155){return Category.Art;}
-        else if(rotation > 155 && rotation <= 207){return Category.Science;}
-        else if(rotation > 207 && rotation <= 259){return Category.Music;}
-        else if(rotation > 259 && rotation <= 311){return Category.Games;}
-        else{return Category.History;}        
+        if(rotation >= 0 && rotation <= 51){return Category.SPORT;}
+        else if(rotation > 51 && rotation <= 103){return Category.ENTERTAINMENT;}
+        else if(rotation > 103 && rotation <= 155){return Category.ART;}
+        else if(rotation > 155 && rotation <= 207){return Category.SCIENCE;}
+        else if(rotation > 207 && rotation <= 259){return Category.MUSIC;}
+        else if(rotation > 259 && rotation <= 311){return Category.GAMES;}
+        else{return Category.HISTORY;}        
     }
     
 

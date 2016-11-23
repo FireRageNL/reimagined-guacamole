@@ -33,7 +33,7 @@ public class Login extends UnicastRemoteObject implements ILogin {
     }
 
     @Override
-    public Profile getCurrentProfile(String email) throws RemoteException {
+    public IProfile getCurrentProfile(String email) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
         return pdb.getProfileData(email);
     }

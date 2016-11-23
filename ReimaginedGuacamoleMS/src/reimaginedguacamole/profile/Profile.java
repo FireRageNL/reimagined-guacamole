@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import reimaginedguacamolems.database.ProfileDB;
  *Class that holds important profile information.
  * @author Marc
  */
-public class Profile extends UnicastRemoteObject implements IProfile {
+public class Profile extends UnicastRemoteObject implements IProfile,Serializable {
 
     private String email;
     private String name;
@@ -24,8 +25,8 @@ public class Profile extends UnicastRemoteObject implements IProfile {
     private int pid;
     private int wins;
     private int losses;
-    private List<Achievement> achievements;
-    private List<Statistic> statistics;
+    private ArrayList<Achievement> achievements;
+    private ArrayList<Statistic> statistics;
     private final ProfileDB pdb = new ProfileDB();
 
     public Profile() throws RemoteException {
@@ -81,7 +82,7 @@ public class Profile extends UnicastRemoteObject implements IProfile {
         return statistics;
     }
 
-    public void setStatistics(List<Statistic> stat) {
+    public void setStatistics(ArrayList<Statistic> stat) {
         statistics = stat;
     }
 
@@ -98,11 +99,11 @@ public class Profile extends UnicastRemoteObject implements IProfile {
         pdb.storeAchievement(toAdd,this);
     }
     
-    public ObservableList<Ranking> getRankings(){
+    public ArrayList<Ranking> getRankings(){
        return pdb.getRankings();
     }
 
-    public ObservableList<History> getHistory() {
+    public ArrayList<History> getHistory() {
         return pdb.getHistory(pid);
     }
 

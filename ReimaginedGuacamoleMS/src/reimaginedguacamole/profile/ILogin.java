@@ -29,6 +29,6 @@ public interface ILogin extends Remote{
      * @return The profile of said user
      * @throws RemoteException 
      */
-    public Profile getCurrentProfile(String email) throws RemoteException;
+    public IProfile getCurrentProfile(String email) throws RemoteException;
     
 }

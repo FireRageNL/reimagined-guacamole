@@ -40,6 +40,7 @@ import reimaginedguacamole.timertasks.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import reimaginedguacamole.tooling.Hashing;
@@ -279,31 +280,31 @@ public class FXMLController implements Initializable, Observer {
         //Sets the labels with the amount of correct and wrong answers based on statistic
         for (IStatistic s : user.getStatistics()) {
             switch (s.getCategory()) {
-                case History:
+                case HISTORY:
                     lblWinHis.setText(Integer.toString(s.getRight()));
                     lblLossHis.setText(Integer.toString(s.getWrong()));
                     break;
-                case Art:
+                case ART:
                     lblWinArt.setText(Integer.toString(s.getRight()));
                     lblLossArt.setText(Integer.toString(s.getWrong()));
                     break;
-                case Music:
+                case MUSIC:
                     lblWinMus.setText(Integer.toString(s.getRight()));
                     lblLossMus.setText(Integer.toString(s.getWrong()));
                     break;
-                case Entertainment:
+                case ENTERTAINMENT:
                     lblWinEnt.setText(Integer.toString(s.getRight()));
                     lblLossEnt.setText(Integer.toString(s.getWrong()));
                     break;
-                case Games:
+                case GAMES:
                     lblWinGame.setText(Integer.toString(s.getRight()));
                     lblLossGame.setText(Integer.toString(s.getWrong()));
                     break;
-                case Sport:
+                case SPORT:
                     lblWinSpr.setText(Integer.toString(s.getRight()));
                     lblLossSpr.setText(Integer.toString(s.getWrong()));
                     break;
-                case Science:
+                case SCIENCE:
                     lblWinSci.setText(Integer.toString(s.getRight()));
                     lblLossSci.setText(Integer.toString(s.getWrong()));
                     break;
@@ -311,19 +312,19 @@ public class FXMLController implements Initializable, Observer {
         }
 
         //Sets the rankings retrieved from the database
-        ObservableList<IRanking> ranks = user.getRankings();
+        ArrayList<IRanking> ranks = user.getRankings();
         colRank.setCellValueFactory(
                 new PropertyValueFactory<>("Rank"));
         colScore.setCellValueFactory(
                 new PropertyValueFactory<>("Score"));
         colNick.setCellValueFactory(new PropertyValueFactory<>("Nickname"));
-        tableRank.setItems(ranks);
+        tableRank.setItems(FXCollections.observableArrayList(ranks));
 
         //Sets the listview for the history with the games user has played.
-        ObservableList<IHistory> history = user.getHistory();
+        ArrayList<IHistory> history = user.getHistory();
         colDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
         colScores.setCellValueFactory(new PropertyValueFactory<>("Score"));
-        tableHistory.setItems(history);
+        tableHistory.setItems(FXCollections.observableArrayList(history));
     }
 
     /**

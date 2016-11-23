@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,7 +15,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author roy_v
  */
-public class History extends UnicastRemoteObject implements IHistory {
+public class History extends UnicastRemoteObject implements IHistory,Serializable {
 
     private final SimpleStringProperty date;
     private final SimpleStringProperty score;
