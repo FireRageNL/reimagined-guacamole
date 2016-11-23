@@ -279,31 +279,31 @@ public class FXMLController implements Initializable, Observer {
         //Sets the labels with the amount of correct and wrong answers based on statistic
         for (IStatistic s : user.getStatistics()) {
             switch (s.getCategory()) {
-                case History:
+                case HISTORY:
                     lblWinHis.setText(Integer.toString(s.getRight()));
                     lblLossHis.setText(Integer.toString(s.getWrong()));
                     break;
-                case Art:
+                case ART:
                     lblWinArt.setText(Integer.toString(s.getRight()));
                     lblLossArt.setText(Integer.toString(s.getWrong()));
                     break;
-                case Music:
+                case MUSIC:
                     lblWinMus.setText(Integer.toString(s.getRight()));
                     lblLossMus.setText(Integer.toString(s.getWrong()));
                     break;
-                case Entertainment:
+                case ENTERTAINMENT:
                     lblWinEnt.setText(Integer.toString(s.getRight()));
                     lblLossEnt.setText(Integer.toString(s.getWrong()));
                     break;
-                case Games:
+                case GAMES:
                     lblWinGame.setText(Integer.toString(s.getRight()));
                     lblLossGame.setText(Integer.toString(s.getWrong()));
                     break;
-                case Sport:
+                case SPORT:
                     lblWinSpr.setText(Integer.toString(s.getRight()));
                     lblLossSpr.setText(Integer.toString(s.getWrong()));
                     break;
-                case Science:
+                case SCIENCE:
                     lblWinSci.setText(Integer.toString(s.getRight()));
                     lblLossSci.setText(Integer.toString(s.getWrong()));
                     break;

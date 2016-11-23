@@ -10,33 +10,33 @@ package reimaginedguacamole.game;
  * @author Marc
  */
 public enum Category {
-    History {
+    HISTORY {
         @Override
         public String toString(){
             return "Geschiedenis";
         }
     },
-    Art{
+    ART{
         @Override
         public String toString(){
             return "Kunst";
         }
     },
-    Games{
+    GAMES{
         @Override
         public String toString(){
             return "Spellen";
         }
     },
-    Entertainment,
-    Music{
+    ENTERTAINMENT,
+    MUSIC{
         @Override
         public String toString(){
             return "Muziek";
         }
     },
-    Sport,
-    Science{
+    SPORT,
+    SCIENCE{
         @Override
         public String toString(){
             return "Wetenschap";
