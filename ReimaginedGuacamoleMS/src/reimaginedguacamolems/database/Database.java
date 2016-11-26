@@ -100,9 +100,8 @@ public class Database {
             columns = columns.substring(0, columns.length() - 1);
 
             //makes the query
-            String statement = "INSERT INTO  ? (" + columns + ") VALUES (" + values + ")";
+            String statement = "INSERT INTO " + table + " (" + columns + ") VALUES (" + values + ")";
             PreparedStatement pst = conn.prepareStatement(statement);
-            pst.setString(1, table);
             int valuecount = 1;
             //adds the values as parameters to the prepared statement
             for (Map.Entry<String, String> entry : data.entrySet()) {
@@ -141,12 +140,9 @@ public class Database {
             // -2 to remove the ", " from the last name
             columns = columns.substring(0, columns.length() - 2);
             // makes the statement
-            String statement = "UPDATE ? SET " + columns + " WHERE ? = ?";
+            String statement = "UPDATE " + table + " SET " + columns + " WHERE " + where + " = ?";
             PreparedStatement pst = conn.prepareStatement(statement);
-            //add statements
-            pst.setString(1, table);
-            pst.setString(2, where);
-            int valuecount = 3;
+            int valuecount = 1;
             //loops through the list to add the values for the prepared statement
             for (Map.Entry<String, String> entry : data.entrySet()) {
                 pst.setString(valuecount, entry.getValue());
@@ -179,13 +175,10 @@ public class Database {
             //opens the connection
             initConnection();
             //makes the statement
-            String sql = "SELECT ? FROM ? WHERE ? = ?";
+            String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            //sets the parameters
-            ps.setString(1, column);
-            ps.setString(2, table);
-            ps.setString(3, where);
-            ps.setString(4, value);
+            //sets the parameter
+            ps.setString(1, value);
             //resultset to store the values
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -228,13 +221,10 @@ public class Database {
             //removes the last 2 characters of the string
             column = column.substring(0, column.length() - 2);
             //makes the statement
-            String sql = "SELECT ? FROM ? WHERE ? = ?";
+            String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            //sets the parameters
-            ps.setString(1, column);
-            ps.setString(2, table);
-            ps.setString(3, where);
-            ps.setString(4, value);
+            //sets the parameter
+            ps.setString(1, value);
             //stores the result in the resultset
             ResultSet rs = ps.executeQuery();
             //metadata is needed to get the amount of columns returned
@@ -291,13 +281,8 @@ public class Database {
             //removes the last 2 characters from the string
             column = column.substring(0, column.length() - 2);
             //sets the statament
-            String sql = "SELECT ? FROM ? WHERE ? IN ( ? )";
+            String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " IN (" + parameters + ")";
             PreparedStatement ps = conn.prepareStatement(sql);
-            //sets the parameter
-            ps.setString(1, column);
-            ps.setString(2, table);
-            ps.setString(3, where);
-            ps.setString(4, parameters);
             //gets the value for every parameter
             for (int i = 0; i < amount; i++) {
                 ps.setString(i + 1, value.get(i));
