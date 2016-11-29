@@ -186,7 +186,7 @@ public class FXMLController implements Initializable, Observer {
         //Checks if textfields are not empty
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
-                Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
+                Registry reg = LocateRegistry.getRegistry("192.168.1.116", 666);
                 ILogin log = (ILogin) reg.lookup("Login");
                 //Tries to log in
                 String password = Hashing.hashPassword(pass);

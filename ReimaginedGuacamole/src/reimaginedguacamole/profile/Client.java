@@ -27,7 +27,7 @@ public class Client extends UnicastRemoteObject implements IClient {
     public Client(IProfile prof) throws RemoteException{
         try {
             this.name = prof.getNickname();
-            Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
+            Registry reg2 = LocateRegistry.getRegistry("192.168.1.116", 666);
             server = (IChatServer) reg2.lookup("ChatServer");
             server.clientEnter(this);
         } catch (RemoteException | NotBoundException ex) {
