@@ -17,16 +17,17 @@ import java.util.logging.Logger;
  * @author roy_v
  */
 public class ChatServer extends UnicastRemoteObject implements IChatServer {
+
     private List<IClient> connectedProfiles = new ArrayList();
-    
-    public ChatServer() throws RemoteException{
-        
+
+    public ChatServer() throws RemoteException {
+
     }
-    
+
     @Override
     public List<String> listClients() throws RemoteException {
         List<String> nicks = new ArrayList();
-        for(IClient p : connectedProfiles){
+        for (IClient p : connectedProfiles) {
             nicks.add(p.getName());
         }
         return nicks;
@@ -34,20 +35,24 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
 
     @Override
     public void broadcastMessage(String message) throws RemoteException {
-        Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.INFO,"New chat message sent to lobby: "+ message);
-        for(IClient p: connectedProfiles){
-           p.addMessage(message);
+        Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.INFO, "New chat message sent to lobby: {0}", message);
+        for (IClient p : connectedProfiles) {
+            p.addMessage(message);
         }
     }
 
     @Override
     public void clientEnter(IClient client) throws RemoteException {
         connectedProfiles.add(client);
+        Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.INFO, "New client entered the lobby chatroom: {0}", client.getName());
+
     }
 
     @Override
     public void clientExit(IClient client) throws RemoteException {
         connectedProfiles.remove(client);
+        Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.INFO, "Client has left the lobby chatroom: {0}", client.getName());
+
     }
-    
+
 }

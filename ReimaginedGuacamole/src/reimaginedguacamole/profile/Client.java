@@ -5,7 +5,6 @@
  */
 package reimaginedguacamole.profile;
 
-import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -13,6 +12,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
 /**
@@ -24,10 +24,8 @@ public class Client extends UnicastRemoteObject implements IClient {
     private String name;
     private IChatServer server;
     private ObservableList<String> lobbyChat;
-    
-    
 
-    public Client(IProfile prof, ObservableList<String> lobbyChat) throws RemoteException{
+    public Client(IProfile prof, ObservableList<String> lobbyChat) throws RemoteException {
         try {
             this.lobbyChat = lobbyChat;
             this.name = prof.getNickname();
@@ -36,13 +34,13 @@ public class Client extends UnicastRemoteObject implements IClient {
             server.clientEnter(this);
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
 
     }
 
     @Override
     public void sendMessage(String message) throws RemoteException {
-        String msg = this.name + ": "+ message;
+        String msg = this.name + ": " + message;
         server.broadcastMessage(msg);
     }
 
@@ -55,5 +53,4 @@ public class Client extends UnicastRemoteObject implements IClient {
     public String getName() throws RemoteException {
         return this.name;
     }
-
 }
