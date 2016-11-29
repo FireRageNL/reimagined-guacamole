@@ -1,4 +1,4 @@
-package Shared;
+package reimaginedguacamole.publisher;
 
 import java.util.*;
 

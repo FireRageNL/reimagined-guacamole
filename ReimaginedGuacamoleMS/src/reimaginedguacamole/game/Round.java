@@ -7,6 +7,8 @@ package reimaginedguacamole.game;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class which contains the information about the current round
@@ -15,20 +17,20 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class Round extends UnicastRemoteObject implements IRound {
 
-    private Question question;
+    private IQuestion question;
     private int givenAnswer;
 
     public Round() throws RemoteException{
-
+        
     }
 
     @Override
-    public Question getQuestion() {
+    public IQuestion getQuestion() {
         return question;
     }
 
     @Override
-    public void setQuestion(Question question) {
+    public void setQuestion(IQuestion question) {
         this.question = question;
     }
 
@@ -40,5 +42,11 @@ public class Round extends UnicastRemoteObject implements IRound {
     @Override
     public int getGivenAnswer() {
         return givenAnswer;
+    }
+
+    @Override
+    public IRound createRound() throws RemoteException {
+        Logger.getLogger(Round.class.getCanonicalName()).log(Level.INFO,"ROUND ADDED!");
+        return new Round();
     }
 }

@@ -1,8 +1,6 @@
-package Shared;
+package reimaginedguacamole.publisher;
 
 import java.beans.*;
-import java.rmi.*;
-import java.util.*;
 
 /**
  * ILocalPropertyListener. Interface to local property listener in order to

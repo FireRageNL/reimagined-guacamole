@@ -1,8 +1,7 @@
-package Shared;
+package reimaginedguacamole.publisher;
 
 import java.beans.*;
 import java.rmi.*;
-import java.util.*;
 
 /**
  * IRemotePropertyListener. Interface to remote property listener in order to

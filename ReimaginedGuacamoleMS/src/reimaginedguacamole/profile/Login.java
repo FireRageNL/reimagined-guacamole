@@ -25,15 +25,15 @@ public class Login extends UnicastRemoteObject implements ILogin {
         ProfileDB pdb = new ProfileDB();
         boolean login = pdb.login(password, username);
         if (!login) {
-            Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try Failed");
+            Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try for user" + username + " failed");
         } else {
-            Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try Succeded");
+            Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try for user" + username + " succeded");
         }
         return login;
     }
 
     @Override
-    public Profile getCurrentProfile(String email) throws RemoteException {
+    public IProfile getCurrentProfile(String email) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
         return pdb.getProfileData(email);
     }

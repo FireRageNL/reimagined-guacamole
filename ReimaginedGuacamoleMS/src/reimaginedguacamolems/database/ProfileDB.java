@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.Achievement;
 import reimaginedguacamole.profile.History;
@@ -74,7 +72,7 @@ public class ProfileDB extends Database {
         //gets the statistics for the current user
         List<Statistic> list = getStatistics(ret.getPid());
         //sets the statistics for the current user
-        ret.setStatistics(list);
+        ret.setStatistics((ArrayList<Statistic>) list);
         return ret;
     }
     /**
@@ -124,6 +122,7 @@ public class ProfileDB extends Database {
             ps.setInt(2, toSave.getPid());
             //executes the query
             ps.executeUpdate();
+            Logger.getLogger(ProfileDB.class.getName()).log(Level.INFO, "Nickname for user " + "{0}" + " changed", toSave.getPid());
             //closes the connection
             this.closeConnection();
         } catch (Exception ex) {
@@ -182,8 +181,8 @@ public class ProfileDB extends Database {
  * Function to get all the rankings
  * @return A list of all the rankings in the DB
  */
-    public ObservableList<Ranking> getRankings() {
-        ObservableList<Ranking> rankings = FXCollections.observableArrayList();
+    public List<Ranking> getRankings() {
+        ArrayList<Ranking> rankings = new ArrayList();
         try {
             //opens the connection
             this.initConnection();
@@ -205,7 +204,7 @@ public class ProfileDB extends Database {
             return rankings;
         } catch (Exception ex) {
             Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            return new ArrayList<Ranking>();
         }
     }
     /**
@@ -213,8 +212,8 @@ public class ProfileDB extends Database {
      * @param username is the user to get the gamehistory from
      * @return The gamehistory in the DB
      */
-    public ObservableList<History> getHistory(int username) {
-        ObservableList<History> history = FXCollections.observableArrayList();
+    public List<History> getHistory(int username) {
+        ArrayList<History> history = new ArrayList();
         try {
             //opens the connection
             this.initConnection();
@@ -236,7 +235,7 @@ public class ProfileDB extends Database {
             return history;
         } catch (Exception ex) {
             Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            return new ArrayList<History>();
         }
     }
 }

@@ -5,7 +5,6 @@
  */
 package reimaginedguacamole.tooling;
 
-import java.security.NoSuchAlgorithmException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

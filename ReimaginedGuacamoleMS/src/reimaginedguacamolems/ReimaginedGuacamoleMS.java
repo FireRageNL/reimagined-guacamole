@@ -5,12 +5,13 @@
  */
 package reimaginedguacamolems;
 
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import reimaginedguacamole.game.Game;
+import reimaginedguacamole.game.Round;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Register;
@@ -29,16 +30,22 @@ public class ReimaginedGuacamoleMS {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Starting uuup!");
+        Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application starting up!");
         try {
             Login log = new Login();
-            Profile prof = new Profile();
+            //Profile prof = new Profile();
             Register register = new Register();
+            Game game = new Game();
+            Round round = new Round();
             Registry reg;
             reg = LocateRegistry.createRegistry(666);
-            reg.rebind("Login",log);
-            reg.rebind("Profile",prof);
+            reg.rebind("Login", log);
+            //reg.rebind("Profile", prof);
             reg.rebind("Register", register);
+            reg.rebind("Game",game);
+            reg.rebind("Round",round);
+            Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application started!");
+
         } catch (RemoteException ex) {
             Logger.getLogger(ReimaginedGuacamoleMS.class.getName()).log(Level.SEVERE, null, ex);
         }

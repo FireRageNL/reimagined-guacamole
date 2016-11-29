@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,7 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
  *Class that holds a certain ranking in the world ranking list.
  * @author roy_v
  */
-public class Ranking extends UnicastRemoteObject implements IRanking {
+public class Ranking extends UnicastRemoteObject implements IRanking,Serializable {
 
    private final SimpleStringProperty rank;
    private final SimpleStringProperty nickname;

@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import reimaginedguacamole.game.Category;
@@ -13,7 +14,7 @@ import reimaginedguacamole.game.Category;
  * Class that holds information about right or wrong answers per category.
  * @author Marc
  */
-public class Statistic extends UnicastRemoteObject implements IStatistic {
+public class Statistic extends UnicastRemoteObject implements IStatistic,Serializable {
 
     private Category category;
     private int right;
