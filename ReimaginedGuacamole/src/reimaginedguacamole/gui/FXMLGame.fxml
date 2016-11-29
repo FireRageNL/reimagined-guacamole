@@ -28,7 +28,7 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="10.0" prefHeight="625.0" prefWidth="908.0" visible="false">
+    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="12.0" prefHeight="625.0" prefWidth="908.0" visible="true">
       <children>
         <TabPane layoutX="16.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE" visible="true">
           <tabs>
@@ -306,8 +306,8 @@
                         </ListView>
                         <HBox prefHeight="49.0" prefWidth="827.0">
                           <children>
-                            <TextField prefHeight="46.0" prefWidth="717.0" />
-                            <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="110.0" text="Send" />
+                            <TextField fx:id="txtLobbyChat" prefHeight="46.0" prefWidth="717.0" />
+                            <Button mnemonicParsing="false" onAction="#btnlobbyChatClicker" prefHeight="46.0" prefWidth="110.0" text="Send" />
                           </children>
                         </HBox>
                       </children>
@@ -349,7 +349,7 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="false">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="638.9998779296875" prefWidth="906.0">
           <children>

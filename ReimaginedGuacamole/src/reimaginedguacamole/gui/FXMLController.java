@@ -61,7 +61,12 @@ public class FXMLController implements Initializable, Observer {
     private Pane loginPane;
     @FXML
     private Pane gamePane;
-
+    
+    
+    //LOBBY OBJECTS
+    @FXML
+    private TextField txtLobbyChat;
+    
     //PROFILE INFORMATION OBJECTS
     @FXML
     private Pane profilePane;
@@ -161,6 +166,7 @@ public class FXMLController implements Initializable, Observer {
     private ObservableList<String> chatList;
     int wheelRotation = 0;
     double progress;
+    private Client client;
 
     // TIMERS
     private Timer waitTimer;
@@ -189,6 +195,7 @@ public class FXMLController implements Initializable, Observer {
                 if (loggedin) {
                     //gets user date from database and sets the window to the profile page.
                     user = log.getCurrentProfile(username);
+                    client = new Client(user);
                     fillProfileData();
                     setWindows(2);
                 } else {
@@ -485,6 +492,19 @@ public class FXMLController implements Initializable, Observer {
         } catch (RemoteException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    
+    
+    @FXML
+    public void btnlobbyChatClicker(){
+        try {
+            String msg = txtLobbyChat.getText();
+            client.sendMessage(msg);
+        } catch (RemoteException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**

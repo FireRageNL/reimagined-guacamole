@@ -12,6 +12,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import reimaginedguacamole.game.Game;
 import reimaginedguacamole.game.Round;
+import reimaginedguacamole.profile.ChatServer;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Register;
@@ -37,6 +38,7 @@ public class ReimaginedGuacamoleMS {
             Register register = new Register();
             Game game = new Game();
             Round round = new Round();
+            ChatServer server = new ChatServer();
             Registry reg;
             reg = LocateRegistry.createRegistry(666);
             reg.rebind("Login", log);
@@ -44,6 +46,7 @@ public class ReimaginedGuacamoleMS {
             reg.rebind("Register", register);
             reg.rebind("Game",game);
             reg.rebind("Round",round);
+            reg.rebind("ChatServer",server);
             Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application started!");
 
         } catch (RemoteException ex) {
