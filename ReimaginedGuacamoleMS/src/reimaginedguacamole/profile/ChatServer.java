@@ -9,6 +9,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,7 +34,7 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
 
     @Override
     public void broadcastMessage(String message) throws RemoteException {
-        System.out.println(message);
+        Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.INFO,"New chat message sent to lobby: "+ message);
         for(IClient p: connectedProfiles){
            p.addMessage(message);
         }

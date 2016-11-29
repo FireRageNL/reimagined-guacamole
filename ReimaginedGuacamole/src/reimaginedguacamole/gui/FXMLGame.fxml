@@ -299,7 +299,7 @@
                             </VBox>
                           </children>
                         </HBox>
-                        <ListView prefHeight="160.0" prefWidth="827.0">
+                        <ListView fx:id="lvLobby" prefHeight="160.0" prefWidth="827.0">
                           <VBox.margin>
                             <Insets top="20.0" />
                           </VBox.margin>

@@ -111,7 +111,7 @@ public class RegisterDialog {
         if (result.isPresent() && result.get().size() == 4) {
             try {
                 //If result is ok, insert into database.
-                Registry reg2 = LocateRegistry.getRegistry("192.168.1.116", 666);
+                Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
                 IRegister register = (IRegister) reg2.lookup("Register");
                 register.registerNewUser(result.get());
             } catch (RemoteException | NotBoundException ex) {

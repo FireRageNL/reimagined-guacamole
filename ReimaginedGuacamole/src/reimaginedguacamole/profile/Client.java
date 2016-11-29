@@ -13,6 +13,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -22,12 +23,15 @@ public class Client extends UnicastRemoteObject implements IClient {
 
     private String name;
     private IChatServer server;
+    private ObservableList<String> lobbyChat;
+    
     
 
-    public Client(IProfile prof) throws RemoteException{
+    public Client(IProfile prof, ObservableList<String> lobbyChat) throws RemoteException{
         try {
+            this.lobbyChat = lobbyChat;
             this.name = prof.getNickname();
-            Registry reg2 = LocateRegistry.getRegistry("192.168.1.116", 666);
+            Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
             server = (IChatServer) reg2.lookup("ChatServer");
             server.clientEnter(this);
         } catch (RemoteException | NotBoundException ex) {
@@ -44,7 +48,7 @@ public class Client extends UnicastRemoteObject implements IClient {
 
     @Override
     public void addMessage(String message) throws RemoteException {
-        System.out.println(message);
+        this.lobbyChat.add(message);
     }
 
     @Override
