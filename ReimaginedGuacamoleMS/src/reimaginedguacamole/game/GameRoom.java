@@ -23,11 +23,13 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom{
         
     }
     
+    public GameRoom(int rounds, int duration) throws RemoteException{
+        
+    }
     private List<IProfile> players;
     private ChatServer chatserver;
     private GameController GameController;
 
-    
     
     @Override
     public int getNrOfPlayers() throws RemoteException {
@@ -53,6 +55,12 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom{
             nicks.add(p.getNickname());
         }
        return nicks;
+    }
+
+    @Override
+    public IGameRoom createGameRoom(int duration, int rounds) throws RemoteException {
+        //DoNothing
+        return new GameRoom();
     }
     
     

@@ -5,14 +5,21 @@
  */
 package reimaginedguacamole.gui;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
+import reimaginedguacamole.game.IGameRoom;
 
 /**
  *
@@ -46,21 +53,27 @@ public class GameRoomDialog {
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
         dialog.setResultConverter((ButtonType param) -> {
             if (param == buttonTypeOk) {
-                List<String> toRet = new ArrayList<>();
-                toRet.add(spr.getValueFactory().getValue().toString());
-                toRet.add(spr2.getValueFactory().getValue().toString());
+                List<Integer> toRet;
+                toRet = new ArrayList<>();
+                toRet.add(Integer.parseInt(spr.getValueFactory().getValue().toString()));
+                toRet.add(Integer.parseInt(spr2.getValueFactory().getValue().toString()));
                 return toRet;
             }
             return new ArrayList<>();
         });
         Optional<List> result = dialog.showAndWait();
-        
-        if(result.isPresent()){
-            List<String> res = result.get();
-            res.stream().forEach((s) -> {
-                System.out.println(s);
-            });
-            
+
+        if (result.isPresent()) {
+            List<Integer> res = result.get();
+            try{
+            Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
+            IGameRoom gameroom = (IGameRoom) reg2.lookup("GameRoom");
+            gameroom.createGameRoom(res.get(0), res.get(1));
+            }
+            catch(RemoteException | NotBoundException ex){
+                Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
     }
 
