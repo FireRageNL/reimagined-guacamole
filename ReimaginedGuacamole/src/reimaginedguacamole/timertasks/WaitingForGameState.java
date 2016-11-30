@@ -5,7 +5,10 @@
  */
 package reimaginedguacamole.timertasks;
 
+import java.rmi.RemoteException;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import reimaginedguacamole.game.IGameController;
 import reimaginedguacamole.game.GameState;
@@ -35,7 +38,11 @@ public class WaitingForGameState extends TimerTask {
     @Override
     public void run() {
         Platform.runLater(() -> {
-            game.setGameState(gamestate);
+            try {
+                game.setGameState(gamestate);
+            } catch (RemoteException ex) {
+                Logger.getLogger(WaitingForGameState.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 

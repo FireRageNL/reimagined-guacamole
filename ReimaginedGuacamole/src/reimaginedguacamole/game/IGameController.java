@@ -19,6 +19,7 @@ public interface IGameController extends Remote {
 
     /**
      * Starts the next round and sets currentRound to the new Round object
+     * @throws java.rmi.RemoteException
      */
     public void startNextRound()throws RemoteException;
 

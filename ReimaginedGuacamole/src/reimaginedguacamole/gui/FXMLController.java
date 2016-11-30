@@ -516,7 +516,7 @@ public class FXMLController implements Initializable, Observer {
      * Resets the game UI to the standard empty playing field so next round can
      * start.
      */
-    private void resetQuestionUI() {
+    private void resetQuestionUI() throws RemoteException{
         lblScore.setText(String.valueOf(gameController.getCurrentScore()));
         lblQuestion.setText("Hier komt straks de vraag");
         btnAnswer1.setText("");
@@ -573,7 +573,7 @@ public class FXMLController implements Initializable, Observer {
      * the spinning gamestate.
      */
     @FXML
-    public void btnSpinClicked() {
+    public void btnSpinClicked() throws RemoteException{
         waitTimer.cancel();
         gameController.setGameState(SPINNING);
     }
@@ -617,8 +617,9 @@ public class FXMLController implements Initializable, Observer {
 
     /**
      * Starts the game timer
+     * @throws java.rmi.RemoteException
      */
-    public void startGameTimer() {
+    public void startGameTimer()throws RemoteException{
         progress = 1;
         animationTimer = new AnimationTimer() {
             private long prevUpdate;
@@ -630,11 +631,15 @@ public class FXMLController implements Initializable, Observer {
                     if (progress > 0) {
                         progress -= 0.003 / (roundDuration / 10);
                     } else {
-                        //Timer has ended. gameround ends and current answer has to be wrong.
-                        progress = 0;
-                        animationTimer.stop();
-                        gameController.setCurrentAnswer(0);
-                        gameController.setGameState(ANSWERED);
+                        try {
+                            //Timer has ended. gameround ends and current answer has to be wrong.
+                            progress = 0;
+                            animationTimer.stop();
+                            gameController.setCurrentAnswer(0);
+                            gameController.setGameState(ANSWERED);
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                     pbRoundTimer.setProgress(progress);
                     prevUpdate = now;
@@ -687,7 +692,7 @@ public class FXMLController implements Initializable, Observer {
      * @param event
      */
     @FXML
-    private void setAnswer(ActionEvent event) {
+    private void setAnswer(ActionEvent event) throws RemoteException{
         animationTimer.stop();
         Button B = (Button) event.getSource();
 
