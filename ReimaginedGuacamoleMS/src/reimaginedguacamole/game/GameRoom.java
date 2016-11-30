@@ -25,6 +25,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom{
     
     private List<IProfile> players;
     private ChatServer chatserver;
+    private GameController GameController;
 
     
     
@@ -36,6 +37,8 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom{
     @Override
     public void joinRoom(IProfile profile) throws RemoteException {
         players.add(profile);
+        GameController.AddPlayersCount();
+        
     }
 
     @Override
