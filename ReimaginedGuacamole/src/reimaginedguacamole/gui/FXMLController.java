@@ -280,6 +280,11 @@ public class FXMLController implements Initializable, Observer {
     private void clickRegister(MouseEvent event) throws RemoteException, NotBoundException {
         RegisterDialog regdialog = new RegisterDialog();
     }
+    
+    @FXML
+    private void clickCreateGame(ActionEvent event){
+        GameRoomDialog gamedialog = new GameRoomDialog();
+    }
 
     /**
      * sets the new nickname for the user and reloads the page so new
@@ -545,9 +550,11 @@ public class FXMLController implements Initializable, Observer {
     @FXML
     public void btnlobbyChatClicker() {
         try {
-            String msg = txtLobbyChat.getText();
-            client.sendMessage(msg);
-            txtLobbyChat.clear();
+            if (!txtLobbyChat.getText().isEmpty()) {
+                String msg = txtLobbyChat.getText();
+                client.sendMessage(msg);
+                txtLobbyChat.clear();
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -636,6 +643,7 @@ public class FXMLController implements Initializable, Observer {
                     prevUpdate = now;
                 }
             }
+
             @Override
             public void start() {
                 prevUpdate = System.nanoTime();

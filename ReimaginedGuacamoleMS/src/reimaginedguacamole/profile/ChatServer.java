@@ -53,7 +53,6 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
     public void clientExit(IClient client) throws RemoteException {
         connectedProfiles.remove(client);
         Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.INFO, "Client has left the lobby chatroom: {0}", client.getName());
-
     }
 
 }

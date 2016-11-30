@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="648.9999000000025" prefWidth="935.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLController">
+<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="648.9999000000025" prefWidth="935.0" visible="true" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="reimaginedguacamole.gui.FXMLController">
   <children>
     <Pane fx:id="loginPane" layoutX="20.0" layoutY="14.0" opacity="1.0" prefHeight="625.0" prefWidth="906.0" visible="false">
       <children>
@@ -279,7 +279,7 @@
                             </ListView>
                             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                               <children>
-                                <Button minHeight="25.0" minWidth="95.0" mnemonicParsing="false" onAction="#startGame" prefHeight="25.0" prefWidth="95.0" text="Create Game">
+                                <Button minHeight="25.0" minWidth="95.0" mnemonicParsing="false" onAction="#clickCreateGame" prefHeight="25.0" prefWidth="95.0" text="Create Game">
                                   <font>
                                     <Font name="System Bold" size="12.0" fx:id="x1" />
                                   </font>
