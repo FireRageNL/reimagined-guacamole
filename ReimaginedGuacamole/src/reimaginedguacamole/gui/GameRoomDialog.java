@@ -20,6 +20,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import reimaginedguacamole.game.IGameRoom;
+import reimaginedguacamole.profile.IGameServer;
 
 /**
  *
@@ -67,8 +68,8 @@ public class GameRoomDialog {
             List<Integer> res = result.get();
             try{
             Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
-            IGameRoom gameroom = (IGameRoom) reg2.lookup("GameRoom");
-            gameroom.createGameRoom(res.get(0), res.get(1));
+            IGameServer gs = (IGameServer) reg2.lookup("GameServer");
+            gs.createController(res.get(0), res.get(1));
             }
             catch(RemoteException | NotBoundException ex){
                 Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);

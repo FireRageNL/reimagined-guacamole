@@ -16,7 +16,7 @@ import reimaginedguacamole.game.IGameController;
  */
 public interface IGameServer extends Remote {
 
-    public IGameController createController() throws RemoteException;
+    public IGameController createController(int round, int duration) throws RemoteException;
 
     /**
      * Function to test username and password provided
