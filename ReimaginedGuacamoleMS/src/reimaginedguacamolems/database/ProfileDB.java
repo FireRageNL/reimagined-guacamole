@@ -8,6 +8,7 @@ package reimaginedguacamolems.database;
 import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -202,9 +203,9 @@ public class ProfileDB extends Database {
             this.closeConnection();
             //returns the list
             return rankings;
-        } catch (Exception ex) {
+        } catch (SQLException | RemoteException ex) {
             Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
-            return new ArrayList<Ranking>();
+            return new ArrayList<>();
         }
     }
     /**
@@ -233,9 +234,9 @@ public class ProfileDB extends Database {
             this.closeConnection();
             //returns the list
             return history;
-        } catch (Exception ex) {
+        } catch (SQLException | RemoteException ex) {
             Logger.getLogger(ProfileDB.class.getName()).log(Level.SEVERE, null, ex);
-            return new ArrayList<History>();
+            return new ArrayList<>();
         }
     }
 }

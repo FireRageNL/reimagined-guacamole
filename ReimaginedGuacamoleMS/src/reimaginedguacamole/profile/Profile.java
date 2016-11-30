@@ -29,9 +29,19 @@ public class Profile extends UnicastRemoteObject implements IProfile,Serializabl
     private final ProfileDB pdb = new ProfileDB();
 
     public Profile() throws RemoteException {
+        //Empty constructor to overwrite the default constructor
     }
     
-    //Default constructor for 
+    /**
+     * Constructor to create a new profile with all the data required to create one
+     * @param email the email of the user
+     * @param name the name of the user
+     * @param nickname the nickname of the user
+     * @param pid the ID value of the user in the database
+     * @param wins the amount of wins the user has
+     * @param losses the amount of losses the user has
+     * @throws RemoteException 
+     */
     public Profile(String email, String name, String nickname, int pid, int wins, int losses)throws RemoteException {
         this.email = email;
         this.name = name;

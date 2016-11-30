@@ -161,8 +161,8 @@ public class GameControllerTest {
     public void testGetGameState() {
         System.out.println("getGameState");
         GameController instance = new GameController(5,10);
-        instance.setGameState(GameState.GameRunning);
-        GameState expResult = GameState.GameRunning;
+        instance.setGameState(GameState.GAMERUNNING);
+        GameState expResult = GameState.GAMERUNNING;
         GameState result = instance.getGameState();
         assertEquals(expResult, result);
     }
@@ -173,7 +173,7 @@ public class GameControllerTest {
     @Test
     public void testSetGameState() {
         System.out.println("setGameState");
-        GameState gameState = GameState.GameRunning;
+        GameState gameState = GameState.GAMERUNNING;
         GameController instance = new GameController(5,10);
         instance.setGameState(gameState);
     }

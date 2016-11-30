@@ -27,13 +27,16 @@ import reimaginedguacamole.profile.IRegister;
 import reimaginedguacamole.tooling.Hashing;
 
 /**
- * TODO: niet laten crashen met een cancel maar netjes proberen af te handelen.
  * Class that creates a dialog for registering a user.
  *
  * @author roy_v
  */
 public class RegisterDialog {
 
+    /**
+     * Constructor that creates a register dialog and that handles the complete
+     * registration process
+     */
     public RegisterDialog() {
         //Set all UI elements
         Dialog<LinkedHashMap> dialog = new Dialog<>();
@@ -67,15 +70,13 @@ public class RegisterDialog {
         Node registerButton = dialog.getDialogPane().lookupButton(registerButtonType);
         registerButton.setDisable(true);
 
-        email.textProperty().addListener((observable, oldValue, newValue) -> {
-            registerButton.setDisable(newValue.trim().isEmpty());
-        });
+        email.textProperty().addListener((observable, oldValue, newValue) -> 
+            registerButton.setDisable(newValue.trim().isEmpty()));
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(() -> email.requestFocus());
         dialog.setResultConverter(dialogButton -> {
             LinkedHashMap hm = new LinkedHashMap();
             if (dialogButton == registerButtonType) {
-                //Check if correct information has been provided
                 if (email.getText().isEmpty() || password.getText().isEmpty() || username.getText().isEmpty() || name.getText().isEmpty()) {
                     error.setText("Niet alle velden zijn ingevuld");
                     hm.put("Error", "1");
@@ -120,7 +121,12 @@ public class RegisterDialog {
         }
     }
 
-    //method that checks email.
+    /**
+     * Method that verifies if a given address is indeed an email
+     *
+     * @param email the value to be verified
+     * @return true or false if the verification succeeded
+     */
     public boolean verifyEmail(String email) {
         Pattern pattern = Pattern.compile("^.+@.+\\..+$");
         Matcher matcher = pattern.matcher(email);

@@ -19,6 +19,7 @@ import reimaginedguacamolems.database.ProfileDB;
 public class Register extends UnicastRemoteObject implements IRegister {
 
     public Register() throws RemoteException {
+        //Empty constructor to overwrite the default constructor
     }
 
     @Override

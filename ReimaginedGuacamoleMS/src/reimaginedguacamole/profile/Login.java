@@ -18,6 +18,7 @@ import reimaginedguacamolems.database.ProfileDB;
 public class Login extends UnicastRemoteObject implements ILogin {
 
     public Login() throws RemoteException {
+        //Empty constructor to overwrite the default constructor
     }
 
     @Override

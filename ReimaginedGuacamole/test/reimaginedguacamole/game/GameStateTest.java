@@ -23,7 +23,7 @@ public class GameStateTest {
     @Test
     public void testValues() {
         System.out.println("values");
-        GameState expResult = GameState.WaitingForCategory;
+        GameState expResult = GameState.WAITINGFORCATEGORY;
         GameState result = GameState.values()[0];
         assertEquals(expResult, result);
     }
@@ -35,7 +35,7 @@ public class GameStateTest {
     public void testValueOf() {
         System.out.println("valueOf");
         String name = "Waiting";
-        GameState expResult = GameState.Waiting;
+        GameState expResult = GameState.WAITING;
         GameState result = GameState.valueOf(name);
         assertEquals(expResult, result);
 

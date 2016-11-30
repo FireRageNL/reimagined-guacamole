@@ -14,7 +14,6 @@ import reimaginedguacamole.game.Game;
 import reimaginedguacamole.game.Round;
 import reimaginedguacamole.profile.ChatServer;
 import reimaginedguacamole.profile.Login;
-import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Register;
 
 /**
@@ -34,7 +33,6 @@ public class ReimaginedGuacamoleMS {
         Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application starting up!");
         try {
             Login log = new Login();
-            //Profile prof = new Profile();
             Register register = new Register();
             Game game = new Game();
             Round round = new Round();
@@ -42,7 +40,6 @@ public class ReimaginedGuacamoleMS {
             Registry reg;
             reg = LocateRegistry.createRegistry(666);
             reg.rebind("Login", log);
-            //reg.rebind("Profile", prof);
             reg.rebind("Register", register);
             reg.rebind("Game",game);
             reg.rebind("Round",round);

@@ -20,8 +20,9 @@ public class Round extends UnicastRemoteObject implements IRound {
     private IQuestion question;
     private int givenAnswer;
 
-    public Round() throws RemoteException{
-        
+    public Round() throws RemoteException {
+        //Empty constcurtor to overwrihte default constructor
+
     }
 
     @Override
@@ -46,7 +47,7 @@ public class Round extends UnicastRemoteObject implements IRound {
 
     @Override
     public IRound createRound() throws RemoteException {
-        Logger.getLogger(Round.class.getCanonicalName()).log(Level.INFO,"ROUND ADDED!");
+        Logger.getLogger(Round.class.getCanonicalName()).log(Level.INFO, "ROUND ADDED!");
         return new Round();
     }
 }

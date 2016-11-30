@@ -11,27 +11,32 @@ import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.GameState;
 
 /**
- *Timer to set a new gamestate after a set time. 
+ * Timer to set a new gamestate after a set time.
+ *
  * @author daan
  */
-public class WaitingForGameState extends TimerTask{
-    
-    GameController _game;
-    GameState _gamestate;
-    
-    public WaitingForGameState(GameController g, GameState gamestate){
-        _game = g;
-        _gamestate = gamestate;
+public class WaitingForGameState extends TimerTask {
+
+    GameController game;
+    GameState gamestate;
+
+    /**
+     * Constructor for a new gamestate waiter
+     *
+     * @param g the game where the state will be changed after the timer
+     * finished
+     * @param gamestate the controller this timer has to be made for
+     */
+    public WaitingForGameState(GameController g, GameState gamestate) {
+        game = g;
+        this.gamestate = gamestate;
     }
+
     @Override
     public void run() {
-        Platform.runLater(new Runnable(){
-            @Override
-            public void run() {
-                _game.setGameState(_gamestate);
-            }
-            
+        Platform.runLater(() -> {
+            game.setGameState(gamestate);
         });
     }
-    
+
 }

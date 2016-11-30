@@ -14,9 +14,27 @@ import java.rmi.RemoteException;
  */
 public interface IRanking extends Remote {
 
+    /**
+     * Function that returns the nickname of the user this ranking is about
+     *
+     * @return the nickname of the user the ranking is about
+     * @throws RemoteException
+     */
     public String getNickname() throws RemoteException;
 
+    /**
+     * Function to return the current rank of the user
+     *
+     * @return the current rank of the user
+     * @throws RemoteException
+     */
     public int getRank() throws RemoteException;
 
+    /**
+     * Function to get the current score of the user
+     *
+     * @return the current score of the user
+     * @throws RemoteException
+     */
     public int getScore() throws RemoteException;
 }

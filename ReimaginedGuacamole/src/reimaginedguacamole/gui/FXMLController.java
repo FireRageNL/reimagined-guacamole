@@ -61,14 +61,13 @@ public class FXMLController implements Initializable, Observer {
     private Pane loginPane;
     @FXML
     private Pane gamePane;
-    
-    
+
     //LOBBY OBJECTS
     @FXML
     private TextField txtLobbyChat;
     @FXML
     private ListView lvLobby;
-    
+
     //PROFILE INFORMATION OBJECTS
     @FXML
     private Pane profilePane;
@@ -164,12 +163,15 @@ public class FXMLController implements Initializable, Observer {
     private IProfile user;
     private Random rng;
     private int wheelSpeed;
-    private int roundDuration, amountOfRounds;
+    private int roundDuration;
+    private int amountOfRounds;
     private ObservableList<String> chatList;
     private ObservableList<String> lobbyChat;
     int wheelRotation = 0;
     double progress;
     private Client client;
+    private static final String BUTTON_STYLE = "-fx-base: #ff3300;";
+    private static final String BUTTON_STYLE_CORRECT = "-fx-base: #00cc00;";
 
     // TIMERS
     private Timer waitTimer;
@@ -230,7 +232,7 @@ public class FXMLController implements Initializable, Observer {
         lobbyChat = FXCollections.observableArrayList();
         lvLobby.setFixedCellSize(20);
         lvLobby.setItems(lobbyChat);
-        lvLobby.getItems().addListener(new ListChangeListener(){
+        lvLobby.getItems().addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change c) {
                 lvLobby.scrollTo(lobbyChat.size() - 1);
@@ -259,6 +261,9 @@ public class FXMLController implements Initializable, Observer {
                 break;
             case 2:
                 profilePane.setVisible(true);
+                break;
+            default:
+                loginPane.setVisible(true);
                 break;
         }
     }
@@ -326,6 +331,10 @@ public class FXMLController implements Initializable, Observer {
                     lblWinSci.setText(Integer.toString(s.getRight()));
                     lblLossSci.setText(Integer.toString(s.getWrong()));
                     break;
+                default:
+                    //Do nothing
+                    break;
+
             }
         }
 
@@ -362,7 +371,7 @@ public class FXMLController implements Initializable, Observer {
         chatList.clear();
         disableButtons(true);
         gameController.addObserver(this);
-        gameController.setGameState(GameState.WaitingForCategory);
+        gameController.setGameState(GameState.WAITINGFORCATEGORY);
     }
 
     /**
@@ -388,19 +397,19 @@ public class FXMLController implements Initializable, Observer {
 
         switch (gameController.getGameState()) {
             //Waiting is not used in this version yet. future version will wait for other players
-            case Waiting:
+            case WAITING:
                 break;
-            case WaitingForCategory:
+            case WAITINGFORCATEGORY:
                 //Game is now waiting for user to start spinning the wheel. if not done after 15 seconds it will start automically.
                 //Disables all necessary buttons and gives feedback to user.
                 lblGameName.setText(user.getNickname());
                 btnSpin.setDisable(false);
                 waitTimer = new Timer(true);
                 chatList.add("GAME: Ben je er Klaar voor? Spin het wiel!");
-                waitTimer.schedule(new WaitingForGameState(gameController, GameState.Spinning), 15000);
+                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SPINNING), 15000);
                 setWindows(0);
                 break;
-            case Spinning:
+            case SPINNING:
                 //this state will start spinning the wheel. also it resets the ui to an empty gamescreen 
                 waitTimer = null;
                 resetQuestionUI();
@@ -411,9 +420,9 @@ public class FXMLController implements Initializable, Observer {
                 waitTimer = new Timer(true);
                 int time = 5000 + rng.nextInt(3000);
                 System.out.println(time);
-                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SpinningFinished), time);
+                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SPINNINGFINISHED), time);
                 break;
-            case SpinningFinished:
+            case SPINNINGFINISHED:
                 //Stops the spinning and starts the new round with a question from the chosen category
                 animationTimer.stop();
                 System.out.println("ANIMATION STOPPED!");
@@ -428,9 +437,9 @@ public class FXMLController implements Initializable, Observer {
 
                 //Waits a few seconds before showing the question.
                 waitTimer = new Timer(true);
-                waitTimer.schedule(new WaitingForGameState(gameController, GameState.GameRunning), 3500);
+                waitTimer.schedule(new WaitingForGameState(gameController, GameState.GAMERUNNING), 3500);
                 break;
-            case GameRunning:
+            case GAMERUNNING:
                 //Gamestate where question can be answered. starts the gametimer which is set to a specific time.
                 disableButtons(false);
                 round = gameController.getCurrentRound();
@@ -442,7 +451,7 @@ public class FXMLController implements Initializable, Observer {
                 startGameTimer();
                 break;
 
-            case Answered:
+            case ANSWERED:
                 //Gamestate where question has been answered or time has run out(answer will be 0).
                 //checks what the user did and gives correct feedback to user.
                 disableButtons(true);
@@ -459,16 +468,19 @@ public class FXMLController implements Initializable, Observer {
 
                 //Checks if game is over and continuesaccording to this check
                 if (gameController.getCurrentRoundIndex() + 1 == gameController.getGame().getAmountOfRounds()) {
-                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.GameFinished), 2500);
+                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.GAMEFINISHED), 2500);
                 } else {
-                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.WaitingForCategory), 2500);
+                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.WAITINGFORCATEGORY), 2500);
                 }
                 break;
 
-            case GameFinished:
+            case GAMEFINISHED:
                 //Game has ended. upload all information and show user game has ended.
                 gameController.endGame(user);
                 chatList.add("GAME:  De Game is afgelopen! \n Je score is " + gameController.getCurrentScore() + "! Goed Bezig!");
+                break;
+            default:
+                //do nothing
                 break;
         }
     }
@@ -504,18 +516,16 @@ public class FXMLController implements Initializable, Observer {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    
+
     @FXML
-    public void btnlobbyChatClicker(){
+    public void btnlobbyChatClicker() {
         try {
             String msg = txtLobbyChat.getText();
             client.sendMessage(msg);
         } catch (RemoteException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -535,7 +545,7 @@ public class FXMLController implements Initializable, Observer {
     @FXML
     public void btnSpinClicked() {
         waitTimer.cancel();
-        gameController.setGameState(Spinning);
+        gameController.setGameState(SPINNING);
     }
 
     /**
@@ -585,10 +595,8 @@ public class FXMLController implements Initializable, Observer {
 
             @Override
             public void handle(long now) {
-
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
-                    //System.out.println(progress);
                     if (progress > 0) {
                         progress -= 0.003 / (roundDuration / 10);
                     } else {
@@ -596,22 +604,18 @@ public class FXMLController implements Initializable, Observer {
                         progress = 0;
                         animationTimer.stop();
                         gameController.setCurrentAnswer(0);
-                        gameController.setGameState(Answered);
+                        gameController.setGameState(ANSWERED);
                     }
                     pbRoundTimer.setProgress(progress);
                     prevUpdate = now;
-
                 }
-
             }
-
             @Override
             public void start() {
                 prevUpdate = System.nanoTime();
                 super.start();
             }
         };
-
         animationTimer.start();
     }
 
@@ -622,22 +626,25 @@ public class FXMLController implements Initializable, Observer {
      * @param buttonIndex index of button which corresponds with correct answer
      */
     private void setButtonCorrect(int buttonIndex) {
-        btnAnswer1.setStyle("-fx-base: #ff3300;");
-        btnAnswer2.setStyle("-fx-base: #ff3300;");
-        btnAnswer3.setStyle("-fx-base: #ff3300;");
-        btnAnswer4.setStyle("-fx-base: #ff3300;");
+        btnAnswer1.setStyle(BUTTON_STYLE);
+        btnAnswer2.setStyle(BUTTON_STYLE);
+        btnAnswer3.setStyle(BUTTON_STYLE);
+        btnAnswer4.setStyle(BUTTON_STYLE);
         switch (buttonIndex) {
             case 1:
-                btnAnswer1.setStyle("-fx-base: #00cc00;");
+                btnAnswer1.setStyle(BUTTON_STYLE_CORRECT);
                 break;
             case 2:
-                btnAnswer2.setStyle("-fx-base: #00cc00;");
+                btnAnswer2.setStyle(BUTTON_STYLE_CORRECT);
                 break;
             case 3:
-                btnAnswer3.setStyle("-fx-base: #00cc00;");
+                btnAnswer3.setStyle(BUTTON_STYLE_CORRECT);
                 break;
             case 4:
-                btnAnswer4.setStyle("-fx-base: #00cc00;");
+                btnAnswer4.setStyle(BUTTON_STYLE_CORRECT);
+                break;
+            default:
+                //do nothing
                 break;
 
         }
@@ -662,8 +669,8 @@ public class FXMLController implements Initializable, Observer {
         } else if (B.getId().contains("4")) {
             gameController.setCurrentAnswer(4);
         }
-        System.out.println(gameController.getCurrentAnswer());
-        gameController.setGameState(Answered);
+        Logger.getLogger(FXMLController.class.getCanonicalName()).log(Level.INFO, "{0}", gameController.getCurrentAnswer());
+        gameController.setGameState(ANSWERED);
     }
 
     /**

@@ -11,11 +11,11 @@ package reimaginedguacamole.game;
  */
 
 public enum GameState {
-    WaitingForCategory,
-    GameRunning,
-    GameFinished,
-    Spinning,
-    SpinningFinished,
-    Answered,
-    Waiting
+    WAITINGFORCATEGORY,
+    GAMERUNNING,
+    GAMEFINISHED,
+    SPINNING,
+    SPINNINGFINISHED,
+    ANSWERED,
+    WAITING
 }

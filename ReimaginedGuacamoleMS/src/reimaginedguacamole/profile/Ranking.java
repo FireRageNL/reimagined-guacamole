@@ -11,33 +11,42 @@ import java.rmi.server.UnicastRemoteObject;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- *Class that holds a certain ranking in the world ranking list.
+ * Class that holds a certain ranking in the world ranking list.
+ *
  * @author roy_v
  */
-public class Ranking extends UnicastRemoteObject implements IRanking,Serializable {
+public class Ranking extends UnicastRemoteObject implements IRanking, Serializable {
 
-   private final SimpleStringProperty rank;
-   private final SimpleStringProperty nickname;
-   private final SimpleStringProperty score;
+    private final SimpleStringProperty rank;
+    private final SimpleStringProperty nickname;
+    private final SimpleStringProperty score;
 
-    public Ranking(int rank, String nickname, int score) throws RemoteException{
+    /**
+     * Constructor for a new ranking object
+     *
+     * @param rank the rank this ranking object has
+     * @param nickname the nickname this ranking object has
+     * @param score the score this ranking object has
+     * @throws RemoteException
+     */
+    public Ranking(int rank, String nickname, int score) throws RemoteException {
         this.rank = new SimpleStringProperty(String.valueOf(rank));
         this.nickname = new SimpleStringProperty(nickname);
         this.score = new SimpleStringProperty(String.valueOf(score));
     }
-    
-   @Override
-    public String getNickname(){
+
+    @Override
+    public String getNickname() {
         return nickname.get();
     }
-    
-   @Override
-    public int getRank(){
+
+    @Override
+    public int getRank() {
         return Integer.parseInt(rank.get());
     }
-    
-   @Override
-    public int getScore(){
+
+    @Override
+    public int getScore() {
         return Integer.parseInt(score.get());
     }
 }

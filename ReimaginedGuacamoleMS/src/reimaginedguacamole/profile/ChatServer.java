@@ -20,8 +20,9 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
 
     private List<IClient> connectedProfiles = new ArrayList();
 
-    public ChatServer() throws RemoteException {
 
+    public ChatServer() throws RemoteException {
+        //Empty constcurtor to overwrihte default constructor
     }
 
     @Override

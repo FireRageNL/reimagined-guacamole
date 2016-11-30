@@ -7,14 +7,19 @@ package reimaginedguacamole.profile;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
  * @author roy_v
  */
+@FunctionalInterface
 public interface IRegister extends Remote {
-    
-    public void registerNewUser(LinkedHashMap profileData) throws RemoteException;
+    /**
+     * Function to register a new user
+     * @param profileData The data for the new user
+     * @throws RemoteException 
+     */
+    public void registerNewUser(Map profileData) throws RemoteException;
     
 }

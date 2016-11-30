@@ -20,6 +20,13 @@ public class Statistic extends UnicastRemoteObject implements IStatistic,Seriali
     private int right;
     private int wrong;
     
+    /**
+     * Constructor to create a ne statistic
+     * @param category the category the statistic is about
+     * @param right amount of questions anwsered correctly
+     * @param wrong amount of questions anwsered wrongly
+     * @throws RemoteException 
+     */
     public Statistic(Category category, int right, int wrong) throws RemoteException {
         this.category = category;
         this.right = right;
@@ -59,7 +66,6 @@ public class Statistic extends UnicastRemoteObject implements IStatistic,Seriali
     public int returnPercentage(){
         int whole = right + wrong;
         double percentage = (double)right/(double)whole * 100;
-        System.out.println(percentage);
         return (int)percentage;
     }
 

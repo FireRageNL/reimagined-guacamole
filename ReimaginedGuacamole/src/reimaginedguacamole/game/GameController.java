@@ -12,6 +12,8 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import reimaginedguacamole.profile.IProfile;
 
 /**
@@ -157,6 +159,7 @@ public class GameController extends Observable {
      */
     public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException {
         //Score is based on time, min score = 150
+        Logger.getLogger(GameController.class.getCanonicalName()).log(Level.INFO, "TIMELEFT:{0}", timeLeft);
         System.out.println("TIMELEFT:" + timeLeft);
         int score = 50 + (100 + (int) (timeLeft * 100));
         //Checks if the correct answer is the same as givenanswer
