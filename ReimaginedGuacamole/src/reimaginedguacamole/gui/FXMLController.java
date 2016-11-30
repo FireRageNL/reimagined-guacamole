@@ -132,6 +132,8 @@ public class FXMLController implements Initializable, Observer {
     @FXML
     private Button btnSpin;
     @FXML
+    private Button btnStartGame;
+    @FXML
     private ListView lvChat;
     @FXML
     private TextField txtChat;
@@ -172,6 +174,7 @@ public class FXMLController implements Initializable, Observer {
     private Client client;
     private static final String BUTTON_STYLE = "-fx-base: #ff3300;";
     private static final String BUTTON_STYLE_CORRECT = "-fx-base: #00cc00;";
+    int CountPlayers;
 
     // TIMERS
     private Timer waitTimer;
@@ -371,7 +374,8 @@ public class FXMLController implements Initializable, Observer {
         chatList.clear();
         disableButtons(true);
         gameController.addObserver(this);
-        gameController.setGameState(GameState.WAITINGFORCATEGORY);
+        btnStartGame.setDisable(true);
+        gameController.setGameState(GameState.WAITINGFORPLAYERS);
     }
 
     /**
@@ -479,12 +483,33 @@ public class FXMLController implements Initializable, Observer {
                 gameController.endGame(user);
                 chatList.add("GAME:  De Game is afgelopen! \n Je score is " + gameController.getCurrentScore() + "! Goed Bezig!");
                 break;
+                
+            case WAITINGFORPLAYERS:
+                chatList.add("GAME: Wachten op spelers");
+                while(CountPlayers != 4)
+                {
+                    
+                }
+                  gameController.setGameState(WAITINGFORCATEGORY);
+                  CountPlayers = 0;
+                  btnStartGame.setDisable(false);
+                
+                break;
+                
             default:
                 //do nothing
                 break;
         }
     }
 
+    
+     /**
+     * Add players for the WAITINGFORPLAYERS state
+     */
+    private void AddPlayersCount(){
+        CountPlayers++;
+    }
+    
     /**
      * Resets the game UI to the standard empty playing field so next round can
      * start.

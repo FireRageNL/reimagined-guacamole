@@ -17,5 +17,6 @@ public enum GameState {
     SPINNING,
     SPINNINGFINISHED,
     ANSWERED,
-    WAITING
+    WAITING,
+    WAITINGFORPLAYERS
 }

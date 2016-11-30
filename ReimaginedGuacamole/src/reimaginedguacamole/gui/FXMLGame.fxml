@@ -28,7 +28,7 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="12.0" prefHeight="625.0" prefWidth="908.0" visible="true">
+    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="12.0" prefHeight="625.0" prefWidth="908.0" visible="false">
       <children>
         <TabPane layoutX="16.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE" visible="true">
           <tabs>
@@ -349,7 +349,7 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="false">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="638.9998779296875" prefWidth="906.0">
           <children>
@@ -483,6 +483,7 @@
           </children>
         </VBox>
         <Button layoutX="0.0" layoutY="592.0" mnemonicParsing="false" onAction="#quitGame" prefHeight="37.9609375" prefWidth="86.0" text="Quit Game" />
+        <Button id="StartGame" fx:id="btnStartGame" layoutX="234.0" layoutY="592.0" mnemonicParsing="false" onAction="#quitGame" prefHeight="38.0" prefWidth="86.0" text="Start Game" />
       </children>
     </Pane>
   </children>
