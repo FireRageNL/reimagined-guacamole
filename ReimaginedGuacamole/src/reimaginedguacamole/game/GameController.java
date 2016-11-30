@@ -32,6 +32,13 @@ public class GameController extends Observable {
     private int currentAnswer;
     private int currentScore;
 
+    /**
+     * Constructor that gets called when a new game gets created
+     * @param duration The amount of seconds a person has to anwser a question
+     * @param amountOfRounds the amount of rounds in the game
+     * @throws RemoteException
+     * @throws NotBoundException 
+     */
     public GameController(int duration, int amountOfRounds) throws RemoteException, NotBoundException {
         Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
         game = (IGame) reg.lookup("Game");
@@ -160,7 +167,6 @@ public class GameController extends Observable {
     public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException {
         //Score is based on time, min score = 150
         Logger.getLogger(GameController.class.getCanonicalName()).log(Level.INFO, "TIMELEFT:{0}", timeLeft);
-        System.out.println("TIMELEFT:" + timeLeft);
         int score = 50 + (100 + (int) (timeLeft * 100));
         //Checks if the correct answer is the same as givenanswer
         if (currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer) {
