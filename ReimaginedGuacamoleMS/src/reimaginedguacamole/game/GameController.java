@@ -38,7 +38,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
      * @throws RemoteException
      * @throws NotBoundException 
      */
-    public GameController(int duration, int amountOfRounds) throws RemoteException, NotBoundException {
+    public GameController(int amountOfRounds, int duration) throws RemoteException, NotBoundException {
 //        Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
 //        game = (IGame) reg.lookup("Game");
         game = new Game();

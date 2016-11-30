@@ -8,11 +8,14 @@ package reimaginedguacamole.profile;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import reimaginedguacamole.game.GameController;
-import reimaginedguacamole.game.IGameController;
+import reimaginedguacamole.game.GameRoom;
+import reimaginedguacamole.game.IGameRoom;
+import reimaginedguacamole.gui.IUpdateLobby;
 import reimaginedguacamolems.database.ProfileDB;
 
 /**
@@ -21,6 +24,9 @@ import reimaginedguacamolems.database.ProfileDB;
  */
 public class GameServer extends UnicastRemoteObject implements IGameServer {
 
+    private ArrayList<GameRoom> gameRooms = new ArrayList<>();
+    private ArrayList<IUpdateLobby> lobbyUpdater = new ArrayList<>();
+    
     public GameServer() throws RemoteException{
         //Wooo new thingy :D
     }
@@ -51,15 +57,37 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public IGameController createController(int round, int duration) throws RemoteException {
-        GameController gc;
+    public IGameRoom createGameRoom(int duration, int rounds) throws RemoteException {
+        GameRoom gr;
         try {
-            gc = new GameController(duration,round);
-            return gc;
+            gr = new GameRoom(duration,rounds);
+            gameRooms.add(gr);
+            sendGameRoomData();
+            Logger.getLogger(GameServer.class.getName()).log(Level.INFO,"Added a new GameRoom: {0}",gr.getName());
+            return gr;
         } catch (NotBoundException ex) {
             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @Override
+    public void sendGameRoomData() throws RemoteException {
+        ArrayList<String> roomData = new ArrayList<>();
+        if(gameRooms.size() > 0){
+            for(GameRoom r : gameRooms){
+                String room = "Players: " + r.getNrOfPlayers() + " /4" + "Game room name: "+r.getName()+ " Amount of Rounds: " + r.getNumberOfRounds();
+                roomData.add(room);
+            }
+        }
+        for(IUpdateLobby lb : lobbyUpdater){
+            lb.updateGameRooms(roomData);
+        }
+    }
+
+    @Override
+    public void addLobbyUser(IUpdateLobby user) throws RemoteException {
+        this.lobbyUpdater.add(user);
     }
     
 }

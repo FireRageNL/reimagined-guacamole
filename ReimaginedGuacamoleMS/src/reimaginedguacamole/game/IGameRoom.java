@@ -26,4 +26,6 @@ public interface IGameRoom extends Remote {
     
     public IGameRoom createGameRoom(int duration, int rounds) throws RemoteException;
     
+    public void announceRoom() throws RemoteException;
+    
 }

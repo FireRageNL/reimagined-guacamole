@@ -40,6 +40,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import reimaginedguacamole.game.IGameController;
@@ -67,6 +68,8 @@ public class FXMLController implements Initializable, Observer {
     private TextField txtLobbyChat;
     @FXML
     private ListView lvLobby;
+    @FXML
+    private ListView lvGameRooms;
 
     //PROFILE INFORMATION OBJECTS
     @FXML
@@ -169,6 +172,7 @@ public class FXMLController implements Initializable, Observer {
     private int amountOfRounds;
     private ObservableList<String> chatList;
     private ObservableList<String> lobbyChat;
+    private ObservableList<String> lobbyRooms;
     int wheelRotation = 0;
     double progress;
     private Client client;
@@ -204,6 +208,8 @@ public class FXMLController implements Initializable, Observer {
                     //gets user date from database and sets the window to the profile page.
                     user = gs.getCurrentProfile(username);
                     client = new Client(user, lobbyChat);
+                    UpdateLobby ul = new UpdateLobby(this);
+                    gs.addLobbyUser(ul);
                     fillProfileData();
                     setWindows(2);
                 } else {
@@ -225,21 +231,20 @@ public class FXMLController implements Initializable, Observer {
         chatList = FXCollections.observableArrayList();
         lvChat.setFixedCellSize(20);
         lvChat.setItems(chatList);
-        lvChat.getItems().addListener(new ListChangeListener() {
-            @Override
-            public void onChanged(ListChangeListener.Change c) {
-                lvChat.scrollTo(chatList.size() - 1);
-
-            }
+        lvChat.getItems().addListener((ListChangeListener.Change c) -> {
+            lvChat.scrollTo(chatList.size() - 1);
         });
         lobbyChat = FXCollections.observableArrayList();
         lvLobby.setFixedCellSize(20);
         lvLobby.setItems(lobbyChat);
-        lvLobby.getItems().addListener(new ListChangeListener() {
-            @Override
-            public void onChanged(ListChangeListener.Change c) {
-                lvLobby.scrollTo(lobbyChat.size() - 1);
-            }
+        lvLobby.getItems().addListener((ListChangeListener.Change c) -> {
+            lvLobby.scrollTo(lobbyChat.size() - 1);
+        });
+        lobbyRooms = FXCollections.observableArrayList();
+        lvGameRooms.setFixedCellSize(50);
+        lvGameRooms.setItems(lobbyRooms);
+        lvGameRooms.getItems().addListener((ListChangeListener.Change c) -> {
+            lvGameRooms.scrollTo(0);
         });
         //creates the pseudorandom generation object
         rng = new Random();
@@ -736,5 +741,10 @@ public class FXMLController implements Initializable, Observer {
         gameController = null;
         client.leaveChatroom();
         setWindows(1);
+    }
+
+    void updateRoomList(List<String> gameRoomsData) {
+        lobbyRooms.clear();
+        lobbyRooms.addAll(gameRoomsData);
     }
 }

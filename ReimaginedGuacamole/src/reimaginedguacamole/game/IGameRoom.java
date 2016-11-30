@@ -24,6 +24,4 @@ public interface IGameRoom extends Remote {
     
     public List<String> getNicknames() throws RemoteException;
     
-    public IGameRoom createGameRoom(int duration, int rounds) throws RemoteException;
-    
 }

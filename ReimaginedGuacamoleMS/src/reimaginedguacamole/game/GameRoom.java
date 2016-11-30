@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.game;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -18,12 +19,16 @@ import reimaginedguacamole.profile.IProfile;
  */
 public class GameRoom extends UnicastRemoteObject implements IGameRoom{
     //private IGameController
+    private String name;
     
     public GameRoom() throws RemoteException{
         
     }
     
-    public GameRoom(int rounds, int duration) throws RemoteException{
+    public GameRoom(int rounds, int duration) throws RemoteException, NotBoundException{
+        this.GameController = new GameController(rounds,duration);
+        this.players = new ArrayList<>();
+        this.name = "TestGameRoom";
         
     }
     private List<IProfile> players;
@@ -47,7 +52,13 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom{
     public void leaveRoom(IProfile profile) throws RemoteException {
         players.remove(profile);
     }
+    public String getName(){
+        return this.name;
+    }
 
+    public String getNumberOfRounds() throws RemoteException{
+        return Integer.toString(this.GameController.getGame().getAmountOfRounds());
+    }
     @Override
     public List<String> getNicknames() throws RemoteException {
         List<String> nicks = new ArrayList();
@@ -61,6 +72,11 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom{
     public IGameRoom createGameRoom(int duration, int rounds) throws RemoteException {
         //DoNothing
         return new GameRoom();
+    }
+
+    @Override
+    public void announceRoom() throws RemoteException {
+        
     }
     
     

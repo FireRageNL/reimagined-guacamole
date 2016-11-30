@@ -69,7 +69,7 @@ public class GameRoomDialog {
             try{
             Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
             IGameServer gs = (IGameServer) reg2.lookup("GameServer");
-            gs.createController(res.get(0), res.get(1));
+            gs.createGameRoom(res.get(0), res.get(1));
             }
             catch(RemoteException | NotBoundException ex){
                 Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);

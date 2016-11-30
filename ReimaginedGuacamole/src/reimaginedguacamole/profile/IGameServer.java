@@ -7,16 +7,16 @@ package reimaginedguacamole.profile;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Map;
-import reimaginedguacamole.game.IGameController;
+import reimaginedguacamole.game.IGameRoom;
+import reimaginedguacamole.gui.IUpdateLobby;
 
 /**
  *
  * @author roy_v
  */
 public interface IGameServer extends Remote {
-
-    public IGameController createController(int round, int duration) throws RemoteException;
 
     /**
      * Function to test username and password provided
@@ -46,4 +46,9 @@ public interface IGameServer extends Remote {
      */
     public void registerNewUser(Map profileData) throws RemoteException;
 
+    public IGameRoom createGameRoom(int duration, int rounds) throws RemoteException;
+    
+    public void sendGameRoomData() throws RemoteException;
+    
+    public void addLobbyUser(IUpdateLobby user) throws RemoteException;
 }
