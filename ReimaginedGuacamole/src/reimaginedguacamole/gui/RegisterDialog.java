@@ -23,6 +23,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import reimaginedguacamole.profile.IGameServer;
 import reimaginedguacamole.profile.IRegister;
 import reimaginedguacamole.tooling.Hashing;
 
@@ -112,9 +113,9 @@ public class RegisterDialog {
         if (result.isPresent() && result.get().size() == 4) {
             try {
                 //If result is ok, insert into database.
-                Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
-                IRegister register = (IRegister) reg2.lookup("Register");
-                register.registerNewUser(result.get());
+                Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
+                IGameServer gs = (IGameServer) reg.lookup("GameServer");
+                gs.registerNewUser(result.get());
             } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(RegisterDialog.class.getName()).log(Level.SEVERE, null, ex);
             }

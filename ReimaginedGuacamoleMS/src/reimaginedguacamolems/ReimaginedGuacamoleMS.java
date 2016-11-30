@@ -14,6 +14,7 @@ import reimaginedguacamole.game.Game;
 import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.Round;
 import reimaginedguacamole.profile.ChatServer;
+import reimaginedguacamole.profile.GameServer;
 import reimaginedguacamole.profile.Login;
 import reimaginedguacamole.profile.Register;
 
@@ -33,20 +34,18 @@ public class ReimaginedGuacamoleMS {
     public static void main(String[] args) {
         Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application starting up!");
         try {
-            Login log = new Login();
-            Register register = new Register();
-            Game game = new Game();
-            Round round = new Round();
+            GameServer gs = new GameServer();
+            //Game game = new Game();
+            //Round round = new Round();
             ChatServer server = new ChatServer();
-            GameController gamecontroller = new GameController();
+            //GameController gamecontroller = new GameController();
             Registry reg;
             reg = LocateRegistry.createRegistry(666);
-            reg.rebind("Login", log);
-            reg.rebind("Register", register);
-            reg.rebind("Game",game);
-            reg.rebind("Round",round);
+            reg.rebind("GameServer", gs);
+            //reg.rebind("Game",game);
+            //reg.rebind("Round",round);
             reg.rebind("ChatServer",server);
-            reg.rebind("GameController", gamecontroller);
+            //reg.rebind("GameController", gamecontroller);
             Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application started!");
 
         } catch (RemoteException ex) {

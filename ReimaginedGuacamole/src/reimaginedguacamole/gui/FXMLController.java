@@ -195,14 +195,14 @@ public class FXMLController implements Initializable, Observer {
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
                 Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
-                ILogin log = (ILogin) reg.lookup("Login");
+                IGameServer gs = (IGameServer) reg.lookup("GameServer");
                 //Tries to log in
                 String password = Hashing.hashPassword(pass);
-                boolean loggedin = log.tryLogin(username, password);
+                boolean loggedin = gs.tryLogin(username, password);
 
                 if (loggedin) {
                     //gets user date from database and sets the window to the profile page.
-                    user = log.getCurrentProfile(username);
+                    user = gs.getCurrentProfile(username);
                     client = new Client(user, lobbyChat);
                     fillProfileData();
                     setWindows(2);
