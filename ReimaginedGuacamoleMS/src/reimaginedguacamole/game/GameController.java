@@ -7,11 +7,9 @@ package reimaginedguacamole.game;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import reimaginedguacamole.profile.IProfile;
@@ -22,7 +20,7 @@ import reimaginedguacamole.profile.IProfile;
  *
  * @author daan
  */
-public class GameController extends Observable {
+public class GameController extends UnicastRemoteObject implements IGameController {
 
     private IGame game;
     private List<IRound> rounds;
@@ -31,6 +29,7 @@ public class GameController extends Observable {
     private IRound currentRound;
     private int currentAnswer;
     private int currentScore;
+    public int CountPlayers;
 
     /**
      * Constructor that gets called when a new game gets created
@@ -40,22 +39,30 @@ public class GameController extends Observable {
      * @throws NotBoundException 
      */
     public GameController(int duration, int amountOfRounds) throws RemoteException, NotBoundException {
-        Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
-        game = (IGame) reg.lookup("Game");
+//        Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
+//        game = (IGame) reg.lookup("Game");
+        game = new Game();
         game.setAmountOfRounds(amountOfRounds);
         game.setRoundDuration(duration);
         rounds = new ArrayList<>();
-        IRound temp = (IRound) reg.lookup("Round");
+        IRound temp = new Round();
+//        IRound temp = (IRound) reg.lookup("Round");
         for (int i = 0; i < amountOfRounds; i++) {
             rounds.add(temp.createRound());
         }
         currentRoundIndex = -1;
         currentScore = 0;
     }
+    
+    public GameController() throws RemoteException {
+        //Empty constcurtor to overwrihte default constructor
+
+    }
 
     /**
      * Starts the next round and sets currentRound to the new Round object
      */
+    @Override
     public void startNextRound() {
         currentRoundIndex++;
         currentRound = rounds.get(currentRoundIndex);
@@ -66,7 +73,9 @@ public class GameController extends Observable {
      * Ends the game and uploads the game information to the database
      *
      * @param user Logged in profile
+     * @throws java.rmi.RemoteException
      */
+    @Override
     public void endGame(IProfile user) throws RemoteException {
 
         game.endGame(user.getPid(), currentScore);
@@ -79,6 +88,7 @@ public class GameController extends Observable {
      * @param wheel rotation of the wheel at this time
      * @return Category enum type
      */
+    @Override
     public Category chooseCategory(double wheel) {
         double rotation = 360 - wheel;
         if (rotation >= 0 && rotation <= 51) {
@@ -98,6 +108,7 @@ public class GameController extends Observable {
         }
     }
 
+    @Override
     public IRound getCurrentRound() {
         return currentRound;
     }
@@ -107,7 +118,9 @@ public class GameController extends Observable {
      * then removes this question from the orgiinal list.
      *
      * @param category
+     * @throws java.rmi.RemoteException
      */
+    @Override
     public void giveRoundQuestion(Category category) throws RemoteException {
         for (IQuestion q : game.getQuestionsList()) {
             if (q.getCategory() == category) {
@@ -118,10 +131,20 @@ public class GameController extends Observable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public IGame getGame() {
         return game;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public GameState getGameState() {
         return gameState;
     }
@@ -131,30 +154,48 @@ public class GameController extends Observable {
      *
      * @param gameState
      */
+    @Override
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
-        this.setChanged();
-        this.notifyObservers(gameState);
+//        this.setChanged();
+//        this.notifyObservers(gameState);
     }
 
+    @Override
     public int getCurrentAnswer() {
         return currentAnswer;
     }
 
+    @Override
     public void setCurrentAnswer(int currentAnswer) {
         this.currentAnswer = currentAnswer;
     }
 
+    @Override
     public int getCorrectAnswer() throws RemoteException {
         return currentRound.getQuestion().getCorrectAnswer();
     }
 
+    @Override
     public int getCurrentScore() {
         return currentScore;
     }
 
+    @Override
     public int getCurrentRoundIndex() {
         return currentRoundIndex;
+    }
+    
+    @Override
+    public int CheckPlayers(){
+    return CountPlayers;
+    };
+    
+     /**
+     * Add players for the WAITINGFORPLAYERS state
+     */
+    public void AddPlayersCount(){
+        CountPlayers++;
     }
 
     /**
@@ -163,7 +204,9 @@ public class GameController extends Observable {
      * @param profile
      * @param timeLeft
      * @return
+     * @throws java.rmi.RemoteException
      */
+    @Override
     public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException {
         //Score is based on time, min score = 150
         Logger.getLogger(GameController.class.getCanonicalName()).log(Level.INFO, "TIMELEFT:{0}", timeLeft);

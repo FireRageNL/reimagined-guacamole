@@ -31,7 +31,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.GameState;
 import static reimaginedguacamole.game.GameState.*;
 import reimaginedguacamole.game.IRound;
@@ -43,6 +42,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import reimaginedguacamole.game.IGameController;
 import reimaginedguacamole.tooling.Hashing;
 
 /**
@@ -161,7 +161,7 @@ public class FXMLController implements Initializable, Observer {
     private TableColumn colScores;
 
     //Global variables
-    private GameController gameController;
+    private IGameController gameController;
     private IProfile user;
     private Random rng;
     private int wheelSpeed;
@@ -373,12 +373,15 @@ public class FXMLController implements Initializable, Observer {
     private void startGame() throws RemoteException, NotBoundException {
         roundDuration = 10;
         amountOfRounds = 5;
-        gameController = new GameController(roundDuration, amountOfRounds);
+        //gameController = new GameController(roundDuration, amountOfRounds);
+        Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
+        IGameController GameController = (IGameController) reg.lookup("GameController");
+        
         resetQuestionUI();
         pbRoundTimer.setProgress(0);
         chatList.clear();
         disableButtons(true);
-        gameController.addObserver(this);
+//        gameController.addObserver(this);
         btnStartGame.setDisable(true);
         gameController.setGameState(GameState.WAITINGFORPLAYERS);
     }
@@ -491,7 +494,7 @@ public class FXMLController implements Initializable, Observer {
                 
             case WAITINGFORPLAYERS:
                 chatList.add("GAME: Wachten op spelers");
-                while(CountPlayers != 4)
+                while(gameController.CheckPlayers() != 4)
                 {
                     
                 }
@@ -507,13 +510,7 @@ public class FXMLController implements Initializable, Observer {
         }
     }
 
-    
-     /**
-     * Add players for the WAITINGFORPLAYERS state
-     */
-    private void AddPlayersCount(){
-        CountPlayers++;
-    }
+
     
     /**
      * Resets the game UI to the standard empty playing field so next round can

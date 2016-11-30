@@ -7,7 +7,7 @@ package reimaginedguacamole.timertasks;
 
 import java.util.TimerTask;
 import javafx.application.Platform;
-import reimaginedguacamole.game.GameController;
+import reimaginedguacamole.game.IGameController;
 import reimaginedguacamole.game.GameState;
 
 /**
@@ -17,7 +17,7 @@ import reimaginedguacamole.game.GameState;
  */
 public class WaitingForGameState extends TimerTask {
 
-    GameController game;
+    IGameController game;
     GameState gamestate;
 
     /**
@@ -27,7 +27,7 @@ public class WaitingForGameState extends TimerTask {
      * finished
      * @param gamestate the controller this timer has to be made for
      */
-    public WaitingForGameState(GameController g, GameState gamestate) {
+    public WaitingForGameState(IGameController g, GameState gamestate) {
         game = g;
         this.gamestate = gamestate;
     }

@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import reimaginedguacamole.game.Game;
+import reimaginedguacamole.game.GameController;
 import reimaginedguacamole.game.Round;
 import reimaginedguacamole.profile.ChatServer;
 import reimaginedguacamole.profile.Login;
@@ -37,6 +38,7 @@ public class ReimaginedGuacamoleMS {
             Game game = new Game();
             Round round = new Round();
             ChatServer server = new ChatServer();
+            GameController gamecontroller = new GameController();
             Registry reg;
             reg = LocateRegistry.createRegistry(666);
             reg.rebind("Login", log);
@@ -44,6 +46,7 @@ public class ReimaginedGuacamoleMS {
             reg.rebind("Game",game);
             reg.rebind("Round",round);
             reg.rebind("ChatServer",server);
+            reg.rebind("GameController", gamecontroller);
             Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application started!");
 
         } catch (RemoteException ex) {
