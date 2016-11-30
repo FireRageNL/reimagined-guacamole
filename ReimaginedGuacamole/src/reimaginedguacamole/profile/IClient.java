@@ -37,5 +37,11 @@ public interface IClient extends Remote {
      * @throws RemoteException
      */
     public String getName() throws RemoteException;
+    
+    /**
+     * Function to remove the client from the chatroom
+     * @throws RemoteException 
+     */
+    public void leaveChatroom() throws RemoteException;
 
 }

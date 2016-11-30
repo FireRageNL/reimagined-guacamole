@@ -522,6 +522,7 @@ public class FXMLController implements Initializable, Observer {
         try {
             String msg = txtLobbyChat.getText();
             client.sendMessage(msg);
+            txtLobbyChat.clear();
         } catch (RemoteException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -694,10 +695,11 @@ public class FXMLController implements Initializable, Observer {
      * logs user out and sets windows back to loginpage
      */
     @FXML
-    public void logOut() {
+    public void logOut() throws RemoteException {
         user = null;
         errorlabel.setText("");
         gameController = null;
+        client.leaveChatroom();
         setWindows(1);
     }
 }

@@ -12,6 +12,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
 /**
@@ -26,9 +27,10 @@ public class Client extends UnicastRemoteObject implements IClient {
 
     /**
      * Constructor for a client of the chatserver
+     *
      * @param prof the profile to get the nickname for
      * @param chat the list where all the chat messages will be added
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     public Client(IProfile prof, ObservableList<String> chat) throws RemoteException {
         try {
@@ -51,11 +53,30 @@ public class Client extends UnicastRemoteObject implements IClient {
 
     @Override
     public void addMessage(String message) throws RemoteException {
-        this.chat.add(message);
+        class ChatRunnable implements Runnable {
+
+            ObservableList<String> chat;
+
+            ChatRunnable(ObservableList<String> chat, String message) {
+                this.chat = chat;
+            }
+
+            @Override
+            public void run() {
+                this.chat.add(message);
+            }
+        }
+        Platform.runLater(new ChatRunnable(chat, message));
+
     }
 
     @Override
     public String getName() throws RemoteException {
         return this.name;
+    }
+
+    @Override
+    public void leaveChatroom() throws RemoteException {
+        server.clientExit(this);
     }
 }
