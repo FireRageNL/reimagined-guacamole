@@ -20,7 +20,7 @@ public interface IGameController extends Remote {
     /**
      * Starts the next round and sets currentRound to the new Round object
      */
-    public void startNextRound();
+    public void startNextRound()throws RemoteException;
 
     /**
      * Ends the game and uploads the game information to the database
@@ -36,10 +36,11 @@ public interface IGameController extends Remote {
      *
      * @param wheel rotation of the wheel at this time
      * @return Category enum type
+     * @throws java.rmi.RemoteException
      */
-    public Category chooseCategory(double wheel);
+    public Category chooseCategory(double wheel)throws RemoteException;
 
-    public IRound getCurrentRound();
+    public IRound getCurrentRound()throws RemoteException;
 
     /**
      * Inserts a question into the round object based on the chosen category
@@ -50,28 +51,29 @@ public interface IGameController extends Remote {
      */
     public void giveRoundQuestion(Category category) throws RemoteException;
 
-    public IGame getGame();
+    public IGame getGame()throws RemoteException;
 
-    public GameState getGameState();
+    public GameState getGameState()throws RemoteException;
 
     /**
      * Sets the gamestate and notifies the Observer so the game can update.
      *
      * @param gameState
+     * @throws java.rmi.RemoteException
      */
-    public void setGameState(GameState gameState);
+    public void setGameState(GameState gameState)throws RemoteException;
 
-    public int getCurrentAnswer();
+    public int getCurrentAnswer()throws RemoteException;
 
-    public void setCurrentAnswer(int currentAnswer);
+    public void setCurrentAnswer(int currentAnswer)throws RemoteException;
 
     public int getCorrectAnswer() throws RemoteException;
 
-    public int getCurrentScore();
+    public int getCurrentScore()throws RemoteException;
 
-    public int getCurrentRoundIndex();
+    public int getCurrentRoundIndex()throws RemoteException;
     
-    public int CheckPlayers();
+    public int CheckPlayers()throws RemoteException;
 
     /**
      * Checks the answer given and adds the score based on time.

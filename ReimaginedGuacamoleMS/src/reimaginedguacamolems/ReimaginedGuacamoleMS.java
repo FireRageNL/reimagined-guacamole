@@ -26,7 +26,7 @@ public class ReimaginedGuacamoleMS {
     private ReimaginedGuacamoleMS() {
         throw new IllegalAccessError("Utility class");
     }
-
+    
     /**
      * @param args the command line arguments
      */

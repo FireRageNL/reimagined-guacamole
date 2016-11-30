@@ -56,7 +56,6 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     
     public GameController() throws RemoteException {
         //Empty constcurtor to overwrihte default constructor
-
     }
 
     /**
