@@ -76,6 +76,7 @@ public class GameDB extends Database {
                 ps.executeUpdate();
                 //closes the connection
                 this.closeConnection();
+                Logger.getLogger(GameDB.class.getName()).log(Level.INFO,"Statistics for user : {0} updated", prof.getPid());
             } catch (SQLException ex) {
                 Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
             }

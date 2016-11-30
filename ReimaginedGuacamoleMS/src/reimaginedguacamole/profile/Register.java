@@ -26,7 +26,7 @@ public class Register extends UnicastRemoteObject implements IRegister {
     public void registerNewUser(Map profileData) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
         pdb.newUserRegistration(profileData);
-        Logger.getLogger(Register.class.getName()).log(Level.INFO, "User regsitration!");
+        Logger.getLogger(Register.class.getName()).log(Level.INFO, "User registration!");
     }
 
 }
