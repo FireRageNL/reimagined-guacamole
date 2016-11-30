@@ -57,7 +57,7 @@ public class Client extends UnicastRemoteObject implements IClient {
 
             ObservableList<String> chat;
 
-            ChatRunnable(ObservableList<String> chat, String message) {
+            ChatRunnable(ObservableList<String> chat) {
                 this.chat = chat;
             }
 
@@ -66,7 +66,7 @@ public class Client extends UnicastRemoteObject implements IClient {
                 this.chat.add(message);
             }
         }
-        Platform.runLater(new ChatRunnable(chat, message));
+        Platform.runLater(new ChatRunnable(chat));
 
     }
 
