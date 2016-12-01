@@ -169,7 +169,6 @@ public class FXMLController implements Initializable, Observer {
     private Random rng;
     private int wheelSpeed;
     private int roundDuration;
-    private int amountOfRounds;
     private ObservableList<String> chatList;
     private ObservableList<String> lobbyChat;
     private ObservableList<String> lobbyRooms;
@@ -178,7 +177,7 @@ public class FXMLController implements Initializable, Observer {
     private Client client;
     private static final String BUTTON_STYLE = "-fx-base: #ff3300;";
     private static final String BUTTON_STYLE_CORRECT = "-fx-base: #00cc00;";
-    int CountPlayers;
+    int countPlayers;
 
     // TIMERS
     private Timer waitTimer;
@@ -231,21 +230,19 @@ public class FXMLController implements Initializable, Observer {
         chatList = FXCollections.observableArrayList();
         lvChat.setFixedCellSize(20);
         lvChat.setItems(chatList);
-        lvChat.getItems().addListener((ListChangeListener.Change c) -> {
-            lvChat.scrollTo(chatList.size() - 1);
-        });
+        lvChat.getItems().addListener((ListChangeListener.Change c)
+                -> lvChat.scrollTo(chatList.size() - 1));
         lobbyChat = FXCollections.observableArrayList();
         lvLobby.setFixedCellSize(20);
         lvLobby.setItems(lobbyChat);
-        lvLobby.getItems().addListener((ListChangeListener.Change c) -> {
-            lvLobby.scrollTo(lobbyChat.size() - 1);
-        });
+        lvLobby.getItems().addListener((ListChangeListener.Change c)
+                -> lvLobby.scrollTo(lobbyChat.size() - 1));
         lobbyRooms = FXCollections.observableArrayList();
         lvGameRooms.setFixedCellSize(50);
         lvGameRooms.setItems(lobbyRooms);
-        lvGameRooms.getItems().addListener((ListChangeListener.Change c) -> {
-            lvGameRooms.scrollTo(0);
-        });
+        lvGameRooms.getItems().addListener((ListChangeListener.Change c)
+                -> lvGameRooms.scrollTo(0)
+        );
         //creates the pseudorandom generation object
         rng = new Random();
     }
@@ -271,7 +268,7 @@ public class FXMLController implements Initializable, Observer {
                 profilePane.setVisible(true);
                 break;
             default:
-                loginPane.setVisible(true);
+                //DoNothing
                 break;
         }
     }
@@ -285,9 +282,9 @@ public class FXMLController implements Initializable, Observer {
     private void clickRegister(MouseEvent event) throws RemoteException, NotBoundException {
         RegisterDialog regdialog = new RegisterDialog();
     }
-    
+
     @FXML
-    private void clickCreateGame(ActionEvent event){
+    private void clickCreateGame(ActionEvent event) {
         GameRoomDialog gamedialog = new GameRoomDialog();
     }
 
@@ -377,16 +374,13 @@ public class FXMLController implements Initializable, Observer {
     @FXML
     private void startGame() throws RemoteException, NotBoundException {
         roundDuration = 10;
-        amountOfRounds = 5;
-        //gameController = new GameController(roundDuration, amountOfRounds);
         Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
         IGameController GameController = (IGameController) reg.lookup("GameController");
-        
+
         resetQuestionUI();
         pbRoundTimer.setProgress(0);
         chatList.clear();
         disableButtons(true);
-//        gameController.addObserver(this);
         btnStartGame.setDisable(true);
         gameController.setGameState(GameState.WAITINGFORPLAYERS);
     }
@@ -496,32 +490,29 @@ public class FXMLController implements Initializable, Observer {
                 gameController.endGame(user);
                 chatList.add("GAME:  De Game is afgelopen! \n Je score is " + gameController.getCurrentScore() + "! Goed Bezig!");
                 break;
-                
+
             case WAITINGFORPLAYERS:
                 chatList.add("GAME: Wachten op spelers");
-                while(gameController.CheckPlayers() != 4)
-                {
-                    
+                while (gameController.checkPlayers() != 4) {
+                    //Wait
                 }
-                  gameController.setGameState(WAITINGFORCATEGORY);
-                  CountPlayers = 0;
-                  btnStartGame.setDisable(false);
-                
+                gameController.setGameState(WAITINGFORCATEGORY);
+                countPlayers = 0;
+                btnStartGame.setDisable(false);
+
                 break;
-                
+
             default:
                 //do nothing
                 break;
         }
     }
 
-
-    
     /**
      * Resets the game UI to the standard empty playing field so next round can
      * start.
      */
-    private void resetQuestionUI() throws RemoteException{
+    private void resetQuestionUI() throws RemoteException {
         lblScore.setText(String.valueOf(gameController.getCurrentScore()));
         lblQuestion.setText("Hier komt straks de vraag");
         btnAnswer1.setText("");
@@ -549,6 +540,9 @@ public class FXMLController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Sends a chat message
+     */
     @FXML
     public void btnlobbyChatClicker() {
         try {
@@ -578,7 +572,7 @@ public class FXMLController implements Initializable, Observer {
      * the spinning gamestate.
      */
     @FXML
-    public void btnSpinClicked() throws RemoteException{
+    public void btnSpinClicked() throws RemoteException {
         waitTimer.cancel();
         gameController.setGameState(SPINNING);
     }
@@ -622,9 +616,10 @@ public class FXMLController implements Initializable, Observer {
 
     /**
      * Starts the game timer
+     *
      * @throws java.rmi.RemoteException
      */
-    public void startGameTimer()throws RemoteException{
+    public void startGameTimer() throws RemoteException {
         progress = 1;
         animationTimer = new AnimationTimer() {
             private long prevUpdate;
@@ -697,17 +692,17 @@ public class FXMLController implements Initializable, Observer {
      * @param event
      */
     @FXML
-    private void setAnswer(ActionEvent event) throws RemoteException{
+    private void setAnswer(ActionEvent event) throws RemoteException {
         animationTimer.stop();
-        Button B = (Button) event.getSource();
+        Button b = (Button) event.getSource();
 
-        if (B.getId().contains("1")) {
+        if (b.getId().contains("1")) {
             gameController.setCurrentAnswer(1);
-        } else if (B.getId().contains("2")) {
+        } else if (b.getId().contains("2")) {
             gameController.setCurrentAnswer(2);
-        } else if (B.getId().contains("3")) {
+        } else if (b.getId().contains("3")) {
             gameController.setCurrentAnswer(3);
-        } else if (B.getId().contains("4")) {
+        } else if (b.getId().contains("4")) {
             gameController.setCurrentAnswer(4);
         }
         Logger.getLogger(FXMLController.class.getCanonicalName()).log(Level.INFO, "{0}", gameController.getCurrentAnswer());

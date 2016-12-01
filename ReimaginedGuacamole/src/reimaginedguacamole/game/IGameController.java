@@ -19,9 +19,10 @@ public interface IGameController extends Remote {
 
     /**
      * Starts the next round and sets currentRound to the new Round object
+     *
      * @throws java.rmi.RemoteException
      */
-    public void startNextRound()throws RemoteException;
+    public void startNextRound() throws RemoteException;
 
     /**
      * Ends the game and uploads the game information to the database
@@ -39,9 +40,15 @@ public interface IGameController extends Remote {
      * @return Category enum type
      * @throws java.rmi.RemoteException
      */
-    public Category chooseCategory(double wheel)throws RemoteException;
+    public Category chooseCategory(double wheel) throws RemoteException;
 
-    public IRound getCurrentRound()throws RemoteException;
+    /**
+     * Gets the current round object and returns it
+     *
+     * @return the current round object
+     * @throws RemoteException
+     */
+    public IRound getCurrentRound() throws RemoteException;
 
     /**
      * Inserts a question into the round object based on the chosen category
@@ -52,9 +59,21 @@ public interface IGameController extends Remote {
      */
     public void giveRoundQuestion(Category category) throws RemoteException;
 
-    public IGame getGame()throws RemoteException;
+    /**
+     * Getter for the game in the current gameController
+     *
+     * @return the current game
+     * @throws RemoteException
+     */
+    public IGame getGame() throws RemoteException;
 
-    public GameState getGameState()throws RemoteException;
+    /**
+     * Get the current state the game is in
+     *
+     * @return an Enum describing the gamestate
+     * @throws RemoteException
+     */
+    public GameState getGameState() throws RemoteException;
 
     /**
      * Sets the gamestate and notifies the Observer so the game can update.
@@ -62,28 +81,65 @@ public interface IGameController extends Remote {
      * @param gameState
      * @throws java.rmi.RemoteException
      */
-    public void setGameState(GameState gameState)throws RemoteException;
+    public void setGameState(GameState gameState) throws RemoteException;
 
-    public int getCurrentAnswer()throws RemoteException;
+    /**
+     * A function to get the current anwser given
+     *
+     * @return the integer of the current anwser given
+     * @throws RemoteException
+     */
+    public int getCurrentAnswer() throws RemoteException;
 
-    public void setCurrentAnswer(int currentAnswer)throws RemoteException;
+    /**
+     * Sets the current anwser given
+     *
+     * @param currentAnswer the integer of the answser the user gave
+     * @throws RemoteException
+     */
+    public void setCurrentAnswer(int currentAnswer) throws RemoteException;
 
+    /**
+     * Gets the correct anwser
+     *
+     * @return the integer of the correct anwser
+     * @throws RemoteException
+     */
     public int getCorrectAnswer() throws RemoteException;
 
-    public int getCurrentScore()throws RemoteException;
+    /**
+     * Gets the current score of the game
+     *
+     * @return the current score
+     * @throws RemoteException
+     */
+    public int getCurrentScore() throws RemoteException;
 
-    public int getCurrentRoundIndex()throws RemoteException;
-    
-    public int CheckPlayers()throws RemoteException;
+    /**
+     * Get an integer representation of the current round the game is in
+     *
+     * @return an integer value of the current round
+     * @throws RemoteException
+     */
+    public int getCurrentRoundIndex() throws RemoteException;
+
+    /**
+     * Check how many players are currently in the waitingforgame state
+     *
+     * @return the number of players waiting
+     * @throws RemoteException
+     */
+    public int checkPlayers() throws RemoteException;
 
     /**
      * Checks the answer given and adds the score based on time.
      *
-     * @param profile
-     * @param timeLeft
+     * @param profile the profile the anwser has to be checked for
+     * @param timeLeft the time the user had remaning when they anwsered the
+     * question
      * @return
      * @throws java.rmi.RemoteException
      */
-    public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException ;
+    public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException;
 
 }

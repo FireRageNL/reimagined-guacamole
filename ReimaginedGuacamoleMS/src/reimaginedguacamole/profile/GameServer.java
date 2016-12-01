@@ -9,7 +9,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,9 +35,9 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         ProfileDB pdb = new ProfileDB();
         boolean login = pdb.login(password, username);
         if (!login) {
-            Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try for user " + username + " failed");
+            Logger.getLogger(GameServer.class.getName()).log(Level.INFO, "Login try for user " + username + " failed");
         } else {
-            Logger.getLogger(Login.class.getName()).log(Level.INFO, "Login try for user " + username + " succeded");
+            Logger.getLogger(GameServer.class.getName()).log(Level.INFO, "Login try for user " + username + " succeded");
         }
         return login;
     }
@@ -74,7 +73,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public void sendGameRoomData() throws RemoteException {
         ArrayList<String> roomData = new ArrayList<>();
-        if(gameRooms.size() > 0){
+        if(!gameRooms.isEmpty()){
             for(GameRoom r : gameRooms){
                 String room = "Players: " + r.getNrOfPlayers() + " /4" + "Game room name: "+r.getName()+ " Amount of Rounds: " + r.getNumberOfRounds();
                 roomData.add(room);

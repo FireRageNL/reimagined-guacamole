@@ -17,25 +17,34 @@ import reimaginedguacamole.profile.IProfile;
  *
  * @author daan
  */
-public class GameRoom extends UnicastRemoteObject implements IGameRoom{
+public class GameRoom extends UnicastRemoteObject implements IGameRoom {
+
     //private IGameController
     private String name;
-    
-    public GameRoom() throws RemoteException{
-        
+    private List<IProfile> players;
+    private ChatServer chatServer;
+    private GameController gameController;
+
+    public GameRoom() throws RemoteException {
+        //Overwrite for default constructor
     }
-    
-    public GameRoom(int rounds, int duration) throws RemoteException, NotBoundException{
-        this.GameController = new GameController(rounds,duration);
+
+    /**
+     * Constructor to build a new game room
+     *
+     * @param rounds the amount of rouds the game in the game room will have
+     * @param duration the time period a person has for anwsering a question in
+     * this game
+     * @throws RemoteException
+     * @throws NotBoundException
+     */
+    public GameRoom(int rounds, int duration) throws RemoteException, NotBoundException {
+        this.gameController = new GameController(rounds, duration);
         this.players = new ArrayList<>();
         this.name = "TestGameRoom";
-        
-    }
-    private List<IProfile> players;
-    private ChatServer chatserver;
-    private GameController GameController;
 
-    
+    }
+
     @Override
     public int getNrOfPlayers() throws RemoteException {
         return players.size();
@@ -44,28 +53,30 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom{
     @Override
     public void joinRoom(IProfile profile) throws RemoteException {
         players.add(profile);
-        GameController.AddPlayersCount();
-        
+        gameController.AddPlayersCount();
+
     }
 
     @Override
     public void leaveRoom(IProfile profile) throws RemoteException {
         players.remove(profile);
     }
-    public String getName(){
+
+    public String getName() {
         return this.name;
     }
 
-    public String getNumberOfRounds() throws RemoteException{
-        return Integer.toString(this.GameController.getGame().getAmountOfRounds());
+    public String getNumberOfRounds() throws RemoteException {
+        return Integer.toString(this.gameController.getGame().getAmountOfRounds());
     }
+
     @Override
     public List<String> getNicknames() throws RemoteException {
         List<String> nicks = new ArrayList();
-        for(IProfile p : players){
+        for (IProfile p : players) {
             nicks.add(p.getNickname());
         }
-       return nicks;
+        return nicks;
     }
 
     @Override
@@ -76,8 +87,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom{
 
     @Override
     public void announceRoom() throws RemoteException {
-        
+        //ToImplement on room change, either player joining or game starting
     }
-    
-    
+
 }

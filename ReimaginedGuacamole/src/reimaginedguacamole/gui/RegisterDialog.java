@@ -24,7 +24,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import reimaginedguacamole.profile.IGameServer;
-import reimaginedguacamole.profile.IRegister;
 import reimaginedguacamole.tooling.Hashing;
 
 /**

@@ -28,14 +28,24 @@ public enum Category {
             return "Spellen";
         }
     },
-    ENTERTAINMENT,
+    ENTERTAINMENT{
+        @Override
+        public String toString(){
+            return "Entertainment";
+        }
+    },
     MUSIC{
         @Override
         public String toString(){
             return "Muziek";
         }
     },
-    SPORT,
+    SPORT{
+        @Override
+        public String toString(){
+            return "Sport";
+        }
+    },
     SCIENCE{
         @Override
         public String toString(){

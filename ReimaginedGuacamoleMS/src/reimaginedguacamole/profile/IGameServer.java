@@ -7,7 +7,6 @@ package reimaginedguacamole.profile;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
 import java.util.Map;
 import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.gui.IUpdateLobby;
@@ -46,9 +45,30 @@ public interface IGameServer extends Remote {
      */
     public void registerNewUser(Map profileData) throws RemoteException;
 
+    /**
+     * Function that creates a new gameRoom to be created and registered on the
+     * gameserver
+     *
+     * @param duration the time each user has to anwser one question
+     * @param rounds the amout of rounds in a game
+     * @return the newly created gameroom object
+     * @throws RemoteException
+     */
     public IGameRoom createGameRoom(int duration, int rounds) throws RemoteException;
-    
+
+    /**
+     * Function to publish the roomdata into the lobby view
+     *
+     * @throws RemoteException
+     */
     public void sendGameRoomData() throws RemoteException;
-    
+
+    /**
+     * Function to add a user to the current list of users in the lobby, so that
+     * data gets pushed to every user in the lobby
+     *
+     * @param user the user to add to the list of users
+     * @throws RemoteException
+     */
     public void addLobbyUser(IUpdateLobby user) throws RemoteException;
 }

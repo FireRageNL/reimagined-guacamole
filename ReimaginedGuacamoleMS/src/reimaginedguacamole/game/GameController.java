@@ -29,7 +29,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     private IRound currentRound;
     private int currentAnswer;
     private int currentScore;
-    public int CountPlayers;
+    private int countPlayers;
 
     /**
      * Constructor that gets called when a new game gets created
@@ -39,14 +39,11 @@ public class GameController extends UnicastRemoteObject implements IGameControll
      * @throws NotBoundException 
      */
     public GameController(int amountOfRounds, int duration) throws RemoteException, NotBoundException {
-//        Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
-//        game = (IGame) reg.lookup("Game");
         game = new Game();
         game.setAmountOfRounds(amountOfRounds);
         game.setRoundDuration(duration);
         rounds = new ArrayList<>();
         IRound temp = new Round();
-//        IRound temp = (IRound) reg.lookup("Round");
         for (int i = 0; i < amountOfRounds; i++) {
             rounds.add(temp.createRound());
         }
@@ -186,15 +183,15 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     }
     
     @Override
-    public int CheckPlayers(){
-    return CountPlayers;
-    };
+    public int checkPlayers(){
+    return countPlayers;
+    }
     
      /**
      * Add players for the WAITINGFORPLAYERS state
      */
     public void AddPlayersCount(){
-        CountPlayers++;
+        countPlayers++;
     }
 
     /**

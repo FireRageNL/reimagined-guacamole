@@ -14,12 +14,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
-import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.profile.IGameServer;
 
 /**
@@ -28,6 +25,11 @@ import reimaginedguacamole.profile.IGameServer;
  */
 public class GameRoomDialog {
 
+    /**
+     * Constructor for a dialog that lets the user select the amount of rounds
+     * and the duration of each round for a game, the constructor builds itself
+     * and then launches itself
+     */
     public GameRoomDialog() {
         Dialog<List> dialog = new Dialog<>();
         dialog.setTitle("Game instellingen");
@@ -66,12 +68,11 @@ public class GameRoomDialog {
 
         if (result.isPresent()) {
             List<Integer> res = result.get();
-            try{
-            Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
-            IGameServer gs = (IGameServer) reg2.lookup("GameServer");
-            gs.createGameRoom(res.get(0), res.get(1));
-            }
-            catch(RemoteException | NotBoundException ex){
+            try {
+                Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
+                IGameServer gs = (IGameServer) reg2.lookup("GameServer");
+                gs.createGameRoom(res.get(0), res.get(1));
+            } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
 

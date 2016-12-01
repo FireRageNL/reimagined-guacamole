@@ -10,13 +10,8 @@ import java.util.logging.Logger;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import reimaginedguacamole.game.Game;
-import reimaginedguacamole.game.GameController;
-import reimaginedguacamole.game.Round;
 import reimaginedguacamole.profile.ChatServer;
 import reimaginedguacamole.profile.GameServer;
-import reimaginedguacamole.profile.Login;
-import reimaginedguacamole.profile.Register;
 
 /**
  *
@@ -27,7 +22,7 @@ public class ReimaginedGuacamoleMS {
     private ReimaginedGuacamoleMS() {
         throw new IllegalAccessError("Utility class");
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -35,17 +30,11 @@ public class ReimaginedGuacamoleMS {
         Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application starting up!");
         try {
             GameServer gs = new GameServer();
-            //Game game = new Game();
-            //Round round = new Round();
             ChatServer server = new ChatServer();
-            //GameController gamecontroller = new GameController();
             Registry reg;
             reg = LocateRegistry.createRegistry(666);
             reg.rebind("GameServer", gs);
-            //reg.rebind("Game",game);
-            //reg.rebind("Round",round);
-            reg.rebind("ChatServer",server);
-            //reg.rebind("GameController", gamecontroller);
+            reg.rebind("ChatServer", server);
             Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application started!");
 
         } catch (RemoteException ex) {
