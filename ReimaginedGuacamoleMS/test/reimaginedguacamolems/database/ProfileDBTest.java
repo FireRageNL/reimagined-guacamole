@@ -5,6 +5,7 @@
  */
 package reimaginedguacamolems.database;
 
+import java.rmi.RemoteException;
 import java.util.LinkedHashMap;
 import javafx.collections.ObservableList;
 import org.junit.Test;
@@ -29,9 +30,10 @@ public class ProfileDBTest {
      */
     /**
      * Test of getProfileData method, of class ProfileDB.
+     * @throws java.rmi.RemoteException
      */
     @Test
-    public void testGetProfileData() {
+    public void testGetProfileData() throws RemoteException {
         System.out.println("getProfileData");
         String email = "test@test.test";
         ProfileDB instance = new ProfileDB();
@@ -55,9 +57,10 @@ public class ProfileDBTest {
 
     /**
      * Test of saveNickname method, of class ProfileDB.
+     * @throws java.rmi.RemoteException
      */
     @Test
-    public void testSaveNickname() {
+    public void testSaveNickname() throws RemoteException {
         System.out.println("saveNickname");
         Profile toSave = new Profile("test@email.com", "test", "Testie12345", 2, 10, 20);
         ProfileDB instance = new ProfileDB();
@@ -69,11 +72,11 @@ public class ProfileDBTest {
 
     /**
      * Test of newUserRegistration method, of class ProfileDB.
+     * @throws java.rmi.RemoteException
      */
     @Test
-    public void testNewUserRegistration() {
+    public void testNewUserRegistration() throws RemoteException {
         System.out.println("newUserRegistration");
-        String profile = "Profile";
         LinkedHashMap profileData = new LinkedHashMap();
         String email = System.currentTimeMillis()+ "@test.com";
         profileData.put("Email", email);
@@ -81,7 +84,7 @@ public class ProfileDBTest {
         profileData.put("Nickname", "WhatAWeirdNick");
         profileData.put("Name", Integer.toString((int) System.currentTimeMillis()));
         ProfileDB instance = new ProfileDB();
-        instance.newUserRegistration(profile, profileData);
+        instance.newUserRegistration(profileData);
         String expResult = "WhatAWeirdNick";
         String result = instance.getProfileData(email).getNickname();
         assertEquals(expResult,result);
@@ -151,7 +154,7 @@ public class ProfileDBTest {
         System.out.println("getRankings");
         ProfileDB instance = new ProfileDB();
         ObservableList<Ranking> expResult = null;
-        ObservableList<Ranking> result = instance.getRankings();
+        ObservableList<Ranking> result = (ObservableList<Ranking>) instance.getRankings();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -166,7 +169,7 @@ public class ProfileDBTest {
         int username = 0;
         ProfileDB instance = new ProfileDB();
         ObservableList<History> expResult = null;
-        ObservableList<History> result = instance.getHistory(username);
+        ObservableList<History> result = (ObservableList<History>) instance.getHistory(username);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

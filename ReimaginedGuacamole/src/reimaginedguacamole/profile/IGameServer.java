@@ -51,10 +51,12 @@ public interface IGameServer extends Remote {
      *
      * @param duration the time each user has to anwser one question
      * @param rounds the amout of rounds in a game
+     * @param roomname the name of the gameroom
+     * @param ip the IP address the game runs on
      * @return the newly created gameroom object
      * @throws RemoteException
      */
-    public IGameRoom createGameRoom(int duration, int rounds) throws RemoteException;
+    public IGameRoom createGameRoom(int duration, int rounds, String roomname, String ip) throws RemoteException;
 
     /**
      * Function to publish the roomdata into the lobby view

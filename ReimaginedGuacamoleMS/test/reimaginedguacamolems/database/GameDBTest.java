@@ -5,6 +5,7 @@
  */
 package reimaginedguacamolems.database;
 
+import java.rmi.RemoteException;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,12 +24,13 @@ public class GameDBTest {
 
     /**
      * Test of updateStats method, of class GameDB.
+     * @throws java.rmi.RemoteException
      */
     @Test
-    public void testUpdateStatsWrong() {
+    public void testUpdateStatsWrong() throws RemoteException {
         System.out.println("updateStats");
         Profile prof;
-        Category cat = Category.Art;
+        Category cat = Category.ART;
         boolean right = false;
         GameDB instance = new GameDB();
         ProfileDB test = new ProfileDB();
@@ -36,7 +38,7 @@ public class GameDBTest {
         int expResult = 0;
         List<Statistic> stats = prof.getStatistics();
         for(Statistic s : stats){
-            if(s.getCategory() == Category.Art){
+            if(s.getCategory() == Category.ART){
                 expResult = s.getWrong() + 1;
             }
         }
@@ -44,7 +46,7 @@ public class GameDBTest {
         instance.updateStats(prof, cat, right);
         List<Statistic> updatedStats = test.getStatistics(prof.getPid());
         for(Statistic s: updatedStats){
-            if(s.getCategory() == Category.Art){
+            if(s.getCategory() == Category.ART){
                 result = s.getWrong();
             }
         }
@@ -53,12 +55,13 @@ public class GameDBTest {
     
      /**
      * Test of updateStats method, of class GameDB.
+     * @throws java.rmi.RemoteException
      */
     @Test
-    public void testUpdateStatsRight() {
+    public void testUpdateStatsRight() throws RemoteException {
         System.out.println("updateStats");
         Profile prof;
-        Category cat = Category.Art;
+        Category cat = Category.ART;
         boolean right = true;
         GameDB instance = new GameDB();
         ProfileDB test = new ProfileDB();
@@ -66,7 +69,7 @@ public class GameDBTest {
         int expResult = 0;
         List<Statistic> stats = prof.getStatistics();
         for(Statistic s : stats){
-            if(s.getCategory() == Category.Art){
+            if(s.getCategory() == Category.ART){
                 expResult = s.getRight() + 1;
             }
         }
@@ -74,7 +77,7 @@ public class GameDBTest {
         instance.updateStats(prof, cat, right);
         List<Statistic> updatedStats = test.getStatistics(prof.getPid());
         for(Statistic s: updatedStats){
-            if(s.getCategory() == Category.Art){
+            if(s.getCategory() == Category.ART){
                 result = s.getRight();
             }
         }

@@ -24,6 +24,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     private List<IProfile> players;
     private ChatServer chatServer;
     private GameController gameController;
+    private String ip;
 
     public GameRoom() throws RemoteException {
         //Overwrite for default constructor
@@ -35,13 +36,16 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
      * @param rounds the amount of rouds the game in the game room will have
      * @param duration the time period a person has for anwsering a question in
      * this game
+     * @param roomname the name of the room
+     * @param ip the IP the game room runs on
      * @throws RemoteException
      * @throws NotBoundException
      */
-    public GameRoom(int rounds, int duration) throws RemoteException, NotBoundException {
+    public GameRoom(int rounds, int duration,String roomname,String ip) throws RemoteException, NotBoundException {
         this.gameController = new GameController(rounds, duration);
         this.players = new ArrayList<>();
-        this.name = "TestGameRoom";
+        this.name = roomname;
+        this.ip = ip;//This has to be overwritten to localhost later on but for testing purposes its set to the client IP that later will have the game server!!
 
     }
 
@@ -66,6 +70,9 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
         return this.name;
     }
 
+    public String getIp(){
+        return this.ip;
+    }
     public String getNumberOfRounds() throws RemoteException {
         return Integer.toString(this.gameController.getGame().getAmountOfRounds());
     }

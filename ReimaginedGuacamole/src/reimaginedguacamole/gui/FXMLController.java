@@ -6,6 +6,7 @@
 package reimaginedguacamole.gui;
 
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.util.Observable;
 import java.util.Observer;
@@ -284,7 +285,7 @@ public class FXMLController implements Initializable, Observer {
     }
 
     @FXML
-    private void clickCreateGame(ActionEvent event) {
+    private void clickCreateGame(ActionEvent event) throws UnknownHostException {
         GameRoomDialog gamedialog = new GameRoomDialog();
     }
 

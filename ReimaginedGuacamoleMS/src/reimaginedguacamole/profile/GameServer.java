@@ -56,10 +56,10 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public IGameRoom createGameRoom(int duration, int rounds) throws RemoteException {
+    public IGameRoom createGameRoom(int duration, int rounds,String roomname, String ip) throws RemoteException {
         GameRoom gr;
         try {
-            gr = new GameRoom(duration,rounds);
+            gr = new GameRoom(duration,rounds,roomname,ip);
             gameRooms.add(gr);
             sendGameRoomData();
             Logger.getLogger(GameServer.class.getName()).log(Level.INFO,"Added a new GameRoom: {0}",gr.getName());
@@ -75,7 +75,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         ArrayList<String> roomData = new ArrayList<>();
         if(!gameRooms.isEmpty()){
             for(GameRoom r : gameRooms){
-                String room = "Players: " + r.getNrOfPlayers() + " /4" + "Game room name: "+r.getName()+ " Amount of Rounds: " + r.getNumberOfRounds();
+                String room ="Game room name: "+r.getName()+ " Players: " + r.getNrOfPlayers() + " /4   "+ " Amount of Rounds: " + r.getNumberOfRounds()+ " IP address of server: "+r.getIp();
                 roomData.add(room);
             }
         }

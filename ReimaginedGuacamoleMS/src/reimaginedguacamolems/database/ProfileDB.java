@@ -239,4 +239,8 @@ public class ProfileDB extends Database {
             return new ArrayList<>();
         }
     }
+
+    void newUserRegistration(String profile, LinkedHashMap profileData) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

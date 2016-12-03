@@ -5,6 +5,8 @@
  */
 package reimaginedguacamole.gui;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -30,14 +32,17 @@ public class GameRoomDialog {
      * and the duration of each round for a game, the constructor builds itself
      * and then launches itself
      */
-    public GameRoomDialog() {
+    public GameRoomDialog() throws UnknownHostException {
         Dialog<List> dialog = new Dialog<>();
         dialog.setTitle("Game instellingen");
         dialog.setHeaderText("Geef hier de instellingen op voor de game die je aan wilt maken");
         SpinnerValueFactory svfr = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 15, 10, 1);
         SpinnerValueFactory svfd = new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 30, 15, 1);
-        Label label1 = new Label("Rondes: ");
-        Label label2 = new Label("Antwoordtijd: ");
+        Label labelName = new Label("Spelnaam: ");
+        Label labelRounds = new Label("Rondes: ");
+        Label labelDuration = new Label("Antwoordtijd: ");
+        TextField name = new TextField();
+        name.textProperty().set("Nieuwe gameroom");
         Spinner spr = new Spinner();
         spr.setValueFactory(svfr);
         spr.setEditable(true);
@@ -47,19 +52,22 @@ public class GameRoomDialog {
         spr2.setEditable(true);
         spr2.setPrefWidth(80);
         GridPane grid = new GridPane();
-        grid.add(label1, 1, 1);
-        grid.add(spr, 2, 1);
-        grid.add(label2, 1, 2);
-        grid.add(spr2, 2, 2);
+        grid.add(labelName,1,1);
+        grid.add(name,2,1);
+        grid.add(labelRounds, 1, 3);
+        grid.add(spr, 2, 3);
+        grid.add(labelDuration, 1, 4);
+        grid.add(spr2, 2, 4);
         dialog.getDialogPane().setContent(grid);
         ButtonType buttonTypeOk = new ButtonType("Okay", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
         dialog.setResultConverter((ButtonType param) -> {
             if (param == buttonTypeOk) {
-                List<Integer> toRet;
+                List<String> toRet;
                 toRet = new ArrayList<>();
-                toRet.add(Integer.parseInt(spr.getValueFactory().getValue().toString()));
-                toRet.add(Integer.parseInt(spr2.getValueFactory().getValue().toString()));
+                toRet.add(spr.getValueFactory().getValue().toString());
+                toRet.add(spr2.getValueFactory().getValue().toString());
+                toRet.add(name.textProperty().getValue());
                 return toRet;
             }
             return new ArrayList<>();
@@ -67,11 +75,12 @@ public class GameRoomDialog {
         Optional<List> result = dialog.showAndWait();
 
         if (result.isPresent()) {
-            List<Integer> res = result.get();
+            List<String> res = result.get();
             try {
                 Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
                 IGameServer gs = (IGameServer) reg2.lookup("GameServer");
-                gs.createGameRoom(res.get(0), res.get(1));
+                String ip = InetAddress.getLocalHost().getHostAddress();
+                gs.createGameRoom(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)),res.get(2), ip);
             } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
