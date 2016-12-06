@@ -38,18 +38,21 @@ public interface IClient extends Remote {
      * @throws RemoteException
      */
     public String getName() throws RemoteException;
-    
+
     /**
      * Function to remove the client from the chatroom
-     * @throws RemoteException 
+     *
+     * @throws RemoteException
      */
     public void leaveChatroom() throws RemoteException;
-    
-        /**
+
+    public void enterChatroom() throws RemoteException;
+
+    /**
      * Function to update the list of players currently in the lobby
-     * 
-     * @param playerData  the list of players in the lobby
-     * @throws RemoteException 
+     *
+     * @param playerData the list of players in the lobby
+     * @throws RemoteException
      */
     public void updatePlayerList(List<String> playerData) throws RemoteException;
 

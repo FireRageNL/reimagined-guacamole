@@ -90,4 +90,9 @@ public class Client extends UnicastRemoteObject implements IClient {
             application.updatePlayerList(playerData);
         });
     }
+
+    @Override
+    public void enterChatroom() throws RemoteException {
+        server.clientEnter(this);
+    }
 }

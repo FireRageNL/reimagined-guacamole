@@ -42,6 +42,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.ListCell;
+import javafx.util.Callback;
 import reimaginedguacamole.game.IGameController;
 import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.tooling.Hashing;
@@ -252,6 +254,27 @@ public class FXMLController implements Initializable {
         lobbyRooms = FXCollections.observableArrayList();
         lvGameRooms.setFixedCellSize(50);
         lvGameRooms.setItems(lobbyRooms);
+        lvGameRooms.setCellFactory(new Callback<ListView<IGameRoom>, ListCell<IGameRoom>>() {
+            @Override
+            public ListCell<IGameRoom> call(ListView<IGameRoom> param) {
+                ListCell<IGameRoom> cell = new ListCell<IGameRoom>() {
+
+                    @Override
+                    protected void updateItem(IGameRoom gameRoom, boolean bln) {
+                        super.updateItem(gameRoom, bln);
+                        if (gameRoom != null) {
+                            try {
+                                setText(gameRoom.getGameRoomListing());
+                            } catch (RemoteException ex) {
+                                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+
+                };
+                return cell;
+            }
+        });
         lvGameRooms.getItems().addListener((ListChangeListener.Change c)
                 -> lvGameRooms.scrollTo(0)
         );
@@ -418,6 +441,7 @@ public class FXMLController implements Initializable {
 
     private void joinGame(IGameRoom room) throws RemoteException, NotBoundException {
         gs.joinRoom(gameClient, room);
+        chatClient.leaveChatroom();
         joinedRoom = room;
     }
 
@@ -438,8 +462,8 @@ public class FXMLController implements Initializable {
      * gamecontroller is changed. It fires all necessary gamecontroller methods
      * and shows the correct information on the UI.
      */
-    public void checkGameState(GameState state){
-        switch(state){
+    public void checkGameState(GameState state) {
+        switch (state) {
             case WAITINGFORCATEGORY:
                 System.out.println("Het spel is aan het rennen yaaay");
                 break;
@@ -560,6 +584,7 @@ public class FXMLController implements Initializable {
 //                break;
 //        }
 //    }
+
     /**
      * Resets the game UI to the standard empty playing field so next round can
      * start.
@@ -788,7 +813,8 @@ public class FXMLController implements Initializable {
     public void disableStartButton(boolean state) {
         btnStartGame.setDisable(state);
     }
-    public void disableSpinButton(boolean state){
+
+    public void disableSpinButton(boolean state) {
         btnSpin.setDisable(state);
     }
 }

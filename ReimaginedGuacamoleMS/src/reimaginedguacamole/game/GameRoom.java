@@ -46,11 +46,12 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
      * @throws NotBoundException
      */
     public GameRoom(int rounds, int duration, String roomname, String ip, GameServer gs) throws RemoteException, NotBoundException, UnknownHostException {
-        this.gameController = new GameController(rounds, duration,gs,this);
+        this.gameController = new GameController(rounds, duration, gs, this);
         this.players = new ArrayList<>();
         this.name = roomname;
         //this.ip = ip; //This has to be overwritten to localhost later on but for testing purposes its set to the client IP that later will have the game server!!
         this.ip = InetAddress.getLocalHost().getHostAddress();
+        //this.chatServer = new ChatServer();
     }
 
     @Override
@@ -111,8 +112,13 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     public GameController getGameController() {
         return this.gameController;
     }
-    
-    public List<IGameClient> getPlayers(){
+
+    public List<IGameClient> getPlayers() {
         return players;
+    }
+
+    @Override
+    public String getGameRoomListing() throws RemoteException {
+        return this.name + "    Players: " + this.getNrOfPlayers() + "    Rondes: " + this.getNumberOfRounds();
     }
 }

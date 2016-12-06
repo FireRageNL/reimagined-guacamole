@@ -8,6 +8,7 @@ package reimaginedguacamole.game;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import reimaginedguacamole.profile.IGameClient;
 import reimaginedguacamole.profile.IProfile;
 
 /**
@@ -27,18 +28,18 @@ public interface IGameRoom extends Remote {
     /**
      * Add a player to the gameroom, making them join the current game
      *
-     * @param profile the profile that joins the game
+     * @param client the profile that joins the game
      * @throws RemoteException
      */
-    public void joinRoom(IProfile profile) throws RemoteException;
+    public void joinRoom(IGameClient client) throws RemoteException;
 
     /**
      * Remove a player from the gameroom, making them leave the current game
      *
-     * @param profile the profile that leaves the game
+     * @param client
      * @throws RemoteException
      */
-    public void leaveRoom(IProfile profile) throws RemoteException;
+    public void leaveRoom(IGameClient client) throws RemoteException;
 
     /**
      * Get all the nicknames of the players currently connected to the room
@@ -65,5 +66,7 @@ public interface IGameRoom extends Remote {
      * @throws RemoteException
      */
     public void announceRoom() throws RemoteException;
+
+    public String getGameRoomListing() throws RemoteException;
 
 }
