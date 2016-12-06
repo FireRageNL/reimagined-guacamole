@@ -37,9 +37,13 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
     @Override
     public void broadcastMessage(String message) throws RemoteException {
         Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.INFO, "New chat message sent to lobby: {0}", message);
-        for (IClient p : connectedProfiles) {
-            p.addMessage(message);
-        }
+        connectedProfiles.stream().forEach((p) -> {
+            try{p.addMessage(message);}
+            catch(RemoteException ex){
+                Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.WARNING,"Removing person from chatlist!");
+                connectedProfiles.remove(p);
+            }
+        });
     }
 
     @Override
