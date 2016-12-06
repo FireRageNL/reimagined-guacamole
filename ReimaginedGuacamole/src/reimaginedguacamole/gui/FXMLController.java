@@ -210,6 +210,7 @@ public class FXMLController implements Initializable, Observer {
                     client = new Client(user, lobbyChat);
                     UpdateLobby ul = new UpdateLobby(this);
                     gs.addLobbyUser(ul);
+                    updateRoomList(lobbyRooms);
                     fillProfileData();
                     setWindows(2);
                 } else {
