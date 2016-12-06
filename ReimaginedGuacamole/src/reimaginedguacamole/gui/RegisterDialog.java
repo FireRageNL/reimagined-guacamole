@@ -112,7 +112,7 @@ public class RegisterDialog {
         if (result.isPresent() && result.get().size() == 4) {
             try {
                 //If result is ok, insert into database.
-                Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
+                Registry reg = LocateRegistry.getRegistry("192.168.1.106", 666);
                 IGameServer gs = (IGameServer) reg.lookup("GameServer");
                 gs.registerNewUser(result.get());
             } catch (RemoteException | NotBoundException ex) {

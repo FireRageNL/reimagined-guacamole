@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -64,7 +65,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             sendGameRoomData();
             Logger.getLogger(GameServer.class.getName()).log(Level.INFO,"Added a new GameRoom: {0}",gr.getName());
             return gr;
-        } catch (NotBoundException ex) {
+        } catch (NotBoundException | UnknownHostException ex) {
             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

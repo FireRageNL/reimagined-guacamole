@@ -77,7 +77,7 @@ public class GameRoomDialog {
         if (result.isPresent()) {
             List<String> res = result.get();
             try {
-                Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
+                Registry reg2 = LocateRegistry.getRegistry("192.168.1.106", 666);
                 IGameServer gs = (IGameServer) reg2.lookup("GameServer");
                 String ip = InetAddress.getLocalHost().getHostAddress();
                 gs.createGameRoom(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)),res.get(2), ip);

@@ -198,7 +198,7 @@ public class FXMLController implements Initializable, Observer {
         //Checks if textfields are not empty
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
-                Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
+                Registry reg = LocateRegistry.getRegistry("192.168.1.106", 666);
                 IGameServer gs = (IGameServer) reg.lookup("GameServer");
                 //Tries to log in
                 String password = Hashing.hashPassword(pass);
@@ -375,9 +375,9 @@ public class FXMLController implements Initializable, Observer {
      */
     @FXML
     private void startGame() throws RemoteException, NotBoundException {
-        roundDuration = 10;
-        Registry reg = LocateRegistry.getRegistry("127.0.0.1", 666);
-        IGameController GameController = (IGameController) reg.lookup("GameController");
+//        roundDuration = 10;
+//        Registry reg = LocateRegistry.getRegistry("192.168.1.106", 666);
+//        IGameController GameController = (IGameController) reg.lookup("GameController");
 
         resetQuestionUI();
         pbRoundTimer.setProgress(0);
@@ -385,6 +385,11 @@ public class FXMLController implements Initializable, Observer {
         disableButtons(true);
         btnStartGame.setDisable(true);
         gameController.setGameState(GameState.WAITINGFORPLAYERS);
+    }
+
+    @FXML
+    private void joinGame() throws RemoteException, NotBoundException {
+
     }
 
     /**
@@ -495,13 +500,22 @@ public class FXMLController implements Initializable, Observer {
 
             case WAITINGFORPLAYERS:
                 chatList.add("GAME: Wachten op spelers");
-                while (gameController.checkPlayers() != 4) {
-                    //Wait
-                }
-                gameController.setGameState(WAITINGFORCATEGORY);
-                countPlayers = 0;
                 btnStartGame.setDisable(false);
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            while (gameController.checkPlayers() != 4) {
+                                //Wait
+                            }
+                            gameController.setGameState(WAITINGFORCATEGORY);
+                            countPlayers = 0;
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
 
+                }.run();
                 break;
 
             default:
