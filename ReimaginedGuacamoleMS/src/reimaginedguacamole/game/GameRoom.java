@@ -5,6 +5,8 @@
  */
 package reimaginedguacamole.game;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -41,12 +43,12 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
      * @throws RemoteException
      * @throws NotBoundException
      */
-    public GameRoom(int rounds, int duration,String roomname,String ip) throws RemoteException, NotBoundException {
+    public GameRoom(int rounds, int duration,String roomname,String ip) throws RemoteException, NotBoundException, UnknownHostException {
         this.gameController = new GameController(rounds, duration);
         this.players = new ArrayList<>();
         this.name = roomname;
-        this.ip = ip;//This has to be overwritten to localhost later on but for testing purposes its set to the client IP that later will have the game server!!
-
+        //this.ip = ip; //This has to be overwritten to localhost later on but for testing purposes its set to the client IP that later will have the game server!!
+        this.ip = InetAddress.getLocalHost().getHostAddress();
     }
 
     @Override
