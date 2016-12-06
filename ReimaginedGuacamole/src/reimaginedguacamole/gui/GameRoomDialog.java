@@ -27,13 +27,14 @@ import reimaginedguacamole.profile.IGameServer;
  */
 public class GameRoomDialog {
 
+    Dialog<List> dialog;
     /**
      * Constructor for a dialog that lets the user select the amount of rounds
      * and the duration of each round for a game, the constructor builds itself
      * and then launches itself
      */
     public GameRoomDialog() throws UnknownHostException {
-        Dialog<List> dialog = new Dialog<>();
+        dialog = new Dialog<>();
         dialog.setTitle("Game instellingen");
         dialog.setHeaderText("Geef hier de instellingen op voor de game die je aan wilt maken");
         SpinnerValueFactory svfr = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 15, 10, 1);
@@ -72,20 +73,9 @@ public class GameRoomDialog {
             }
             return new ArrayList<>();
         });
-        Optional<List> result = dialog.showAndWait();
-
-        if (result.isPresent()) {
-            List<String> res = result.get();
-            try {
-                Registry reg2 = LocateRegistry.getRegistry("192.168.1.106", 666);
-                IGameServer gs = (IGameServer) reg2.lookup("GameServer");
-                String ip = InetAddress.getLocalHost().getHostAddress();
-                gs.createGameRoom(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)),res.get(2), ip);
-            } catch (RemoteException | NotBoundException ex) {
-                Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
     }
 
+    public Dialog<List> getDialog() {
+        return dialog;
+    }
 }

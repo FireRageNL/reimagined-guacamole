@@ -71,6 +71,7 @@
 
     -->
 	<target name="-post-compile">
-    <copy file="database.properties" todir="${dist.dir}"/>        
+    <copy file="database.properties" todir="${dist.dir}"/>
+	<copy file="run.bat" todir="${dist.dir}"/>
 </target>
 </project>

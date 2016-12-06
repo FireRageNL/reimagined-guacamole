@@ -132,4 +132,21 @@ public interface IProfile extends Remote {
      * @throws RemoteException
      */
     public List<IHistory> getHistory() throws RemoteException;
+
+    /**
+     * Set the score of the player
+     *
+     * @param score the score to be set
+     * @throws RemoteException
+     */
+    public void setScore(int score) throws RemoteException;
+
+    /**
+     * Get the score of a player
+     *
+     * @return the score of the player
+     * @throws RemoteException
+     */
+    public int getScore() throws RemoteException;
+
 }

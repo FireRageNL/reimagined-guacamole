@@ -13,10 +13,11 @@ import java.util.List;
 import reimaginedguacamolems.database.ProfileDB;
 
 /**
- *Class that holds important profile information.
+ * Class that holds important profile information.
+ *
  * @author Marc
  */
-public class Profile extends UnicastRemoteObject implements IProfile,Serializable {
+public class Profile extends UnicastRemoteObject implements IProfile, Serializable {
 
     private String email;
     private String name;
@@ -24,25 +25,28 @@ public class Profile extends UnicastRemoteObject implements IProfile,Serializabl
     private int pid;
     private int wins;
     private int losses;
-    private ArrayList<Achievement> achievements;
-    private ArrayList<Statistic> statistics;
+    private ArrayList<IAchievement> achievements;
+    private ArrayList<IStatistic> statistics;
     private final ProfileDB pdb = new ProfileDB();
+    private int score;
 
     public Profile() throws RemoteException {
         //Empty constructor to overwrite the default constructor
     }
-    
+
     /**
-     * Constructor to create a new profile with all the data required to create one
+     * Constructor to create a new profile with all the data required to create
+     * one
+     *
      * @param email the email of the user
      * @param name the name of the user
      * @param nickname the nickname of the user
      * @param pid the ID value of the user in the database
      * @param wins the amount of wins the user has
      * @param losses the amount of losses the user has
-     * @throws RemoteException 
+     * @throws RemoteException
      */
-    public Profile(String email, String name, String nickname, int pid, int wins, int losses)throws RemoteException {
+    public Profile(String email, String name, String nickname, int pid, int wins, int losses) throws RemoteException {
         this.email = email;
         this.name = name;
         this.nickname = nickname;
@@ -96,11 +100,12 @@ public class Profile extends UnicastRemoteObject implements IProfile,Serializabl
     }
 
     @Override
-    public List<Statistic> getStatistics() {
+    public List<IStatistic> getStatistics() {
         return statistics;
     }
+
     @Override
-    public void setStatistics(List<Statistic> stat) {
+    public void setStatistics(List<IStatistic> stat) {
         statistics = (ArrayList) stat;
     }
 
@@ -109,25 +114,35 @@ public class Profile extends UnicastRemoteObject implements IProfile,Serializabl
         this.nickname = nick;
         pdb.saveNickname(this);
     }
-    
+
     @Override
-    public List<Achievement> getAchievements(){
+    public List<IAchievement> getAchievements() {
         return achievements;
-    }
-    @Override
-    public void addAchievement(Achievement toAdd){
-        achievements.add(toAdd);
-        pdb.storeAchievement(toAdd,this);
-    }
-    
-    @Override
-    public List<Ranking> getRankings(){
-       return pdb.getRankings();
     }
 
     @Override
-    public List<History> getHistory() {
+    public List<IRanking> getRankings() {
+        return pdb.getRankings();
+    }
+
+    @Override
+    public List<IHistory> getHistory() {
         return pdb.getHistory(pid);
+    }
+
+    @Override
+    public void addAchievement(IAchievement toAdd) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setScore(int score) throws RemoteException {
+        this.score = score;
+    }
+
+    @Override
+    public int getScore() throws RemoteException {
+        return score;
     }
 
 }

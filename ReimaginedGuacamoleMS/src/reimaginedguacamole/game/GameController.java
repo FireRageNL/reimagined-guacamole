@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import reimaginedguacamole.profile.GameServer;
 import reimaginedguacamole.profile.IProfile;
 
 /**
@@ -30,6 +31,8 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     private int currentAnswer;
     private int currentScore;
     private int countPlayers;
+    private GameServer gs;
+    private GameRoom gr;
 
     /**
      * Constructor that gets called when a new game gets created
@@ -38,7 +41,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
      * @throws RemoteException
      * @throws NotBoundException 
      */
-    public GameController(int amountOfRounds, int duration) throws RemoteException, NotBoundException {
+    public GameController(int amountOfRounds, int duration, GameServer gs, GameRoom gr) throws RemoteException, NotBoundException {
         game = new Game();
         game.setAmountOfRounds(amountOfRounds);
         game.setRoundDuration(duration);
@@ -49,6 +52,9 @@ public class GameController extends UnicastRemoteObject implements IGameControll
         }
         currentRoundIndex = -1;
         currentScore = 0;
+        this.gameState = GameState.WAITINGFORPLAYERS;
+        this.gs = gs;
+        this.gr = gr;
     }
     
     public GameController() throws RemoteException {
@@ -151,10 +157,9 @@ public class GameController extends UnicastRemoteObject implements IGameControll
      * @param gameState
      */
     @Override
-    public void setGameState(GameState gameState) {
+    public void setGameState(GameState gameState) throws RemoteException {
         this.gameState = gameState;
-//        this.setChanged();
-//        this.notifyObservers(gameState);
+        gs.broadcastGameState(gameState, gr);
     }
 
     @Override

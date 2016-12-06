@@ -76,47 +76,77 @@ public interface IProfile extends Remote {
      * @throws RemoteException
      */
     public void addLoss() throws RemoteException;
+
     /**
      * Get a list of the statistics per category of the current profile
+     *
      * @return the list of statistics
-     * @throws RemoteException 
+     * @throws RemoteException
      */
-    public List<Statistic> getStatistics() throws RemoteException;
-    
+    public List<IStatistic> getStatistics() throws RemoteException;
+
     /**
      * Set a new statistic in the current profile
+     *
      * @param stat the statistic to be set
-     * @throws RemoteException 
+     * @throws RemoteException
      */
-    public void setStatistics(List<Statistic> stat) throws RemoteException;
+    public void setStatistics(List<IStatistic> stat) throws RemoteException;
+
     /**
      * Change the nickname of the current profile
+     *
      * @param nick the new nickname to be set
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     public void setNickName(String nick) throws RemoteException;
+
     /**
      * Get all Achievements of the profile
+     *
      * @return the achievemnts assoicated with the profile
-     * @throws RemoteException 
+     * @throws RemoteException
      */
-    public List<Achievement> getAchievements() throws RemoteException;
+    public List<IAchievement> getAchievements() throws RemoteException;
+
     /**
      * Add a achievement to the current profile
+     *
      * @param toAdd The achievement to be added
-     * @throws RemoteException 
+     * @throws RemoteException
      */
-    public void addAchievement(Achievement toAdd) throws RemoteException;
+    public void addAchievement(IAchievement toAdd) throws RemoteException;
+
     /**
      * Get the current world rankings
+     *
      * @return A list of the world rankings
-     * @throws RemoteException 
+     * @throws RemoteException
      */
-    public List<Ranking> getRankings() throws RemoteException;
+    public List<IRanking> getRankings() throws RemoteException;
+
     /**
      * Get the game history of the current profile
+     *
      * @return the game history of the profile
-     * @throws RemoteException 
+     * @throws RemoteException
      */
-    public List<History> getHistory() throws RemoteException;
+    public List<IHistory> getHistory() throws RemoteException;
+
+    /**
+     * Set the score of the player
+     *
+     * @param score the score to be set
+     * @throws RemoteException
+     */
+    public void setScore(int score) throws RemoteException;
+
+    /**
+     * Get the score of a player
+     *
+     * @return the score of the player
+     * @throws RemoteException
+     */
+    public int getScore() throws RemoteException;
+
 }

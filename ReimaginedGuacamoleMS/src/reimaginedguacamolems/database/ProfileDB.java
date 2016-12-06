@@ -18,6 +18,9 @@ import java.util.logging.Logger;
 import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.Achievement;
 import reimaginedguacamole.profile.History;
+import reimaginedguacamole.profile.IHistory;
+import reimaginedguacamole.profile.IRanking;
+import reimaginedguacamole.profile.IStatistic;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Ranking;
 import reimaginedguacamole.profile.Statistic;
@@ -71,9 +74,9 @@ public class ProfileDB extends Database {
         //creates the profile
         Profile ret = new Profile(results.get(1), results.get(0), results.get(2), pid, wins, losses);
         //gets the statistics for the current user
-        List<Statistic> list = getStatistics(ret.getPid());
+        List<IStatistic> list = getStatistics(ret.getPid());
         //sets the statistics for the current user
-        ret.setStatistics((ArrayList<Statistic>) list);
+        ret.setStatistics((ArrayList<IStatistic>) list);
         return ret;
     }
     /**
@@ -81,8 +84,8 @@ public class ProfileDB extends Database {
      * @param userID the user to get the ID from
      * @return all the statistics from said user
      */
-    public List<Statistic> getStatistics(int userID) {
-        List<Statistic> list = new ArrayList<>();
+    public List<IStatistic> getStatistics(int userID) {
+        List<IStatistic> list = new ArrayList<>();
         try {
             //opens the connection
             this.initConnection();
@@ -182,8 +185,8 @@ public class ProfileDB extends Database {
  * Function to get all the rankings
  * @return A list of all the rankings in the DB
  */
-    public List<Ranking> getRankings() {
-        ArrayList<Ranking> rankings = new ArrayList();
+    public List<IRanking> getRankings() {
+        ArrayList<IRanking> rankings = new ArrayList();
         try {
             //opens the connection
             this.initConnection();
@@ -213,8 +216,8 @@ public class ProfileDB extends Database {
      * @param username is the user to get the gamehistory from
      * @return The gamehistory in the DB
      */
-    public List<History> getHistory(int username) {
-        ArrayList<History> history = new ArrayList();
+    public List<IHistory> getHistory(int username) {
+        ArrayList<IHistory> history = new ArrayList();
         try {
             //opens the connection
             this.initConnection();

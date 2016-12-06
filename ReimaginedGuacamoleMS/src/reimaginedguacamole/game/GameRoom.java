@@ -13,6 +13,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import reimaginedguacamole.profile.ChatServer;
+import reimaginedguacamole.profile.GameServer;
+import reimaginedguacamole.profile.IGameClient;
 import reimaginedguacamole.profile.IProfile;
 
 /**
@@ -23,7 +25,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
 
     //private IGameController
     private String name;
-    private List<IProfile> players;
+    private List<IGameClient> players;
     private ChatServer chatServer;
     private GameController gameController;
     private String ip;
@@ -43,8 +45,8 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
      * @throws RemoteException
      * @throws NotBoundException
      */
-    public GameRoom(int rounds, int duration,String roomname,String ip) throws RemoteException, NotBoundException, UnknownHostException {
-        this.gameController = new GameController(rounds, duration);
+    public GameRoom(int rounds, int duration, String roomname, String ip, GameServer gs) throws RemoteException, NotBoundException, UnknownHostException {
+        this.gameController = new GameController(rounds, duration,gs,this);
         this.players = new ArrayList<>();
         this.name = roomname;
         //this.ip = ip; //This has to be overwritten to localhost later on but for testing purposes its set to the client IP that later will have the game server!!
@@ -53,18 +55,19 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
 
     @Override
     public int getNrOfPlayers() throws RemoteException {
-        return players.size();
+        return gameController.checkPlayers();
     }
 
     @Override
-    public void joinRoom(IProfile profile) throws RemoteException {
+    public void joinRoom(IGameClient profile) throws RemoteException {
         players.add(profile);
         gameController.AddPlayersCount();
-
+        System.out.println(gameController.checkPlayers());
+        System.out.println(profile.getProfile().getNickname() + " joined room");
     }
 
     @Override
-    public void leaveRoom(IProfile profile) throws RemoteException {
+    public void leaveRoom(IGameClient profile) throws RemoteException {
         players.remove(profile);
     }
 
@@ -72,9 +75,10 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
         return this.name;
     }
 
-    public String getIp(){
+    public String getIp() {
         return this.ip;
     }
+
     public String getNumberOfRounds() throws RemoteException {
         return Integer.toString(this.gameController.getGame().getAmountOfRounds());
     }
@@ -82,8 +86,8 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     @Override
     public List<String> getNicknames() throws RemoteException {
         List<String> nicks = new ArrayList();
-        for (IProfile p : players) {
-            nicks.add(p.getNickname());
+        for (IGameClient c : players) {
+            nicks.add(c.getProfile().getNickname());
         }
         return nicks;
     }
@@ -99,4 +103,16 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
         //ToImplement on room change, either player joining or game starting
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    public GameController getGameController() {
+        return this.gameController;
+    }
+    
+    public List<IGameClient> getPlayers(){
+        return players;
+    }
 }

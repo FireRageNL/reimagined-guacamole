@@ -5,11 +5,10 @@
  */
 package reimaginedguacamole.gui;
 
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -34,24 +33,24 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import reimaginedguacamole.game.GameState;
 import static reimaginedguacamole.game.GameState.*;
-import reimaginedguacamole.game.IRound;
 import reimaginedguacamole.profile.*;
-import reimaginedguacamole.timertasks.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import reimaginedguacamole.game.IGameController;
+import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.tooling.Hashing;
 
 /**
  *
  * @author daan
  */
-public class FXMLController implements Initializable, Observer {
+public class FXMLController implements Initializable {
 
     @FXML
     private Label errorlabel;
@@ -169,16 +168,19 @@ public class FXMLController implements Initializable, Observer {
     //Global variables
     private IGameController gameController;
     private IProfile user;
+    private GameClient gameClient;
     private Random rng;
     private int wheelSpeed;
     private int roundDuration;
     private ObservableList<String> chatList;
     private ObservableList<String> lobbyChat;
-    private ObservableList<String> lobbyRooms;
+    private ObservableList<IGameRoom> lobbyRooms;
     private ObservableList<String> players;
+    private IGameServer gs;
+    private IGameRoom joinedRoom;
     int wheelRotation = 0;
     double progress;
-    private Client client;
+    private Client chatClient;
     private static final String BUTTON_STYLE = "-fx-base: #ff3300;";
     private static final String BUTTON_STYLE_CORRECT = "-fx-base: #00cc00;";
     int countPlayers;
@@ -202,7 +204,7 @@ public class FXMLController implements Initializable, Observer {
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
                 Registry reg = LocateRegistry.getRegistry("192.168.1.106", 666);
-                IGameServer gs = (IGameServer) reg.lookup("GameServer");
+                gs = (IGameServer) reg.lookup("GameServer");
                 //Tries to log in
                 String password = Hashing.hashPassword(pass);
                 boolean loggedin = gs.tryLogin(username, password);
@@ -210,16 +212,15 @@ public class FXMLController implements Initializable, Observer {
                 if (loggedin) {
                     //gets user date from database and sets the window to the profile page.
                     user = gs.getCurrentProfile(username);
-                    client = new Client(user, lobbyChat, this);
-                    UpdateLobby ul = new UpdateLobby(this);
-                    gs.addLobbyUser(ul);
-                    updateRoomList(lobbyRooms);
+                    gameClient.setProf(user);
+                    chatClient = new Client(user, lobbyChat, this);
+                    updateRoomList(gs.sendGameRoomData());
                     fillProfileData();
                     setWindows(2);
                 } else {
                     errorlabel.setText("Gebruikersnaam/Wachtwoord fout");
                 }
-            } catch (Exception ex) {
+            } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -228,7 +229,13 @@ public class FXMLController implements Initializable, Observer {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        btnSpin.setDisable(true);
+        btnStartGame.setDisable(true);
+        try {
+            gameClient = new GameClient(this);
+        } catch (RemoteException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //Set window to loginpage
         setWindows(1);
         //initializes the chatlist for later usage and sets the style.
@@ -292,8 +299,20 @@ public class FXMLController implements Initializable, Observer {
     }
 
     @FXML
-    private void clickCreateGame(ActionEvent event) throws UnknownHostException {
+    private void clickCreateGame(ActionEvent event) throws UnknownHostException, NotBoundException {
         GameRoomDialog gamedialog = new GameRoomDialog();
+        Optional<List> result = gamedialog.getDialog().showAndWait();
+
+        if (result.isPresent()) {
+            List<String> res = result.get();
+            try {
+                String ip = InetAddress.getLocalHost().getHostAddress();
+                joinGame(gs.createGameRoom(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)), res.get(2), ip));
+            } catch (RemoteException ex) {
+                Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
 
     /**
@@ -381,20 +400,25 @@ public class FXMLController implements Initializable, Observer {
      */
     @FXML
     private void startGame() throws RemoteException, NotBoundException {
-        roundDuration = 10;
-        Registry reg = LocateRegistry.getRegistry("192.168.1.106", 666);
-        IGameController GameController = (IGameController) reg.lookup("GameController");
         resetQuestionUI();
         pbRoundTimer.setProgress(0);
-        chatList.clear();
         disableButtons(true);
         btnStartGame.setDisable(true);
-        gameController.setGameState(GameState.WAITINGFORPLAYERS);
+        gs.startGame(joinedRoom);
     }
 
     @FXML
-    private void joinGame() throws RemoteException, NotBoundException {
+    private void btnJoinGameClicked(ActionEvent event) {
+        try {
+            joinGame((IGameRoom) lvGameRooms.getSelectionModel().getSelectedItem());
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    private void joinGame(IGameRoom room) throws RemoteException, NotBoundException {
+        gs.joinRoom(gameClient, room);
+        joinedRoom = room;
     }
 
     /**
@@ -402,7 +426,7 @@ public class FXMLController implements Initializable, Observer {
      *
      * @param state
      */
-    private void disableButtons(boolean state) {
+    public void disableButtons(boolean state) {
         btnAnswer1.setDisable(state);
         btnAnswer2.setDisable(state);
         btnAnswer3.setDisable(state);
@@ -414,131 +438,134 @@ public class FXMLController implements Initializable, Observer {
      * gamecontroller is changed. It fires all necessary gamecontroller methods
      * and shows the correct information on the UI.
      */
-    private void checkGameState() throws RemoteException {
-
-        IRound round;
-
-        switch (gameController.getGameState()) {
-            //Waiting is not used in this version yet. future version will wait for other players
-            case WAITING:
-                break;
+    public void checkGameState(GameState state){
+        switch(state){
             case WAITINGFORCATEGORY:
-                //Game is now waiting for user to start spinning the wheel. if not done after 15 seconds it will start automically.
-                //Disables all necessary buttons and gives feedback to user.
-                lblGameName.setText(user.getNickname());
-                btnSpin.setDisable(false);
-                waitTimer = new Timer(true);
-                chatList.add("GAME: Ben je er Klaar voor? Spin het wiel!");
-                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SPINNING), 15000);
-                setWindows(0);
-                break;
-            case SPINNING:
-                //this state will start spinning the wheel. also it resets the ui to an empty gamescreen 
-                waitTimer = null;
-                resetQuestionUI();
-                btnSpin.setDisable(true);
-                chatList.add("GAME: Welke categorie zul je krijgen?");
-                System.out.println("Start Spinning");
-                spinWheel();
-                waitTimer = new Timer(true);
-                int time = 5000 + rng.nextInt(3000);
-                System.out.println(time);
-                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SPINNINGFINISHED), time);
-                break;
-            case SPINNINGFINISHED:
-                //Stops the spinning and starts the new round with a question from the chosen category
-                animationTimer.stop();
-                System.out.println("ANIMATION STOPPED!");
-                gameController.startNextRound();
-                gameController.giveRoundQuestion(gameController.chooseCategory(wheel.getRotate()));
-
-                //Sets the appriopriate round and shows a loading bar.
-                round = gameController.getCurrentRound();
-                pbRoundTimer.setProgress(-1);
-                lblQuestion.setText(round.getQuestion().getCategory().toString());
-                chatList.add("GAME: De categorie is " + round.getQuestion().getCategory() + "\n");
-
-                //Waits a few seconds before showing the question.
-                waitTimer = new Timer(true);
-                waitTimer.schedule(new WaitingForGameState(gameController, GameState.GAMERUNNING), 3500);
-                break;
-            case GAMERUNNING:
-                //Gamestate where question can be answered. starts the gametimer which is set to a specific time.
-                disableButtons(false);
-                round = gameController.getCurrentRound();
-                lblQuestion.setText(round.getQuestion().getQuestionContents());
-                btnAnswer1.setText(round.getQuestion().getAnswer1());
-                btnAnswer2.setText(round.getQuestion().getAnswer2());
-                btnAnswer3.setText(round.getQuestion().getAnswer3());
-                btnAnswer4.setText(round.getQuestion().getAnswer4());
-                startGameTimer();
-                break;
-
-            case ANSWERED:
-                //Gamestate where question has been answered or time has run out(answer will be 0).
-                //checks what the user did and gives correct feedback to user.
-                disableButtons(true);
-                int score = gameController.getCurrentScore();
-                if (gameController.checkAnswer(user, pbRoundTimer.getProgress())) {
-                    score = gameController.getCurrentScore() - score;
-                    chatList.add("GAME: Goed gedaan! je krijgt " + score + " punten!");
-                } else {
-                    chatList.add("GAME: Jammer!");
-                }
-                lblScore.setText(String.valueOf(gameController.getCurrentScore()));
-                setButtonCorrect(gameController.getCorrectAnswer());
-                waitTimer = new Timer(true);
-
-                //Checks if game is over and continuesaccording to this check
-                if (gameController.getCurrentRoundIndex() + 1 == gameController.getGame().getAmountOfRounds()) {
-                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.GAMEFINISHED), 2500);
-                } else {
-                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.WAITINGFORCATEGORY), 2500);
-                }
-                break;
-
-            case GAMEFINISHED:
-                //Game has ended. upload all information and show user game has ended.
-                gameController.endGame(user);
-                chatList.add("GAME:  De Game is afgelopen! \n Je score is " + gameController.getCurrentScore() + "! Goed Bezig!");
-                break;
-
-            case WAITINGFORPLAYERS:
-                chatList.add("GAME: Wachten op spelers");
-                btnStartGame.setDisable(false);
-                 << << << < HEAD
-                
- == == ==
-                        = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            while (gameController.checkPlayers() != 4) {
-                                //Wait
-                            }
-                            gameController.setGameState(WAITINGFORCATEGORY);
-                            countPlayers = 0;
-                        } catch (RemoteException ex) {
-                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-
-                }.run();
-                 >>> >>> > origin / master
-                break;
-
-            default:
-                //do nothing
+                System.out.println("Het spel is aan het rennen yaaay");
                 break;
         }
     }
-
+//private void checkGameState() throws RemoteException {
+//
+//        IRound round;
+//
+//        switch (gameController.getGameState()) {
+//            //Waiting is not used in this version yet. future version will wait for other players
+//            case WAITING:
+//                break;
+//            case WAITINGFORCATEGORY:
+//                //Game is now waiting for user to start spinning the wheel. if not done after 15 seconds it will start automically.
+//                //Disables all necessary buttons and gives feedback to user.
+//                lblGameName.setText(user.getNickname());
+//                btnSpin.setDisable(false);
+//                waitTimer = new Timer(true);
+//                chatList.add("GAME: Ben je er Klaar voor? Spin het wiel!");
+//                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SPINNING), 15000);
+//                setWindows(0);
+//                break;
+//            case SPINNING:
+//                //this state will start spinning the wheel. also it resets the ui to an empty gamescreen 
+//                waitTimer = null;
+//                resetQuestionUI();
+//                btnSpin.setDisable(true);
+//                chatList.add("GAME: Welke categorie zul je krijgen?");
+//                System.out.println("Start Spinning");
+//                spinWheel();
+//                waitTimer = new Timer(true);
+//                int time = 5000 + rng.nextInt(3000);
+//                System.out.println(time);
+//                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SPINNINGFINISHED), time);
+//                break;
+//            case SPINNINGFINISHED:
+//                //Stops the spinning and starts the new round with a question from the chosen category
+//                animationTimer.stop();
+//                System.out.println("ANIMATION STOPPED!");
+//                gameController.startNextRound();
+//                gameController.giveRoundQuestion(gameController.chooseCategory(wheel.getRotate()));
+//
+//                //Sets the appriopriate round and shows a loading bar.
+//                round = gameController.getCurrentRound();
+//                pbRoundTimer.setProgress(-1);
+//                lblQuestion.setText(round.getQuestion().getCategory().toString());
+//                chatList.add("GAME: De categorie is " + round.getQuestion().getCategory() + "\n");
+//
+//                //Waits a few seconds before showing the question.
+//                waitTimer = new Timer(true);
+//                waitTimer.schedule(new WaitingForGameState(gameController, GameState.GAMERUNNING), 3500);
+//                break;
+//            case GAMERUNNING:
+//                //Gamestate where question can be answered. starts the gametimer which is set to a specific time.
+//                disableButtons(false);
+//                round = gameController.getCurrentRound();
+//                lblQuestion.setText(round.getQuestion().getQuestionContents());
+//                btnAnswer1.setText(round.getQuestion().getAnswer1());
+//                btnAnswer2.setText(round.getQuestion().getAnswer2());
+//                btnAnswer3.setText(round.getQuestion().getAnswer3());
+//                btnAnswer4.setText(round.getQuestion().getAnswer4());
+//                startGameTimer();
+//                break;
+//
+//            case ANSWERED:
+//                //Gamestate where question has been answered or time has run out(answer will be 0).
+//                //checks what the user did and gives correct feedback to user.
+//                disableButtons(true);
+//                int score = gameController.getCurrentScore();
+//                if (gameController.checkAnswer(user, pbRoundTimer.getProgress())) {
+//                    score = gameController.getCurrentScore() - score;
+//                    chatList.add("GAME: Goed gedaan! je krijgt " + score + " punten!");
+//                } else {
+//                    chatList.add("GAME: Jammer!");
+//                }
+//                lblScore.setText(String.valueOf(gameController.getCurrentScore()));
+//                setButtonCorrect(gameController.getCorrectAnswer());
+//                waitTimer = new Timer(true);
+//
+//                //Checks if game is over and continuesaccording to this check
+//                if (gameController.getCurrentRoundIndex() + 1 == gameController.getGame().getAmountOfRounds()) {
+//                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.GAMEFINISHED), 2500);
+//                } else {
+//                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.WAITINGFORCATEGORY), 2500);
+//                }
+//                break;
+//
+//            case GAMEFINISHED:
+//                //Game has ended. upload all information and show user game has ended.
+//                gameController.endGame(user);
+//                chatList.add("GAME:  De Game is afgelopen! \n Je score is " + gameController.getCurrentScore() + "! Goed Bezig!");
+//                break;
+//
+//            case WAITINGFORPLAYERS:
+//                chatList.add("GAME: Wachten op spelers");
+//                btnStartGame.setDisable(false);
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            while (gameController.checkPlayers() != 4) {
+//                                //Wait
+//                            }
+//                            gameController.setGameState(WAITINGFORCATEGORY);
+//                            countPlayers = 0;
+//                        } catch (RemoteException ex) {
+//                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//
+//                }.run();
+//
+//                break;
+//
+//            default:
+//                //do nothing
+//                break;
+//        }
+//    }
     /**
      * Resets the game UI to the standard empty playing field so next round can
      * start.
      */
     private void resetQuestionUI() throws RemoteException {
-        lblScore.setText(String.valueOf(gameController.getCurrentScore()));
+        lblScore.setText("aaaa");
         lblQuestion.setText("Hier komt straks de vraag");
         btnAnswer1.setText("");
         btnAnswer2.setText("");
@@ -551,21 +578,6 @@ public class FXMLController implements Initializable, Observer {
     }
 
     /**
-     * Fires when the gamecontroller object uses method setGameState.
-     *
-     * @param o gameController
-     * @param arg
-     */
-    @Override
-    public void update(Observable o, Object arg) {
-        try {
-            checkGameState();
-        } catch (RemoteException ex) {
-            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
      * Sends a chat message
      */
     @FXML
@@ -573,7 +585,7 @@ public class FXMLController implements Initializable, Observer {
         try {
             if (!txtLobbyChat.getText().isEmpty()) {
                 String msg = txtLobbyChat.getText();
-                client.sendMessage(msg);
+                chatClient.sendMessage(msg);
                 txtLobbyChat.clear();
             }
         } catch (RemoteException ex) {
@@ -759,11 +771,11 @@ public class FXMLController implements Initializable, Observer {
         user = null;
         errorlabel.setText("");
         gameController = null;
-        client.leaveChatroom();
+        chatClient.leaveChatroom();
         setWindows(1);
     }
 
-    public void updateRoomList(List<String> gameRoomsData) {
+    public void updateRoomList(List<IGameRoom> gameRoomsData) {
         lobbyRooms.clear();
         lobbyRooms.addAll(gameRoomsData);
     }
@@ -771,5 +783,12 @@ public class FXMLController implements Initializable, Observer {
     public void updatePlayerList(List<String> playerData) {
         players.clear();
         players.addAll(playerData);
+    }
+
+    public void disableStartButton(boolean state) {
+        btnStartGame.setDisable(state);
+    }
+    public void disableSpinButton(boolean state){
+        btnSpin.setDisable(state);
     }
 }
