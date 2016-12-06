@@ -39,7 +39,7 @@ public class Client extends UnicastRemoteObject implements IClient {
         try {
             this.chat = chat;
             this.name = prof.getNickname();
-            Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
+            Registry reg2 = LocateRegistry.getRegistry("192.168.1.106", 666);
             server = (IChatServer) reg2.lookup("ChatServer");
             server.clientEnter(this);
             application = app;
