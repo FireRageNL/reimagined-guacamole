@@ -23,6 +23,6 @@ public interface IUpdateLobby extends Remote {
      * list
      * @throws RemoteException
      */
-    public void updateGameRooms(List<String> gameRoomsData) throws RemoteException;
+    public void updateGameRooms(List<String> gameRoomsData) throws RemoteException;   
 
 }

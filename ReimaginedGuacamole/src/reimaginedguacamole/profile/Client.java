@@ -10,10 +10,12 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import reimaginedguacamole.gui.FXMLController;
 
 /**
  *
@@ -24,6 +26,7 @@ public class Client extends UnicastRemoteObject implements IClient {
     private String name;
     private IChatServer server;
     private ObservableList<String> chat;
+    private FXMLController application;
 
     /**
      * Constructor for a client of the chatserver
@@ -32,13 +35,14 @@ public class Client extends UnicastRemoteObject implements IClient {
      * @param chat the list where all the chat messages will be added
      * @throws RemoteException
      */
-    public Client(IProfile prof, ObservableList<String> chat) throws RemoteException {
+    public Client(IProfile prof, ObservableList<String> chat,FXMLController app) throws RemoteException {
         try {
             this.chat = chat;
             this.name = prof.getNickname();
             Registry reg2 = LocateRegistry.getRegistry("127.0.0.1", 666);
             server = (IChatServer) reg2.lookup("ChatServer");
             server.clientEnter(this);
+            application = app;
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -78,5 +82,12 @@ public class Client extends UnicastRemoteObject implements IClient {
     @Override
     public void leaveChatroom() throws RemoteException {
         server.clientExit(this);
+    }
+
+    @Override
+    public void updatePlayerList(List<String> playerData) throws RemoteException {
+        Platform.runLater(() ->{
+            application.updatePlayerList(playerData);
+        });
     }
 }

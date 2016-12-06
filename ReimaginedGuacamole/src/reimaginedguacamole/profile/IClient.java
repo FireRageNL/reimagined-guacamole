@@ -7,6 +7,7 @@ package reimaginedguacamole.profile;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  *
@@ -43,5 +44,13 @@ public interface IClient extends Remote {
      * @throws RemoteException 
      */
     public void leaveChatroom() throws RemoteException;
+    
+        /**
+     * Function to update the list of players currently in the lobby
+     * 
+     * @param playerData  the list of players in the lobby
+     * @throws RemoteException 
+     */
+    public void updatePlayerList(List<String> playerData) throws RemoteException;
 
 }
