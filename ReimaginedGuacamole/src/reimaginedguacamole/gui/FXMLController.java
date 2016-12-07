@@ -191,6 +191,7 @@ public class FXMLController implements Initializable {
     private Timer waitTimer;
     private AnimationTimer animationTimer;
     public static final int NANO_TICKS = 20000000;
+    private final String IP = "192.168.1.116";
 
     /**
      * checks usercredentials with database. Sends user to profile page when
@@ -205,7 +206,7 @@ public class FXMLController implements Initializable {
         //Checks if textfields are not empty
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
-                Registry reg = LocateRegistry.getRegistry("192.168.1.106", 666);
+                Registry reg = LocateRegistry.getRegistry(IP, 666);
                 gs = (IGameServer) reg.lookup("GameServer");
                 //Tries to log in
                 String password = Hashing.hashPassword(pass);

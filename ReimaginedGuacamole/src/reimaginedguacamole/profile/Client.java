@@ -27,6 +27,7 @@ public class Client extends UnicastRemoteObject implements IClient {
     private IChatServer server;
     private ObservableList<String> chat;
     private FXMLController application;
+    private final String IP = "192.168.1.116";
 
     /**
      * Constructor for a client of the chatserver
@@ -39,7 +40,7 @@ public class Client extends UnicastRemoteObject implements IClient {
         try {
             this.chat = chat;
             this.name = prof.getNickname();
-            Registry reg2 = LocateRegistry.getRegistry("192.168.1.106", 666);
+            Registry reg2 = LocateRegistry.getRegistry(IP, 666);
             server = (IChatServer) reg2.lookup("ChatServer");
             server.clientEnter(this);
             application = app;
