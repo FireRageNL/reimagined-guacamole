@@ -146,4 +146,9 @@ public class Profile extends UnicastRemoteObject implements IProfile, Serializab
         return score;
     }
 
+    @Override
+    public void addScore(int score) throws RemoteException {
+        this.score += score;
+    }
+
 }

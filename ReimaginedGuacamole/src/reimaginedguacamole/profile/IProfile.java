@@ -148,5 +148,7 @@ public interface IProfile extends Remote {
      * @throws RemoteException
      */
     public int getScore() throws RemoteException;
+    
+    public void addScore(int score) throws RemoteException;
 
 }
