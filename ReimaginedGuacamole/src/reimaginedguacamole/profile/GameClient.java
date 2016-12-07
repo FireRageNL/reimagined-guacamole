@@ -96,7 +96,14 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
 
     @Override
     public void refreshUI(int[] scores, List<String> names) throws RemoteException {
-        application.refreshUI(scores, names);
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                application.refreshUI(scores, names);
+            }
+            
+        });
+        
     }
 
 }

@@ -679,7 +679,7 @@ public class FXMLController implements Initializable {
         lblPlayer3.setText(names.get(2));
         lblScore3.setText(String.valueOf(scores[2]));
         lblPlayer4.setText(names.get(3));
-        lblScore4.setText(String.valueOf(scores[4]));
+        lblScore4.setText(String.valueOf(scores[3]));
         
         
     }
