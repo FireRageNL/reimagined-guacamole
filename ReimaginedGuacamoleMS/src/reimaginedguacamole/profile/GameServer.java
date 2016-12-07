@@ -129,6 +129,53 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             c.spinWheel(speed,time);
         }
     }
+
+    @Override
+    public void stopSpin(IGameRoom joinedRoom, double rotation) throws RemoteException {
+        joinedRoom.addPlayerDone();
+        System.out.println("one player done spinning");
+        if(joinedRoom.getPlayersDone() == 4){
+            joinedRoom.getGameController().giveRoundQuestion(joinedRoom.getGameController().chooseCategory(rotation));
+            joinedRoom.setPlayersDone();
+            System.out.println("ALl players done spinning");
+            this.broadcastGameState(GameState.SPINNINGFINISHED, joinedRoom);
+        }
+    }
+
+    @Override
+    public String getCategory(IGameRoom joinedRoom) throws RemoteException {
+        return joinedRoom.getGameController().getCurrentRound().getQuestion().getCategory().toString();
+    }
+
+    @Override
+    public void startRound(IGameRoom joinedRoom) throws RemoteException {
+        joinedRoom.addPlayerDone();
+        if(joinedRoom.getPlayersDone() == 4){
+            joinedRoom.setPlayersDone();
+            this.broadcastGameState(GameState.GAMERUNNING, joinedRoom);
+        }
+    }
+
+    @Override
+    public List<String> getQuestion(IGameRoom joinedRoom) throws RemoteException {
+        List<String> question = new ArrayList();
+        question.add(joinedRoom.getGameController().getCurrentRound().getQuestion().getQuestionContents());
+        question.add(joinedRoom.getGameController().getCurrentRound().getQuestion().getAnswer1());
+        question.add(joinedRoom.getGameController().getCurrentRound().getQuestion().getAnswer2());
+        question.add(joinedRoom.getGameController().getCurrentRound().getQuestion().getAnswer3());
+        question.add(joinedRoom.getGameController().getCurrentRound().getQuestion().getAnswer4());
+        question.add(String.valueOf(joinedRoom.getGameController().getCurrentRound().getQuestion().getCorrectAnswer()));
+        return question;
+    }
+
+    @Override
+    public void playerAnswered(IGameRoom joinedRoom) throws RemoteException {
+        joinedRoom.addPlayerDone();
+        if(joinedRoom.getPlayersDone() == 4){
+            joinedRoom.setPlayersDone();
+            this.broadcastGameState(GameState.ANSWERED, joinedRoom);
+        }
+    }
     
     
     

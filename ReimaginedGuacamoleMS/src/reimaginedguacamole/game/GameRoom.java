@@ -29,6 +29,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     private ChatServer chatServer;
     private IGameController gameController;
     private String ip;
+    private int playersDone;
 
     public GameRoom() throws RemoteException {
         //Overwrite for default constructor
@@ -49,6 +50,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
         this.gameController = new GameController(rounds, duration, gs, this);
         this.players = new ArrayList<>();
         this.name = roomname;
+        playersDone = 0;
         //this.ip = ip; //This has to be overwritten to localhost later on but for testing purposes its set to the client IP that later will have the game server!!
         this.ip = InetAddress.getLocalHost().getHostAddress();
         //this.chatServer = new ChatServer();
@@ -121,4 +123,20 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     public String getGameRoomListing() throws RemoteException {
         return this.name + "    Players: " + this.getNrOfPlayers() + "    Rondes: " + this.getNumberOfRounds();
     }
+
+    @Override
+    public int getPlayersDone() throws RemoteException {
+        return playersDone;
+    }
+
+    @Override
+    public void addPlayerDone() throws RemoteException {
+        playersDone++;
+    }
+
+    @Override
+    public void setPlayersDone() throws RemoteException {
+        playersDone = 0;
+    }
+    
 }

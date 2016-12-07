@@ -40,6 +40,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.ListCell;
@@ -186,6 +187,7 @@ public class FXMLController implements Initializable {
     private static final String BUTTON_STYLE_CORRECT = "-fx-base: #00cc00;";
     int countPlayers;
     private int userIndex;
+    private int currentAnswer = 0;
 
     // TIMERS
     private Timer waitTimer;
@@ -426,7 +428,7 @@ public class FXMLController implements Initializable {
     private void startGame() throws RemoteException, NotBoundException {
         resetQuestionUI();
         pbRoundTimer.setProgress(0);
-        disableButtons(true);
+        
         btnStartGame.setDisable(true);
         gs.startGame(joinedRoom);
     }
@@ -466,6 +468,8 @@ public class FXMLController implements Initializable {
     public void checkGameState(GameState state) throws RemoteException {
         switch (state) {
             case WAITINGFORCATEGORY:
+                currentAnswer = 0;
+                disableButtons(true);
                 System.out.println("Het spel is aan het rennen yaaay");
                 if(gs.getCurrentUser(joinedRoom) == userIndex){
                     btnSpin.setDisable(false);
@@ -473,7 +477,41 @@ public class FXMLController implements Initializable {
                 }
                 
                 break;
+            case SPINNINGFINISHED:
+                System.out.println("SPinning finished on client");
+                pbRoundTimer.setProgress(-1);
+                lblQuestion.setText("De Categorie is: " +gs.getCategory(joinedRoom));
+                waitTimer = new Timer(true);
+                waitTimer.schedule(new TimerTask(){
+            @Override
+            public void run() {
+                try {
+                    gs.startRound(joinedRoom);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+                    
+                }, 3000);
+                break;
+                
+            case GAMERUNNING:
+                disableButtons(false);
+                List<String> question = gs.getQuestion(joinedRoom);
+                lblQuestion.setText(question.get(0));
+                btnAnswer1.setText(question.get(1));
+               btnAnswer2.setText(question.get(2));
+                btnAnswer3.setText(question.get(3));
+              btnAnswer4.setText(question.get(4));
+              startGameTimer();
+                break;
+                
+            case ANSWERED:
+                System.out.println("All players answered so lets gooo");
+                break;
         }
+        
+        
     }
 //private void checkGameState() throws RemoteException {
 //
@@ -673,8 +711,12 @@ public class FXMLController implements Initializable {
                     wheel.setRotate(wheelRotation);
                     prevUpdate = now;
                     x++;
-                    System.out.println(x);
                     if(x == rotation){
+                        try {
+                            gs.stopSpin(joinedRoom, progress);
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         this.stop();
                     }
                 }
@@ -705,14 +747,15 @@ public class FXMLController implements Initializable {
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
                     if (progress > 0) {
-                        progress -= 0.003 / (roundDuration / 10);
+                        progress -= 0.003;
                     } else {
                         try {
                             //Timer has ended. gameround ends and current answer has to be wrong.
                             progress = 0;
                             animationTimer.stop();
-                            gameController.setCurrentAnswer(0);
-                            gameController.setGameState(ANSWERED);
+                            currentAnswer = 0;
+                            gs.playerAnswered(joinedRoom);
+                            disableButtons(true);
                         } catch (RemoteException ex) {
                             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -769,20 +812,21 @@ public class FXMLController implements Initializable {
      */
     @FXML
     private void setAnswer(ActionEvent event) throws RemoteException {
+        disableButtons(true);
         animationTimer.stop();
         Button b = (Button) event.getSource();
 
         if (b.getId().contains("1")) {
-            gameController.setCurrentAnswer(1);
+            currentAnswer = 1;
         } else if (b.getId().contains("2")) {
-            gameController.setCurrentAnswer(2);
+            currentAnswer = 2;
         } else if (b.getId().contains("3")) {
-            gameController.setCurrentAnswer(3);
+            currentAnswer = 3;
         } else if (b.getId().contains("4")) {
-            gameController.setCurrentAnswer(4);
+            currentAnswer = 4;
         }
-        Logger.getLogger(FXMLController.class.getCanonicalName()).log(Level.INFO, "{0}", gameController.getCurrentAnswer());
-        gameController.setGameState(ANSWERED);
+        Logger.getLogger(FXMLController.class.getCanonicalName()).log(Level.INFO, "{0}", "asdf");
+        gs.playerAnswered(joinedRoom);
     }
 
     /**
@@ -837,7 +881,8 @@ public class FXMLController implements Initializable {
         System.out.println("Ik ben player " + userIndex);
     }
     
-    public void stopSpin(){
+    public void stopSpin() throws RemoteException{
         animationTimer.stop();
+        gs.stopSpin(joinedRoom,wheel.getRotate());
     }
 }

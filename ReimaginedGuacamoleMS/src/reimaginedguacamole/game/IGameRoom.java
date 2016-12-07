@@ -72,6 +72,12 @@ public interface IGameRoom extends Remote {
     public IGameController getGameController() throws RemoteException;
     
     public List<IGameClient> getPlayers() throws RemoteException;
+    
+    public int getPlayersDone() throws RemoteException;
+    
+    public void setPlayersDone() throws RemoteException;
+    
+    public void addPlayerDone() throws RemoteException;
    
 
 }

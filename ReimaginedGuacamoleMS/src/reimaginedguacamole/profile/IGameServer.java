@@ -87,4 +87,14 @@ public interface IGameServer extends Remote {
     public void getUserIndex(IGameRoom joinedRoom) throws RemoteException;
     
     public void spinWheel(IGameRoom joinedRoom) throws RemoteException;
+    
+    public void stopSpin(IGameRoom joinedRoom, double rotation) throws RemoteException;
+    
+    public String getCategory(IGameRoom joinedRoom) throws RemoteException;
+    
+    public void startRound(IGameRoom joinedRoom) throws RemoteException;
+    
+    public List<String> getQuestion(IGameRoom joinedRoom) throws RemoteException;
+    
+    public void playerAnswered(IGameRoom joinedRoom) throws RemoteException;
 }

@@ -37,7 +37,11 @@ public class spinTimerTask extends TimerTask {
     @Override
     public void run() {
         Platform.runLater(() -> {
-               game.stopSpin();
+            try {
+                game.stopSpin();
+            } catch (RemoteException ex) {
+                Logger.getLogger(spinTimerTask.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 ;
 
         });
