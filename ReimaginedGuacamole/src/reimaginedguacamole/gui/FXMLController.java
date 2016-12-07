@@ -207,6 +207,7 @@ public class FXMLController implements Initializable {
     int countPlayers;
     private int userIndex;
     private int currentAnswer = 0;
+    private int currentCorrectAnswer;
 
     // TIMERS
     private Timer waitTimer;
@@ -524,14 +525,20 @@ public class FXMLController implements Initializable {
                btnAnswer2.setText(question.get(2));
                 btnAnswer3.setText(question.get(3));
               btnAnswer4.setText(question.get(4));
+              currentCorrectAnswer = Integer.parseInt(question.get(5));
+              
               startGameTimer();
                 break;
                 
             case ANSWERED:
                 System.out.println("All players answered so lets gooo");
                 gs.checkAnswers(joinedRoom, userIndex, currentAnswer, pbRoundTimer.getProgress());
-                gs.refreshUI(joinedRoom);
                 break;
+                
+            case WAITINGFORPLAYERS:
+                setButtonCorrect(currentCorrectAnswer);
+                gs.refreshUI(joinedRoom);
+                
         }
         
         
@@ -657,7 +664,7 @@ public class FXMLController implements Initializable {
      * start.
      */
     private void resetQuestionUI() throws RemoteException {
-        lblScore.setText("aaaa");
+        //lblScore.setText("aaaa");
         lblQuestion.setText("Hier komt straks de vraag");
         btnAnswer1.setText("");
         btnAnswer2.setText("");

@@ -188,7 +188,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         if(joinedRoom.getPlayersDone() == 4){
             joinedRoom.setPlayersDone();
             
-            this.broadcastGameState(GameState.ANSWERED, joinedRoom);
+            this.broadcastGameState(GameState.WAITINGFORPLAYERS, joinedRoom);
         }
     }
 
