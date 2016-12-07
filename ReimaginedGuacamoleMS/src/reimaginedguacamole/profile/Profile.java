@@ -53,6 +53,7 @@ public class Profile extends UnicastRemoteObject implements IProfile, Serializab
         this.pid = pid;
         this.wins = wins;
         this.losses = losses;
+        this.score = 0;
         achievements = new ArrayList<>();
 
     }

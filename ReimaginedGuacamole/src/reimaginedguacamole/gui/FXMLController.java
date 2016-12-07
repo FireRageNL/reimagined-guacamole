@@ -149,6 +149,25 @@ public class FXMLController implements Initializable {
     private Label lblGameName;
     @FXML
     private Label lblScore;
+    
+    
+    @FXML
+    private Label lblPlayer1;
+    @FXML
+    private Label lblPlayer2;
+    @FXML
+    private Label lblPlayer3;
+    @FXML
+    private Label lblPlayer4;
+    
+    @FXML
+    private Label lblScore1;
+    @FXML
+    private Label lblScore2;
+    @FXML
+    private Label lblScore3;
+    @FXML
+    private Label lblScore4;
 
     //RANKING PAGE OBEJCTS
     @FXML
@@ -426,7 +445,7 @@ public class FXMLController implements Initializable {
      */
     @FXML
     private void startGame() throws RemoteException, NotBoundException {
-        resetQuestionUI();
+        
         pbRoundTimer.setProgress(0);
         
         btnStartGame.setDisable(true);
@@ -468,6 +487,8 @@ public class FXMLController implements Initializable {
     public void checkGameState(GameState state) throws RemoteException {
         switch (state) {
             case WAITINGFORCATEGORY:
+                gs.refreshUI(joinedRoom);
+                resetQuestionUI();
                 currentAnswer = 0;
                 disableButtons(true);
                 System.out.println("Het spel is aan het rennen yaaay");
@@ -508,6 +529,8 @@ public class FXMLController implements Initializable {
                 
             case ANSWERED:
                 System.out.println("All players answered so lets gooo");
+                gs.checkAnswers(joinedRoom, userIndex, currentAnswer, pbRoundTimer.getProgress());
+                gs.refreshUI(joinedRoom);
                 break;
         }
         
@@ -646,6 +669,22 @@ public class FXMLController implements Initializable {
         btnAnswer4.setStyle("");
     }
 
+    
+    
+    public void refreshUI(int[] scores, List<String> names){
+        lblPlayer1.setText(names.get(0));
+        lblScore1.setText(String.valueOf(scores[0]));
+        lblPlayer2.setText(names.get(1));
+        lblScore2.setText(String.valueOf(scores[1]));
+        lblPlayer3.setText(names.get(2));
+        lblScore3.setText(String.valueOf(scores[2]));
+        lblPlayer4.setText(names.get(3));
+        lblScore4.setText(String.valueOf(scores[4]));
+        
+        
+    }
+    
+    
     /**
      * Sends a chat message
      */

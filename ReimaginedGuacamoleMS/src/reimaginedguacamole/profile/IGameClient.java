@@ -7,6 +7,7 @@ package reimaginedguacamole.profile;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 import reimaginedguacamole.game.GameState;
 
 /**
@@ -30,4 +31,6 @@ public interface IGameClient extends Remote {
     public void setUserIndex(int i) throws RemoteException;
     
     public void spinWheel(int wheelspeed, int time) throws RemoteException;
+    
+    public void refreshUI(int[] scores, List<String> names ) throws RemoteException;
 }

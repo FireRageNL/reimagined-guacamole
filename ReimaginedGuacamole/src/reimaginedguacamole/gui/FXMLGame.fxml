@@ -364,12 +364,12 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label fx:id="lblGameName" text="Player 1:">
+                            <Label id="lblGameName" fx:id="lblPlayer1" text="Player 1:">
                               <font>
                                 <Font size="25.0" fx:id="x6" />
                               </font>
                             </Label>
-                            <Label fx:id="lblScore" font="$x6" text="100">
+                            <Label id="lblScore" fx:id="lblScore1" font="$x6" text="100">
                               <HBox.margin>
                                 <Insets left="20.0" />
                               </HBox.margin>
@@ -378,8 +378,8 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label font="$x6" text="Player 2:" />
-                            <Label font="$x6" text="100">
+                            <Label fx:id="lblPlayer2" font="$x6" text="Player 2:" />
+                            <Label fx:id="lblScore2" font="$x6" text="100">
                               <HBox.margin>
                                 <Insets left="20.0" />
                               </HBox.margin>
@@ -388,8 +388,8 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label font="$x6" text="Player 3:" />
-                            <Label font="$x6" text="100">
+                            <Label fx:id="lblPlayer3" font="$x6" text="Player 3:" />
+                            <Label fx:id="lblScore3" font="$x6" text="100">
                               <HBox.margin>
                                 <Insets left="20.0" />
                               </HBox.margin>
@@ -398,8 +398,8 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label font="$x6" text="Player 4:" />
-                            <Label font="$x6" text="100">
+                            <Label fx:id="lblPlayer4" font="$x6" text="Player 4:" />
+                            <Label fx:id="lblScore4" font="$x6" text="100">
                               <HBox.margin>
                                 <Insets left="20.0" />
                               </HBox.margin>

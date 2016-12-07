@@ -7,6 +7,7 @@ package reimaginedguacamole.profile;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,6 +92,11 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
         application.spinWheel(wheelspeed);
         //Timer t = new Timer(true);
         //t.schedule(new spinTimerTask(application), 7000);
+    }
+
+    @Override
+    public void refreshUI(int[] scores, List<String> names) throws RemoteException {
+        application.refreshUI(scores, names);
     }
 
 }

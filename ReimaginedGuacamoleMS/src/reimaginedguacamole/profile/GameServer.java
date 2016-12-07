@@ -176,6 +176,36 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             this.broadcastGameState(GameState.ANSWERED, joinedRoom);
         }
     }
+
+    @Override
+    public void checkAnswers(IGameRoom joinedRoom, int userIndex, int givenAnswer, double timeLeft) throws RemoteException {
+        joinedRoom.addPlayerDone();
+        int score = 0;
+        if(givenAnswer == joinedRoom.getGameController().getCorrectAnswer()){
+            score = 50 + ( 100 + (int)(timeLeft*100));
+            joinedRoom.getPlayers().get(userIndex).getProfile().setScore(joinedRoom.getPlayers().get(userIndex).getProfile().getScore()+score);
+        }
+        if(joinedRoom.getPlayersDone() == 4){
+            joinedRoom.setPlayersDone();
+            
+            this.broadcastGameState(GameState.ANSWERED, joinedRoom);
+        }
+    }
+
+    @Override
+    public void refreshUI(IGameRoom joinedRoom) throws RemoteException {
+        int[] scores = new int[4];
+        List<String> names = new ArrayList();
+        int i = 0;
+        for (IGameClient c : joinedRoom.getPlayers()){
+            scores[i] = c.getProfile().getScore();
+            names.add(c.getProfile().getNickname());
+        }
+        for(IGameClient c : joinedRoom.getPlayers()){
+            
+            c.refreshUI(scores,names);
+        }
+    }
     
     
     
