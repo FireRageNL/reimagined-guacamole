@@ -178,16 +178,21 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void checkAnswers(IGameRoom joinedRoom, int userIndex, int givenAnswer, double timeLeft) throws RemoteException {
+    public synchronized void checkAnswers(IGameRoom joinedRoom, int userIndex, int givenAnswer, double timeLeft) throws RemoteException {
         joinedRoom.addPlayerDone();
         int score = 0;
+        System.out.println("in de methode!");
+        System.out.println("index "+userIndex+" GivenAnswer "+ givenAnswer+" en timeleft" + timeLeft);
         if(givenAnswer == joinedRoom.getGameController().getCorrectAnswer()){
             score = 50 + ( 100 + (int)(timeLeft*100));
-            joinedRoom.getPlayers().get(userIndex).getProfile().setScore(joinedRoom.getPlayers().get(userIndex).getProfile().getScore()+score);
+            System.out.println(score);
+            System.out.println("antwoord goed!");
+            joinedRoom.getPlayers().get(userIndex).getProfile().addScore(score);
+            
         }
         if(joinedRoom.getPlayersDone() == 4){
             joinedRoom.setPlayersDone();
-            
+            System.out.println("ik ben de laatste, dus we gaan lekker door!");
             this.broadcastGameState(GameState.WAITINGFORPLAYERS, joinedRoom);
         }
     }
@@ -199,6 +204,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         int i = 0;
         for (IGameClient c : joinedRoom.getPlayers()){
             scores[i] = c.getProfile().getScore();
+            System.out.println(scores[i]);
             names.add(c.getProfile().getNickname());
         }
         for(IGameClient c : joinedRoom.getPlayers()){
