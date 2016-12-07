@@ -172,7 +172,6 @@ public class FXMLController implements Initializable {
     private IProfile user;
     private GameClient gameClient;
     private Random rng;
-    private int wheelSpeed;
     private int roundDuration;
     private ObservableList<String> chatList;
     private ObservableList<String> lobbyChat;
@@ -186,6 +185,7 @@ public class FXMLController implements Initializable {
     private static final String BUTTON_STYLE = "-fx-base: #ff3300;";
     private static final String BUTTON_STYLE_CORRECT = "-fx-base: #00cc00;";
     int countPlayers;
+    private int userIndex;
 
     // TIMERS
     private Timer waitTimer;
@@ -463,10 +463,15 @@ public class FXMLController implements Initializable {
      * gamecontroller is changed. It fires all necessary gamecontroller methods
      * and shows the correct information on the UI.
      */
-    public void checkGameState(GameState state) {
+    public void checkGameState(GameState state) throws RemoteException {
         switch (state) {
             case WAITINGFORCATEGORY:
                 System.out.println("Het spel is aan het rennen yaaay");
+                if(gs.getCurrentUser(joinedRoom) == userIndex){
+                    btnSpin.setDisable(false);
+                    System.out.println("ik mag draaien!");
+                }
+                
                 break;
         }
     }
@@ -636,33 +641,42 @@ public class FXMLController implements Initializable {
      */
     @FXML
     public void btnSpinClicked() throws RemoteException {
-        waitTimer.cancel();
-        gameController.setGameState(SPINNING);
+            gs.spinWheel(joinedRoom);
     }
 
     /**
      * Starts an animation timer to spin the wheel.
+     * @param wheelspeed
      */
-    public void spinWheel() {
+    public void spinWheel(int rotation) {
+
+        System.out.println("SPIN THE WHEEL ON JAT");
         //wheelspeed is random between 13 and 19 pixels per tick.
-        wheelSpeed = 13 + rng.nextInt(6);
+        //wheelSpeed = 13 + rng.nextInt(6);
         animationTimer = new AnimationTimer() {
             private long prevUpdate;
 
+            int x = 0;
+            
             @Override
             public void handle(long now) {
 
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
                     if (wheelRotation < 360) {
-                        wheelRotation += wheelSpeed;
+                        wheelRotation += 15;
                     } else {
                         //makes for smooth rotation
-                        wheelRotation += wheelSpeed;
+                        wheelRotation += 15;
                         wheelRotation = wheelRotation - 360;
                     }
                     wheel.setRotate(wheelRotation);
                     prevUpdate = now;
+                    x++;
+                    System.out.println(x);
+                    if(x == rotation){
+                        this.stop();
+                    }
                 }
 
             }
@@ -673,7 +687,6 @@ public class FXMLController implements Initializable {
                 super.start();
             }
         };
-
         animationTimer.start();
     }
 
@@ -817,5 +830,14 @@ public class FXMLController implements Initializable {
 
     public void disableSpinButton(boolean state) {
         btnSpin.setDisable(state);
+    }
+    
+    public void setUserIndex(int i){
+        userIndex = i;
+        System.out.println("Ik ben player " + userIndex);
+    }
+    
+    public void stopSpin(){
+        animationTimer.stop();
     }
 }

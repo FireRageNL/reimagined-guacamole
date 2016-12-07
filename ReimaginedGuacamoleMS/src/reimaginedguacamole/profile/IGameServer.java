@@ -80,5 +80,11 @@ public interface IGameServer extends Remote {
 
     public void startGame(IGameRoom joinedRoom) throws RemoteException;
     
-    public void broadcastGameState(GameState gameState, GameRoom gr) throws RemoteException;
+    public void broadcastGameState(GameState gameState, IGameRoom gr) throws RemoteException;
+    
+    public int getCurrentUser(IGameRoom joinedRoom) throws RemoteException;
+    
+    public void getUserIndex(IGameRoom joinedRoom) throws RemoteException;
+    
+    public void spinWheel(IGameRoom joinedRoom) throws RemoteException;
 }

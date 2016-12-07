@@ -141,5 +141,13 @@ public interface IGameController extends Remote {
      * @throws java.rmi.RemoteException
      */
     public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException;
+    
+    /**
+     * 
+     * @throws RemoteException 
+     */
+    public void AddPlayersCount() throws RemoteException;
+    
+    public int getCurrentUser() throws RemoteException;
 
 }

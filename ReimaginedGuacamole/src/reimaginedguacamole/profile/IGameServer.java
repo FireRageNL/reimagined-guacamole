@@ -9,6 +9,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
+import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.game.IGameRoom;
 
 /**
@@ -74,7 +75,15 @@ public interface IGameServer extends Remote {
      * @throws RemoteException
      */
 
+    public void broadcastGameState(GameState gameState, IGameRoom gr) throws RemoteException;
+    
     public void joinRoom(IGameClient user, IGameRoom room) throws RemoteException;
 
     public void startGame(IGameRoom joinedRoom) throws RemoteException;
+
+   public int getCurrentUser(IGameRoom joinedRoom) throws RemoteException;
+   
+   public void getUserIndex(IGameRoom joinedRoom) throws RemoteException;
+   
+   public void spinWheel(IGameRoom joinedRoom) throws RemoteException;
 }

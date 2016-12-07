@@ -26,4 +26,8 @@ public interface IGameClient extends Remote {
     public void disableSpinButton(boolean state) throws RemoteException;
 
     public void checkGameState(GameState gameState) throws RemoteException;
+    
+    public void setUserIndex(int i) throws RemoteException;
+    
+    public void spinWheel(int wheelspeed, int time) throws RemoteException;
 }

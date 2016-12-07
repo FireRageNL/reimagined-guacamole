@@ -33,6 +33,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     private int countPlayers;
     private GameServer gs;
     private GameRoom gr;
+    private int currentUser;
 
     /**
      * Constructor that gets called when a new game gets created
@@ -51,6 +52,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
             rounds.add(temp.createRound());
         }
         currentRoundIndex = -1;
+        currentUser = -1;
         currentScore = 0;
         this.gameState = GameState.WAITINGFORPLAYERS;
         this.gs = gs;
@@ -67,6 +69,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     @Override
     public void startNextRound() {
         currentRoundIndex++;
+        currentUser++;
         currentRound = rounds.get(currentRoundIndex);
 
     }
@@ -83,6 +86,10 @@ public class GameController extends UnicastRemoteObject implements IGameControll
         game.endGame(user.getPid(), currentScore);
     }
 
+    public int getCurrentUser() throws RemoteException{
+        return currentUser;
+    }
+    
     /**
      * Chooses a category based on the rotation of the wheel. categories are
      * divided in 7 equal parts.
@@ -195,7 +202,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
      /**
      * Add players for the WAITINGFORPLAYERS state
      */
-    public void AddPlayersCount(){
+    public void AddPlayersCount() throws RemoteException{
         countPlayers++;
     }
 

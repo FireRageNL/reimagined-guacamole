@@ -27,7 +27,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     private String name;
     private List<IGameClient> players;
     private ChatServer chatServer;
-    private GameController gameController;
+    private IGameController gameController;
     private String ip;
 
     public GameRoom() throws RemoteException {
@@ -109,11 +109,11 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
         return this.name;
     }
 
-    public GameController getGameController() {
+    public IGameController getGameController() throws RemoteException{
         return this.gameController;
     }
 
-    public List<IGameClient> getPlayers() {
+    public List<IGameClient> getPlayers() throws RemoteException{
         return players;
     }
 

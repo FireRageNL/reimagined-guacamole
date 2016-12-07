@@ -68,5 +68,10 @@ public interface IGameRoom extends Remote {
     public void announceRoom() throws RemoteException;
 
     public String getGameRoomListing() throws RemoteException;
+    
+    public IGameController getGameController() throws RemoteException;
+    
+    public List<IGameClient> getPlayers() throws RemoteException;
+   
 
 }

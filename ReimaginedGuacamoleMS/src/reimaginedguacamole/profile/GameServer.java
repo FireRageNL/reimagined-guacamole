@@ -12,6 +12,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import reimaginedguacamole.game.GameRoom;
@@ -93,14 +94,44 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     @Override
     public void startGame(IGameRoom joinedRoom) throws RemoteException {
-        GameRoom room = (GameRoom) joinedRoom;
-        room.getGameController().setGameState(GameState.WAITINGFORCATEGORY);
+        joinedRoom.getGameController().startNextRound();
+        joinedRoom.getGameController().setGameState(GameState.WAITINGFORCATEGORY);
+        this.getUserIndex(joinedRoom);
     }
     @Override
-    public void broadcastGameState(GameState gameState, GameRoom gr) throws RemoteException {
+    public void broadcastGameState(GameState gameState, IGameRoom gr) throws RemoteException {
         for(IGameClient c: gr.getPlayers()){
             c.checkGameState(gameState);
         }
     }
+
+    @Override
+    public int getCurrentUser(IGameRoom joinedRoom) throws RemoteException {
+        return joinedRoom.getGameController().getCurrentUser();
+    }
+
+    @Override
+    public void getUserIndex(IGameRoom joinedRoom) throws RemoteException {
+        int i = 0;
+        for(IGameClient c: joinedRoom.getPlayers()){
+            c.setUserIndex(i);
+            i++;
+        }
+    }
+
+    @Override
+    public void spinWheel(IGameRoom joinedRoom) throws RemoteException {
+        Random rng = new Random();
+        int speed = 200+ rng.nextInt(200);
+        int time = 5000 + rng.nextInt(3000);
+        System.out.println("SPIN THE WHEEL" + speed + "--"+time);
+        for(IGameClient c: joinedRoom.getPlayers()){
+            c.spinWheel(speed,time);
+        }
+    }
+    
+    
+    
+    
     
 }

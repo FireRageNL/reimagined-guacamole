@@ -11,6 +11,7 @@ import java.util.List;
 import reimaginedguacamole.profile.IGameClient;
 import reimaginedguacamole.profile.IProfile;
 
+
 /**
  *
  * @author daan
@@ -68,5 +69,7 @@ public interface IGameRoom extends Remote {
     public void announceRoom() throws RemoteException;
 
     public String getGameRoomListing() throws RemoteException;
+    
+    public IGameController getGameController() throws RemoteException;
 
 }

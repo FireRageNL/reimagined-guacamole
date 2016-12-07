@@ -7,9 +7,13 @@ package reimaginedguacamole.profile;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.gui.FXMLController;
+import reimaginedguacamole.timertasks.spinTimerTask;
 
 /**
  *
@@ -68,8 +72,27 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     @Override
     public void checkGameState(GameState gameState) throws RemoteException {
         Platform.runLater(() ->{
-            application.checkGameState(gameState);
+            try {
+                application.checkGameState(gameState);
+            } catch (RemoteException ex) {
+                Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
+    @Override
+    public void setUserIndex(int i) throws RemoteException {
+        application.setUserIndex(i);
+    }
+
+    @Override
+    public void spinWheel(int wheelspeed, int time) throws RemoteException {
+        System.out.println("Client spin");
+        application.spinWheel(wheelspeed);
+        //Timer t = new Timer(true);
+        //t.schedule(new spinTimerTask(application), 7000);
+    }
+
 }
+
+
