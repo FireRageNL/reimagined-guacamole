@@ -34,7 +34,7 @@ import reimaginedguacamole.tooling.Hashing;
 public class RegisterDialog {
 
     
-    private String ip = "192.168.1.116";
+    private String ip;
     /**
      * Constructor that creates a register dialog and that handles the complete
      * registration process
