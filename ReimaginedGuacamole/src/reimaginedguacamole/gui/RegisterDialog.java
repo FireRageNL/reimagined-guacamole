@@ -34,12 +34,13 @@ import reimaginedguacamole.tooling.Hashing;
 public class RegisterDialog {
 
     
-    private final String IP = "192.168.1.116";
+    private String ip = "192.168.1.116";
     /**
      * Constructor that creates a register dialog and that handles the complete
      * registration process
      */
-    public RegisterDialog() {
+    public RegisterDialog(String ip) {
+        this.ip = ip;
         //Set all UI elements
         Dialog<LinkedHashMap> dialog = new Dialog<>();
         dialog.setTitle("Registreren");
@@ -114,7 +115,7 @@ public class RegisterDialog {
         if (result.isPresent() && result.get().size() == 4) {
             try {
                 //If result is ok, insert into database.
-                Registry reg = LocateRegistry.getRegistry(IP, 666);
+                Registry reg = LocateRegistry.getRegistry(ip, 666);
                 IGameServer gs = (IGameServer) reg.lookup("GameServer");
                 gs.registerNewUser(result.get());
             } catch (RemoteException | NotBoundException ex) {

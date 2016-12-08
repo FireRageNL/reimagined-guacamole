@@ -27,7 +27,7 @@ public class Client extends UnicastRemoteObject implements IClient {
     private IChatServer server;
     private ObservableList<String> chat;
     private FXMLController application;
-    private final String IP = "192.168.1.116";
+    private String IP;
 
     /**
      * Constructor for a client of the chatserver
@@ -36,7 +36,7 @@ public class Client extends UnicastRemoteObject implements IClient {
      * @param chat the list where all the chat messages will be added
      * @throws RemoteException
      */
-    public Client(IProfile prof, ObservableList<String> chat,FXMLController app) throws RemoteException {
+    public Client(IProfile prof, ObservableList<String> chat,FXMLController app, String ip) throws RemoteException {
         try {
             this.chat = chat;
             this.name = prof.getNickname();
@@ -44,6 +44,7 @@ public class Client extends UnicastRemoteObject implements IClient {
             server = (IChatServer) reg2.lookup("ChatServer");
             server.clientEnter(this);
             application = app;
+            this.IP = ip;
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }

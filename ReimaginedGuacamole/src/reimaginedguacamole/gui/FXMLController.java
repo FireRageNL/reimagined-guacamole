@@ -5,6 +5,9 @@
  */
 package reimaginedguacamole.gui;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -38,8 +41,10 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -149,8 +154,7 @@ public class FXMLController implements Initializable {
     private Label lblGameName;
     @FXML
     private Label lblScore;
-    
-    
+
     @FXML
     private Label lblPlayer1;
     @FXML
@@ -159,7 +163,7 @@ public class FXMLController implements Initializable {
     private Label lblPlayer3;
     @FXML
     private Label lblPlayer4;
-    
+
     @FXML
     private Label lblScore1;
     @FXML
@@ -213,7 +217,7 @@ public class FXMLController implements Initializable {
     private Timer waitTimer;
     private AnimationTimer animationTimer;
     public static final int NANO_TICKS = 20000000;
-    private final String IP = "192.168.1.116";
+    private String ip;
 
     /**
      * checks usercredentials with database. Sends user to profile page when
@@ -228,7 +232,7 @@ public class FXMLController implements Initializable {
         //Checks if textfields are not empty
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
-                Registry reg = LocateRegistry.getRegistry(IP, 666);
+                Registry reg = LocateRegistry.getRegistry(ip, 666);
                 gs = (IGameServer) reg.lookup("GameServer");
                 //Tries to log in
                 String password = Hashing.hashPassword(pass);
@@ -238,7 +242,7 @@ public class FXMLController implements Initializable {
                     //gets user date from database and sets the window to the profile page.
                     user = gs.getCurrentProfile(username);
                     gameClient.setProf(user);
-                    chatClient = new Client(user, lobbyChat, this);
+                    chatClient = new Client(user, lobbyChat, this, ip);
                     updateRoomList(gs.sendGameRoomData());
                     fillProfileData();
                     setWindows(2);
@@ -254,6 +258,7 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        loadProperties();
         btnSpin.setDisable(true);
         btnStartGame.setDisable(true);
         try {
@@ -341,7 +346,7 @@ public class FXMLController implements Initializable {
      */
     @FXML
     private void clickRegister(MouseEvent event) throws RemoteException, NotBoundException {
-        RegisterDialog regdialog = new RegisterDialog();
+        RegisterDialog regdialog = new RegisterDialog(ip);
     }
 
     @FXML
@@ -446,9 +451,9 @@ public class FXMLController implements Initializable {
      */
     @FXML
     private void startGame() throws RemoteException, NotBoundException {
-        
+
         pbRoundTimer.setProgress(0);
-        
+
         btnStartGame.setDisable(true);
         gs.startGame(joinedRoom);
     }
@@ -493,55 +498,54 @@ public class FXMLController implements Initializable {
                 currentAnswer = 0;
                 disableButtons(true);
                 System.out.println("Het spel is aan het rennen yaaay");
-                if(gs.getCurrentUser(joinedRoom) == userIndex){
+                if (gs.getCurrentUser(joinedRoom) == userIndex) {
                     btnSpin.setDisable(false);
                     System.out.println("ik mag draaien!");
                 }
-                
+
                 break;
             case SPINNINGFINISHED:
                 System.out.println("SPinning finished on client");
                 pbRoundTimer.setProgress(-1);
-                lblQuestion.setText("De Categorie is: " +gs.getCategory(joinedRoom));
+                lblQuestion.setText("De Categorie is: " + gs.getCategory(joinedRoom));
                 waitTimer = new Timer(true);
-                waitTimer.schedule(new TimerTask(){
-            @Override
-            public void run() {
-                try {
-                    gs.startRound(joinedRoom);
-                } catch (RemoteException ex) {
-                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-                    
+                waitTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        try {
+                            gs.startRound(joinedRoom);
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
                 }, 3000);
                 break;
-                
+
             case GAMERUNNING:
                 disableButtons(false);
                 List<String> question = gs.getQuestion(joinedRoom);
                 lblQuestion.setText(question.get(0));
                 btnAnswer1.setText(question.get(1));
-               btnAnswer2.setText(question.get(2));
+                btnAnswer2.setText(question.get(2));
                 btnAnswer3.setText(question.get(3));
-              btnAnswer4.setText(question.get(4));
-              currentCorrectAnswer = Integer.parseInt(question.get(5));
-              
-              startGameTimer();
+                btnAnswer4.setText(question.get(4));
+                currentCorrectAnswer = Integer.parseInt(question.get(5));
+
+                startGameTimer();
                 break;
-                
+
             case ANSWERED:
                 System.out.println("All players answered so lets gooo");
                 gs.checkAnswers(joinedRoom, userIndex, currentAnswer, pbRoundTimer.getProgress());
                 break;
-                
+
             case WAITINGFORPLAYERS:
                 setButtonCorrect(currentCorrectAnswer);
                 gs.refreshUI(joinedRoom);
-                
+
         }
-        
-        
+
     }
 //private void checkGameState() throws RemoteException {
 //
@@ -676,9 +680,7 @@ public class FXMLController implements Initializable {
         btnAnswer4.setStyle("");
     }
 
-    
-    
-    public void refreshUI(int[] scores, List<String> names){
+    public void refreshUI(int[] scores, List<String> names) {
         lblPlayer1.setText(names.get(0));
         lblScore1.setText(String.valueOf(scores[0]));
         lblPlayer2.setText(names.get(1));
@@ -687,11 +689,9 @@ public class FXMLController implements Initializable {
         lblScore3.setText(String.valueOf(scores[2]));
         lblPlayer4.setText(names.get(3));
         lblScore4.setText(String.valueOf(scores[3]));
-        
-        
+
     }
-    
-    
+
     /**
      * Sends a chat message
      */
@@ -725,11 +725,12 @@ public class FXMLController implements Initializable {
      */
     @FXML
     public void btnSpinClicked() throws RemoteException {
-            gs.spinWheel(joinedRoom);
+        gs.spinWheel(joinedRoom);
     }
 
     /**
      * Starts an animation timer to spin the wheel.
+     *
      * @param wheelspeed
      */
     public void spinWheel(int rotation) {
@@ -741,7 +742,7 @@ public class FXMLController implements Initializable {
             private long prevUpdate;
 
             int x = 0;
-            
+
             @Override
             public void handle(long now) {
 
@@ -757,7 +758,7 @@ public class FXMLController implements Initializable {
                     wheel.setRotate(wheelRotation);
                     prevUpdate = now;
                     x++;
-                    if(x == rotation){
+                    if (x == rotation) {
                         try {
                             gs.stopSpin(joinedRoom, progress);
                         } catch (RemoteException ex) {
@@ -921,14 +922,29 @@ public class FXMLController implements Initializable {
     public void disableSpinButton(boolean state) {
         btnSpin.setDisable(state);
     }
-    
-    public void setUserIndex(int i){
+
+    public void setUserIndex(int i) {
         userIndex = i;
         System.out.println("Ik ben player " + userIndex);
     }
-    
-    public void stopSpin() throws RemoteException{
+
+    public void stopSpin() throws RemoteException {
         animationTimer.stop();
-        gs.stopSpin(joinedRoom,wheel.getRotate());
+        gs.stopSpin(joinedRoom, wheel.getRotate());
+    }
+
+    public void loadProperties() {
+        try {
+            Properties prop = new Properties();
+            //properties for the masterserver
+            try (InputStream in = new FileInputStream("masterserver.properties")) {
+                prop.load(in);
+                Enumeration<?> e = prop.propertyNames();
+                String key = (String) e.nextElement();
+                ip = prop.getProperty(key);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
