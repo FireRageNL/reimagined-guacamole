@@ -92,6 +92,10 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
+    public void leaveRoom(IGameClient user, IGameRoom room) throws RemoteException{
+        room.leaveRoom(user);
+    }
+    @Override
     public synchronized void startGame(IGameRoom joinedRoom) throws RemoteException {
         joinedRoom.getGameController().startNextRound();
         joinedRoom.getGameController().setGameState(GameState.WAITINGFORCATEGORY);

@@ -203,9 +203,11 @@ public class GameController extends UnicastRemoteObject implements IGameControll
      /**
      * Add players for the WAITINGFORPLAYERS state
      */
+    @Override
     public void AddPlayersCount() throws RemoteException{
         countPlayers++;
     }
+
 
     /**
      * Checks the answer given and adds the score based on time.
@@ -232,6 +234,11 @@ public class GameController extends UnicastRemoteObject implements IGameControll
             return false;
         }
 
+    }
+
+    @Override
+    public void removePlayersCount() throws RemoteException {
+        countPlayers--;
     }
 
 }

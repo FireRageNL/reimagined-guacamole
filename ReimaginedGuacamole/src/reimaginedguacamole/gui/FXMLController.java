@@ -903,10 +903,14 @@ public class FXMLController implements Initializable {
     /**
      * Quit game. reset all timers and controllers to null. reset windows to
      * Profile page
+     *
+     * @throws java.rmi.RemoteException
      */
     @FXML
     public void quitGame() throws RemoteException {
         fillProfileData();
+        gs.leaveRoom(gameClient, joinedRoom);
+        chatClient.enterChatroom();
         if (animationTimer != null) {
             animationTimer.stop();
         }
@@ -914,6 +918,7 @@ public class FXMLController implements Initializable {
             waitTimer.cancel();
         }
         gameController = null;
+        updateRoomList(gs.sendGameRoomData());
         setWindows(2);
     }
 
@@ -957,6 +962,11 @@ public class FXMLController implements Initializable {
         gs.stopSpin(joinedRoom, wheel.getRotate());
     }
 
+    @FXML
+    public void btnRefreshGameRooms() throws RemoteException{
+        updateRoomList(gs.sendGameRoomData());
+    }
+    
     public void loadProperties() {
         try {
             Properties prop = new Properties();

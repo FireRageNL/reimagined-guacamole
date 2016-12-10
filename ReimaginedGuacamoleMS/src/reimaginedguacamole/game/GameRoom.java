@@ -72,6 +72,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     @Override
     public void leaveRoom(IGameClient profile) throws RemoteException {
         players.remove(profile);
+        gameController.removePlayersCount();
     }
 
     public String getName() {

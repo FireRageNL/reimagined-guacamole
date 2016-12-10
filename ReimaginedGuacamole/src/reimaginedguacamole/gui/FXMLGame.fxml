@@ -28,7 +28,7 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="12.0" prefHeight="625.0" prefWidth="908.0" visible="false">
+    <Pane fx:id="profilePane" focusTraversable="false" layoutX="13.0" layoutY="12.0" prefHeight="625.0" prefWidth="908.0" visible="true">
       <children>
         <TabPane layoutX="16.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE" visible="true">
           <tabs>
@@ -295,6 +295,7 @@
                                   </VBox.margin>
                                 </Label>
                                 <ListView fx:id="lvPlayers" prefHeight="195.0" prefWidth="100.0" />
+                                <Button font="$x1" minHeight="25.0" minWidth="95.0" mnemonicParsing="false" onAction="#btnRefreshGameRooms" prefHeight="25.0" prefWidth="95.0" text="Refresh" />
                               </children>
                             </VBox>
                           </children>
@@ -349,7 +350,7 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="false">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="638.9998779296875" prefWidth="906.0">
           <children>

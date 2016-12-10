@@ -148,6 +148,8 @@ public interface IGameController extends Remote {
      */
     public void AddPlayersCount() throws RemoteException;
     
+    public void removePlayersCount() throws RemoteException;
+    
     public int getCurrentUser() throws RemoteException;
 
 }

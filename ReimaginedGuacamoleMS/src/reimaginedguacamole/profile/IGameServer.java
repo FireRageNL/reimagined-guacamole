@@ -101,4 +101,6 @@ public interface IGameServer extends Remote {
     public void refreshUI(IGameRoom joinedRoom) throws RemoteException;
 
     public void nextRound(IGameRoom joinedRoom) throws RemoteException;
+
+    public void leaveRoom(IGameClient user, IGameRoom room) throws RemoteException;
 }
