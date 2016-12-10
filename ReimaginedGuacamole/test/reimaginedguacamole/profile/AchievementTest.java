@@ -23,7 +23,7 @@ public class AchievementTest {
     @Test
     public void testGetDescription() {
         System.out.println("getDescription");
-        Achievement instance = new Achievement("This achievement is purely created for test purposes","Testachievement");
+        IAchievement instance = new Achievement("This achievement is purely created for test purposes","Testachievement");
         String expResult = "This achievement is purely created for test purposes";
         String result = instance.getDescription();
         assertEquals(expResult, result);

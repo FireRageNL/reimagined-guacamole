@@ -7,7 +7,7 @@ package reimaginedguacamole.game;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import reimaginedguacamole.profile.Profile;
+import reimaginedguacamole.profile.IProfile;
 
 /**
  *
@@ -18,27 +18,6 @@ public class GameControllerTest {
     public GameControllerTest() {
     }
     
-
-    /**
-     * Test of startNextRound method, of class GameController.
-     */
-    @Test
-    public void testStartNextRound() {
-        System.out.println("startNextRound");
-        GameController instance = new GameController(5,10);
-        instance.startNextRound();
-    }
-
-    /**
-     * Test of endGame method, of class GameController.
-     */
-    @Test
-    public void testEndGame() {
-        System.out.println("endGame");
-        Profile user = new Profile("test@email.com","test","Testie",2,10,20);     
-        GameController instance = new GameController(5,10);
-        instance.endGame(user);
-    }
 
     /**
      * Test of chooseCategory method, of class GameController.

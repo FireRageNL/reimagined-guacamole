@@ -78,6 +78,8 @@ public interface IGameRoom extends Remote {
     public void setPlayersDone() throws RemoteException;
     
     public void addPlayerDone() throws RemoteException;
+    
+    public String getNumberOfRounds() throws RemoteException;
    
 
 }

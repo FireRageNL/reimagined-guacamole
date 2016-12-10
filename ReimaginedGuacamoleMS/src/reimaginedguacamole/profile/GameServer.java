@@ -27,11 +27,11 @@ import reimaginedguacamolems.database.ProfileDB;
 public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     private List<IGameRoom> gameRooms = new ArrayList<>();
-    
-    public GameServer() throws RemoteException{
+
+    public GameServer() throws RemoteException {
         //Wooo new thingy :D
     }
-    
+
     @Override
     public boolean tryLogin(String username, String password) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
@@ -58,13 +58,13 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public IGameRoom createGameRoom(int duration, int rounds,String roomname, String ip) throws RemoteException {
+    public IGameRoom createGameRoom(int duration, int rounds, String roomname, String ip) throws RemoteException {
         GameRoom gr;
         try {
-            gr = new GameRoom(duration,rounds,roomname,ip,this);
+            gr = new GameRoom(duration, rounds, roomname, ip, this);
             gameRooms.add(gr);
             sendGameRoomData();
-            Logger.getLogger(GameServer.class.getName()).log(Level.INFO,"Added a new GameRoom: {0}",gr.getName());
+            Logger.getLogger(GameServer.class.getName()).log(Level.INFO, "Added a new GameRoom: {0}", gr.getName());
             return gr;
         } catch (NotBoundException | UnknownHostException ex) {
             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,23 +74,22 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     @Override
     public List<IGameRoom> sendGameRoomData() throws RemoteException {
-        return gameRooms;      
+        return gameRooms;
     }
 
-
     @Override
-    public void joinRoom(IGameClient user, IGameRoom room) throws RemoteException{
+    public void joinRoom(IGameClient user, IGameRoom room) throws RemoteException {
         try {
-            
+
             room.joinRoom(user);
             user.joinGame();
-            if(room.getNrOfPlayers() == 4){
-            user.disableStartButton(false);
+            if (room.getNrOfPlayers() == 4) {
+                user.disableStartButton(false);
             }
         } catch (RemoteException ex) {
             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
         }
- }
+    }
 
     @Override
     public void startGame(IGameRoom joinedRoom) throws RemoteException {
@@ -98,9 +97,24 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         joinedRoom.getGameController().setGameState(GameState.WAITINGFORCATEGORY);
         this.getUserIndex(joinedRoom);
     }
+
+    @Override
+    public void nextRound(IGameRoom joinedRoom) throws RemoteException {
+        joinedRoom.addPlayerDone();
+        if (joinedRoom.getPlayersDone() == 4) {
+            joinedRoom.setPlayersDone();
+            if (joinedRoom.getGameController().getCurrentRoundIndex() < Integer.getInteger(joinedRoom.getNumberOfRounds())) {
+                joinedRoom.getGameController().startNextRound();
+                joinedRoom.getGameController().setGameState(GameState.WAITINGFORCATEGORY);
+            } else {
+                broadcastGameState(GameState.GAMEFINISHED, joinedRoom);
+            }
+        }
+    }
+
     @Override
     public void broadcastGameState(GameState gameState, IGameRoom gr) throws RemoteException {
-        for(IGameClient c: gr.getPlayers()){
+        for (IGameClient c : gr.getPlayers()) {
             c.checkGameState(gameState);
         }
     }
@@ -113,7 +127,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public void getUserIndex(IGameRoom joinedRoom) throws RemoteException {
         int i = 0;
-        for(IGameClient c: joinedRoom.getPlayers()){
+        for (IGameClient c : joinedRoom.getPlayers()) {
             c.setUserIndex(i);
             i++;
         }
@@ -122,11 +136,11 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public void spinWheel(IGameRoom joinedRoom) throws RemoteException {
         Random rng = new Random();
-        int speed = 200+ rng.nextInt(200);
+        int speed = 200 + rng.nextInt(200);
         int time = 5000 + rng.nextInt(3000);
-        System.out.println("SPIN THE WHEEL" + speed + "--"+time);
-        for(IGameClient c: joinedRoom.getPlayers()){
-            c.spinWheel(speed,time);
+        System.out.println("SPIN THE WHEEL" + speed + "--" + time);
+        for (IGameClient c : joinedRoom.getPlayers()) {
+            c.spinWheel(speed, time);
         }
     }
 
@@ -134,7 +148,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     public void stopSpin(IGameRoom joinedRoom, double rotation) throws RemoteException {
         joinedRoom.addPlayerDone();
         System.out.println("one player done spinning");
-        if(joinedRoom.getPlayersDone() == 4){
+        System.out.println("Rotation: " + rotation);
+        if (joinedRoom.getPlayersDone() == 4) {
             joinedRoom.getGameController().giveRoundQuestion(joinedRoom.getGameController().chooseCategory(rotation));
             joinedRoom.setPlayersDone();
             System.out.println("ALl players done spinning");
@@ -150,7 +165,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public void startRound(IGameRoom joinedRoom) throws RemoteException {
         joinedRoom.addPlayerDone();
-        if(joinedRoom.getPlayersDone() == 4){
+        if (joinedRoom.getPlayersDone() == 4) {
             joinedRoom.setPlayersDone();
             this.broadcastGameState(GameState.GAMERUNNING, joinedRoom);
         }
@@ -171,7 +186,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public void playerAnswered(IGameRoom joinedRoom) throws RemoteException {
         joinedRoom.addPlayerDone();
-        if(joinedRoom.getPlayersDone() == 4){
+        if (joinedRoom.getPlayersDone() == 4) {
             joinedRoom.setPlayersDone();
             this.broadcastGameState(GameState.ANSWERED, joinedRoom);
         }
@@ -182,7 +197,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         joinedRoom.addPlayerDone();
         joinedRoom.getPlayers().get(userIndex).getProfile().addScore(score);
 
-        if(joinedRoom.getPlayersDone() == 4){
+        if (joinedRoom.getPlayersDone() == 4) {
             joinedRoom.setPlayersDone();
             System.out.println("ik ben de laatste, dus we gaan lekker door!");
             this.broadcastGameState(GameState.WAITINGFORPLAYERS, joinedRoom);
@@ -194,19 +209,16 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         int[] scores = new int[4];
         List<String> names = new ArrayList();
         int i = 0;
-        for (IGameClient c : joinedRoom.getPlayers()){
+        for (IGameClient c : joinedRoom.getPlayers()) {
             scores[i] = c.getProfile().getScore();
             System.out.println(scores[i]);
             names.add(c.getProfile().getNickname());
+            i++;
         }
-        for(IGameClient c : joinedRoom.getPlayers()){
-            
-            c.refreshUI(scores,names);
+        for (IGameClient c : joinedRoom.getPlayers()) {
+
+            c.refreshUI(scores, names);
         }
     }
-    
-    
-    
-    
-    
+
 }

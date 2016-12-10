@@ -81,7 +81,8 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     public String getIp() {
         return this.ip;
     }
-
+    
+    @Override
     public String getNumberOfRounds() throws RemoteException {
         return Integer.toString(this.gameController.getGame().getAmountOfRounds());
     }

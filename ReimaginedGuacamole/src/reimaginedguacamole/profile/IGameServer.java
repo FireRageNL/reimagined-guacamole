@@ -62,7 +62,7 @@ public interface IGameServer extends Remote {
     /**
      * Function to publish the roomdata into the lobby view
      *
-     * @return 
+     * @return
      * @throws RemoteException
      */
     public List<IGameRoom> sendGameRoomData() throws RemoteException;
@@ -74,32 +74,31 @@ public interface IGameServer extends Remote {
      * @param user the user to add to the list of users
      * @throws RemoteException
      */
-
-    public void broadcastGameState(GameState gameState, IGameRoom gr) throws RemoteException;
-    
     public void joinRoom(IGameClient user, IGameRoom room) throws RemoteException;
 
     public void startGame(IGameRoom joinedRoom) throws RemoteException;
 
-   public int getCurrentUser(IGameRoom joinedRoom) throws RemoteException;
-   
-   public void getUserIndex(IGameRoom joinedRoom) throws RemoteException;
-   
-   public void spinWheel(IGameRoom joinedRoom) throws RemoteException;
-   
-   public void stopSpin(IGameRoom joinedRoom, double rotation) throws RemoteException;
-    
+    public void broadcastGameState(GameState gameState, IGameRoom gr) throws RemoteException;
+
+    public int getCurrentUser(IGameRoom joinedRoom) throws RemoteException;
+
+    public void getUserIndex(IGameRoom joinedRoom) throws RemoteException;
+
+    public void spinWheel(IGameRoom joinedRoom) throws RemoteException;
+
+    public void stopSpin(IGameRoom joinedRoom, double rotation) throws RemoteException;
+
     public String getCategory(IGameRoom joinedRoom) throws RemoteException;
-    
-        public void startRound(IGameRoom joinedRoom) throws RemoteException;
-        
-        public List<String> getQuestion(IGameRoom joinedRoom) throws RemoteException;
-        
+
+    public void startRound(IGameRoom joinedRoom) throws RemoteException;
+
+    public List<String> getQuestion(IGameRoom joinedRoom) throws RemoteException;
+
     public void playerAnswered(IGameRoom joinedRoom) throws RemoteException;
-    
+
     public void checkAnswers(IGameRoom joinedRoom, int userIndex, int score) throws RemoteException;
-    
+
     public void refreshUI(IGameRoom joinedRoom) throws RemoteException;
-    
-    
+
+    public void nextRound(IGameRoom joinedRoom) throws RemoteException;
 }

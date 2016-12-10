@@ -539,8 +539,8 @@ public class FXMLController implements Initializable {
                 System.out.println("All players answered so lets gooo");
                 int score = 0;
                 double timeLeft = pbRoundTimer.getProgress();
-                if(currentAnswer == currentCorrectAnswer){
-                    score = 50 + ( 100 + (int)(timeLeft*100));
+                if (currentAnswer == currentCorrectAnswer) {
+                    score = 50 + (100 + (int) (timeLeft * 100));
                 }
                 gs.checkAnswers(joinedRoom, userIndex, score);
                 break;
@@ -548,7 +548,22 @@ public class FXMLController implements Initializable {
             case WAITINGFORPLAYERS:
                 setButtonCorrect(currentCorrectAnswer);
                 gs.refreshUI(joinedRoom);
+                waitTimer = new Timer(true);
+                waitTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        try {
+                            gs.nextRound(joinedRoom);
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
 
+                }, 10000);
+                break;
+            case GAMEFINISHED:
+                gs.refreshUI(joinedRoom);
+                System.out.println("FINISHED!");
         }
 
     }
@@ -765,7 +780,7 @@ public class FXMLController implements Initializable {
                     x++;
                     if (x == rotation) {
                         try {
-                            gs.stopSpin(joinedRoom, progress);
+                            gs.stopSpin(joinedRoom, wheel.getRotate());
                         } catch (RemoteException ex) {
                             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -804,12 +819,15 @@ public class FXMLController implements Initializable {
                         try {
                             //Timer has ended. gameround ends and current answer has to be wrong.
                             progress = 0;
-                            animationTimer.stop();
+                            System.out.println("PROGRESSBAR IS RUNNINGS");
                             currentAnswer = 0;
                             gs.playerAnswered(joinedRoom);
                             disableButtons(true);
                         } catch (RemoteException ex) {
                             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                        } finally {
+                            pbRoundTimer.setProgress(0);
+                            animationTimer.stop();
                         }
                     }
                     pbRoundTimer.setProgress(progress);
@@ -866,6 +884,7 @@ public class FXMLController implements Initializable {
     private void setAnswer(ActionEvent event) throws RemoteException {
         disableButtons(true);
         animationTimer.stop();
+        System.out.println("I DID THE ANWSERING");
         Button b = (Button) event.getSource();
 
         if (b.getId().contains("1")) {
