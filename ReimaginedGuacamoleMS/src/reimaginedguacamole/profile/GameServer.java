@@ -178,18 +178,10 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public synchronized void checkAnswers(IGameRoom joinedRoom, int userIndex, int givenAnswer, double timeLeft) throws RemoteException {
+    public void checkAnswers(IGameRoom joinedRoom, int userIndex, int score) throws RemoteException {
         joinedRoom.addPlayerDone();
-        int score = 0;
-        System.out.println("in de methode!");
-        System.out.println("index "+userIndex+" GivenAnswer "+ givenAnswer+" en timeleft" + timeLeft);
-        if(givenAnswer == joinedRoom.getGameController().getCorrectAnswer()){
-            score = 50 + ( 100 + (int)(timeLeft*100));
-            System.out.println(score);
-            System.out.println("antwoord goed!");
-            joinedRoom.getPlayers().get(userIndex).getProfile().addScore(score);
-            
-        }
+        joinedRoom.getPlayers().get(userIndex).getProfile().addScore(score);
+
         if(joinedRoom.getPlayersDone() == 4){
             joinedRoom.setPlayersDone();
             System.out.println("ik ben de laatste, dus we gaan lekker door!");

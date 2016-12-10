@@ -97,7 +97,7 @@ public interface IGameServer extends Remote {
         
     public void playerAnswered(IGameRoom joinedRoom) throws RemoteException;
     
-    public void checkAnswers(IGameRoom joinedRoom, int userIndex, int givenAnswer, double timeLeft) throws RemoteException;
+    public void checkAnswers(IGameRoom joinedRoom, int userIndex, int score) throws RemoteException;
     
     public void refreshUI(IGameRoom joinedRoom) throws RemoteException;
     

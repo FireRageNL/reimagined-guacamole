@@ -537,7 +537,12 @@ public class FXMLController implements Initializable {
 
             case ANSWERED:
                 System.out.println("All players answered so lets gooo");
-                gs.checkAnswers(joinedRoom, userIndex, currentAnswer, pbRoundTimer.getProgress());
+                int score = 0;
+                double timeLeft = pbRoundTimer.getProgress();
+                if(currentAnswer == currentCorrectAnswer){
+                    score = 50 + ( 100 + (int)(timeLeft*100));
+                }
+                gs.checkAnswers(joinedRoom, userIndex, score);
                 break;
 
             case WAITINGFORPLAYERS:
