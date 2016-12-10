@@ -142,7 +142,6 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         Random rng = new Random();
         int speed = 200 + rng.nextInt(200);
         int time = 5000 + rng.nextInt(3000);
-        System.out.println("SPIN THE WHEEL" + speed + "--" + time);
         for (IGameClient c : joinedRoom.getPlayers()) {
             c.spinWheel(speed, time);
         }
@@ -151,12 +150,10 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public synchronized void stopSpin(IGameRoom joinedRoom, double rotation) throws RemoteException {
         joinedRoom.addPlayerDone();
-        System.out.println("one player done spinning");
-        System.out.println("Rotation: " + rotation);
         if (joinedRoom.getPlayersDone() == 4) {
             joinedRoom.getGameController().giveRoundQuestion(joinedRoom.getGameController().chooseCategory(rotation));
             joinedRoom.setPlayersDone();
-            System.out.println("ALl players done spinning");
+            Logger.getLogger(GameServer.class.getCanonicalName()).log(Level.INFO,"All players stopped spinning!");
             this.broadcastGameState(GameState.SPINNINGFINISHED, joinedRoom);
         }
     }
@@ -203,7 +200,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
         if (joinedRoom.getPlayersDone() == 4) {
             joinedRoom.setPlayersDone();
-            System.out.println("ik ben de laatste, dus we gaan lekker door!");
+            Logger.getLogger(GameServer.class.getCanonicalName()).log(Level.INFO,"All players finished submitting scores!");
             this.broadcastGameState(GameState.WAITINGFORPLAYERS, joinedRoom);
         }
     }
@@ -215,7 +212,6 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         int i = 0;
         for (IGameClient c : joinedRoom.getPlayers()) {
             scores[i] = c.getProfile().getScore();
-            System.out.println(scores[i]);
             names.add(c.getProfile().getNickname());
             i++;
         }

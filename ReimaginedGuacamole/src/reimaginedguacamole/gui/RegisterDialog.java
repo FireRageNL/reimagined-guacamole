@@ -33,14 +33,14 @@ import reimaginedguacamole.tooling.Hashing;
  */
 public class RegisterDialog {
 
-    
-    private String ip;
     /**
      * Constructor that creates a register dialog and that handles the complete
      * registration process
+     *
+     * @param ip the ip of the masterserver where the registration will take
+     * place
      */
     public RegisterDialog(String ip) {
-        this.ip = ip;
         //Set all UI elements
         Dialog<LinkedHashMap> dialog = new Dialog<>();
         dialog.setTitle("Registreren");
@@ -73,8 +73,8 @@ public class RegisterDialog {
         Node registerButton = dialog.getDialogPane().lookupButton(registerButtonType);
         registerButton.setDisable(true);
 
-        email.textProperty().addListener((observable, oldValue, newValue) -> 
-            registerButton.setDisable(newValue.trim().isEmpty()));
+        email.textProperty().addListener((observable, oldValue, newValue)
+                -> registerButton.setDisable(newValue.trim().isEmpty()));
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(() -> email.requestFocus());
         dialog.setResultConverter(dialogButton -> {

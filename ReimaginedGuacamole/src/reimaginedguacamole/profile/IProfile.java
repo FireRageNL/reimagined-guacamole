@@ -149,6 +149,11 @@ public interface IProfile extends Remote {
      */
     public int getScore() throws RemoteException;
     
+    /**
+     * Add the score to the current players score
+     * @param score the score to be added
+     * @throws RemoteException 
+     */
     public void addScore(int score) throws RemoteException;
 
 }

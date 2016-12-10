@@ -8,13 +8,11 @@ package reimaginedguacamole.profile;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.gui.FXMLController;
-import reimaginedguacamole.timertasks.spinTimerTask;
 
 /**
  *
@@ -25,6 +23,13 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     private IProfile prof;
     private FXMLController application;
 
+    /**
+     * Default constructor for a game client
+     *
+     * @param app the fxmlcontroller class that initialized this client, and
+     * where UI calls have to go to
+     * @throws RemoteException
+     */
     public GameClient(FXMLController app) throws RemoteException {
         application = app;
     }
@@ -44,35 +49,35 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
 
     @Override
     public void joinGame() throws RemoteException {
-        Platform.runLater(() -> {
-            application.setWindows(0);
-        });
+        Platform.runLater(()
+                -> application.setWindows(0)
+        );
     }
 
     @Override
     public void disableStartButton(boolean state) throws RemoteException {
-        Platform.runLater(() -> {
-            application.disableStartButton(state);
-        });
+        Platform.runLater(()
+                -> application.disableStartButton(state)
+        );
     }
 
     @Override
     public void disableButtons(boolean state) throws RemoteException {
-        Platform.runLater(() -> {
-            application.disableButtons(state);
-        });
+        Platform.runLater(()
+                -> application.disableButtons(state)
+        );
     }
 
     @Override
     public void disableSpinButton(boolean state) throws RemoteException {
-        Platform.runLater(() -> {
-            application.disableButtons(state);
-        });
+        Platform.runLater(()
+                -> application.disableButtons(state)
+        );
     }
 
     @Override
     public void checkGameState(GameState gameState) throws RemoteException {
-        Platform.runLater(() ->{
+        Platform.runLater(() -> {
             try {
                 application.checkGameState(gameState);
             } catch (RemoteException ex) {
@@ -88,25 +93,13 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
 
     @Override
     public void spinWheel(int wheelspeed, int time) throws RemoteException {
-        System.out.println("Client spin");
         application.spinWheel(wheelspeed);
-        //Timer t = new Timer(true);
-        //t.schedule(new spinTimerTask(application), 7000);
     }
 
     @Override
     public void refreshUI(int[] scores, List<String> names) throws RemoteException {
-        Platform.runLater(new Runnable(){
-            @Override
-            public void run() {
-                application.refreshUI(scores, names);
-                
-            }
-            
-        });
-        
+        Platform.runLater(()
+                -> application.refreshUI(scores, names)
+        );
     }
-
 }
-
-

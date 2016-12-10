@@ -12,10 +12,11 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import reimaginedguacamole.profile.ChatServer;
 import reimaginedguacamole.profile.GameServer;
 import reimaginedguacamole.profile.IGameClient;
-import reimaginedguacamole.profile.IProfile;
 
 /**
  *
@@ -43,8 +44,10 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
      * this game
      * @param roomname the name of the room
      * @param ip the IP the game room runs on
+     * @param gs the gameserver that initialized this gameroom
      * @throws RemoteException
      * @throws NotBoundException
+     * @throws UnknownHostException
      */
     public GameRoom(int rounds, int duration, String roomname, String ip, GameServer gs) throws RemoteException, NotBoundException, UnknownHostException {
         this.gameController = new GameController(rounds, duration, gs, this);
@@ -53,7 +56,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
         playersDone = 0;
         //this.ip = ip; //This has to be overwritten to localhost later on but for testing purposes its set to the client IP that later will have the game server!!
         this.ip = InetAddress.getLocalHost().getHostAddress();
-        //this.chatServer = new ChatServer();
+        this.chatServer = new ChatServer();
     }
 
     @Override
@@ -64,9 +67,8 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     @Override
     public void joinRoom(IGameClient profile) throws RemoteException {
         players.add(profile);
-        gameController.AddPlayersCount();
-        System.out.println(gameController.checkPlayers());
-        System.out.println(profile.getProfile().getNickname() + " joined room");
+        gameController.addPlayersCount();
+        Logger.getLogger(GameRoom.class.getCanonicalName()).log(Level.INFO, "{0} Has joined the room", profile.getProfile().getNickname());
     }
 
     @Override

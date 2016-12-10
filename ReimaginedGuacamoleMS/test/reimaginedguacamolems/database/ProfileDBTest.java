@@ -15,7 +15,6 @@ import reimaginedguacamole.profile.History;
 import reimaginedguacamole.profile.IHistory;
 import reimaginedguacamole.profile.IRanking;
 import reimaginedguacamole.profile.Profile;
-import reimaginedguacamole.profile.Ranking;
 import reimaginedguacamole.tooling.Hashing;
 
 /**

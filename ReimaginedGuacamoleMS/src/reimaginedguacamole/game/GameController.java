@@ -39,6 +39,8 @@ public class GameController extends UnicastRemoteObject implements IGameControll
      * Constructor that gets called when a new game gets created
      * @param duration The amount of seconds a person has to anwser a question
      * @param amountOfRounds the amount of rounds in the game
+     * @param gs the gameserver that initialized this gamecontroller
+     * @param gr the gameroom this gamecontroller is part of
      * @throws RemoteException
      * @throws NotBoundException 
      */
@@ -63,9 +65,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
         //Empty constcurtor to overwrihte default constructor
     }
 
-    /**
-     * Starts the next round and sets currentRound to the new Round object
-     */
+
     @Override
     public void startNextRound() {
         currentRoundIndex++;
@@ -74,29 +74,19 @@ public class GameController extends UnicastRemoteObject implements IGameControll
 
     }
 
-    /**
-     * Ends the game and uploads the game information to the database
-     *
-     * @param user Logged in profile
-     * @throws java.rmi.RemoteException
-     */
+
     @Override
     public void endGame(IProfile user) throws RemoteException {
 
         game.endGame(user.getPid(), currentScore);
     }
 
+    @Override
     public int getCurrentUser() throws RemoteException{
         return currentUser;
     }
     
-    /**
-     * Chooses a category based on the rotation of the wheel. categories are
-     * divided in 7 equal parts.
-     *
-     * @param wheel rotation of the wheel at this time
-     * @return Category enum type
-     */
+
     @Override
     public Category chooseCategory(double wheel) {
         double rotation = 360 - wheel;
@@ -122,13 +112,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
         return currentRound;
     }
 
-    /**
-     * Inserts a question into the round object based on the chosen category
-     * then removes this question from the orgiinal list.
-     *
-     * @param category
-     * @throws java.rmi.RemoteException
-     */
+
     @Override
     public void giveRoundQuestion(Category category) throws RemoteException {
         for (IQuestion q : game.getQuestionsList()) {
@@ -140,33 +124,21 @@ public class GameController extends UnicastRemoteObject implements IGameControll
         }
     }
 
-    /**
-     *
-     * @return
-     */
+
     @Override
     public IGame getGame() {
         return game;
     }
 
-    /**
-     *
-     * @return
-     */
+
     @Override
     public GameState getGameState() {
         return gameState;
     }
 
-    /**
-     * Sets the gamestate and notifies the Observer so the game can update.
-     *
-     * @param gameState
-     */
     @Override
     public void setGameState(GameState gameState) throws RemoteException {
         this.gameState = gameState;
-        System.out.println("Deez state of the game are being set: "+gameState.toString());
         gs.broadcastGameState(gameState, gr);
     }
 
@@ -200,23 +172,13 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     return countPlayers;
     }
     
-     /**
-     * Add players for the WAITINGFORPLAYERS state
-     */
+  
     @Override
-    public void AddPlayersCount() throws RemoteException{
+    public void addPlayersCount() throws RemoteException{
         countPlayers++;
     }
 
 
-    /**
-     * Checks the answer given and adds the score based on time.
-     *
-     * @param profile
-     * @param timeLeft
-     * @return
-     * @throws java.rmi.RemoteException
-     */
     @Override
     public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException {
         //Score is based on time, min score = 150

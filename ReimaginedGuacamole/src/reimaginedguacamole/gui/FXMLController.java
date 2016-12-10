@@ -12,7 +12,6 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import javafx.animation.AnimationTimer;
@@ -26,7 +25,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -50,7 +48,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
-import reimaginedguacamole.game.IGameController;
 import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.tooling.Hashing;
 
@@ -121,12 +118,6 @@ public class FXMLController implements Initializable {
     @FXML
     private Label lblLossSci;
 
-    //Game Start Objects
-    @FXML
-    private Slider sliderAmountOfRounds;
-    @FXML
-    private Slider sliderTimePerRound;
-
     //GAME OBJECTS
     @FXML
     ProgressBar pbRoundTimer;
@@ -150,10 +141,6 @@ public class FXMLController implements Initializable {
     private ListView lvChat;
     @FXML
     private TextField txtChat;
-    @FXML
-    private Label lblGameName;
-    @FXML
-    private Label lblScore;
 
     @FXML
     private Label lblPlayer1;
@@ -192,11 +179,8 @@ public class FXMLController implements Initializable {
     private TableColumn colScores;
 
     //Global variables
-    private IGameController gameController;
     private IProfile user;
     private GameClient gameClient;
-    private Random rng;
-    private int roundDuration;
     private ObservableList<String> chatList;
     private ObservableList<String> lobbyChat;
     private ObservableList<IGameRoom> lobbyRooms;
@@ -285,8 +269,7 @@ public class FXMLController implements Initializable {
         lvGameRooms.setCellFactory(new Callback<ListView<IGameRoom>, ListCell<IGameRoom>>() {
             @Override
             public ListCell<IGameRoom> call(ListView<IGameRoom> param) {
-                ListCell<IGameRoom> cell = new ListCell<IGameRoom>() {
-
+                return new ListCell<IGameRoom>() {
                     @Override
                     protected void updateItem(IGameRoom gameRoom, boolean bln) {
                         super.updateItem(gameRoom, bln);
@@ -300,7 +283,6 @@ public class FXMLController implements Initializable {
                     }
 
                 };
-                return cell;
             }
         });
         lvGameRooms.getItems().addListener((ListChangeListener.Change c)
@@ -309,8 +291,7 @@ public class FXMLController implements Initializable {
         players = FXCollections.observableArrayList();
         lvPlayers.setFixedCellSize(20);
         lvPlayers.setItems(players);
-        //creates the pseudorandom generation object
-        rng = new Random();
+
     }
 
     /**
@@ -357,8 +338,8 @@ public class FXMLController implements Initializable {
         if (result.isPresent()) {
             List<String> res = result.get();
             try {
-                String ip = InetAddress.getLocalHost().getHostAddress();
-                joinGame(gs.createGameRoom(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)), res.get(2), ip));
+                String sip = InetAddress.getLocalHost().getHostAddress();
+                joinGame(gs.createGameRoom(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)), res.get(2), sip));
             } catch (RemoteException ex) {
                 Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -489,6 +470,9 @@ public class FXMLController implements Initializable {
      * Our main Game Controller. it fires everytime the gamestate in
      * gamecontroller is changed. It fires all necessary gamecontroller methods
      * and shows the correct information on the UI.
+     *
+     * @param state the game state to be checked
+     * @throws java.rmi.RemoteException
      */
     public void checkGameState(GameState state) throws RemoteException {
         switch (state) {
@@ -497,15 +481,12 @@ public class FXMLController implements Initializable {
                 resetQuestionUI();
                 currentAnswer = 0;
                 disableButtons(true);
-                System.out.println("Het spel is aan het rennen yaaay");
                 if (gs.getCurrentUser(joinedRoom) == userIndex) {
                     btnSpin.setDisable(false);
-                    System.out.println("ik mag draaien!");
                 }
 
                 break;
             case SPINNINGFINISHED:
-                System.out.println("SPinning finished on client");
                 pbRoundTimer.setProgress(-1);
                 lblQuestion.setText("De Categorie is: " + gs.getCategory(joinedRoom));
                 waitTimer = new Timer(true);
@@ -536,7 +517,6 @@ public class FXMLController implements Initializable {
                 break;
 
             case ANSWERED:
-                System.out.println("All players answered so lets gooo");
                 int score = 0;
                 double timeLeft = pbRoundTimer.getProgress();
                 if (currentAnswer == currentCorrectAnswer) {
@@ -563,132 +543,19 @@ public class FXMLController implements Initializable {
                 break;
             case GAMEFINISHED:
                 gs.refreshUI(joinedRoom);
-                System.out.println("FINISHED!");
+                break;
+            default:
+                //do nothing
+                break;
         }
 
     }
-//private void checkGameState() throws RemoteException {
-//
-//        IRound round;
-//
-//        switch (gameController.getGameState()) {
-//            //Waiting is not used in this version yet. future version will wait for other players
-//            case WAITING:
-//                break;
-//            case WAITINGFORCATEGORY:
-//                //Game is now waiting for user to start spinning the wheel. if not done after 15 seconds it will start automically.
-//                //Disables all necessary buttons and gives feedback to user.
-//                lblGameName.setText(user.getNickname());
-//                btnSpin.setDisable(false);
-//                waitTimer = new Timer(true);
-//                chatList.add("GAME: Ben je er Klaar voor? Spin het wiel!");
-//                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SPINNING), 15000);
-//                setWindows(0);
-//                break;
-//            case SPINNING:
-//                //this state will start spinning the wheel. also it resets the ui to an empty gamescreen 
-//                waitTimer = null;
-//                resetQuestionUI();
-//                btnSpin.setDisable(true);
-//                chatList.add("GAME: Welke categorie zul je krijgen?");
-//                System.out.println("Start Spinning");
-//                spinWheel();
-//                waitTimer = new Timer(true);
-//                int time = 5000 + rng.nextInt(3000);
-//                System.out.println(time);
-//                waitTimer.schedule(new WaitingForGameState(gameController, GameState.SPINNINGFINISHED), time);
-//                break;
-//            case SPINNINGFINISHED:
-//                //Stops the spinning and starts the new round with a question from the chosen category
-//                animationTimer.stop();
-//                System.out.println("ANIMATION STOPPED!");
-//                gameController.startNextRound();
-//                gameController.giveRoundQuestion(gameController.chooseCategory(wheel.getRotate()));
-//
-//                //Sets the appriopriate round and shows a loading bar.
-//                round = gameController.getCurrentRound();
-//                pbRoundTimer.setProgress(-1);
-//                lblQuestion.setText(round.getQuestion().getCategory().toString());
-//                chatList.add("GAME: De categorie is " + round.getQuestion().getCategory() + "\n");
-//
-//                //Waits a few seconds before showing the question.
-//                waitTimer = new Timer(true);
-//                waitTimer.schedule(new WaitingForGameState(gameController, GameState.GAMERUNNING), 3500);
-//                break;
-//            case GAMERUNNING:
-//                //Gamestate where question can be answered. starts the gametimer which is set to a specific time.
-//                disableButtons(false);
-//                round = gameController.getCurrentRound();
-//                lblQuestion.setText(round.getQuestion().getQuestionContents());
-//                btnAnswer1.setText(round.getQuestion().getAnswer1());
-//                btnAnswer2.setText(round.getQuestion().getAnswer2());
-//                btnAnswer3.setText(round.getQuestion().getAnswer3());
-//                btnAnswer4.setText(round.getQuestion().getAnswer4());
-//                startGameTimer();
-//                break;
-//
-//            case ANSWERED:
-//                //Gamestate where question has been answered or time has run out(answer will be 0).
-//                //checks what the user did and gives correct feedback to user.
-//                disableButtons(true);
-//                int score = gameController.getCurrentScore();
-//                if (gameController.checkAnswer(user, pbRoundTimer.getProgress())) {
-//                    score = gameController.getCurrentScore() - score;
-//                    chatList.add("GAME: Goed gedaan! je krijgt " + score + " punten!");
-//                } else {
-//                    chatList.add("GAME: Jammer!");
-//                }
-//                lblScore.setText(String.valueOf(gameController.getCurrentScore()));
-//                setButtonCorrect(gameController.getCorrectAnswer());
-//                waitTimer = new Timer(true);
-//
-//                //Checks if game is over and continuesaccording to this check
-//                if (gameController.getCurrentRoundIndex() + 1 == gameController.getGame().getAmountOfRounds()) {
-//                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.GAMEFINISHED), 2500);
-//                } else {
-//                    waitTimer.schedule(new WaitingForGameState(gameController, GameState.WAITINGFORCATEGORY), 2500);
-//                }
-//                break;
-//
-//            case GAMEFINISHED:
-//                //Game has ended. upload all information and show user game has ended.
-//                gameController.endGame(user);
-//                chatList.add("GAME:  De Game is afgelopen! \n Je score is " + gameController.getCurrentScore() + "! Goed Bezig!");
-//                break;
-//
-//            case WAITINGFORPLAYERS:
-//                chatList.add("GAME: Wachten op spelers");
-//                btnStartGame.setDisable(false);
-//                new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            while (gameController.checkPlayers() != 4) {
-//                                //Wait
-//                            }
-//                            gameController.setGameState(WAITINGFORCATEGORY);
-//                            countPlayers = 0;
-//                        } catch (RemoteException ex) {
-//                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
-//
-//                }.run();
-//
-//                break;
-//
-//            default:
-//                //do nothing
-//                break;
-//        }
-//    }
 
     /**
      * Resets the game UI to the standard empty playing field so next round can
      * start.
      */
     private void resetQuestionUI() throws RemoteException {
-        //lblScore.setText("aaaa");
         lblQuestion.setText("Hier komt straks de vraag");
         btnAnswer1.setText("");
         btnAnswer2.setText("");
@@ -700,6 +567,13 @@ public class FXMLController implements Initializable {
         btnAnswer4.setStyle("");
     }
 
+    /**
+     * Function to update the current user interface with the newest recieved
+     * data
+     *
+     * @param scores the scores to put in the score labels
+     * @param names the names to put in the player labels
+     */
     public void refreshUI(int[] scores, List<String> names) {
         lblPlayer1.setText(names.get(0));
         lblScore1.setText(String.valueOf(scores[0]));
@@ -731,6 +605,7 @@ public class FXMLController implements Initializable {
 
     /**
      * Adds text user typed to the chatlistview
+     * @throws java.rmi.RemoteException
      */
     @FXML
     public void btnChatClicked() throws RemoteException {
@@ -742,6 +617,7 @@ public class FXMLController implements Initializable {
     /**
      * fires when the button Spin is clicked. cancels the wait timer and starts
      * the spinning gamestate.
+     * @throws java.rmi.RemoteException
      */
     @FXML
     public void btnSpinClicked() throws RemoteException {
@@ -751,13 +627,10 @@ public class FXMLController implements Initializable {
     /**
      * Starts an animation timer to spin the wheel.
      *
-     * @param wheelspeed
+     * @param rotation the rotation the wheel has to do
      */
     public void spinWheel(int rotation) {
-
-        System.out.println("SPIN THE WHEEL ON JAT");
         //wheelspeed is random between 13 and 19 pixels per tick.
-        //wheelSpeed = 13 + rng.nextInt(6);
         animationTimer = new AnimationTimer() {
             private long prevUpdate;
 
@@ -819,7 +692,6 @@ public class FXMLController implements Initializable {
                         try {
                             //Timer has ended. gameround ends and current answer has to be wrong.
                             progress = 0;
-                            System.out.println("PROGRESSBAR IS RUNNINGS");
                             currentAnswer = 0;
                             gs.playerAnswered(joinedRoom);
                             disableButtons(true);
@@ -884,7 +756,6 @@ public class FXMLController implements Initializable {
     private void setAnswer(ActionEvent event) throws RemoteException {
         disableButtons(true);
         animationTimer.stop();
-        System.out.println("I DID THE ANWSERING");
         Button b = (Button) event.getSource();
 
         if (b.getId().contains("1")) {
@@ -917,56 +788,94 @@ public class FXMLController implements Initializable {
         if (waitTimer != null) {
             waitTimer.cancel();
         }
-        gameController = null;
         updateRoomList(gs.sendGameRoomData());
         setWindows(2);
     }
 
     /**
      * logs user out and sets windows back to loginpage
+     * @throws java.rmi.RemoteException
      */
     @FXML
     public void logOut() throws RemoteException {
         user = null;
         errorlabel.setText("");
-        gameController = null;
         chatClient.leaveChatroom();
         setWindows(1);
     }
 
+    /**
+     * Update the game rooms list
+     *
+     * @param gameRoomsData the gameroom list data
+     */
     public void updateRoomList(List<IGameRoom> gameRoomsData) {
         lobbyRooms.clear();
         lobbyRooms.addAll(gameRoomsData);
     }
 
+    /**
+     * Update the player list
+     *
+     * @param playerData the playerlist data
+     */
     public void updatePlayerList(List<String> playerData) {
         players.clear();
         players.addAll(playerData);
     }
 
+    /**
+     * Disable the start button
+     *
+     * @param state true/false to disable
+     */
     public void disableStartButton(boolean state) {
         btnStartGame.setDisable(state);
     }
 
+    /**
+     * Disable the spin button
+     *
+     * @param state true/false to disable
+     */
     public void disableSpinButton(boolean state) {
         btnSpin.setDisable(state);
     }
 
+    /**
+     * Set the userindex of the player
+     *
+     * @param i the userindex
+     */
     public void setUserIndex(int i) {
         userIndex = i;
-        System.out.println("Ik ben player " + userIndex);
     }
 
+    /**
+     * Stop the spinning of the wheel.
+     *
+     * @throws RemoteException
+     */
     public void stopSpin() throws RemoteException {
         animationTimer.stop();
         gs.stopSpin(joinedRoom, wheel.getRotate());
     }
 
+    /**
+     * Function that gets called from the refresh button, refreshes the current
+     * game room list
+     *
+     * @throws RemoteException
+     */
     @FXML
-    public void btnRefreshGameRooms() throws RemoteException{
+    public void btnRefreshGameRooms() throws RemoteException {
         updateRoomList(gs.sendGameRoomData());
     }
-    
+
+    /**
+     * Load the masterserver properties, currently it only loads the IP the
+     * maserserver is running on
+     */
     public void loadProperties() {
         try {
             Properties prop = new Properties();

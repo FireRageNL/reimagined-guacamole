@@ -9,8 +9,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import reimaginedguacamole.profile.IGameClient;
-import reimaginedguacamole.profile.IProfile;
-
 
 /**
  *
@@ -68,14 +66,61 @@ public interface IGameRoom extends Remote {
      */
     public void announceRoom() throws RemoteException;
 
+    /**
+     * Function that returns the game room string representation
+     *
+     * @return the gamerooms string representation
+     * @throws RemoteException
+     */
     public String getGameRoomListing() throws RemoteException;
-    
+
+    /**
+     * Function to get the gamecontroller associated with the gameroom
+     *
+     * @return the gamecontroller
+     * @throws RemoteException
+     */
     public IGameController getGameController() throws RemoteException;
-    
+
+    /**
+     * function to get all the players currently in the gameroom
+     *
+     * @return the players in the gameroom
+     * @throws RemoteException
+     */
+    public List<IGameClient> getPlayers() throws RemoteException;
+
+    /**
+     * Function to get the amount of players finished with their current action
+     * and awaiting the change to the next gamestate
+     *
+     * @return the amount of players finsihed
+     * @throws RemoteException
+     */
     public int getPlayersDone() throws RemoteException;
-    
+
+    /**
+     * Function to set the players awaiting the change to the next gamestate to
+     * 0
+     *
+     * @throws RemoteException
+     */
     public void setPlayersDone() throws RemoteException;
-    
+
+    /**
+     * Function that gets called when a player is finished with their action and
+     * they're awaiting the change to the the next gamestate
+     *
+     * @throws RemoteException
+     */
     public void addPlayerDone() throws RemoteException;
+
+    /**
+     * Function to get the amount of rounds in a game
+     *
+     * @return the amount of rounds as a string
+     * @throws RemoteException
+     */
+    public String getNumberOfRounds() throws RemoteException;
 
 }
