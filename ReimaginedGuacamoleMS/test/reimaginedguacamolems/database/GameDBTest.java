@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import reimaginedguacamole.game.Category;
+import reimaginedguacamole.profile.IStatistic;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Statistic;
 
@@ -36,16 +37,16 @@ public class GameDBTest {
         ProfileDB test = new ProfileDB();
         prof = test.getProfileData("test@test.test");
         int expResult = 0;
-        List<Statistic> stats = prof.getStatistics();
-        for(Statistic s : stats){
+        List<IStatistic> stats = prof.getStatistics();
+        for(IStatistic s : stats){
             if(s.getCategory() == Category.ART){
                 expResult = s.getWrong() + 1;
             }
         }
         int result = 0;
         instance.updateStats(prof, cat, right);
-        List<Statistic> updatedStats = test.getStatistics(prof.getPid());
-        for(Statistic s: updatedStats){
+        List<IStatistic> updatedStats = test.getStatistics(prof.getPid());
+        for(IStatistic s: updatedStats){
             if(s.getCategory() == Category.ART){
                 result = s.getWrong();
             }
@@ -67,16 +68,16 @@ public class GameDBTest {
         ProfileDB test = new ProfileDB();
         prof = test.getProfileData("test@test.test");
         int expResult = 0;
-        List<Statistic> stats = prof.getStatistics();
-        for(Statistic s : stats){
+        List<IStatistic> stats = prof.getStatistics();
+        for(IStatistic s : stats){
             if(s.getCategory() == Category.ART){
                 expResult = s.getRight() + 1;
             }
         }
         int result = 0;
         instance.updateStats(prof, cat, right);
-        List<Statistic> updatedStats = test.getStatistics(prof.getPid());
-        for(Statistic s: updatedStats){
+        List<IStatistic> updatedStats = test.getStatistics(prof.getPid());
+        for(IStatistic s: updatedStats){
             if(s.getCategory() == Category.ART){
                 result = s.getRight();
             }
