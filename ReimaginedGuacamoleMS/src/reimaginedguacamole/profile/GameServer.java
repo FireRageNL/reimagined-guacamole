@@ -33,7 +33,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public boolean tryLogin(String username, String password) throws RemoteException {
+    public synchronized boolean tryLogin(String username, String password) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
         boolean login = pdb.login(password, username);
         if (!login) {
@@ -92,18 +92,18 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void startGame(IGameRoom joinedRoom) throws RemoteException {
+    public synchronized void startGame(IGameRoom joinedRoom) throws RemoteException {
         joinedRoom.getGameController().startNextRound();
         joinedRoom.getGameController().setGameState(GameState.WAITINGFORCATEGORY);
         this.getUserIndex(joinedRoom);
     }
 
     @Override
-    public void nextRound(IGameRoom joinedRoom) throws RemoteException {
+    public synchronized void nextRound(IGameRoom joinedRoom) throws RemoteException {
         joinedRoom.addPlayerDone();
         if (joinedRoom.getPlayersDone() == 4) {
             joinedRoom.setPlayersDone();
-            if (joinedRoom.getGameController().getCurrentRoundIndex() < Integer.getInteger(joinedRoom.getNumberOfRounds())) {
+            if (joinedRoom.getGameController().getCurrentRoundIndex() < Integer.parseInt(joinedRoom.getNumberOfRounds()) - 1 ) {
                 joinedRoom.getGameController().startNextRound();
                 joinedRoom.getGameController().setGameState(GameState.WAITINGFORCATEGORY);
             } else {
@@ -145,7 +145,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void stopSpin(IGameRoom joinedRoom, double rotation) throws RemoteException {
+    public synchronized void stopSpin(IGameRoom joinedRoom, double rotation) throws RemoteException {
         joinedRoom.addPlayerDone();
         System.out.println("one player done spinning");
         System.out.println("Rotation: " + rotation);
@@ -163,7 +163,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void startRound(IGameRoom joinedRoom) throws RemoteException {
+    public synchronized void startRound(IGameRoom joinedRoom) throws RemoteException {
         joinedRoom.addPlayerDone();
         if (joinedRoom.getPlayersDone() == 4) {
             joinedRoom.setPlayersDone();
@@ -184,7 +184,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void playerAnswered(IGameRoom joinedRoom) throws RemoteException {
+    public synchronized void playerAnswered(IGameRoom joinedRoom) throws RemoteException {
         joinedRoom.addPlayerDone();
         if (joinedRoom.getPlayersDone() == 4) {
             joinedRoom.setPlayersDone();
@@ -193,7 +193,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void checkAnswers(IGameRoom joinedRoom, int userIndex, int score) throws RemoteException {
+    public synchronized void checkAnswers(IGameRoom joinedRoom, int userIndex, int score) throws RemoteException {
         joinedRoom.addPlayerDone();
         joinedRoom.getPlayers().get(userIndex).getProfile().addScore(score);
 

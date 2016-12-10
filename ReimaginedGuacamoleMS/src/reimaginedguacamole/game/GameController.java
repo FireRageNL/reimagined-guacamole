@@ -166,6 +166,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     @Override
     public void setGameState(GameState gameState) throws RemoteException {
         this.gameState = gameState;
+        System.out.println("Deez state of the game are being set: "+gameState.toString());
         gs.broadcastGameState(gameState, gr);
     }
 
