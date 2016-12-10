@@ -10,8 +10,6 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import reimaginedguacamole.game.IGameController;
-import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.gui.FXMLController;
 
 /**
@@ -19,7 +17,7 @@ import reimaginedguacamole.gui.FXMLController;
  *
  * @author daan
  */
-public class spinTimerTask extends TimerTask {
+public class SpinTimerTask extends TimerTask {
 
     FXMLController game;
 
@@ -28,9 +26,8 @@ public class spinTimerTask extends TimerTask {
      *
      * @param g the game where the state will be changed after the timer
      * finished
-     * @param gamestate the controller this timer has to be made for
      */
-    public spinTimerTask(FXMLController g) {
+    public SpinTimerTask(FXMLController g) {
         game = g;
     }
 
@@ -40,10 +37,8 @@ public class spinTimerTask extends TimerTask {
             try {
                 game.stopSpin();
             } catch (RemoteException ex) {
-                Logger.getLogger(spinTimerTask.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SpinTimerTask.class.getName()).log(Level.SEVERE, null, ex);
             }
-                ;
-
         });
     }
 
