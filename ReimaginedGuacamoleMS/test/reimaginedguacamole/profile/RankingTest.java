@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.rmi.RemoteException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -21,7 +22,7 @@ public class RankingTest {
      * Test of getNickname method, of class Ranking.
      */
     @Test
-    public void testGetNickname() {
+    public void testGetNickname() throws RemoteException {
         System.out.println("getNickname");
         Ranking instance = new Ranking(10,"nickname", 10);
         String expResult = "nickname";
@@ -33,7 +34,7 @@ public class RankingTest {
      * Test of getRank method, of class Ranking.
      */
     @Test
-    public void testGetRank() {
+    public void testGetRank() throws RemoteException {
         System.out.println("getRank");
         Ranking instance = new Ranking(10,"nickname", 10);
         int expResult = 10;
@@ -45,7 +46,7 @@ public class RankingTest {
      * Test of getScore method, of class Ranking.
      */
     @Test
-    public void testGetScore() {
+    public void testGetScore() throws RemoteException {
         System.out.println("getScore");
         Ranking instance = new Ranking(10,"nickname", 10);
         int expResult = 10;

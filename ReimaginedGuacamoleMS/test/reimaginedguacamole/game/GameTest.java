@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.game;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -16,32 +17,18 @@ import static org.junit.Assert.*;
  */
 public class GameTest {
     
+    
     public GameTest() {
-    }
-
-    /**
-     * Test of getQuestionsList method, of class Game.
-     */
-    @Test
-    public void testGetQuestionsList() {
-        System.out.println("getQuestionsList");
-        Question question = new Question("What is your name?","Arthur","Lancelot","John","Jimmy",1,Category.History);
-         List<Question> lijst = new ArrayList<Question>();
-         lijst.add(question);
-        Game instance = new Game(5,10);
-        instance.questionsList = lijst;
-        Question expResult = question;
-        Question result = instance.getQuestionsList().get(0);
-        assertEquals(expResult, result);
     }
 
     /**
      * Test of getRoundDuration method, of class Game.
      */
     @Test
-    public void testGetRoundDuration() {
+    public void testGetRoundDuration() throws RemoteException {
         System.out.println("getRoundDuration");
-        Game instance = new Game(5,10);
+        Game instance = new Game();
+        instance.setAmountOfRounds(10);
         int expResult = 10;
         int result = instance.getRoundDuration();
         assertEquals(expResult, result);
@@ -51,11 +38,11 @@ public class GameTest {
      * Test of setRoundDuration method, of class Game.
      */
     @Test
-    public void testSetRoundDuration() {
+    public void testSetRoundDuration() throws RemoteException {
         System.out.println("setRoundDuration");
         int roundDuration = 15;
         int expResult = roundDuration;
-        Game instance = new Game(5,10);
+        Game instance = new Game();
         instance.setRoundDuration(roundDuration);
         int result = instance.getRoundDuration();
         assertEquals(expResult, result);
@@ -65,9 +52,9 @@ public class GameTest {
      * Test of getAmountOfRounds method, of class Game.
      */
     @Test
-    public void testGetAmountOfRounds() {
+    public void testGetAmountOfRounds() throws RemoteException {
         System.out.println("getAmountOfRounds");
-        Game instance = new Game(5,10);
+        Game instance = new Game();
         int expResult = 5;
         int result = instance.getAmountOfRounds();
         assertEquals(expResult, result);

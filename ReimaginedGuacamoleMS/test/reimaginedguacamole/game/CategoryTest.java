@@ -5,22 +5,26 @@
  */
 package reimaginedguacamole.game;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author Marc
+ * @author Jorrit
  */
 public class CategoryTest {
     
     public CategoryTest() {
     }
-    
+
     /**
      * Test of values method, of class Category.
      */
-    @Test
+   @Test
     public void testValuesEntertaintment() {
         System.out.println("values");
         Category expResult = Category.ENTERTAINMENT;
@@ -46,7 +50,7 @@ public class CategoryTest {
     public void testValueOfHistory() {
         System.out.println("valueOf");
         String expResult = "Geschiedenis";
-        Category.valueOf("History");
+        Category.valueOf("HISTORY");
         String result = Category.HISTORY.toString();
         assertEquals(expResult, result);
     }
@@ -58,7 +62,7 @@ public class CategoryTest {
     public void testValueOfArt() {
         System.out.println("valueOf");
         String expResult = "Kunst";
-        Category.valueOf("Art");
+        Category.valueOf("ART");
         String result = Category.ART.toString();
         assertEquals(expResult, result);
     }
@@ -70,7 +74,7 @@ public class CategoryTest {
     public void testValueOfGames() {
         System.out.println("valueOf");
         String expResult = "Spellen";
-        Category.valueOf("Games");
+        Category.valueOf("GAMES");
         String result = Category.GAMES.toString();
         assertEquals(expResult, result);
     }
@@ -82,7 +86,7 @@ public class CategoryTest {
     public void testValueOfMusic() {
         System.out.println("valueOf");
         String expResult = "Muziek";
-        Category.valueOf("Music");
+        Category.valueOf("MUSIC");
         String result = Category.MUSIC.toString();
         assertEquals(expResult, result);
 
@@ -95,9 +99,8 @@ public class CategoryTest {
     public void testValueOfScience() {
         System.out.println("valueOf");
         String expResult = "Wetenschap";
-        Category.valueOf("Science");
+        Category.valueOf("SCIENCE");
         String result = Category.SCIENCE.toString();
         assertEquals(expResult, result);
     }
-    
 }

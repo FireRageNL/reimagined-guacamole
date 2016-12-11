@@ -7,11 +7,14 @@ package reimaginedguacamolems.database;
 
 import java.rmi.RemoteException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import javafx.collections.ObservableList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import reimaginedguacamole.profile.Achievement;
 import reimaginedguacamole.profile.History;
+import reimaginedguacamole.profile.IHistory;
+import reimaginedguacamole.profile.IRanking;
 import reimaginedguacamole.profile.Profile;
 import reimaginedguacamole.profile.Ranking;
 import reimaginedguacamole.tooling.Hashing;
@@ -154,7 +157,7 @@ public class ProfileDBTest {
         System.out.println("getRankings");
         ProfileDB instance = new ProfileDB();
         ObservableList<Ranking> expResult = null;
-        ObservableList<Ranking> result = (ObservableList<Ranking>) instance.getRankings();
+        List<IRanking> result = instance.getRankings();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -169,7 +172,7 @@ public class ProfileDBTest {
         int username = 0;
         ProfileDB instance = new ProfileDB();
         ObservableList<History> expResult = null;
-        ObservableList<History> result = (ObservableList<History>) instance.getHistory(username);
+        List<IHistory> result = instance.getHistory(username);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

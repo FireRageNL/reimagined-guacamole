@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.rmi.RemoteException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import reimaginedguacamole.game.Category;
@@ -23,10 +24,10 @@ public class StatisticTest {
      * Test of getCategory method, of class Statistic.
      */
     @Test
-    public void testGetCategory() {
+    public void testGetCategory() throws RemoteException {
         System.out.println("getCategory");
-        Statistic instance = new Statistic(Category.Art,10,20);
-        Category expResult = Category.Art;
+        Statistic instance = new Statistic(Category.ART,10,20);
+        Category expResult = Category.ART;
         Category result = instance.getCategory();
         assertEquals(expResult, result);
     }
@@ -35,9 +36,9 @@ public class StatisticTest {
      * Test of getRight method, of class Statistic.
      */
     @Test
-    public void testGetRight() {
+    public void testGetRight() throws RemoteException {
         System.out.println("getRight");
-        Statistic instance = new Statistic(Category.Art,10,20);
+        Statistic instance = new Statistic(Category.ART,10,20);
         int expResult = 10;
         int result = instance.getRight();
         assertEquals(expResult, result);
@@ -47,10 +48,10 @@ public class StatisticTest {
      * Test of setRight method, of class Statistic.
      */
     @Test
-    public void testSetRight() {
+    public void testSetRight() throws RemoteException {
         System.out.println("setRight");
         int right = 20;
-        Statistic instance = new Statistic(Category.Art,10,20);
+        Statistic instance = new Statistic(Category.ART,10,20);
         instance.setRight(right);
         assertEquals(right,instance.getRight());
     }
@@ -59,9 +60,9 @@ public class StatisticTest {
      * Test of getWrong method, of class Statistic.
      */
     @Test
-    public void testGetWrong() {
+    public void testGetWrong() throws RemoteException {
         System.out.println("getWrong");
-        Statistic instance = new Statistic(Category.Art,10,20);
+        Statistic instance = new Statistic(Category.ART,10,20);
         int expResult = 20;
         int result = instance.getWrong();
         assertEquals(expResult, result);
@@ -71,10 +72,10 @@ public class StatisticTest {
      * Test of setWrong method, of class Statistic.
      */
     @Test
-    public void testSetWrong() {
+    public void testSetWrong() throws RemoteException {
         System.out.println("setWrong");
         int wrong = 30;
-        Statistic instance = new Statistic(Category.Art,10,20);
+        Statistic instance = new Statistic(Category.ART,10,20);
         instance.setWrong(wrong);
         assertEquals(wrong,instance.getWrong());
     }
@@ -83,9 +84,9 @@ public class StatisticTest {
      * Test of returnPercenntage method, of class Statistic.
      */
     @Test
-    public void testReturnPercenntage() {
+    public void testReturnPercenntage() throws RemoteException {
         System.out.println("returnPercenntage");
-        Statistic instance = new Statistic(Category.Art,20,20);
+        Statistic instance = new Statistic(Category.ART,20,20);
         int expResult = 50;
         int result = instance.returnPercentage();
         assertEquals(expResult, result);

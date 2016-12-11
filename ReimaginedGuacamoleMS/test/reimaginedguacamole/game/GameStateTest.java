@@ -10,10 +10,13 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author roy_v
+ * @author Jorrit
  */
 public class GameStateTest {
-    
+
+    /**
+     * Test of values method, of class GameState.
+     */
     public GameStateTest() {
     }
 
@@ -36,7 +39,7 @@ public class GameStateTest {
         System.out.println("valueOf");
         String name = "Waiting";
         GameState expResult = GameState.WAITING;
-        GameState result = GameState.values()[6];
+        GameState result = GameState.valueOf(name);
         assertEquals(expResult, result);
 
     }

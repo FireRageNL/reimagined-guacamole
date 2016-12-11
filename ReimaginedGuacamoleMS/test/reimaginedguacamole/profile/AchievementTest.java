@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.rmi.RemoteException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -21,7 +22,7 @@ public class AchievementTest {
      * Test of getDescription method, of class Achievement.
      */
     @Test
-    public void testGetDescription() {
+    public void testGetDescription() throws RemoteException {
         System.out.println("getDescription");
         Achievement instance = new Achievement("This achievement is purely created for test purposes","Testachievement");
         String expResult = "This achievement is purely created for test purposes";
@@ -33,7 +34,7 @@ public class AchievementTest {
      * Test of getName method, of class Achievement.
      */
     @Test
-    public void testGetName() {
+    public void testGetName() throws RemoteException {
         System.out.println("getName");
         Achievement instance = new Achievement("This achievement is purely created for test purposes","Testachievement");
         String expResult = "Testachievement";

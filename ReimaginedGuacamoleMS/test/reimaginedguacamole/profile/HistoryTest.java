@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.rmi.RemoteException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -21,7 +22,7 @@ public class HistoryTest {
      * Test of getDate method, of class History.
      */
     @Test
-    public void testGetDate() {
+    public void testGetDate() throws RemoteException {
         System.out.println("getDate");
         History instance = new History("18/10/2016:0000",10);
         String expResult = "18/10/2016";
@@ -33,7 +34,7 @@ public class HistoryTest {
      * Test of getScore method, of class History.
      */
     @Test
-    public void testGetScore() {
+    public void testGetScore() throws RemoteException {
         System.out.println("getScore");
          History instance = new History("18/10/2016:0000",10);
         int expResult = 10;

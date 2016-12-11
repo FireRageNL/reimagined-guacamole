@@ -5,23 +5,24 @@
  */
 package reimaginedguacamole.game;
 
+import java.rmi.RemoteException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author Marc
+ * @author Jorrit
  */
 public class PowerUpTest {
     
-    public PowerUpTest() {
+   public PowerUpTest() {
     }
 
     /**
      * Test of getDescription method, of class PowerUp.
      */
     @Test
-    public void testGetDescription() {
+    public void testGetDescription() throws RemoteException {
         System.out.println("getDescription");
         PowerUp instance = new PowerUp("Extra Punten" , "Krijg bij de volgende vraag extra punten");
         String expResult = "Krijg bij de volgende vraag extra punten";
@@ -33,7 +34,7 @@ public class PowerUpTest {
      * Test of getName method, of class PowerUp.
      */
     @Test
-    public void testGetName() {
+    public void testGetName() throws RemoteException {
         System.out.println("getName");
         PowerUp instance = new PowerUp("Extra Punten" , "Krijg bij de volgende vraag extra punten");
         String expResult = "Extra Punten";

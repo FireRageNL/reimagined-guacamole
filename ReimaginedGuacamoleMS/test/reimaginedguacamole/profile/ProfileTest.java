@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
@@ -13,8 +14,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import reimaginedguacamole.database.ProfileDB;
 import reimaginedguacamole.game.Category;
+import reimaginedguacamolems.database.ProfileDB;
 
 /**
  *
@@ -45,7 +46,7 @@ public class ProfileTest {
      * Test of getEmail method, of class Profile.
      */
     @Test
-    public void testGetEmail() {
+    public void testGetEmail() throws RemoteException {
         System.out.println("getEmail");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
         String expResult = "test@email.com";
@@ -57,7 +58,7 @@ public class ProfileTest {
      * Test of getName method, of class Profile.
      */
     @Test
-    public void testGetName() {
+    public void testGetName() throws RemoteException {
         System.out.println("getName");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
         String expResult = "test";
@@ -69,7 +70,7 @@ public class ProfileTest {
      * Test of getNickname method, of class Profile.
      */
     @Test
-    public void testGetNickname() {
+    public void testGetNickname() throws RemoteException {
         System.out.println("getNickname");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
         String expResult = "Testie";
@@ -81,7 +82,7 @@ public class ProfileTest {
      * Test of getPid method, of class Profile.
      */
     @Test
-    public void testGetPid() {
+    public void testGetPid() throws RemoteException {
         System.out.println("getPid");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
         int expResult = 2;
@@ -93,7 +94,7 @@ public class ProfileTest {
      * Test of getWins method, of class Profile.
      */
     @Test
-    public void testGetWins() {
+    public void testGetWins() throws RemoteException {
         System.out.println("getWins");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
         int expResult = 10;
@@ -105,7 +106,7 @@ public class ProfileTest {
      * Test of getLosses method, of class Profile.
      */
     @Test
-    public void testGetLosses() {
+    public void testGetLosses() throws RemoteException {
         System.out.println("getLosses");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
         int expResult = 20;
@@ -117,7 +118,7 @@ public class ProfileTest {
      * Test of addWin method, of class Profile.
      */
     @Test
-    public void testAddWin() {
+    public void testAddWin() throws RemoteException {
         System.out.println("addWin");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
         instance.addWin();
@@ -130,7 +131,7 @@ public class ProfileTest {
      * Test of addLoss method, of class Profile.
      */
     @Test
-    public void testAddLoss() {
+    public void testAddLoss() throws RemoteException {
         System.out.println("addLoss");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
         instance.addLoss();
@@ -143,7 +144,7 @@ public class ProfileTest {
      * Test of getStatistics method, of class Profile.
      */
     @Test
-    public void testGetStatistics() {
+    public void testGetStatistics() throws RemoteException {
         System.out.println("getStatistics");
         ProfileDB db = new ProfileDB();
         Profile instance = db.getProfileData("test@test.test");
@@ -153,26 +154,10 @@ public class ProfileTest {
     }
 
     /**
-     * Test of setStatistics method, of class Profile.
-     */
-    @Test
-    public void testSetStatistics() {
-        System.out.println("setStatistics");
-        
-        List<Statistic> stat = new ArrayList<>();
-        stat.add(new Statistic(Category.Art,9,2));
-        Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
-        instance.setStatistics(stat);
-        int expResult = 9;
-        int result = instance.getStatistics().get(0).getRight();
-        assertEquals(expResult,result);
-    }
-
-    /**
      * Test of setNickName method, of class Profile.
      */
     @Test
-    public void testSetNickName() {
+    public void testSetNickName() throws RemoteException {
         System.out.println("setNickName");
         String nick = "testnickname1234";
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
@@ -184,7 +169,7 @@ public class ProfileTest {
      * Test of getAchievements method, of class Profile.
      */
     @Test
-    public void testGetAchievements() {
+    public void testGetAchievements() throws RemoteException {
         System.out.println("getAchievements");
         Achievement toAdd = new Achievement("Such a pretty test achievement","test");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
@@ -198,7 +183,7 @@ public class ProfileTest {
      * Test of addAchievement method, of class Profile.
      */
     @Test
-    public void testAddAchievement() {
+    public void testAddAchievement() throws RemoteException {
         System.out.println("addAchievement");
         Achievement toAdd = new Achievement("Such a pretty test achievement","test");
         Profile instance = new Profile("test@email.com","test","Testie",2,10,20);
