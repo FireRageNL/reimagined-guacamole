@@ -141,13 +141,28 @@ public interface IGameController extends Remote {
      * @throws java.rmi.RemoteException
      */
     public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException;
-    
+
     /**
-     * 
+     * Adds a player to the game controller when someone joins, to be able to
+     * easily checked in other functions
+     *
+     * @throws RemoteException
+     */
+    public void addPlayersCount() throws RemoteException;
+
+    /**
+     * Removes a player to the game controller when someone leaves, to be able
+     * to easily checked in other functions
+     *
+     * @throws RemoteException
+     */
+    public void removePlayersCount() throws RemoteException;
+
+    /**
+     * Gets the user that is allowed to spin
+     * @return int of the user that is allowed to spin
      * @throws RemoteException 
      */
-    public void AddPlayersCount() throws RemoteException;
-    
     public int getCurrentUser() throws RemoteException;
 
 }

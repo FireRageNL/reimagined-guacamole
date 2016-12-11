@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.IStatistic;
 import reimaginedguacamole.profile.Profile;
-import reimaginedguacamole.profile.Statistic;
 
 /**
  *

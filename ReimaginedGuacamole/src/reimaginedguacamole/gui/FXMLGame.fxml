@@ -28,7 +28,7 @@
         </ImageView>
       </children>
     </Pane>
-    <Pane fx:id="profilePane" focusTraversable="false" layoutX="14.0" layoutY="12.0" prefHeight="625.0" prefWidth="908.0" visible="false">
+    <Pane fx:id="profilePane" focusTraversable="false" layoutX="13.0" layoutY="12.0" prefHeight="625.0" prefWidth="908.0" visible="true">
       <children>
         <TabPane layoutX="16.0" layoutY="7.0" prefHeight="610.9998779296875" prefWidth="892.0" rotateGraphic="false" side="TOP" tabClosingPolicy="UNAVAILABLE" visible="true">
           <tabs>
@@ -295,6 +295,7 @@
                                   </VBox.margin>
                                 </Label>
                                 <ListView fx:id="lvPlayers" prefHeight="195.0" prefWidth="100.0" />
+                                <Button font="$x1" minHeight="25.0" minWidth="95.0" mnemonicParsing="false" onAction="#btnRefreshGameRooms" prefHeight="25.0" prefWidth="95.0" text="Refresh" />
                               </children>
                             </VBox>
                           </children>
@@ -349,7 +350,7 @@
         </TabPane>
       </children>
     </Pane>
-    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="true">
+    <Pane fx:id="gamePane" layoutX="13.0" layoutY="10.0" opacity="1.0" prefHeight="624.9998779296875" prefWidth="908.0" visible="false">
       <children>
         <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="638.9998779296875" prefWidth="906.0">
           <children>
@@ -364,12 +365,12 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label fx:id="lblGameName" text="Player 1:">
+                            <Label id="lblGameName" fx:id="lblPlayer1" text="Player 1:">
                               <font>
                                 <Font size="25.0" fx:id="x6" />
                               </font>
                             </Label>
-                            <Label fx:id="lblScore" font="$x6" text="100">
+                            <Label id="lblScore" fx:id="lblScore1" font="$x6" text="100">
                               <HBox.margin>
                                 <Insets left="20.0" />
                               </HBox.margin>
@@ -378,8 +379,8 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label font="$x6" text="Player 2:" />
-                            <Label font="$x6" text="100">
+                            <Label fx:id="lblPlayer2" font="$x6" text="Player 2:" />
+                            <Label fx:id="lblScore2" font="$x6" text="100">
                               <HBox.margin>
                                 <Insets left="20.0" />
                               </HBox.margin>
@@ -388,8 +389,8 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label font="$x6" text="Player 3:" />
-                            <Label font="$x6" text="100">
+                            <Label fx:id="lblPlayer3" font="$x6" text="Player 3:" />
+                            <Label fx:id="lblScore3" font="$x6" text="100">
                               <HBox.margin>
                                 <Insets left="20.0" />
                               </HBox.margin>
@@ -398,8 +399,8 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="37.9609375" prefWidth="302.0">
                           <children>
-                            <Label font="$x6" text="Player 4:" />
-                            <Label font="$x6" text="100">
+                            <Label fx:id="lblPlayer4" font="$x6" text="Player 4:" />
+                            <Label fx:id="lblScore4" font="$x6" text="100">
                               <HBox.margin>
                                 <Insets left="20.0" />
                               </HBox.margin>

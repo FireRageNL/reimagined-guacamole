@@ -53,6 +53,7 @@ public class Profile extends UnicastRemoteObject implements IProfile, Serializab
         this.pid = pid;
         this.wins = wins;
         this.losses = losses;
+        this.score = 0;
         achievements = new ArrayList<>();
 
     }
@@ -143,6 +144,11 @@ public class Profile extends UnicastRemoteObject implements IProfile, Serializab
     @Override
     public int getScore() throws RemoteException {
         return score;
+    }
+
+    @Override
+    public void addScore(int score) throws RemoteException {
+        this.score += score;
     }
 
 }

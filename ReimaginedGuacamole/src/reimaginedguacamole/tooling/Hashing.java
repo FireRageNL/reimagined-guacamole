@@ -10,13 +10,21 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author roy_v
  */
 public class Hashing {
 
+    private Hashing() {
+        //Constructor override
+    }
+
+    /**
+     * Function to return a SHA-265 hashed password from a user inputted password
+     * @param input the password to be hashes
+     * @return the password hash
+     */
     public static String hashPassword(String input) {
         StringBuilder sb = new StringBuilder();
         MessageDigest md;

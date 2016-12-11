@@ -27,20 +27,21 @@ public class Client extends UnicastRemoteObject implements IClient {
     private IChatServer server;
     private ObservableList<String> chat;
     private FXMLController application;
-    private final String IP = "192.168.1.116";
 
     /**
      * Constructor for a client of the chatserver
      *
      * @param prof the profile to get the nickname for
      * @param chat the list where all the chat messages will be added
+     * @param app the controller that initiated this client
+     * @param ip the IP of the masterserver
      * @throws RemoteException
      */
-    public Client(IProfile prof, ObservableList<String> chat,FXMLController app) throws RemoteException {
+    public Client(IProfile prof, ObservableList<String> chat,FXMLController app, String ip) throws RemoteException {
         try {
             this.chat = chat;
             this.name = prof.getNickname();
-            Registry reg2 = LocateRegistry.getRegistry(IP, 666);
+            Registry reg2 = LocateRegistry.getRegistry(ip, 666);
             server = (IChatServer) reg2.lookup("ChatServer");
             server.clientEnter(this);
             application = app;
@@ -87,9 +88,9 @@ public class Client extends UnicastRemoteObject implements IClient {
 
     @Override
     public void updatePlayerList(List<String> playerData) throws RemoteException {
-        Platform.runLater(() ->{
-            application.updatePlayerList(playerData);
-        });
+        Platform.runLater(() -> 
+            application.updatePlayerList(playerData)
+        );
     }
 
     @Override
