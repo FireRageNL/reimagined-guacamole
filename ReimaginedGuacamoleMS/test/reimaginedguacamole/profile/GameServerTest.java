@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.After;
@@ -13,8 +14,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import reimaginedguacamole.game.GameRoom;
 import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.game.IGameRoom;
+import reimaginedguacamole.tooling.Hashing;
 
 /**
  *
@@ -47,14 +50,12 @@ public class GameServerTest {
     @Test
     public void testTryLogin() throws Exception {
         System.out.println("tryLogin");
-        String username = "";
-        String password = "";
+        String username = "daan@email.com";
+        String password = "8f447168a4a83aa70f492d927abf96843dc2b33d0e4f45d4199955ba9496135d";
         GameServer instance = new GameServer();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.tryLogin(username, password);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -63,13 +64,11 @@ public class GameServerTest {
     @Test
     public void testGetCurrentProfile() throws Exception {
         System.out.println("getCurrentProfile");
-        String email = "";
+        String email = "daan@email.com";
         GameServer instance = new GameServer();
-        IProfile expResult = null;
+        String expResult = "Daan";
         IProfile result = instance.getCurrentProfile(email);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result.getName());
     }
 
     /**
@@ -78,11 +77,14 @@ public class GameServerTest {
     @Test
     public void testRegisterNewUser() throws Exception {
         System.out.println("registerNewUser");
-        Map profileData = null;
+        Map profileData = new LinkedHashMap();
+        String email = System.currentTimeMillis()+ "@test.com";
+        profileData.put("Email", email);
+        profileData.put("Password", Hashing.hashPassword("doot"));
+        profileData.put("Nickname", "WhatAWeirdNick");
+        profileData.put("Name", Integer.toString((int) System.currentTimeMillis()));
         GameServer instance = new GameServer();
         instance.registerNewUser(profileData);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -91,16 +93,13 @@ public class GameServerTest {
     @Test
     public void testCreateGameRoom() throws Exception {
         System.out.println("createGameRoom");
-        int duration = 0;
-        int rounds = 0;
-        String roomname = "";
-        String ip = "";
+        int duration = 5;
+        int rounds = 10;
+        String roomname = "Test";
+        String ip = "127.0.0.1";
         GameServer instance = new GameServer();
-        IGameRoom expResult = null;
         IGameRoom result = instance.createGameRoom(duration, rounds, roomname, ip);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(roomname, result.toString());
     }
 
     /**
@@ -110,11 +109,8 @@ public class GameServerTest {
     public void testSendGameRoomData() throws Exception {
         System.out.println("sendGameRoomData");
         GameServer instance = new GameServer();
-        List<IGameRoom> expResult = null;
         List<IGameRoom> result = instance.sendGameRoomData();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(true, result.isEmpty());
     }
 
     /**
@@ -123,12 +119,12 @@ public class GameServerTest {
     @Test
     public void testJoinRoom() throws Exception {
         System.out.println("joinRoom");
-        IGameClient user = null;
-        IGameRoom room = null;
+        IGameRoom room = new GameRoom();
         GameServer instance = new GameServer();
+        IGameClient user = (IGameClient) instance.getCurrentProfile("daan@email.com");
         instance.joinRoom(user, room);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -137,11 +133,11 @@ public class GameServerTest {
     @Test
     public void testStartGame() throws Exception {
         System.out.println("startGame");
-        IGameRoom joinedRoom = null;
+        IGameRoom joinedRoom = new GameRoom();
         GameServer instance = new GameServer();
         instance.startGame(joinedRoom);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -151,11 +147,11 @@ public class GameServerTest {
     public void testBroadcastGameState() throws Exception {
         System.out.println("broadcastGameState");
         GameState gameState = null;
-        IGameRoom gr = null;
+        IGameRoom gr = new GameRoom();
         GameServer instance = new GameServer();
         instance.broadcastGameState(gameState, gr);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -164,13 +160,13 @@ public class GameServerTest {
     @Test
     public void testGetCurrentUser() throws Exception {
         System.out.println("getCurrentUser");
-        IGameRoom joinedRoom = null;
+        IGameRoom joinedRoom = new GameRoom();
         GameServer instance = new GameServer();
         int expResult = 0;
         int result = instance.getCurrentUser(joinedRoom);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -179,11 +175,11 @@ public class GameServerTest {
     @Test
     public void testGetUserIndex() throws Exception {
         System.out.println("getUserIndex");
-        IGameRoom joinedRoom = null;
+        IGameRoom joinedRoom = new GameRoom();
         GameServer instance = new GameServer();
         instance.getUserIndex(joinedRoom);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -192,11 +188,11 @@ public class GameServerTest {
     @Test
     public void testSpinWheel() throws Exception {
         System.out.println("spinWheel");
-        IGameRoom joinedRoom = null;
+        IGameRoom joinedRoom = new GameRoom();
         GameServer instance = new GameServer();
         instance.spinWheel(joinedRoom);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
 }

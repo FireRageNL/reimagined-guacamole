@@ -45,11 +45,9 @@ public class ChatServerTest {
     public void testListClients() throws Exception {
         System.out.println("listClients");
         ChatServer instance = new ChatServer();
-        List<String> expResult = null;
-        List<String> result = instance.listClients();
+        int expResult = 0;
+        int result = instance.listClients().size();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -58,11 +56,9 @@ public class ChatServerTest {
     @Test
     public void testBroadcastMessage() throws Exception {
         System.out.println("broadcastMessage");
-        String message = "";
+        String message = "Testmessage";
         ChatServer instance = new ChatServer();
         instance.broadcastMessage(message);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -74,8 +70,7 @@ public class ChatServerTest {
         IClient client = null;
         ChatServer instance = new ChatServer();
         instance.clientEnter(client);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        fail("Faalt door rmi");
     }
 
     /**
@@ -87,8 +82,7 @@ public class ChatServerTest {
         IClient client = null;
         ChatServer instance = new ChatServer();
         instance.clientExit(client);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        fail("Faalt door rmi");
     }
     
 }

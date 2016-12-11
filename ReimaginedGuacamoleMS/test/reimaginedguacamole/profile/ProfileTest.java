@@ -6,15 +6,12 @@
 package reimaginedguacamole.profile;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import reimaginedguacamole.game.Category;
 import reimaginedguacamolems.database.ProfileDB;
 
 /**
