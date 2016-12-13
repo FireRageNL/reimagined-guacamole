@@ -70,6 +70,9 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     public void startNextRound() {
         currentRoundIndex++;
         currentUser++;
+        if(currentUser == 4){
+            currentUser=0;
+        }
         currentRound = rounds.get(currentRoundIndex);
 
     }
