@@ -483,13 +483,19 @@ public class FXMLController implements Initializable {
                 currentAnswer = 0;
                 disableButtons(true);
                 if (gs.getCurrentUser(joinedRoom) == userIndex) {
+                    chatList.add("Jij mag spinnen!");
                     btnSpin.setDisable(false);
+                }
+                else{
+                    chatList.add("Iemand anders mag spinnen!");
                 }
 
                 break;
             case SPINNINGFINISHED:
                 pbRoundTimer.setProgress(-1);
-                lblQuestion.setText("De Categorie is: " + gs.getCategory(joinedRoom));
+                String category = gs.getCategory(joinedRoom);
+                lblQuestion.setText("De Categorie is: " + category);
+                chatList.add("GAME: De categorie is "+ category);
                 waitTimer = new Timer(true);
                 waitTimer.schedule(new TimerTask() {
                     @Override
@@ -521,6 +527,7 @@ public class FXMLController implements Initializable {
                 int score = 0;
                 double timeLeft = pbRoundTimer.getProgress();
                 if (currentAnswer == currentCorrectAnswer) {
+                    
                     score = 50 + (100 + (int) (timeLeft * 100));
                 }
                 gs.checkAnswers(joinedRoom, userIndex, score);
@@ -543,6 +550,7 @@ public class FXMLController implements Initializable {
                 }, 10000);
                 break;
             case GAMEFINISHED:
+                chatList.add("GAME: De game is afgelopen!");
                 gs.refreshUI(joinedRoom);
                 break;
             default:
