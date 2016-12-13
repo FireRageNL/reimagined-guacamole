@@ -450,6 +450,7 @@ public class FXMLController implements Initializable {
 
     private void joinGame(IGameRoom room) throws RemoteException, NotBoundException {
         gs.joinRoom(gameClient, room);
+        disableButtons(true);
         chatClient.leaveChatroom();
         joinedRoom = room;
     }
@@ -622,6 +623,7 @@ public class FXMLController implements Initializable {
     @FXML
     public void btnSpinClicked() throws RemoteException {
         gs.spinWheel(joinedRoom);
+        disableSpinButton(true);
     }
 
     /**
