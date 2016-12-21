@@ -230,7 +230,7 @@ public class FXMLController implements Initializable {
                     user = ms.getCurrentProfile(username);
                     gameClient.setProf(user);
                     chatClient = new Client(user, lobbyChat, this, ip);
-                    updateRoomList(gs.sendGameRoomData());
+                    updateRoomList(gs.sendGameRoomData()); //This causes a nullpointer exception; TODO FIX NULLPOINTER
                     fillProfileData();
                     setWindows(2);
                 } else {

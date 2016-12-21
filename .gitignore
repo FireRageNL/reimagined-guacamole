@@ -30,3 +30,4 @@ ReimaginedGuacamoleMS/.jacocoverage/
 *.sonar_lock
 ReimaginedGuacamole/.sonar/report-task.txt
 ReimaginedGuacamoleMS/.sonar/report-task.txt
+ReimaginedGuacamole/nbproject/jfx-impl_backup*.xml
