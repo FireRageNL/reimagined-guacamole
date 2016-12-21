@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.gui;
 
+import reimaginedguacamole.networking.IMasterServer;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -187,6 +188,7 @@ public class FXMLController implements Initializable {
     private ObservableList<String> players;
     private IGameServer gs;
     private IGameRoom joinedRoom;
+    private IMasterServer ms;
     int wheelRotation = 0;
     double progress;
     private Client chatClient;
@@ -217,14 +219,15 @@ public class FXMLController implements Initializable {
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
                 Registry reg = LocateRegistry.getRegistry(ip, 666);
-                gs = (IGameServer) reg.lookup("GameServer");
+                //gs = (IGameServer) reg.lookup("GameServer");
+                ms = (IMasterServer) reg.lookup("MasterServer");
                 //Tries to log in
                 String password = Hashing.hashPassword(pass);
-                boolean loggedin = gs.tryLogin(username, password);
+                boolean loggedin = ms.tryLogin(username, password);
 
                 if (loggedin) {
                     //gets user date from database and sets the window to the profile page.
-                    user = gs.getCurrentProfile(username);
+                    user = ms.getCurrentProfile(username);
                     gameClient.setProf(user);
                     chatClient = new Client(user, lobbyChat, this, ip);
                     updateRoomList(gs.sendGameRoomData());
@@ -339,7 +342,7 @@ public class FXMLController implements Initializable {
             List<String> res = result.get();
             try {
                 String sip = InetAddress.getLocalHost().getHostAddress();
-                joinGame(gs.createGameRoom(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)), res.get(2), sip));
+                joinGame(gs.createGameRoom(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)), res.get(2), sip,ms));
             } catch (RemoteException ex) {
                 Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);
             }

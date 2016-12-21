@@ -10,9 +10,13 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import reimaginedguacamole.game.Category;
+import reimaginedguacamole.game.IGame;
+import reimaginedguacamole.game.IQuestion;
+import reimaginedguacamole.networking.IMasterServer;
 import reimaginedguacamole.profile.IProfile;
-import reimaginedguacamolems.database.GameDB;
-import reimaginedguacamolems.database.QuestionDB;
+//import reimaginedguacamolems.database.GameDB;
+//import reimaginedguacamolems.database.QuestionDB;
 
 /**
  * Class that holds all important game information
@@ -23,8 +27,9 @@ public class Game extends UnicastRemoteObject implements IGame {
     
     private int amountOfRounds;
     private int roundDuration;
-    private QuestionDB qDB = new QuestionDB();
-    private GameDB gDB = new GameDB();
+    private IMasterServer ms;
+    //private QuestionDB qDB = new QuestionDB();
+    //private GameDB gDB = new GameDB();
     private List<IQuestion> questionsList;
 
     /**
@@ -33,6 +38,10 @@ public class Game extends UnicastRemoteObject implements IGame {
      */
     public Game() throws RemoteException {
         //Default constructor
+    }
+    
+    public Game(IMasterServer ms) throws RemoteException{
+        this.ms = ms;
     }
     
     @Override
@@ -59,18 +68,18 @@ public class Game extends UnicastRemoteObject implements IGame {
     @Override
     public void setAmountOfRounds(int amount) throws RemoteException {
         this.amountOfRounds = amount;
-        questionsList = qDB.getQuestions(amount);
+        questionsList = ms.getQuestions(amount);
         Logger.getLogger(Game.class.getName()).log(Level.INFO, "Amount of rounds set as: " + amount);
     }
     
     @Override
     public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException {
-        gDB.updateStats(prof, cat, right);
+        ms.updateStats(prof, cat, right);
     }
     
     @Override
     public void endGame(int userID, int score) throws RemoteException {
-        gDB.endGame(userID, score);
+        ms.endGame(userID, score);
         Logger.getLogger(Game.class.getCanonicalName()).log(Level.INFO,"Game for user "+ userID+" finished with a score of "+ score);
     }
     

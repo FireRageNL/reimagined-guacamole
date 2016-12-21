@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reimaginedguacamole.profile;
+package reimaginedguacamole.gameserver;
 
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
@@ -11,14 +11,15 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import reimaginedguacamole.game.GameRoom;
 import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.game.IGameRoom;
-import reimaginedguacamolems.database.ProfileDB;
+import reimaginedguacamole.networking.IMasterServer;
+import reimaginedguacamole.profile.IGameClient;
+import reimaginedguacamole.profile.IGameServer;
 
 /**
  *
@@ -27,41 +28,21 @@ import reimaginedguacamolems.database.ProfileDB;
 public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     private List<IGameRoom> gameRooms = new ArrayList<>();
+    private IMasterServer ms;
 
     public GameServer() throws RemoteException {
         //Wooo new thingy :D
     }
 
-    @Override
-    public synchronized boolean tryLogin(String username, String password) throws RemoteException {
-        ProfileDB pdb = new ProfileDB();
-        boolean login = pdb.login(password, username);
-        if (!login) {
-            Logger.getLogger(GameServer.class.getName()).log(Level.INFO, "Login try for user " + username + " failed");
-        } else {
-            Logger.getLogger(GameServer.class.getName()).log(Level.INFO, "Login try for user " + username + " succeded");
-        }
-        return login;
+    public GameServer(IMasterServer ms) throws RemoteException {
+        this.ms = ms;
     }
 
     @Override
-    public IProfile getCurrentProfile(String email) throws RemoteException {
-        ProfileDB pdb = new ProfileDB();
-        return pdb.getProfileData(email);
-    }
-
-    @Override
-    public void registerNewUser(Map profileData) throws RemoteException {
-        ProfileDB pdb = new ProfileDB();
-        pdb.newUserRegistration(profileData);
-        Logger.getLogger(Register.class.getName()).log(Level.INFO, "User registration!");
-    }
-
-    @Override
-    public IGameRoom createGameRoom(int duration, int rounds, String roomname, String ip) throws RemoteException {
+    public IGameRoom createGameRoom(int duration, int rounds, String roomname, String ip, IMasterServer ms) throws RemoteException {
         GameRoom gr;
         try {
-            gr = new GameRoom(duration, rounds, roomname, ip, this);
+            gr = new GameRoom(duration, rounds, roomname, ip, this,ms);
             gameRooms.add(gr);
             sendGameRoomData();
             Logger.getLogger(GameServer.class.getName()).log(Level.INFO, "Added a new GameRoom: {0}", gr.getName());

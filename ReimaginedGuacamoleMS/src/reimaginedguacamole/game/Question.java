@@ -7,6 +7,10 @@ package reimaginedguacamole.game;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import reimaginedguacamole.game.Category;
+import reimaginedguacamole.game.Category;
+import reimaginedguacamole.game.IQuestion;
+import reimaginedguacamole.game.IQuestion;
 
 /**
  *Class that holds necessary information for a question

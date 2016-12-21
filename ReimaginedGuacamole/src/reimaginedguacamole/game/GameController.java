@@ -12,7 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import reimaginedguacamole.profile.GameServer;
+import reimaginedguacamole.game.Category;
+import reimaginedguacamole.game.Game;
+import reimaginedguacamole.game.GameState;
+import reimaginedguacamole.game.IGame;
+import reimaginedguacamole.game.IGameController;
+import reimaginedguacamole.game.IQuestion;
+import reimaginedguacamole.game.IRound;
+import reimaginedguacamole.game.Round;
+import reimaginedguacamole.gameserver.GameServer;
+import reimaginedguacamole.networking.IMasterServer;
 import reimaginedguacamole.profile.IProfile;
 
 /**
@@ -34,6 +43,7 @@ public class GameController extends UnicastRemoteObject implements IGameControll
     private GameServer gs;
     private GameRoom gr;
     private int currentUser;
+    private IMasterServer ms;
 
     /**
      * Constructor that gets called when a new game gets created
@@ -44,8 +54,9 @@ public class GameController extends UnicastRemoteObject implements IGameControll
      * @throws RemoteException
      * @throws NotBoundException 
      */
-    public GameController(int amountOfRounds, int duration, GameServer gs, GameRoom gr) throws RemoteException, NotBoundException {
-        game = new Game();
+    public GameController(int amountOfRounds, int duration, GameServer gs, GameRoom gr,IMasterServer ms) throws RemoteException, NotBoundException {
+        this.ms = ms;
+        game = new Game(ms);
         game.setAmountOfRounds(amountOfRounds);
         game.setRoundDuration(duration);
         rounds = new ArrayList<>();
