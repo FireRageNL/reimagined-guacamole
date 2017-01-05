@@ -50,6 +50,7 @@ import java.util.logging.Logger;
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
 import reimaginedguacamole.game.IGameRoom;
+import reimaginedguacamole.gameserver.ServerRunnable;
 import reimaginedguacamole.tooling.Hashing;
 
 /**
@@ -184,7 +185,7 @@ public class FXMLController implements Initializable {
     private GameClient gameClient;
     private ObservableList<String> chatList;
     private ObservableList<String> lobbyChat;
-    private ObservableList<IGameRoom> lobbyRooms;
+    private ObservableList<IGameServer> lobbyRooms;
     private ObservableList<String> players;
     private IGameServer gs;
     private IGameRoom joinedRoom;
@@ -230,7 +231,7 @@ public class FXMLController implements Initializable {
                     user = ms.getCurrentProfile(username);
                     gameClient.setProf(user);
                     chatClient = new Client(user, lobbyChat, this, ip);
-                    updateRoomList(gs.sendGameRoomData()); //This causes a nullpointer exception; TODO FIX NULLPOINTER
+                    updateRoomList(ms.sendGameRoomData()); //This causes a nullpointer exception; TODO FIX NULLPOINTER
                     fillProfileData();
                     setWindows(2);
                 } else {
@@ -269,16 +270,16 @@ public class FXMLController implements Initializable {
         lobbyRooms = FXCollections.observableArrayList();
         lvGameRooms.setFixedCellSize(50);
         lvGameRooms.setItems(lobbyRooms);
-        lvGameRooms.setCellFactory(new Callback<ListView<IGameRoom>, ListCell<IGameRoom>>() {
+        lvGameRooms.setCellFactory(new Callback<ListView<IGameServer>, ListCell<IGameServer>>() {
             @Override
-            public ListCell<IGameRoom> call(ListView<IGameRoom> param) {
-                return new ListCell<IGameRoom>() {
+            public ListCell<IGameServer> call(ListView<IGameServer> param) {
+                return new ListCell<IGameServer>() {
                     @Override
-                    protected void updateItem(IGameRoom gameRoom, boolean bln) {
+                    protected void updateItem(IGameServer gameRoom, boolean bln) {
                         super.updateItem(gameRoom, bln);
                         if (gameRoom != null) {
                             try {
-                                setText(gameRoom.getGameRoomListing());
+                                setText(gameRoom.sendGameRoomData().getGameRoomListing());
                             } catch (RemoteException ex) {
                                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -334,7 +335,7 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private void clickCreateGame(ActionEvent event) throws UnknownHostException, NotBoundException {
+    private void clickCreateGame(ActionEvent event) throws UnknownHostException, NotBoundException, InterruptedException {
         GameRoomDialog gamedialog = new GameRoomDialog();
         Optional<List> result = gamedialog.getDialog().showAndWait();
 
@@ -342,7 +343,11 @@ public class FXMLController implements Initializable {
             List<String> res = result.get();
             try {
                 String sip = InetAddress.getLocalHost().getHostAddress();
-                joinGame(gs.createGameRoom(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)), res.get(2), sip,ms));
+                ServerRunnable sr = new ServerRunnable(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)), res.get(2), sip,ms);
+                Thread serverThread = new Thread(sr);
+                serverThread.start();
+                Thread.sleep(500);
+                updateRoomList(ms.sendGameRoomData());
             } catch (RemoteException ex) {
                 Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -445,17 +450,18 @@ public class FXMLController implements Initializable {
     @FXML
     private void btnJoinGameClicked(ActionEvent event) {
         try {
-            joinGame((IGameRoom) lvGameRooms.getSelectionModel().getSelectedItem());
+            joinGame((IGameServer) lvGameRooms.getSelectionModel().getSelectedItem());
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void joinGame(IGameRoom room) throws RemoteException, NotBoundException {
-        gs.joinRoom(gameClient, room);
+    private void joinGame(IGameServer server) throws RemoteException, NotBoundException {
+        gs = server;
+        gs.joinRoom(gameClient);
         disableButtons(true);
         chatClient.leaveChatroom();
-        joinedRoom = room;
+        joinedRoom = gs.sendGameRoomData();
     }
 
     /**
@@ -793,7 +799,7 @@ public class FXMLController implements Initializable {
     @FXML
     public void quitGame() throws RemoteException {
         fillProfileData();
-        gs.leaveRoom(gameClient, joinedRoom);
+        gs.leaveRoom(gameClient);
         chatClient.enterChatroom();
         if (animationTimer != null) {
             animationTimer.stop();
@@ -801,7 +807,7 @@ public class FXMLController implements Initializable {
         if (waitTimer != null) {
             waitTimer.cancel();
         }
-        updateRoomList(gs.sendGameRoomData());
+        updateRoomList(ms.sendGameRoomData());
         setWindows(2);
     }
 
@@ -822,7 +828,7 @@ public class FXMLController implements Initializable {
      *
      * @param gameRoomsData the gameroom list data
      */
-    public void updateRoomList(List<IGameRoom> gameRoomsData) {
+    public void updateRoomList(List<IGameServer> gameRoomsData) {
         lobbyRooms.clear();
         lobbyRooms.addAll(gameRoomsData);
     }
@@ -882,7 +888,7 @@ public class FXMLController implements Initializable {
      */
     @FXML
     public void btnRefreshGameRooms() throws RemoteException {
-        updateRoomList(gs.sendGameRoomData());
+        updateRoomList(ms.sendGameRoomData());
     }
 
     /**

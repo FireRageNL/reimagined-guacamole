@@ -7,12 +7,15 @@ package reimaginedguacamole.networking;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import reimaginedguacamole.game.Category;
+import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.game.IQuestion;
+import reimaginedguacamole.profile.IGameServer;
 import reimaginedguacamole.profile.IProfile;
 import reimaginedguacamole.profile.Register;
 import reimaginedguacamolems.database.ProfileDB;
@@ -23,6 +26,8 @@ import reimaginedguacamolems.database.QuestionDB;
  * @author roy_v
  */
 public class MasterServer extends UnicastRemoteObject implements IMasterServer {
+
+    private List<IGameServer> gameservers = new ArrayList<>();
 
     public MasterServer() throws RemoteException {
         //Empty constructor because of reasons
@@ -62,13 +67,28 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     @Override
     public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
-        
+
     }
 
     @Override
     public void endGame(int userID, int score) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
-        
+
+    }
+
+    @Override
+    public void regNewGame(IGameServer gs) throws RemoteException {
+        gameservers.add(gs);
+    }
+
+    @Override
+    public void unregGameServer(IGameServer gs) throws RemoteException {
+        gameservers.remove(gs);
+    }
+
+    @Override
+    public List<IGameServer> sendGameRoomData() throws RemoteException {
+        return gameservers;
     }
 
 }

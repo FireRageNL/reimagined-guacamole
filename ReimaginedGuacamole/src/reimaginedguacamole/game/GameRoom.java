@@ -43,7 +43,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     /**
      * Constructor to build a new game room
      *
-     * @param rounds the amount of rouds the game in the game room will have
+     * @param rounds the amount of rounds the game in the game room will have
      * @param duration the time period a person has for anwsering a question in
      * this game
      * @param roomname the name of the room

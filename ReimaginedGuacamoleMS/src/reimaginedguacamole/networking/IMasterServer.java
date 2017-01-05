@@ -10,7 +10,9 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
 import reimaginedguacamole.game.Category;
+import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.game.IQuestion;
+import reimaginedguacamole.profile.IGameServer;
 import reimaginedguacamole.profile.IProfile;
 
 /**
@@ -52,4 +54,10 @@ public interface IMasterServer extends Remote {
     public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException;
 
     public void endGame(int userID, int score) throws RemoteException;
+    
+    public void regNewGame(IGameServer gs) throws RemoteException;
+    
+    public void unregGameServer(IGameServer gs) throws RemoteException;
+    
+    public List<IGameServer> sendGameRoomData() throws RemoteException;
 }

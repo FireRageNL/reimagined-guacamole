@@ -27,7 +27,7 @@ import reimaginedguacamole.profile.IGameServer;
  */
 public class GameServer extends UnicastRemoteObject implements IGameServer {
 
-    private List<IGameRoom> gameRooms = new ArrayList<>();
+    private GameRoom gameRoom;
     private IMasterServer ms;
 
     public GameServer() throws RemoteException {
@@ -40,13 +40,11 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     @Override
     public IGameRoom createGameRoom(int duration, int rounds, String roomname, String ip, IMasterServer ms) throws RemoteException {
-        GameRoom gr;
         try {
-            gr = new GameRoom(duration, rounds, roomname, ip, this,ms);
-            gameRooms.add(gr);
+            gameRoom = new GameRoom(duration, rounds, roomname, ip, this,ms);
             sendGameRoomData();
-            Logger.getLogger(GameServer.class.getName()).log(Level.INFO, "Added a new GameRoom: {0}", gr.getName());
-            return gr;
+            Logger.getLogger(GameServer.class.getName()).log(Level.INFO, "Added a new GameRoom: {0}", gameRoom.getName());
+            return gameRoom;
         } catch (NotBoundException | UnknownHostException ex) {
             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -54,17 +52,17 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public List<IGameRoom> sendGameRoomData() throws RemoteException {
-        return gameRooms;
+    public IGameRoom sendGameRoomData() throws RemoteException {
+        return gameRoom;
     }
 
     @Override
-    public void joinRoom(IGameClient user, IGameRoom room) throws RemoteException {
+    public void joinRoom(IGameClient user) throws RemoteException {
         try {
 
-            room.joinRoom(user);
+            gameRoom.joinRoom(user);
             user.joinGame();
-            if (room.getNrOfPlayers() == 4) {
+            if (gameRoom.getNrOfPlayers() == 4) {
                 user.disableStartButton(false);
             }
         } catch (RemoteException ex) {
@@ -73,8 +71,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void leaveRoom(IGameClient user, IGameRoom room) throws RemoteException{
-        room.leaveRoom(user);
+    public void leaveRoom(IGameClient user) throws RemoteException{
+        gameRoom.leaveRoom(user);
     }
     @Override
     public synchronized void startGame(IGameRoom joinedRoom) throws RemoteException {
