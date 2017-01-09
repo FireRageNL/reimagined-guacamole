@@ -47,7 +47,14 @@ import java.util.Properties;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.gameserver.ServerRunnable;
@@ -57,7 +64,7 @@ import reimaginedguacamole.tooling.Hashing;
  *
  * @author daan
  */
-public class FXMLController implements Initializable {
+public class FXMLController extends Application implements Initializable {
 
     @FXML
     private Label errorlabel;
@@ -199,12 +206,36 @@ public class FXMLController implements Initializable {
     private int userIndex;
     private int currentAnswer = 0;
     private int currentCorrectAnswer;
+    private Thread serverThread;
 
     // TIMERS
     private Timer waitTimer;
     private AnimationTimer animationTimer;
     public static final int NANO_TICKS = 20000000;
     private String ip;
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLGame.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnCloseRequest(e -> Platform.exit());
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+    @Override
+    public void stop() throws Exception{
+     if(serverThread.isAlive()){
+         serverThread.interrupt();
+     }   
+    }
 
     /**
      * checks usercredentials with database. Sends user to profile page when
@@ -343,8 +374,8 @@ public class FXMLController implements Initializable {
             List<String> res = result.get();
             try {
                 String sip = InetAddress.getLocalHost().getHostAddress();
-                ServerRunnable sr = new ServerRunnable(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)), res.get(2), sip,ms);
-                Thread serverThread = new Thread(sr);
+                ServerRunnable sr = new ServerRunnable(Integer.parseInt(res.get(0)), Integer.parseInt(res.get(1)), res.get(2), sip, ms);
+                serverThread = new Thread(sr);
                 serverThread.start();
                 Thread.sleep(500);
                 updateRoomList(ms.sendGameRoomData());
@@ -494,8 +525,7 @@ public class FXMLController implements Initializable {
                 if (gs.getCurrentUser(joinedRoom) == userIndex) {
                     chatList.add("Jij mag spinnen!");
                     btnSpin.setDisable(false);
-                }
-                else{
+                } else {
                     chatList.add("Iemand anders mag spinnen!");
                 }
 
@@ -504,7 +534,7 @@ public class FXMLController implements Initializable {
                 pbRoundTimer.setProgress(-1);
                 String category = gs.getCategory(joinedRoom);
                 lblQuestion.setText("De Categorie is: " + category);
-                chatList.add("GAME: De categorie is "+ category);
+                chatList.add("GAME: De categorie is " + category);
                 waitTimer = new Timer(true);
                 waitTimer.schedule(new TimerTask() {
                     @Override
@@ -536,7 +566,7 @@ public class FXMLController implements Initializable {
                 int score = 0;
                 double timeLeft = pbRoundTimer.getProgress();
                 if (currentAnswer == currentCorrectAnswer) {
-                    
+
                     score = 50 + (100 + (int) (timeLeft * 100));
                 }
                 gs.checkAnswers(joinedRoom, userIndex, score);
@@ -623,6 +653,7 @@ public class FXMLController implements Initializable {
 
     /**
      * Adds text user typed to the chatlistview
+     *
      * @throws java.rmi.RemoteException
      */
     @FXML
@@ -635,6 +666,7 @@ public class FXMLController implements Initializable {
     /**
      * fires when the button Spin is clicked. cancels the wait timer and starts
      * the spinning gamestate.
+     *
      * @throws java.rmi.RemoteException
      */
     @FXML
@@ -813,6 +845,7 @@ public class FXMLController implements Initializable {
 
     /**
      * logs user out and sets windows back to loginpage
+     *
      * @throws java.rmi.RemoteException
      */
     @FXML
