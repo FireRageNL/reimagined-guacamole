@@ -28,15 +28,15 @@ import reimaginedguacamole.profile.IGameServer;
 public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     private GameRoom gameRoom;
-    private IMasterServer ms;
 
+    /**
+     * Constructor to override default constructor
+     * @throws RemoteException 
+     */
     public GameServer() throws RemoteException {
-        //Wooo new thingy :D
+        //Such override
     }
 
-    public GameServer(IMasterServer ms) throws RemoteException {
-        this.ms = ms;
-    }
 
     @Override
     public IGameRoom createGameRoom(int duration, int rounds, String roomname, String ip, IMasterServer ms) throws RemoteException {

@@ -229,12 +229,13 @@ public class FXMLController extends Application implements Initializable {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
     @Override
-    public void stop() throws Exception{
-     if(serverThread.isAlive()){
-         serverThread.interrupt();
-     }   
+    public void stop() throws Exception {
+        chatClient.leaveChatroom();
+        if (serverThread.isAlive()) {
+            serverThread.interrupt();
+        }
     }
 
     /**
@@ -251,7 +252,6 @@ public class FXMLController extends Application implements Initializable {
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
                 Registry reg = LocateRegistry.getRegistry(ip, 666);
-                //gs = (IGameServer) reg.lookup("GameServer");
                 ms = (IMasterServer) reg.lookup("MasterServer");
                 //Tries to log in
                 String password = Hashing.hashPassword(pass);
@@ -262,7 +262,7 @@ public class FXMLController extends Application implements Initializable {
                     user = ms.getCurrentProfile(username);
                     gameClient.setProf(user);
                     chatClient = new Client(user, lobbyChat, this, ip);
-                    updateRoomList(ms.sendGameRoomData()); //This causes a nullpointer exception; TODO FIX NULLPOINTER
+                    updateRoomList(ms.sendGameRoomData());
                     fillProfileData();
                     setWindows(2);
                 } else {

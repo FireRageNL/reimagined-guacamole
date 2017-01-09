@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import reimaginedguacamole.game.IGameController;
-import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.profile.ChatServer;
 import reimaginedguacamole.gameserver.GameServer;
 import reimaginedguacamole.networking.IMasterServer;
@@ -31,7 +29,6 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     private String name;
     private List<IGameClient> players;
     private ChatServer chatServer;
-    private IMasterServer ms;
     private IGameController gameController;
     private String ip;
     private int playersDone;
@@ -55,7 +52,6 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
      * @throws UnknownHostException
      */
     public GameRoom(int rounds, int duration, String roomname, String ip, GameServer gs, IMasterServer ms) throws RemoteException, NotBoundException, UnknownHostException {
-        this.ms = ms;
         this.gameController = new GameController(rounds, duration, gs, this,ms);
         this.players = new ArrayList<>();
         this.name = roomname;

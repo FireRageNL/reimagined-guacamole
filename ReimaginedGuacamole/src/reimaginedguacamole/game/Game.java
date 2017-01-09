@@ -10,13 +10,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import reimaginedguacamole.game.Category;
-import reimaginedguacamole.game.IGame;
-import reimaginedguacamole.game.IQuestion;
 import reimaginedguacamole.networking.IMasterServer;
 import reimaginedguacamole.profile.IProfile;
-//import reimaginedguacamolems.database.GameDB;
-//import reimaginedguacamolems.database.QuestionDB;
 
 /**
  * Class that holds all important game information
@@ -28,8 +23,6 @@ public class Game extends UnicastRemoteObject implements IGame {
     private int amountOfRounds;
     private int roundDuration;
     private IMasterServer ms;
-    //private QuestionDB qDB = new QuestionDB();
-    //private GameDB gDB = new GameDB();
     private List<IQuestion> questionsList;
 
     /**
@@ -40,6 +33,11 @@ public class Game extends UnicastRemoteObject implements IGame {
         //Default constructor
     }
     
+    /**
+     * Constructor for a Game
+     * @param ms the masterserver
+     * @throws RemoteException 
+     */
     public Game(IMasterServer ms) throws RemoteException{
         this.ms = ms;
     }

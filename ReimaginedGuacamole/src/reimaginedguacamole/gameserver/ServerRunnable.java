@@ -23,9 +23,23 @@ public class ServerRunnable implements Runnable {
     private String roomName;
     private String ip;
 
+    /**
+     * Constructor to override the default constructor
+     * @throws RemoteException 
+     */
     public ServerRunnable() throws RemoteException {
+        //Such override
     }
 
+    /**
+     * Constructor to create a new gameServer thread
+     * @param duration The amount of time that a player has to answer a question
+     * @param rounds The amount of rounds a game has
+     * @param roomname The name of the room
+     * @param ip The IP of the server the room runs on
+     * @param ms The masterserver
+     * @throws RemoteException 
+     */
     public ServerRunnable(int duration, int rounds, String roomname, String ip, IMasterServer ms) throws RemoteException {
         this.ms = ms;
         this.duration = duration;
@@ -37,16 +51,12 @@ public class ServerRunnable implements Runnable {
     @Override
     public void run() {
         try {
-            gs = new GameServer(ms);
+            gs = new GameServer();
             gs.createGameRoom(duration, rounds, roomName, ip, ms);
             ms.regNewGame(gs);
-            while (true) {
-                try {
-                    System.out.println("I am running Details: " + gs.sendGameRoomData().getGameRoomListing());
-                } catch (RemoteException ex) {
-                    Logger.getLogger(ServerRunnable.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            while (!Thread.interrupted()) {
             }
+
         } catch (RemoteException ex) {
             Logger.getLogger(ServerRunnable.class.getName()).log(Level.SEVERE, null, ex);
         }

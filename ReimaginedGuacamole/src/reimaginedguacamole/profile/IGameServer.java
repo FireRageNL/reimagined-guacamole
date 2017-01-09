@@ -8,7 +8,6 @@ package reimaginedguacamole.profile;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
-import reimaginedguacamole.game.GameRoom;
 import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.networking.IMasterServer;
@@ -29,6 +28,7 @@ public interface IGameServer extends Remote {
      * @param rounds the amout of rounds in a game
      * @param roomname the name of the gameroom
      * @param ip the IP address the game runs on
+     * @param ms The masterserver
      * @return the newly created gameroom object
      * @throws RemoteException
      */
@@ -37,7 +37,7 @@ public interface IGameServer extends Remote {
     /**
      * Function to publish the roomdata into the lobby view
      *
-     * @return
+     * @return the data of the gameroom
      * @throws RemoteException
      */
     public IGameRoom sendGameRoomData() throws RemoteException;
@@ -47,7 +47,6 @@ public interface IGameServer extends Remote {
      * data gets pushed to every user in the lobby
      *
      * @param user the user to add to the list of users
-     * @param room the room that the user is joining
      * @throws RemoteException
      */
     public void joinRoom(IGameClient user) throws RemoteException;
@@ -169,7 +168,6 @@ public interface IGameServer extends Remote {
      * Function that removes a user from a room
      *
      * @param user the user that is leaving the room
-     * @param room the room the user is leaving
      * @throws RemoteException
      */
     public void leaveRoom(IGameClient user) throws RemoteException;
