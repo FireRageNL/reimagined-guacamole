@@ -532,10 +532,10 @@ public class FXMLController extends Application implements Initializable {
                 currentAnswer = 0;
                 disableButtons(true);
                 if (gs.getCurrentUser(joinedRoom) == userIndex) {
-                    chatList.add("Jij mag spinnen!");
+                    chatList.add("GAME: Jij mag spinnen!");
                     btnSpin.setDisable(false);
                 } else {
-                    chatList.add("Iemand anders mag spinnen!");
+                    chatList.add("GAME: Iemand anders mag spinnen!");
                 }
 
                 break;
