@@ -107,7 +107,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     }
     
     @Override
-    public Client getChatClient(){
+    public IClient getChatClient(){
         return chatClient;
     }
     
