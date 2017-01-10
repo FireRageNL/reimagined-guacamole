@@ -60,5 +60,7 @@ public interface IClient extends Remote {
      * @throws RemoteException
      */
     public void updatePlayerList(List<String> playerData) throws RemoteException;
+    
+    public void setChatServer(IChatServer server) throws RemoteException;
 
 }
