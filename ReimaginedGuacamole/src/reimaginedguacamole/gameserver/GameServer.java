@@ -19,6 +19,7 @@ import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.networking.IMasterServer;
 import reimaginedguacamole.profile.ChatServer;
+import reimaginedguacamole.profile.IChatServer;
 import reimaginedguacamole.profile.IGameClient;
 import reimaginedguacamole.profile.IGameServer;
 
@@ -29,7 +30,7 @@ import reimaginedguacamole.profile.IGameServer;
 public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     private GameRoom gameRoom;
-    private ChatServer chatServer;
+    private IChatServer chatServer;
 
     /**
      * Constructor to override default constructor
@@ -204,7 +205,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
     
     @Override 
-    public ChatServer getChatServer(){
+    public IChatServer getChatServer(){
         return chatServer;
     }
 

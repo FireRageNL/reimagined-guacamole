@@ -177,5 +177,5 @@ public interface IGameServer extends Remote {
      * @return
      * @throws RemoteException 
      */
-    public ChatServer getChatServer() throws RemoteException;
+    public IChatServer getChatServer() throws RemoteException;
 }
