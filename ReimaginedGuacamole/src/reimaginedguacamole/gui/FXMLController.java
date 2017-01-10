@@ -480,7 +480,7 @@ public class FXMLController extends Application implements Initializable {
     private void startGame() throws RemoteException, NotBoundException {
 
         pbRoundTimer.setProgress(0);
-
+        ms.unregGameServer(gs);
         btnStartGame.setDisable(true);
         gs.startGame(joinedRoom);
     }
@@ -496,12 +496,17 @@ public class FXMLController extends Application implements Initializable {
 
     private void joinGame(IGameServer server) throws RemoteException, NotBoundException {
         gs = server;
+        if(gs.sendGameRoomData().getNrOfPlayers() < 4){
         gs.joinRoom(gameClient);
         disableButtons(true);
         chatClient.leaveChatroom();
         gameClient.getChatClient().setChatServer((IChatServer)gs.getChatServer());
         gameClient.getChatClient().enterChatroom();
         joinedRoom = gs.sendGameRoomData();
+        }
+        else{
+            lobbyChat.add("GAME: Deze room is vol!");
+        }
     }
 
     /**
@@ -537,7 +542,6 @@ public class FXMLController extends Application implements Initializable {
                 } else {
                     chatList.add("GAME: Iemand anders mag spinnen!");
                 }
-
                 break;
             case SPINNINGFINISHED:
                 pbRoundTimer.setProgress(-1);
