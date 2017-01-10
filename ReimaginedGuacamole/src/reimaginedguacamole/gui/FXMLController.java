@@ -386,6 +386,12 @@ public class FXMLController extends Application implements Initializable {
         }
     }
 
+    
+    public ObservableList<String> getChatList(){
+        return chatList;
+    }
+    
+    
     /**
      * sets the new nickname for the user and reloads the page so new
      * information is shown.
@@ -492,6 +498,8 @@ public class FXMLController extends Application implements Initializable {
         gs.joinRoom(gameClient);
         disableButtons(true);
         chatClient.leaveChatroom();
+        gameClient.getChatClient().setChatServer(gs.getChatServer());
+        gameClient.getChatClient().enterChatroom();
         joinedRoom = gs.sendGameRoomData();
     }
 
@@ -659,8 +667,9 @@ public class FXMLController extends Application implements Initializable {
     @FXML
     public void btnChatClicked() throws RemoteException {
         String chatLine = txtChat.getText();
-        chatList.add(user.getNickname() + ": " + chatLine);
+        gameClient.getChatClient().addMessage(chatLine);
         txtChat.setText("");
+        
     }
 
     /**

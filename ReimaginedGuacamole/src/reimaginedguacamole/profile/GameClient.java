@@ -22,6 +22,8 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
 
     private IProfile prof;
     private FXMLController application;
+    private Client chatClient;
+    private IChatServer chatServer;
 
     /**
      * Default constructor for a game client
@@ -32,6 +34,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
      */
     public GameClient(FXMLController app) throws RemoteException {
         application = app;
+        chatClient = new Client(prof,application.getChatList(),application);
     }
 
     public IProfile getProf() {
@@ -102,4 +105,11 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
                 -> application.refreshUI(scores, names)
         );
     }
+    
+    @Override
+    public Client getChatClient(){
+        return chatClient;
+    }
+    
+    
 }

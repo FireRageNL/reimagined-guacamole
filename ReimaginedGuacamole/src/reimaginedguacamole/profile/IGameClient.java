@@ -86,4 +86,7 @@ public interface IGameClient extends Remote {
      * @throws RemoteException 
      */
     public void refreshUI(int[] scores, List<String> names) throws RemoteException;
+    
+    
+    public Client getChatClient();
 }

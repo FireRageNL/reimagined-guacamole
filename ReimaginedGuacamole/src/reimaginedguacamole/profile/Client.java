@@ -48,7 +48,12 @@ public class Client extends UnicastRemoteObject implements IClient {
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+    }
+    
+    public Client(IProfile prof, ObservableList<String> chat, FXMLController app) throws RemoteException{
+        this.chat = chat;
+        this.name = prof.getNickname();
+        application = app;
     }
 
     @Override
@@ -96,5 +101,14 @@ public class Client extends UnicastRemoteObject implements IClient {
     @Override
     public void enterChatroom() throws RemoteException {
         server.clientEnter(this);
+    }
+    
+    public void setChatServer(IChatServer server){
+        this.server = server;
+        try {
+            server.clientEnter(this);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
