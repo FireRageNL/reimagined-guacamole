@@ -851,6 +851,11 @@ public class FXMLController extends Application implements Initializable {
         if (waitTimer != null) {
             waitTimer.cancel();
         }
+        if(serverThread != null){
+            if(serverThread.isAlive()){
+                serverThread.interrupt();
+            }
+        }
         updateRoomList(ms.sendGameRoomData());
         setWindows(2);
     }
