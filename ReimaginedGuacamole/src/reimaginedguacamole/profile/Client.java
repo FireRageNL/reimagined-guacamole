@@ -106,10 +106,5 @@ public class Client extends UnicastRemoteObject implements IClient {
     @Override
     public void setChatServer(IChatServer server) throws RemoteException{
         this.server = server;
-        try {
-            server.clientEnter(this);
-        } catch (RemoteException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }
