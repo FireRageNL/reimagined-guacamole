@@ -251,6 +251,7 @@ public class FXMLController extends Application implements Initializable {
         //Checks if textfields are not empty
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
+                System.out.println("trying to connect to:  " + ip);
                 Registry reg = LocateRegistry.getRegistry(ip, 666);
                 ms = (IMasterServer) reg.lookup("MasterServer");
                 //Tries to log in

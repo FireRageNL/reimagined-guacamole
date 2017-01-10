@@ -51,7 +51,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
 
     @Override
     public void joinGame() throws RemoteException {
-        chatClient = new Client(prof,application.getChatList(),application);
+            chatClient = new Client(prof,application.getChatList(),application);
         Platform.runLater(()
                 -> application.setWindows(0)
         );

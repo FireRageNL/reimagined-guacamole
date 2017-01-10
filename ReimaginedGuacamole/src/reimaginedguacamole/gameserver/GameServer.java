@@ -37,6 +37,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
      */
     public GameServer() throws RemoteException {
         //Such override
+        chatServer = new ChatServer();
     }
 
 
