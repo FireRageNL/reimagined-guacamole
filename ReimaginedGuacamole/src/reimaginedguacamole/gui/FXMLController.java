@@ -57,6 +57,7 @@ import javafx.scene.control.ListCell;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import reimaginedguacamole.game.IGameRoom;
+import reimaginedguacamole.game.Score;
 import reimaginedguacamole.gameserver.ServerRunnable;
 import reimaginedguacamole.tooling.Hashing;
 
@@ -387,12 +388,10 @@ public class FXMLController extends Application implements Initializable {
         }
     }
 
-    
-    public ObservableList<String> getChatList(){
+    public ObservableList<String> getChatList() {
         return chatList;
     }
-    
-    
+
     /**
      * sets the new nickname for the user and reloads the page so new
      * information is shown.
@@ -496,15 +495,14 @@ public class FXMLController extends Application implements Initializable {
 
     private void joinGame(IGameServer server) throws RemoteException, NotBoundException {
         gs = server;
-        if(gs.sendGameRoomData().getNrOfPlayers() < 4){
-        gs.joinRoom(gameClient);
-        disableButtons(true);
-        chatClient.leaveChatroom();
-        gameClient.getChatClient().setChatServer((IChatServer)gs.getChatServer());
-        gameClient.getChatClient().enterChatroom();
-        joinedRoom = gs.sendGameRoomData();
-        }
-        else{
+        if (gs.sendGameRoomData().getNrOfPlayers() < 4) {
+            gs.joinRoom(gameClient);
+            disableButtons(true);
+            chatClient.leaveChatroom();
+            gameClient.getChatClient().setChatServer((IChatServer) gs.getChatServer());
+            gameClient.getChatClient().enterChatroom();
+            joinedRoom = gs.sendGameRoomData();
+        } else {
             lobbyChat.add("GAME: Deze room is vol!");
         }
     }
@@ -633,17 +631,17 @@ public class FXMLController extends Application implements Initializable {
      * data
      *
      * @param scores the scores to put in the score labels
-     * @param names the names to put in the player labels
      */
-    public void refreshUI(int[] scores, List<String> names) {
-        lblPlayer1.setText(names.get(0));
-        lblScore1.setText(String.valueOf(scores[0]));
-        lblPlayer2.setText(names.get(1));
-        lblScore2.setText(String.valueOf(scores[1]));
-        lblPlayer3.setText(names.get(2));
-        lblScore3.setText(String.valueOf(scores[2]));
-        lblPlayer4.setText(names.get(3));
-        lblScore4.setText(String.valueOf(scores[3]));
+    public void refreshUI(List<Score> scores) {
+
+        lblPlayer1.setText(scores.get(0).getName());
+        lblScore1.setText(String.valueOf(scores.get(0).getScore()));
+        lblPlayer2.setText(scores.get(1).getName());
+        lblScore2.setText(String.valueOf(scores.get(1).getScore()));
+        lblPlayer3.setText(scores.get(2).getName());
+        lblScore3.setText(String.valueOf(scores.get(2).getScore()));
+        lblPlayer4.setText(scores.get(3).getName());
+        lblScore4.setText(String.valueOf(scores.get(3).getScore()));
 
     }
 
@@ -674,7 +672,7 @@ public class FXMLController extends Application implements Initializable {
         String chatLine = txtChat.getText();
         gameClient.getChatClient().sendMessage(chatLine);
         txtChat.setText("");
-        
+
     }
 
     /**

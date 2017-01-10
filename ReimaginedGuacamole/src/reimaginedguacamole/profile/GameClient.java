@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import reimaginedguacamole.game.GameState;
+import reimaginedguacamole.game.Score;
 import reimaginedguacamole.gui.FXMLController;
 
 /**
@@ -100,9 +101,9 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     }
 
     @Override
-    public void refreshUI(int[] scores, List<String> names) throws RemoteException {
+    public void refreshUI(List<Score> scores) throws RemoteException {
         Platform.runLater(()
-                -> application.refreshUI(scores, names)
+                -> application.refreshUI(scores)
         );
     }
     

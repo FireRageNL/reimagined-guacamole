@@ -9,6 +9,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import reimaginedguacamole.game.GameState;
+import reimaginedguacamole.game.Score;
 
 /**
  *
@@ -81,11 +82,10 @@ public interface IGameClient extends Remote {
 
     /**
      * Function to refresh the current gameUI
-     * @param scores a array of scores
-     * @param names the names associated with the scores
+     * @param scores a list of scores
      * @throws RemoteException 
      */
-    public void refreshUI(int[] scores, List<String> names) throws RemoteException;
+    public void refreshUI(List<Score> scores) throws RemoteException;
     
     
     public IClient getChatClient() throws RemoteException;

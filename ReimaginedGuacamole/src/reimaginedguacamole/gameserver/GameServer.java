@@ -10,6 +10,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 import reimaginedguacamole.game.GameRoom;
 import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.game.IGameRoom;
+import reimaginedguacamole.game.Score;
 import reimaginedguacamole.networking.IMasterServer;
 import reimaginedguacamole.profile.ChatServer;
 import reimaginedguacamole.profile.IChatServer;
@@ -190,17 +192,17 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     @Override
     public void refreshUI(IGameRoom joinedRoom) throws RemoteException {
-        int[] scores = new int[4];
         List<String> names = new ArrayList();
+        List<Score> scores = new ArrayList<Score>();
         int i = 0;
         for (IGameClient c : joinedRoom.getPlayers()) {
-            scores[i] = c.getProfile().getScore();
-            names.add(c.getProfile().getNickname());
-            i++;
+            Score s = new Score(c.getProfile().getNickname(),c.getProfile().getScore());
+            scores.add(s);
         }
+        Collections.sort(scores);
         for (IGameClient c : joinedRoom.getPlayers()) {
 
-            c.refreshUI(scores, names);
+            c.refreshUI(scores);
         }
     }
     
