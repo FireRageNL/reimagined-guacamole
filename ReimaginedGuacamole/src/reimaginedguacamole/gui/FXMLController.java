@@ -499,7 +499,7 @@ public class FXMLController extends Application implements Initializable {
         gs.joinRoom(gameClient);
         disableButtons(true);
         chatClient.leaveChatroom();
-        gameClient.getChatClient().setChatServer(gs.getChatServer());
+        gameClient.getChatClient().setChatServer((IChatServer)gs.getChatServer());
         gameClient.getChatClient().enterChatroom();
         joinedRoom = gs.sendGameRoomData();
     }
