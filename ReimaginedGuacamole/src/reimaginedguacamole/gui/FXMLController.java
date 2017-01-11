@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.gui;
 
+import java.io.File;
 import reimaginedguacamole.networking.IMasterServer;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -599,6 +600,7 @@ public class FXMLController extends Application implements Initializable {
                     score = 50 + (100 + (int) (timeLeft * 100));
                     chatList.add("GAME: Je had het goed! je krijgt hiervoor " + score + " punten!!");
                 } else {
+                    playSound("incorrect");
                     chatList.add("GAME: Je had helaas niet goed..");
                 }
                 gs.checkAnswers(joinedRoom, userIndex, score);
@@ -635,27 +637,21 @@ public class FXMLController extends Application implements Initializable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
                     String url = "";
                     switch (sound) {
                         case "correct":
-                            url = "..\\Images\\happykids.wav";
+                            url = "src\\reimaginedguacamole\\gui\\Images\\happykids.wav";
                             break;
                         case "incorrect":
-                            url = "..\\Images\\boo.wav";
+                            url = "src\\reimaginedguacamole\\gui\\Images\\boo.wav";
                             break;
                         case "spin":
-                            url = "..\\Images\\boo.wav";
+                            url = "src\\reimaginedguacamole\\gui\\Images\\boo.wav";
                             break;
                     }
-
-                    URL file = new URL(url);
-                    final Media media = new Media(file.toString());
+                    final Media media = new Media(new File(url).toURI().toString());
                     final MediaPlayer mediaPlayer = new MediaPlayer(media);
                     mediaPlayer.play();
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
 
         }).start();
