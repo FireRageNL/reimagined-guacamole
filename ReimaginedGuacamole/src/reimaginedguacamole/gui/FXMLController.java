@@ -502,6 +502,7 @@ public class FXMLController extends Application implements Initializable {
             gameClient.getChatClient().setChatServer((IChatServer) gs.getChatServer());
             gameClient.getChatClient().enterChatroom();
             joinedRoom = gs.sendGameRoomData();
+            user.setScore(0);
             chatList.clear();
             resetQuestionUI();
             disableButtons(true);
@@ -604,7 +605,6 @@ public class FXMLController extends Application implements Initializable {
                 break;
             case GAMEFINISHED:
                 chatList.add("GAME: De game is afgelopen!");
-                user.setScore(0);
                 gs.refreshUI(joinedRoom);
                 break;
             default:
@@ -855,8 +855,8 @@ public class FXMLController extends Application implements Initializable {
         if (waitTimer != null) {
             waitTimer.cancel();
         }
-        if(serverThread != null){
-            if(serverThread.isAlive()){
+        if (serverThread != null) {
+            if (serverThread.isAlive()) {
                 serverThread.interrupt();
             }
         }
