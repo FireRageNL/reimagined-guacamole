@@ -502,6 +502,9 @@ public class FXMLController extends Application implements Initializable {
             gameClient.getChatClient().setChatServer((IChatServer) gs.getChatServer());
             gameClient.getChatClient().enterChatroom();
             joinedRoom = gs.sendGameRoomData();
+            chatList.clear();
+            resetQuestionUI();
+            disableButtons(true);
         } else {
             lobbyChat.add("GAME: Deze room is vol!");
         }
