@@ -651,7 +651,7 @@ public class FXMLController extends Application implements Initializable {
                             url = "src\\reimaginedguacamole\\gui\\Images\\boo.wav";
                             break;
                         case "spin":
-                            url = "src\\reimaginedguacamole\\gui\\Images\\boo.wav";
+                            url = "src\\reimaginedguacamole\\gui\\Images\\takethewheel.wav";
                             break;
                         case "wait":
                             url = "src\\reimaginedguacamole\\gui\\Images\\wait.wav";
@@ -752,7 +752,7 @@ public class FXMLController extends Application implements Initializable {
      * @param rotation the rotation the wheel has to do
      */
     public void spinWheel(int rotation) {
-        
+        playSound("spin");
         //wheelspeed is random between 13 and 19 pixels per tick.
         animationTimer = new AnimationTimer() {
             private long prevUpdate;
@@ -777,6 +777,8 @@ public class FXMLController extends Application implements Initializable {
                     if (x == rotation) {
                         try {
                             gs.stopSpin(joinedRoom, wheel.getRotate());
+                            mediaPlayer.stop();
+                            waitThread.interrupt();
                         } catch (RemoteException ex) {
                             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                         }
