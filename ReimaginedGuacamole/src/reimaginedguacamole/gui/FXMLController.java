@@ -588,8 +588,12 @@ public class FXMLController extends Application implements Initializable {
                 int score = 0;
                 double timeLeft = pbRoundTimer.getProgress();
                 if (currentAnswer == currentCorrectAnswer) {
-
+                    
                     score = 50 + (100 + (int) (timeLeft * 100));
+                    chatList.add("GAME: Je had het goed! je krijgt hiervoor "+ score + " punten!!");
+                }
+                else{
+                    chatList.add("GAME: Je had helaas niet goed..");
                 }
                 gs.checkAnswers(joinedRoom, userIndex, score);
                 break;
