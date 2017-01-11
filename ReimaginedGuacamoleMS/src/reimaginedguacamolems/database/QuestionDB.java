@@ -8,6 +8,7 @@ package reimaginedguacamolems.database;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import reimaginedguacamole.game.Category;
@@ -58,6 +59,11 @@ public class QuestionDB extends Database {
              questions.add(new Question(questionContent.get(i),questionContent.get(i+1),questionContent.get(i+2),questionContent.get(i+3),questionContent.get(i+4),Integer.parseInt(questionContent.get(i+5)),Category.values()[Integer.parseInt(questionContent.get(i+6))-1]));
         } 
         //returns the questions
+        long seed = System.nanoTime();
+        Collections.shuffle(questions,new Random(seed));
+        for(IQuestion q : questions){
+            System.out.println(q.getQuestionContents());
+        }
         return questions;
     }
     
