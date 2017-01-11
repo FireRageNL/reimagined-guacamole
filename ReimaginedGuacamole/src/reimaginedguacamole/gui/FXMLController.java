@@ -64,6 +64,7 @@ import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.game.Score;
 import reimaginedguacamole.gameserver.ServerRunnable;
 import reimaginedguacamole.tooling.Hashing;
+import static javafx.application.Application.launch;
 
 /**
  *
@@ -212,7 +213,7 @@ public class FXMLController extends Application implements Initializable {
     private int currentAnswer = 0;
     private int currentCorrectAnswer;
     private Thread serverThread;
-    private Thread waitThread;
+    private Thread soundThread;
     private static MediaPlayer mediaPlayer;
     
     // TIMERS
@@ -228,6 +229,7 @@ public class FXMLController extends Application implements Initializable {
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(e -> Platform.exit());
+        playSound("guacamole");
     }
 
     /**
@@ -507,7 +509,7 @@ public class FXMLController extends Application implements Initializable {
 
     private void joinGame(IGameServer server) throws RemoteException, NotBoundException {
         mediaPlayer.stop();
-        waitThread.interrupt();
+        soundThread.interrupt();
         gs = server;
         if (gs.sendGameRoomData().getNrOfPlayers() < 4) {
             gs.joinRoom(gameClient);
@@ -639,7 +641,7 @@ public class FXMLController extends Application implements Initializable {
     }
 
     public void playSound(String sound) {
-        waitThread = new Thread(new Runnable() {
+        soundThread = new Thread(new Runnable() {
             @Override
             public void run() {
                     String url = "";
@@ -656,6 +658,9 @@ public class FXMLController extends Application implements Initializable {
                         case "wait":
                             url = "src\\reimaginedguacamole\\gui\\Images\\wait.wav";
                             break;
+                        case "guacamole":
+                            url = "src\\reimaginedguacamole\\gui\\Images\\Guacamole.wav";
+                            break;
                     }
                     Media media = new Media(new File(url).toURI().toString());
                     mediaPlayer = new MediaPlayer(media);
@@ -664,7 +669,7 @@ public class FXMLController extends Application implements Initializable {
             }
             }
         });
-        waitThread.start();
+        soundThread.start();
     }
 
     /**
@@ -778,7 +783,7 @@ public class FXMLController extends Application implements Initializable {
                         try {
                             gs.stopSpin(joinedRoom, wheel.getRotate());
                             mediaPlayer.stop();
-                            waitThread.interrupt();
+                            soundThread.interrupt();
                         } catch (RemoteException ex) {
                             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
                         }
