@@ -502,13 +502,20 @@ public class FXMLController extends Application implements Initializable {
             gameClient.getChatClient().setChatServer((IChatServer) gs.getChatServer());
             gameClient.getChatClient().enterChatroom();
             joinedRoom = gs.sendGameRoomData();
+            startGameRefreshUI();
+        } else {
+            lobbyChat.add("GAME: Deze room is vol!");
+        }
+    }
+    
+    
+    public void startGameRefreshUI() throws RemoteException{
             user.setScore(0);
             chatList.clear();
             resetQuestionUI();
             disableButtons(true);
-        } else {
-            lobbyChat.add("GAME: Deze room is vol!");
-        }
+            pbRoundTimer.setProgress(-1);
+            wheel.setRotate(0);
     }
 
     /**
