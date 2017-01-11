@@ -54,7 +54,7 @@ public class ServerRunnable implements Runnable {
             gs = new GameServer();
             gs.createGameRoom(duration, rounds, roomName, ip, ms);
             ms.regNewGame(gs);
-            while (!Thread.interrupted()) {
+            while (!Thread.currentThread().isInterrupted()) {
             }
 
         } catch (RemoteException ex) {

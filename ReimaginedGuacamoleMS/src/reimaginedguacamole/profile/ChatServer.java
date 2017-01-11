@@ -65,7 +65,7 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
     }
 
     @Override
-    public void clientExit(IClient client) throws RemoteException {
+    public synchronized void clientExit(IClient client) throws RemoteException {
         connectedProfiles.remove(client);
         for (IClient c : connectedProfiles) {
             c.updatePlayerList(listClients());

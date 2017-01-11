@@ -9,7 +9,17 @@ In welke Griekse stad werden vroeger door de Grieken de Olympische spelen gehoud
 Welke dictator werd op 30 december 2006 in Bagdad geëxecuteerd?;Osama Bin Laden;Mohammed Atta;Saddam Hussein;George Bush;3;1
 Welk land stuurde de eerste mens de ruimte in?;USA;USSR;Noord-Korea;Trinidag & Tobago;2;1
 Wie was in 2008 premier van Nederland?;Jan-Peter Balkenende;Wim Kok;Mark Rutte;Pim Fortuyn;1;1
+In welk jaar werd Nelson Mandela vrijgelaten uit de gevangenis?;1992;1995;1990;2001;3;1
+Wie was de eerste mens in de ruimte?;Buzz Aldrin;Buzz Lightyear;Wubbo Ockels;Yuri Gagarin;4;1
+Hoeveel Olympische Spelen hebben plaatsgevonden in Africa?;0;5;10;8;1;1
+In welk jaar zonk de Titanic;1923;1912;1915;1903;2;1
+In welke kleur was de eerste Model T van Ford beschikbaar?;Groen;Grijs;Blauw;Zwart;4;1
 Wie schilderde de Schreeuw?;Edvard Munch;Karel Appel;Rembrandt;Van Gogh;1;2
+Wie schreef de Aeneis?;Seneca;Vergillius;Homerus;Augustus;2;2
+Wie schreef de Ontdekking van de Hemel?;Harry Mulisch;Boudewijn Buch;Herman Brusselmans;Jan Cremer;1;2
+Uit welke stroming is het Postimpressionisme ontstaan?Modernisme;Realisme;Dadaisme;Impressionisme;4;2
+Hoeveel schilderijen heeft Vincent van Gogh verkocht terwijl hij nog leefde;2;5;1;0;3;2
+Wie heeft de Moulin Rouge geschilderd?;Henri de Toulouse-Lautrec;Georges Braque;Henri Rousseau;Camille Pissarro;1;2
 Wie schreef de Illias?;Plato;Vergillius;Homerus;Archimedes;3;2
 Welk merk soep gebruikte Andy Warhol voor zijn kunstwerk?;Uncle Ben's;Cup-a-Soup;Unox;Campbell;4;2
 Wie schreef Dracula?;Bram Stoker;Bram de Steker;Harry Mulisch;Paul van Loon;1;2
@@ -21,6 +31,11 @@ Wie van deze schilders maakte surrealistische kunst?;Salvador Dali;Andy Warhol;R
 Hoe heet het kunstwerk in Brussel wat voor de World Expo geplaatst is?;Manneke Pis;Het Koninklijk Paleis van Brussel; Atomium;Eiffel Toren;3;2
 Wie is de uitgever van de Call Of Duty franchise?;Activision;EA;Ubisoft;Valve;1;3
 In welk jaar is de originele Doom game uitgekomen?;1991;1992;1993;1994;3;3
+Welke RPG serie is van Square Enix?;Persona;The Elder Scrolls;Final Fantasy;Dragon Age;3;3
+Uit hoeveel blokjes bestaat een stukje in Tetris?;3;4;5;8;2;3
+
+
+
 Wat is geen First Person Shooter?;Counterstrike;Unreal Tournament;Quake;Metal Slug;4;3
 Naar wie is een achievement genoemd in World of Warcraft?;Leeroy Jenkins;George Clooney;Jack Black;Mr. T;1;3
 Welk gamekanaal heeft de meeste subscribers op Youtube?;Jacksepticeye;Markiplier;Kwebbelkop;Pewdiepie;4;3
@@ -32,6 +47,11 @@ In welke stad speelt het spel GTA5 zich af?;Los Angelos;Los Santos;La Bonita;El 
 Hoe wordt de mysterieuze coureur in het programma Top Gear genoemd?;The Stag;The Stallion;The Stig;The Stick;3;4
 Wat is de naam van de rode race-auto uit de animatiefilm Cars?;Lightning McQueen;Lightning McKing;Thunder McQueen;Thunder McKing;1;4
 Uit welk Noord-Brabants dorp kwamen de hangjongeren uit New Kids?;Schijndel;Veghel;Maaskantje;Erp;3;4
+
+
+
+
+
 Uit welke film komt de quote: Your mother was a hamster and your father smells of elderberries?;Monthy Python and the Holy Grail;Life of Brian;Grown ups;Snatch;1;4
 Wat is de dodelijkste vloek uit de Harry Potter Films?;Flippendo;Wingardium Leviosa;Alohomora;Avada Kedavra;4;4
 Welke kleur heeft de teletubbie Tinky Winky?;Rood;Paars;Geel;Groen;2;4
@@ -41,6 +61,11 @@ Wie speelt Captain Jack Sparrow in de Pirates of the Carribean films?;Johhnie De
 Uit welk dorpje komt Ash Ketchum uit de Pokemon serie?;New Bark Town;Vaniville Town;Pallet Town;Littleroot Town;3;4
 Wie bracht de hit Bohemian Rhapsody uit?;Queen;Prince;Kings of Leon;Queens of the Stone Age;1;5
 Welke rapper heeft niet bij de rapgroep G-Unit gezeten?;50 Cent;Lloyd Banks;Tony Yayo;Snoop Dogg;4;5
+
+
+
+
+
 Welke koreaanse artiest scoorde een hit met het nummer Gangnam Style?;Pys;Psy;Syp;Spy;2;5
 Met welke artiest maakte de groep The Lonely Island het nummer Jack Sparrow?;Micheal Bublé;Micheal Bay;Micheal Bolton;Justin Timberlake;3;5
 Uit welk land komt de band A-Ha?;Zweden;Noorwegen;Denemarken;Ijsland;2;5
@@ -51,6 +76,11 @@ Welke artiest bracht albums genaamd 19 ,21 en 25?;Amy Winehouse;Miley Cyrus;Sela
 Met welke Film won Hans Zimmer een Oscar voor beste filmmuziek?;Rain man;The Lion King;Gladiator;Inception;2;5
 Waar werden de Zomerspelen van 1972 gehouden?;Frankrijk;Oost-Duitsland;West-Duitsland;Zwitserland;3;6
 Wanneer werd Nederland Europees kampioen voetbal?;1984;1988;1992;1996;2;6
+
+
+
+
+
 Hoe heet het stadion van NEC;Euroborg;Rat Verlegh Stadion;Goffertstadion;De Kuip;3;6
 Welke Argentijnse voetballer wordt de kleine Maradonna genoemd?;Suarez;Aguero;Messi;Higuain;3;6
 Hoeveel nederlanders wonnen ooit de ronde van Frankrijk?;0;1;2;3;3;6
@@ -66,6 +96,11 @@ Welke metaal veroorzaakt de kleur groen in vuurwerk?;Magnesium;Ijzer;Aluminium;K
 Hoeveel nanometer groeit een nagel in een seconde?;1;2;3;4;1;7
 Wat is de sterkste spier in het menselijk lichaam?;De tong;Biceps;Triceps;Quadriceps;1;7
 Wat kan afgelezen worden op een altimeter?;Luchtdruk;Afstand;Gewicht;Hoogte;4;7
+
+
+
+
+
 Waarvoor staat c in de vergelijking e = mc²?;Massa;Energie;Snelheid van het licht;Snelheid van het object;3;7
 Wat hebben Jean-Baptiste Olivier en André Garnerin uitgevonden?;De luchtballon;Shampoo;Parachute;Handzeep;3;7
 Welke van onderstaande namen is geen schaal?;Richter;Beaufort;Scoville;Edison;4;7
