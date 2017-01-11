@@ -213,6 +213,7 @@ public class FXMLController extends Application implements Initializable {
     private int currentCorrectAnswer;
     private Thread serverThread;
     private Thread waitThread;
+    private static MediaPlayer mediaPlayer;
     
     // TIMERS
     private Timer waitTimer;
@@ -505,6 +506,7 @@ public class FXMLController extends Application implements Initializable {
     }
 
     private void joinGame(IGameServer server) throws RemoteException, NotBoundException {
+        mediaPlayer.stop();
         waitThread.interrupt();
         gs = server;
         if (gs.sendGameRoomData().getNrOfPlayers() < 4) {
@@ -655,9 +657,11 @@ public class FXMLController extends Application implements Initializable {
                             url = "src\\reimaginedguacamole\\gui\\Images\\wait.wav";
                             break;
                     }
-                    final Media media = new Media(new File(url).toURI().toString());
-                    final MediaPlayer mediaPlayer = new MediaPlayer(media);
+                    Media media = new Media(new File(url).toURI().toString());
+                    mediaPlayer = new MediaPlayer(media);
                     mediaPlayer.play();
+                    while (!Thread.currentThread().isInterrupted()) {
+            }
             }
         });
         waitThread.start();
