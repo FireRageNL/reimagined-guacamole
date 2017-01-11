@@ -34,7 +34,7 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
     }
 
     @Override
-    public void broadcastMessage(String message) throws RemoteException {
+    public synchronized void broadcastMessage(String message) throws RemoteException {
         List<IClient> templist = new ArrayList<>();
         Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.INFO, "New chat message sent to lobby: {0}", message);
         connectedProfiles.stream().forEach(p -> {

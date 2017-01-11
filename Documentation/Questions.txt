@@ -33,7 +33,7 @@ Wie is de uitgever van de Call Of Duty franchise?;Activision;EA;Ubisoft;Valve;1;
 In welk jaar is de originele Doom game uitgekomen?;1991;1992;1993;1994;3;3
 Welke RPG serie is van Square Enix?;Persona;The Elder Scrolls;Final Fantasy;Dragon Age;3;3
 Uit hoeveel blokjes bestaat een stukje in Tetris?;3;4;5;8;2;3
-
+Wat is de best verkopende Console ooit?;Xbox;Wii;Playstation 2;Playstation 3;3;3
 
 
 Wat is geen First Person Shooter?;Counterstrike;Unreal Tournament;Quake;Metal Slug;4;3
