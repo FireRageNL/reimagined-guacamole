@@ -212,7 +212,8 @@ public class FXMLController extends Application implements Initializable {
     private int currentAnswer = 0;
     private int currentCorrectAnswer;
     private Thread serverThread;
-
+    private Thread waitThread;
+    
     // TIMERS
     private Timer waitTimer;
     private AnimationTimer animationTimer;
@@ -249,6 +250,7 @@ public class FXMLController extends Application implements Initializable {
      */
     @FXML
     private void loginUser() {
+        playSound("wait");
         //Gets information from textfields
         String username = txtUsername.getText();
         String pass = txtPassword.getText();
@@ -503,6 +505,7 @@ public class FXMLController extends Application implements Initializable {
     }
 
     private void joinGame(IGameServer server) throws RemoteException, NotBoundException {
+        waitThread.interrupt();
         gs = server;
         if (gs.sendGameRoomData().getNrOfPlayers() < 4) {
             gs.joinRoom(gameClient);
@@ -634,7 +637,7 @@ public class FXMLController extends Application implements Initializable {
     }
 
     public void playSound(String sound) {
-        new Thread(new Runnable() {
+        waitThread = new Thread(new Runnable() {
             @Override
             public void run() {
                     String url = "";
@@ -648,14 +651,16 @@ public class FXMLController extends Application implements Initializable {
                         case "spin":
                             url = "src\\reimaginedguacamole\\gui\\Images\\boo.wav";
                             break;
+                        case "wait":
+                            url = "src\\reimaginedguacamole\\gui\\Images\\wait.wav";
+                            break;
                     }
                     final Media media = new Media(new File(url).toURI().toString());
                     final MediaPlayer mediaPlayer = new MediaPlayer(media);
                     mediaPlayer.play();
             }
-
-        }).start();
-
+        });
+        waitThread.start();
     }
 
     /**
@@ -743,6 +748,7 @@ public class FXMLController extends Application implements Initializable {
      * @param rotation the rotation the wheel has to do
      */
     public void spinWheel(int rotation) {
+        
         //wheelspeed is random between 13 and 19 pixels per tick.
         animationTimer = new AnimationTimer() {
             private long prevUpdate;
