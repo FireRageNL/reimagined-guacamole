@@ -690,7 +690,9 @@ public class FXMLController extends Application implements Initializable {
     @FXML
     public void btnChatClicked() throws RemoteException {
         String chatLine = txtChat.getText();
+        if(!chatLine.equals("")){
         gameClient.getChatClient().sendMessage(chatLine);
+        }
         txtChat.setText("");
 
     }
