@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
@@ -54,6 +55,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import reimaginedguacamole.game.IGameRoom;
@@ -381,8 +384,8 @@ public class FXMLController extends Application implements Initializable {
                 serverThread.start();
                 Thread.sleep(500);
                 updateRoomList(ms.sendGameRoomData());
-                for(IGameServer games : lobbyRooms){
-                    if(games.getIp().equals(sip)){
+                for (IGameServer games : lobbyRooms) {
+                    if (games.getIp().equals(sip)) {
                         joinGame(games);
                     }
                 }
@@ -512,15 +515,14 @@ public class FXMLController extends Application implements Initializable {
             lobbyChat.add("GAME: Deze room is vol!");
         }
     }
-    
-    
-    public void startGameRefreshUI() throws RemoteException{
-            user.setScore(0);
-            chatList.clear();
-            resetQuestionUI();
-            disableButtons(true);
-            pbRoundTimer.setProgress(-1);
-            wheel.setRotate(0);
+
+    public void startGameRefreshUI() throws RemoteException {
+        user.setScore(0);
+        chatList.clear();
+        resetQuestionUI();
+        disableButtons(true);
+        pbRoundTimer.setProgress(-1);
+        wheel.setRotate(0);
     }
 
     /**
@@ -593,11 +595,10 @@ public class FXMLController extends Application implements Initializable {
                 int score = 0;
                 double timeLeft = pbRoundTimer.getProgress();
                 if (currentAnswer == currentCorrectAnswer) {
-                    
+                    playSound("correct");
                     score = 50 + (100 + (int) (timeLeft * 100));
-                    chatList.add("GAME: Je had het goed! je krijgt hiervoor "+ score + " punten!!");
-                }
-                else{
+                    chatList.add("GAME: Je had het goed! je krijgt hiervoor " + score + " punten!!");
+                } else {
                     chatList.add("GAME: Je had helaas niet goed..");
                 }
                 gs.checkAnswers(joinedRoom, userIndex, score);
@@ -627,6 +628,37 @@ public class FXMLController extends Application implements Initializable {
                 //do nothing
                 break;
         }
+
+    }
+
+    public void playSound(String sound) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String url = "";
+                    switch (sound) {
+                        case "correct":
+                            url = "..\\Images\\happykids.wav";
+                            break;
+                        case "incorrect":
+                            url = "..\\Images\\boo.wav";
+                            break;
+                        case "spin":
+                            url = "..\\Images\\boo.wav";
+                            break;
+                    }
+
+                    URL file = new URL(url);
+                    final Media media = new Media(file.toString());
+                    final MediaPlayer mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.play();
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }).start();
 
     }
 
@@ -690,8 +722,8 @@ public class FXMLController extends Application implements Initializable {
     @FXML
     public void btnChatClicked() throws RemoteException {
         String chatLine = txtChat.getText();
-        if(!chatLine.equals("")){
-        gameClient.getChatClient().sendMessage(chatLine);
+        if (!chatLine.equals("")) {
+            gameClient.getChatClient().sendMessage(chatLine);
         }
         txtChat.setText("");
 
