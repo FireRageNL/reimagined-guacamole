@@ -381,6 +381,11 @@ public class FXMLController extends Application implements Initializable {
                 serverThread.start();
                 Thread.sleep(500);
                 updateRoomList(ms.sendGameRoomData());
+                for(IGameServer games : lobbyRooms){
+                    if(games.getIp().equals(sip)){
+                        joinGame(games);
+                    }
+                }
             } catch (RemoteException ex) {
                 Logger.getLogger(GameRoomDialog.class.getName()).log(Level.SEVERE, null, ex);
             }

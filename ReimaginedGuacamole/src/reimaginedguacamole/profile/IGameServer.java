@@ -173,9 +173,16 @@ public interface IGameServer extends Remote {
     public void leaveRoom(IGameClient user) throws RemoteException;
     
     /**
-     * 
-     * @return
+     * Getter for the chat server
+     * @return the chatserver
      * @throws RemoteException 
      */
     public IChatServer getChatServer() throws RemoteException;
+    
+    /**
+     * Getter for the IP address
+     * @return the IP address
+     * @throws RemoteException 
+     */
+    public String getIp() throws RemoteException;
 }

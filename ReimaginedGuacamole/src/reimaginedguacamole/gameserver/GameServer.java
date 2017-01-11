@@ -33,6 +33,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     private GameRoom gameRoom;
     private IChatServer chatServer;
+    private String ip;
 
     /**
      * Constructor to override default constructor
@@ -46,6 +47,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     @Override
     public IGameRoom createGameRoom(int duration, int rounds, String roomname, String ip, IMasterServer ms) throws RemoteException {
+        this.ip = ip;
         try {
             gameRoom = new GameRoom(duration, rounds, roomname, ip, this,ms);
             sendGameRoomData();
@@ -210,6 +212,11 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override 
     public IChatServer getChatServer(){
         return chatServer;
+    }
+
+    @Override
+    public String getIp() throws RemoteException {
+        return ip;
     }
 
 }
