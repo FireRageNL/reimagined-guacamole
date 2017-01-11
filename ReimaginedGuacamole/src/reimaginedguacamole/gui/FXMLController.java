@@ -601,6 +601,7 @@ public class FXMLController extends Application implements Initializable {
                 break;
             case GAMEFINISHED:
                 chatList.add("GAME: De game is afgelopen!");
+                user.setScore(0);
                 gs.refreshUI(joinedRoom);
                 break;
             default:
