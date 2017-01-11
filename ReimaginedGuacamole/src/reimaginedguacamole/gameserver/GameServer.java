@@ -200,6 +200,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             scores.add(s);
         }
         Collections.sort(scores);
+        Collections.reverse(scores);
         for (IGameClient c : joinedRoom.getPlayers()) {
 
             c.refreshUI(scores);
