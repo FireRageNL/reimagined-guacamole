@@ -249,7 +249,6 @@ public class FXMLController extends Application implements Initializable {
         if (serverThread != null && serverThread.isAlive()) {
             serverThread.interrupt();
         }
-        System.exit(0);
     }
 
     /**
