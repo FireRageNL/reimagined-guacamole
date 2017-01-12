@@ -32,7 +32,7 @@ import reimaginedguacamole.profile.IGameServer;
 public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     private GameRoom gameRoom;
-    private IChatServer chatServer;
+    private final IChatServer chatServer;
     private String ip;
 
     /**

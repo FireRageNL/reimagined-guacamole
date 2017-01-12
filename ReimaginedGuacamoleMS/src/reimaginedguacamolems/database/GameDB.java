@@ -40,7 +40,9 @@ public class GameDB extends Database {
                 toUpdate = s;
             }
         }
-        if (toUpdate != null) {
+        if (toUpdate == null) {
+            Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, "No statistics have been updated for Profile " + prof.getPid());
+        } else {
             //checks of question is right or wrong
             try {
                 if (right) {
@@ -48,7 +50,7 @@ public class GameDB extends Database {
                 } else {
                     toUpdate.setWrong(1 + toUpdate.getWrong());
                 }
-            } catch (Exception ex) {
+            } catch (RemoteException ex) {
                 Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
 
             }
@@ -80,8 +82,6 @@ public class GameDB extends Database {
             } catch (SQLException ex) {
                 Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, "No statistics have been updated for Profile " + prof.getPid());
         }
 
     }

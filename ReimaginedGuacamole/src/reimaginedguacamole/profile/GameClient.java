@@ -22,7 +22,7 @@ import reimaginedguacamole.gui.FXMLController;
 public class GameClient extends UnicastRemoteObject implements IGameClient {
 
     private IProfile prof;
-    private FXMLController application;
+    private final FXMLController application;
     private Client chatClient;
 
     /**

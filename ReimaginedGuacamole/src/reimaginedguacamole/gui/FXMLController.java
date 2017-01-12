@@ -567,34 +567,11 @@ public class FXMLController extends Application implements Initializable {
                 break;
 
             case ANSWERED:
-                int score = 0;
-                double timeLeft = pbRoundTimer.getProgress();
-                if (currentAnswer == currentCorrectAnswer) {
-                    playSound("correct");
-                    score = 50 + (100 + (int) (timeLeft * 100));
-                    chatList.add("GAME: Je had het goed! je krijgt hiervoor " + score + " punten!!");
-                } else {
-                    playSound("incorrect");
-                    chatList.add("GAME: Je had helaas niet goed..");
-                }
-                gs.checkAnswers(joinedRoom, userIndex, score);
+                calculateScore();
                 break;
 
             case WAITINGFORPLAYERS:
-                setButtonCorrect(currentCorrectAnswer);
-                gs.refreshUI(joinedRoom);
-                waitTimer = new Timer(true);
-                waitTimer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        try {
-                            gs.nextRound(joinedRoom);
-                        } catch (RemoteException ex) {
-                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-
-                }, 10000);
+                waitForNewRound();
                 break;
             case GAMEFINISHED:
                 chatList.add("GAME: De game is afgelopen!");
@@ -630,6 +607,9 @@ public class FXMLController extends Application implements Initializable {
                     break;
                 case "guacamole":
                     url = "src\\reimaginedguacamole\\gui\\Images\\Guacamole.wav";
+                    break;
+                default:
+                    //DoNothing
                     break;
             }
             Media media = new Media(new File(url).toURI().toString());
@@ -882,7 +862,6 @@ public class FXMLController extends Application implements Initializable {
         } else if (b.getId().contains("4")) {
             currentAnswer = 4;
         }
-        Logger.getLogger(FXMLController.class.getCanonicalName()).log(Level.INFO, "{0}", "asdf");
         gs.playerAnswered(joinedRoom);
     }
 
@@ -1037,5 +1016,36 @@ public class FXMLController extends Application implements Initializable {
             }
 
         }, 3000);
+    }
+
+    private void calculateScore() throws RemoteException {
+        int score = 0;
+        double timeLeft = pbRoundTimer.getProgress();
+        if (currentAnswer == currentCorrectAnswer) {
+            playSound("correct");
+            score = 50 + (100 + (int) (timeLeft * 100));
+            chatList.add("GAME: Je had het goed! je krijgt hiervoor " + score + " punten!!");
+        } else {
+            playSound("incorrect");
+            chatList.add("GAME: Je had helaas niet goed..");
+        }
+        gs.checkAnswers(joinedRoom, userIndex, score);
+    }
+
+    private void waitForNewRound() throws RemoteException{
+        setButtonCorrect(currentCorrectAnswer);
+        gs.refreshUI(joinedRoom);
+        waitTimer = new Timer(true);
+        waitTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    gs.nextRound(joinedRoom);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }, 10000);
     }
 }

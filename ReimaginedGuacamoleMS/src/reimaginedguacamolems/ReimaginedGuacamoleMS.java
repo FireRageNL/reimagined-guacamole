@@ -27,14 +27,14 @@ public class ReimaginedGuacamoleMS {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application starting up!");
+        Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application starting up! -- This was a triumph");
         try {
             ChatServer server = new ChatServer();
             MasterServer ms = new MasterServer();
             Registry reg = LocateRegistry.createRegistry(666);
             reg.rebind("ChatServer", server);
             reg.rebind("MasterServer", ms); 
-            Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application started!");
+            Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application started! -- I'm making a note here, huge success");
         } catch (RemoteException ex) {
             Logger.getLogger(ReimaginedGuacamoleMS.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -14,8 +14,8 @@ import java.util.Objects;
  */
 public class Score implements Serializable, Comparable {
 
-    private String name;
-    private int playerScore;
+    private final String name;
+    private final int playerScore;
 
     public Score(String name, int score) {
         this.name = name;

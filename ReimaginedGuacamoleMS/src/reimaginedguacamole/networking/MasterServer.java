@@ -26,7 +26,7 @@ import reimaginedguacamolems.database.QuestionDB;
  */
 public class MasterServer extends UnicastRemoteObject implements IMasterServer {
 
-    private List<IGameServer> gameservers = new ArrayList<>();
+    private final List<IGameServer> gameservers = new ArrayList<>();
 
     public MasterServer() throws RemoteException {
         //Empty constructor because of reasons
@@ -37,9 +37,9 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
         ProfileDB pdb = new ProfileDB();
         boolean login = pdb.login(password, username);
         if (!login) {
-            Logger.getLogger(MasterServer.class.getName()).log(Level.INFO, "Login try for user " + username + " failed");
+            Logger.getLogger(MasterServer.class.getName()).log(Level.INFO, "Login try for user {0} failed -- But there's no sense crying over every mistake", username);
         } else {
-            Logger.getLogger(MasterServer.class.getName()).log(Level.INFO, "Login try for user " + username + " succeded");
+            Logger.getLogger(MasterServer.class.getName()).log(Level.INFO, "Login try for user {0} succeded -- You just keep on trying till you run out of cake", username);
         }
         return login;
     }
@@ -54,7 +54,7 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     public void registerNewUser(Map profileData) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
         pdb.newUserRegistration(profileData);
-        Logger.getLogger(Register.class.getName()).log(Level.INFO, "User registration!");
+        Logger.getLogger(Register.class.getName()).log(Level.INFO, "User registration! -- It's hard to overstate my satisfaction");
     }
 
     @Override
@@ -78,11 +78,14 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     @Override
     public void regNewGame(IGameServer gs) throws RemoteException {
         gameservers.add(gs);
+        Logger.getLogger(MasterServer.class.getCanonicalName()).log(Level.INFO,"New room registered! -- Now these points of data make a beautiful line");
+        
     }
 
     @Override
     public void unregGameServer(IGameServer gs) throws RemoteException {
         gameservers.remove(gs);
+        Logger.getLogger(MasterServer.class.getCanonicalName()).log(Level.INFO,"Room removed from listing! -- Go ahead and leave me");
     }
 
     @Override
