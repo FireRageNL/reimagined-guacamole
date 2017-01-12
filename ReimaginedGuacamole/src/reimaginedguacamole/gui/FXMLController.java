@@ -203,14 +203,14 @@ public class FXMLController extends Application implements Initializable {
     private IMasterServer ms;
     int wheelRotation = 0;
     double progress;
-    private Client chatClient;
+    private static Client chatClient;
     private static final String BUTTON_STYLE = "-fx-base: #ff3300;";
     private static final String BUTTON_STYLE_CORRECT = "-fx-base: #00cc00;";
     int countPlayers;
     private int userIndex;
     private int currentAnswer = 0;
     private int currentCorrectAnswer;
-    private Thread serverThread;
+    private static Thread serverThread;
     private static Thread soundThread;
     private static MediaPlayer mediaPlayer;
 
@@ -238,9 +238,18 @@ public class FXMLController extends Application implements Initializable {
     }
 
     @Override
-    public void stop() {
+    public void stop() throws RemoteException {
         mediaPlayer.stop();
-        soundThread.interrupt();
+        if (soundThread != null && soundThread.isAlive()) {
+            soundThread.interrupt();
+        }
+        if (chatClient != null) {
+            chatClient.leaveChatroom();
+        }
+        if (serverThread != null && serverThread.isAlive()) {
+            serverThread.interrupt();
+        }
+        System.exit(0);
     }
 
     /**
@@ -248,7 +257,7 @@ public class FXMLController extends Application implements Initializable {
      * succesull, else error message is displayed.
      */
     @FXML
-    private void loginUser() {
+    private  void loginUser() {
         playSound("wait");
         //Gets information from textfields
         String username = txtUsername.getText();
@@ -1032,7 +1041,7 @@ public class FXMLController extends Application implements Initializable {
         gs.checkAnswers(joinedRoom, userIndex, score);
     }
 
-    private void waitForNewRound() throws RemoteException{
+    private void waitForNewRound() throws RemoteException {
         setButtonCorrect(currentCorrectAnswer);
         gs.refreshUI(joinedRoom);
         waitTimer = new Timer(true);
