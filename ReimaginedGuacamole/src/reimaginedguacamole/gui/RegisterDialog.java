@@ -76,7 +76,7 @@ public class RegisterDialog {
         email.textProperty().addListener((observable, oldValue, newValue)
                 -> registerButton.setDisable(newValue.trim().isEmpty()));
         dialog.getDialogPane().setContent(grid);
-        Platform.runLater(() -> email.requestFocus());
+        Platform.runLater(email::requestFocus);
         dialog.setResultConverter(dialogButton -> {
             LinkedHashMap hm = new LinkedHashMap();
             if (dialogButton == registerButtonType) {
@@ -104,7 +104,7 @@ public class RegisterDialog {
             if (result.get().size() == 4) {
                 break;
             }
-            while (result.get().size() < 3) {
+            while (result.get().size() < 3) { //NOSONAR result.ispresent() is already checked before, if no result is present this isnt reachable
                 if (result.get().containsKey("Close")) {
                     dialog.hide();
                 } else {

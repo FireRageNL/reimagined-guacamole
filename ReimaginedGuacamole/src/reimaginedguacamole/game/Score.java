@@ -6,6 +6,7 @@
 package reimaginedguacamole.game;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -14,11 +15,11 @@ import java.io.Serializable;
 public class Score implements Serializable, Comparable {
 
     private String name;
-    private int score;
+    private int playerScore;
 
     public Score(String name, int score) {
         this.name = name;
-        this.score = score;
+        this.playerScore = score;
     }
 
     public String getName() {
@@ -26,13 +27,29 @@ public class Score implements Serializable, Comparable {
     }
 
     public int getScore() {
-        return score;
+        return playerScore;
     }
 
     @Override
     public int compareTo(Object o) {
         Score comp = (Score) o;
-        return Integer.compare(this.score, comp.getScore());
+        return Integer.compare(this.playerScore, comp.getScore());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+        Score sc = (Score) o;
+        return sc.getName().equals(this.getName()) && sc.getScore() == this.getScore();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + this.playerScore;
+        return hash;
+    }
 }

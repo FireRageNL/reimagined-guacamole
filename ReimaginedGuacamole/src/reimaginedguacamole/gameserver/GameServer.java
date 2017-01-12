@@ -194,9 +194,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     @Override
     public void refreshUI(IGameRoom joinedRoom) throws RemoteException {
-        List<String> names = new ArrayList();
-        List<Score> scores = new ArrayList<Score>();
-        int i = 0;
+        List<Score> scores = new ArrayList<>();
         for (IGameClient c : joinedRoom.getPlayers()) {
             Score s = new Score(c.getProfile().getNickname(),c.getProfile().getScore());
             scores.add(s);

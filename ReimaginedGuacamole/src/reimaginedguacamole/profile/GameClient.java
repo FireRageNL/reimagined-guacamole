@@ -24,7 +24,6 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     private IProfile prof;
     private FXMLController application;
     private Client chatClient;
-    private IChatServer chatServer;
 
     /**
      * Default constructor for a game client

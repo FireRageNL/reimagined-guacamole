@@ -11,7 +11,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
@@ -50,7 +49,6 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -213,9 +211,9 @@ public class FXMLController extends Application implements Initializable {
     private int currentAnswer = 0;
     private int currentCorrectAnswer;
     private Thread serverThread;
-    private Thread soundThread;
+    private static Thread soundThread;
     private static MediaPlayer mediaPlayer;
-    
+
     // TIMERS
     private Timer waitTimer;
     private AnimationTimer animationTimer;
@@ -240,11 +238,9 @@ public class FXMLController extends Application implements Initializable {
     }
 
     @Override
-    public void stop() throws Exception {
-        chatClient.leaveChatroom();
-        if (serverThread.isAlive()) {
-            serverThread.interrupt();
-        }
+    public void stop() {
+        mediaPlayer.stop();
+        soundThread.interrupt();
     }
 
     /**
@@ -261,7 +257,6 @@ public class FXMLController extends Application implements Initializable {
         //Checks if textfields are not empty
         if (!pass.isEmpty() && !username.isEmpty()) {
             try {
-                System.out.println("trying to connect to:  " + ip);
                 Registry reg = LocateRegistry.getRegistry(ip, 666);
                 ms = (IMasterServer) reg.lookup("MasterServer");
                 //Tries to log in
@@ -373,7 +368,7 @@ public class FXMLController extends Application implements Initializable {
      */
     @FXML
     private void clickRegister(MouseEvent event) throws RemoteException, NotBoundException {
-        RegisterDialog regdialog = new RegisterDialog(ip);
+        new RegisterDialog(ip);
     }
 
     @FXML
@@ -559,43 +554,15 @@ public class FXMLController extends Application implements Initializable {
                 gs.refreshUI(joinedRoom);
                 resetQuestionUI();
                 currentAnswer = 0;
-                disableButtons(true);
-                if (gs.getCurrentUser(joinedRoom) == userIndex) {
-                    chatList.add("GAME: Jij mag spinnen!");
-                    btnSpin.setDisable(false);
-                } else {
-                    chatList.add("GAME: Iemand anders mag spinnen!");
-                }
+                spinSelector();
                 break;
             case SPINNINGFINISHED:
-                pbRoundTimer.setProgress(-1);
-                String category = gs.getCategory(joinedRoom);
-                lblQuestion.setText("De Categorie is: " + category);
-                chatList.add("GAME: De categorie is " + category);
-                waitTimer = new Timer(true);
-                waitTimer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        try {
-                            gs.startRound(joinedRoom);
-                        } catch (RemoteException ex) {
-                            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-
-                }, 3000);
+                categorySelected();
                 break;
 
             case GAMERUNNING:
                 disableButtons(false);
-                List<String> question = gs.getQuestion(joinedRoom);
-                lblQuestion.setText(question.get(0));
-                btnAnswer1.setText(question.get(1));
-                btnAnswer2.setText(question.get(2));
-                btnAnswer3.setText(question.get(3));
-                btnAnswer4.setText(question.get(4));
-                currentCorrectAnswer = Integer.parseInt(question.get(5));
-
+                setQuestionUI();
                 startGameTimer();
                 break;
 
@@ -640,36 +607,54 @@ public class FXMLController extends Application implements Initializable {
 
     }
 
-    public void playSound(String sound) {
-        soundThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                    String url = "";
-                    switch (sound) {
-                        case "correct":
-                            url = "src\\reimaginedguacamole\\gui\\Images\\happykids.wav";
-                            break;
-                        case "incorrect":
-                            url = "src\\reimaginedguacamole\\gui\\Images\\boo.wav";
-                            break;
-                        case "spin":
-                            url = "src\\reimaginedguacamole\\gui\\Images\\takethewheel.wav";
-                            break;
-                        case "wait":
-                            url = "src\\reimaginedguacamole\\gui\\Images\\wait.wav";
-                            break;
-                        case "guacamole":
-                            url = "src\\reimaginedguacamole\\gui\\Images\\Guacamole.wav";
-                            break;
-                    }
-                    Media media = new Media(new File(url).toURI().toString());
-                    mediaPlayer = new MediaPlayer(media);
-                    mediaPlayer.play();
-                    while (!Thread.currentThread().isInterrupted()) {
+    /**
+     * Function to play certain sounds ingame
+     *
+     * @param sound the type of soundfile to play
+     */
+    public static void playSound(String sound) {
+        soundThread = new Thread(() -> {
+            String url = "";
+            switch (sound) {
+                case "correct":
+                    url = "src\\reimaginedguacamole\\gui\\Images\\happykids.wav";
+                    break;
+                case "incorrect":
+                    url = "src\\reimaginedguacamole\\gui\\Images\\boo.wav";
+                    break;
+                case "spin":
+                    url = "src\\reimaginedguacamole\\gui\\Images\\takethewheel.wav";
+                    break;
+                case "wait":
+                    url = "src\\reimaginedguacamole\\gui\\Images\\wait.wav";
+                    break;
+                case "guacamole":
+                    url = "src\\reimaginedguacamole\\gui\\Images\\Guacamole.wav";
+                    break;
             }
+            Media media = new Media(new File(url).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.play();
+            while (!Thread.currentThread().isInterrupted()) {
+                //Empty loop so thread will keep on running till it gets interrupted
             }
         });
         soundThread.start();
+    }
+
+    /**
+     * Sets the game UI with the next question
+     *
+     * @throws RemoteException
+     */
+    private void setQuestionUI() throws RemoteException {
+        List<String> question = gs.getQuestion(joinedRoom);
+        lblQuestion.setText(question.get(0));
+        btnAnswer1.setText(question.get(1));
+        btnAnswer2.setText(question.get(2));
+        btnAnswer3.setText(question.get(3));
+        btnAnswer4.setText(question.get(4));
+        currentCorrectAnswer = Integer.parseInt(question.get(5));
     }
 
     /**
@@ -732,7 +717,7 @@ public class FXMLController extends Application implements Initializable {
     @FXML
     public void btnChatClicked() throws RemoteException {
         String chatLine = txtChat.getText();
-        if (!chatLine.equals("")) {
+        if (!"".equals(chatLine)) {
             gameClient.getChatClient().sendMessage(chatLine);
         }
         txtChat.setText("");
@@ -918,10 +903,8 @@ public class FXMLController extends Application implements Initializable {
         if (waitTimer != null) {
             waitTimer.cancel();
         }
-        if (serverThread != null) {
-            if (serverThread.isAlive()) {
-                serverThread.interrupt();
-            }
+        if (serverThread != null && serverThread.isAlive()) {
+            serverThread.interrupt();
         }
         updateRoomList(ms.sendGameRoomData());
         setWindows(2);
@@ -1025,5 +1008,34 @@ public class FXMLController extends Application implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void spinSelector() throws RemoteException {
+        disableButtons(true);
+        if (gs.getCurrentUser(joinedRoom) == userIndex) {
+            chatList.add("GAME: Jij mag spinnen!");
+            btnSpin.setDisable(false);
+        } else {
+            chatList.add("GAME: Iemand anders mag spinnen!");
+        }
+    }
+
+    private void categorySelected() throws RemoteException {
+        pbRoundTimer.setProgress(-1);
+        String category = gs.getCategory(joinedRoom);
+        lblQuestion.setText("De Categorie is: " + category);
+        chatList.add("GAME: De categorie is " + category);
+        waitTimer = new Timer(true);
+        waitTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    gs.startRound(joinedRoom);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }, 3000);
     }
 }

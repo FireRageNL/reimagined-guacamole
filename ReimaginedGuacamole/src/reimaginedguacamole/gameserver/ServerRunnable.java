@@ -16,7 +16,6 @@ import reimaginedguacamole.networking.IMasterServer;
  */
 public class ServerRunnable implements Runnable {
 
-    private GameServer gs;
     private IMasterServer ms;
     private int duration;
     private int rounds;
@@ -51,10 +50,11 @@ public class ServerRunnable implements Runnable {
     @Override
     public void run() {
         try {
-            gs = new GameServer();
+            GameServer gs = new GameServer();
             gs.createGameRoom(duration, rounds, roomName, ip, ms);
             ms.regNewGame(gs);
             while (!Thread.currentThread().isInterrupted()) {
+                //Loop to keep the thread running until it is interrupted
             }
 
         } catch (RemoteException ex) {

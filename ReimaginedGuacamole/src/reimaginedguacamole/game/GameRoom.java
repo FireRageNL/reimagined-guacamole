@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import reimaginedguacamole.profile.ChatServer;
 import reimaginedguacamole.gameserver.GameServer;
 import reimaginedguacamole.networking.IMasterServer;
 import reimaginedguacamole.profile.IGameClient;
@@ -28,7 +27,6 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     //private IGameController
     private String name;
     private List<IGameClient> players;
-    private ChatServer chatServer;
     private IGameController gameController;
     private String ip;
     private int playersDone;
@@ -58,7 +56,6 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
         playersDone = 0;
         //this.ip = ip; //This has to be overwritten to localhost later on but for testing purposes its set to the client IP that later will have the game server!!
         this.ip = InetAddress.getLocalHost().getHostAddress();
-        this.chatServer = new ChatServer();
     }
 
     @Override

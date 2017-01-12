@@ -42,12 +42,11 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
                 p.addMessage(message);
             } catch (RemoteException ex) {
                 Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.WARNING, "Removing person from chatlist!");
+                Logger.getLogger(ChatServer.class.getCanonicalName()).log(Level.WARNING,null,ex);
                 templist.add(p);
             }
         });
-        templist.stream().forEach(p -> {
-            connectedProfiles.remove(p);
-        });
+        templist.stream().forEach(connectedProfiles::remove);
         connectedProfiles.stream().forEach(c -> {
             try {
                 c.updatePlayerList(listClients());

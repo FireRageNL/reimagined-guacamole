@@ -34,8 +34,8 @@ In welk jaar is de originele Doom game uitgekomen?;1991;1992;1993;1994;3;3
 Welke RPG serie is van Square Enix?;Persona;The Elder Scrolls;Final Fantasy;Dragon Age;3;3
 Uit hoeveel blokjes bestaat een stukje in Tetris?;3;4;5;8;2;3
 Wat is de best verkopende Console ooit?;Xbox;Wii;Playstation 2;Playstation 3;3;3
-
-
+Welke game heeft de grootste speelbare map?;World of Warcraft;GTA 5;Final Fantasy XV;The Elder Scrolls: Daggerfall;4;3
+Wat is de best verkopende game franchise van Microsoft?;Age of Empires;Halo;Gears of War;Fable;2;3
 Wat is geen First Person Shooter?;Counterstrike;Unreal Tournament;Quake;Metal Slug;4;3
 Naar wie is een achievement genoemd in World of Warcraft?;Leeroy Jenkins;George Clooney;Jack Black;Mr. T;1;3
 Welk gamekanaal heeft de meeste subscribers op Youtube?;Jacksepticeye;Markiplier;Kwebbelkop;Pewdiepie;4;3
@@ -47,10 +47,10 @@ In welke stad speelt het spel GTA5 zich af?;Los Angelos;Los Santos;La Bonita;El 
 Hoe wordt de mysterieuze coureur in het programma Top Gear genoemd?;The Stag;The Stallion;The Stig;The Stick;3;4
 Wat is de naam van de rode race-auto uit de animatiefilm Cars?;Lightning McQueen;Lightning McKing;Thunder McQueen;Thunder McKing;1;4
 Uit welk Noord-Brabants dorp kwamen de hangjongeren uit New Kids?;Schijndel;Veghel;Maaskantje;Erp;3;4
-
-
-
-
+Waar is de Fifty Shades triologie op gebaseerd?;Twilight;Harry Potter;The Hunger Games;Vampire Diaries;1;4
+Van wie komt de bekende uitspraak 'Man man man'?;Rob Geus;Gerard Joling;Roy Donders;Sylvana Simons;1;4
+Hoe heet de One Punch Man?;Inaba;Yasogami;Saitama;Sasuke;3;4
+Welk van deze bekende Nederlanders komt niet uit Brabant?;Roy Donders;Patrick Lodiers;Jeroen van Koningsbrugge;Guus Meeuwis;2;4
 
 Uit welke film komt de quote: Your mother was a hamster and your father smells of elderberries?;Monthy Python and the Holy Grail;Life of Brian;Grown ups;Snatch;1;4
 Wat is de dodelijkste vloek uit de Harry Potter Films?;Flippendo;Wingardium Leviosa;Alohomora;Avada Kedavra;4;4
@@ -61,7 +61,7 @@ Wie speelt Captain Jack Sparrow in de Pirates of the Carribean films?;Johhnie De
 Uit welk dorpje komt Ash Ketchum uit de Pokemon serie?;New Bark Town;Vaniville Town;Pallet Town;Littleroot Town;3;4
 Wie bracht de hit Bohemian Rhapsody uit?;Queen;Prince;Kings of Leon;Queens of the Stone Age;1;5
 Welke rapper heeft niet bij de rapgroep G-Unit gezeten?;50 Cent;Lloyd Banks;Tony Yayo;Snoop Dogg;4;5
-
+Welke Nederlandse artiest stond in 2016 in de top 100 van verkochte concertkaarten van de hele wereld?;Racoon;Marco Borsato;Andre Rieu;Nick en Simon;3;4
 
 
 
@@ -76,7 +76,7 @@ Welke artiest bracht albums genaamd 19 ,21 en 25?;Amy Winehouse;Miley Cyrus;Sela
 Met welke Film won Hans Zimmer een Oscar voor beste filmmuziek?;Rain man;The Lion King;Gladiator;Inception;2;5
 Waar werden de Zomerspelen van 1972 gehouden?;Frankrijk;Oost-Duitsland;West-Duitsland;Zwitserland;3;6
 Wanneer werd Nederland Europees kampioen voetbal?;1984;1988;1992;1996;2;6
-
+Hoe lang is een officieel wedstrijdbad?;25;75;20;50;4;6
 
 
 

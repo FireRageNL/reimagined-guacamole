@@ -18,9 +18,6 @@ import reimaginedguacamole.networking.MasterServer;
  * @author roy_v
  */
 public class ReimaginedGuacamoleMS {
-
-    private static ChatServer server;
-    private static Registry reg;
     
     private ReimaginedGuacamoleMS() {
         throw new IllegalAccessError("Utility class");
@@ -32,9 +29,9 @@ public class ReimaginedGuacamoleMS {
     public static void main(String[] args) {
         Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application starting up!");
         try {
-            server = new ChatServer();
+            ChatServer server = new ChatServer();
             MasterServer ms = new MasterServer();
-            reg = LocateRegistry.createRegistry(666);
+            Registry reg = LocateRegistry.createRegistry(666);
             reg.rebind("ChatServer", server);
             reg.rebind("MasterServer", ms); 
             Logger.getLogger(ReimaginedGuacamoleMS.class.getCanonicalName()).log(Level.INFO, "Application started!");

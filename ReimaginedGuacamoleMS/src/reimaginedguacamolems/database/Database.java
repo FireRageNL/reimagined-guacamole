@@ -81,10 +81,10 @@ public class Database {
             int columnCount = 0;
             // loops through the list and adds the column names to the string
             StringBuilder bld = new StringBuilder();
-            for (Map.Entry<String, String> entry : data.entrySet()) {
+            columnCount = data.entrySet().stream().map(entry -> {
                 bld.append(entry.getKey()).append(",");
-                columnCount++;
-            }
+                return entry;
+            }).map(item -> 1).reduce(columnCount, Integer::sum);
             // string that contains the column names for the query
             String columns = bld.toString();
             // loops through the list and adds the values to the string
@@ -101,16 +101,16 @@ public class Database {
 
             //makes the query
             String statement = "INSERT INTO " + table + " (" + columns + ") VALUES (" + values + ")";
-            PreparedStatement pst = conn.prepareStatement(statement);
-            int valuecount = 1;
-            //adds the values as parameters to the prepared statement
-            for (Map.Entry<String, String> entry : data.entrySet()) {
-                pst.setString(valuecount, entry.getValue());
-                valuecount++;
+            try (PreparedStatement pst = conn.prepareStatement(statement)) {
+                int valuecount = 1;
+                //adds the values as parameters to the prepared statement
+                for (Map.Entry<String, String> entry : data.entrySet()) {
+                    pst.setString(valuecount, entry.getValue());
+                    valuecount++;
+                }
+                //executes the query
+                pst.executeUpdate();
             }
-            //executes the query
-            pst.executeUpdate();
-            pst.close();
             //closes the connection
             closeConnection();
         } catch (SQLException ex) {
@@ -133,27 +133,25 @@ public class Database {
             //string that contains the column names
             StringBuilder bld = new StringBuilder();
             //loops through the list to add the column names to the string
-            for (Map.Entry<String, String> entry : data.entrySet()) {
-                bld.append(entry.getKey()).append(" =?, ");
-            }
+            data.entrySet().forEach(entry
+                    -> bld.append(entry.getKey()).append(" =?, "));
             String columns = bld.toString();
             // -2 to remove the ", " from the last name
             columns = columns.substring(0, columns.length() - 2);
             // makes the statement
             String statement = "UPDATE " + table + " SET " + columns + " WHERE " + where + " = ?";
-            PreparedStatement pst = conn.prepareStatement(statement);
-            int valuecount = 1;
-            //loops through the list to add the values for the prepared statement
-            for (Map.Entry<String, String> entry : data.entrySet()) {
-                pst.setString(valuecount, entry.getValue());
-                valuecount++;
+            try (PreparedStatement pst = conn.prepareStatement(statement)) {
+                int valuecount = 1;
+                //loops through the list to add the values for the prepared statement
+                for (Map.Entry<String, String> entry : data.entrySet()) {
+                    pst.setString(valuecount, entry.getValue());
+                    valuecount++;
+                }   //sets the parameters
+                pst.setString(valuecount, val);
+                //executes the query
+                pst.executeUpdate();
+                //closes the connection
             }
-            //sets the parameters
-            pst.setString(valuecount, val);
-            //executes the query
-            pst.executeUpdate();
-            //closes the connection
-            pst.close();
             closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -176,17 +174,18 @@ public class Database {
             initConnection();
             //makes the statement
             String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
             //sets the parameter
-            ps.setString(1, value);
-            //resultset to store the values
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                //sets the result
-                result = rs.getString(column);
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                //sets the parameter
+                ps.setString(1, value);
+                //resultset to store the values
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    //sets the result
+                    result = rs.getString(column);
+                }
+                //closes the connection
             }
-            //closes the connection
-            ps.close();
             closeConnection();
 
         } catch (SQLException ex) {
@@ -214,29 +213,29 @@ public class Database {
             initConnection();
             //loops to the list to add the column names to the string
             StringBuilder bld = new StringBuilder();
-            for (String c : columns) {
-                bld.append(c).append(", ");
-            }
+            columns.forEach(c
+                    -> bld.append(c).append(", "));
             String column = bld.toString();
             //removes the last 2 characters of the string
             column = column.substring(0, column.length() - 2);
             //makes the statement
             String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
             //sets the parameter
-            ps.setString(1, value);
-            //stores the result in the resultset
-            ResultSet rs = ps.executeQuery();
-            //metadata is needed to get the amount of columns returned
-            ResultSetMetaData rsmd = rs.getMetaData();
-            while (rs.next()) {
-                //loops through the results and adds them to the list
-                for (int i = 1; i < (rsmd.getColumnCount() + 1); i++) {
-                    result.add(rs.getString(i));
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                //sets the parameter
+                ps.setString(1, value);
+                //stores the result in the resultset
+                ResultSet rs = ps.executeQuery();
+                //metadata is needed to get the amount of columns returned
+                ResultSetMetaData rsmd = rs.getMetaData();
+                while (rs.next()) {
+                    //loops through the results and adds them to the list
+                    for (int i = 1; i < (rsmd.getColumnCount() + 1); i++) {
+                        result.add(rs.getString(i));
+                    }
                 }
+                //closes the connection
             }
-            //closes the connection
-            ps.close();
             closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -273,32 +272,32 @@ public class Database {
             initConnection();
             //loops through te list to add the column names
             StringBuilder bld2 = new StringBuilder();
-            for (String c : columns) {
-                bld2.append(c).append(", ");
-            }
+            columns.forEach(c
+                    -> bld2.append(c).append(", "));
             //string for the column names
             String column = bld2.toString();
             //removes the last 2 characters from the string
             column = column.substring(0, column.length() - 2);
             //sets the statament
             String sql = "SELECT " + column + " FROM " + table + " WHERE " + where + " IN (" + parameters + ")";
-            PreparedStatement ps = conn.prepareStatement(sql);
             //gets the value for every parameter
-            for (int i = 0; i < amount; i++) {
-                ps.setString(i + 1, value.get(i));
-            }
-            //executes the query
-            ResultSet rs = ps.executeQuery();
-            //gets the metadata to get the amount of results
-            ResultSetMetaData rsmd = rs.getMetaData();
-            //loops through the results and adds them to the list
-            while (rs.next()) {
-                for (int i = 1; i < (rsmd.getColumnCount() + 1); i++) {
-                    result.add(rs.getString(i));
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                //gets the value for every parameter
+                for (int i = 0; i < amount; i++) {
+                    ps.setString(i + 1, value.get(i));
                 }
+                //executes the query
+                ResultSet rs = ps.executeQuery();
+                //gets the metadata to get the amount of results
+                ResultSetMetaData rsmd = rs.getMetaData();
+                //loops through the results and adds them to the list
+                while (rs.next()) {
+                    for (int i = 1; i < (rsmd.getColumnCount() + 1); i++) {
+                        result.add(rs.getString(i));
+                    }
+                }
+                closeConnection();
             }
-            closeConnection();
-            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }

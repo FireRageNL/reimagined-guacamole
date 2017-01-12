@@ -61,9 +61,6 @@ public class QuestionDB extends Database {
         //returns the questions
         long seed = System.nanoTime();
         Collections.shuffle(questions,new Random(seed));
-        for(IQuestion q : questions){
-            System.out.println(q.getQuestionContents());
-        }
         return questions;
     }
     
