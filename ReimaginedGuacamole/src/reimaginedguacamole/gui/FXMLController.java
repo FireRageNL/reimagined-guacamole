@@ -608,7 +608,7 @@ public class FXMLController extends Application implements Initializable {
                     url = "src\\reimaginedguacamole\\gui\\Images\\boo.wav";
                     break;
                 case "spin":
-                    url = "src\\reimaginedguacamole\\gui\\Images\\takethewheel.wav";
+                    url = "src\\reimaginedguacamole\\gui\\Images\\happykids.wav";
                     break;
                 case "wait":
                     url = "src\\reimaginedguacamole\\gui\\Images\\wait.wav";
