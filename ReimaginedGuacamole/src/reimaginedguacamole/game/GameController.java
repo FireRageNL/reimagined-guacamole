@@ -184,26 +184,6 @@ public class GameController extends UnicastRemoteObject implements IGameControll
         countPlayers++;
     }
 
-
-    @Override
-    public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException {
-        //Score is based on time, min score = 150
-        Logger.getLogger(GameController.class.getCanonicalName()).log(Level.INFO, "TIMELEFT:{0}", timeLeft);
-        int score = 50 + (100 + (int) (timeLeft * 100));
-        //Checks if the correct answer is the same as givenanswer
-        if (currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer) {
-            currentScore += score;
-            //Update the stats for this category and user with a +1 to the correct field.
-            //game.updateStats(profile, currentRound.getQuestion().getCategory(), true);
-            return true;
-        } else {
-            //Update the stats for this category and user with a +1 to the Wrong field.
-            //game.updateStats(profile, currentRound.getQuestion().getCategory(), false);
-            return false;
-        }
-
-    }
-
     @Override
     public void removePlayersCount() throws RemoteException {
         countPlayers--;
