@@ -583,6 +583,7 @@ public class FXMLController extends Application implements Initializable {
                 break;
             case GAMEFINISHED:
                 chatList.add("GAME: De game is afgelopen!");
+                gs.uploadStatistics(joinedRoom, ms);
                 gs.refreshUI(joinedRoom);
                 break;
             default:
@@ -882,7 +883,6 @@ public class FXMLController extends Application implements Initializable {
     @FXML
     public void quitGame() throws RemoteException {
         fillProfileData();
-        gs.uploadStatistics(joinedRoom, ms);
         gs.leaveRoom(gameClient);
         chatClient.enterChatroom();
         if (animationTimer != null) {
