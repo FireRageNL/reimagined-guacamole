@@ -37,6 +37,7 @@ public class GameDB extends Database {
         PreparedStatement ps;
         for (IStatistic s : prof.getStatistics()) {
             try {
+                System.out.println("Updating one statistic for: "+prof.getNickname());
                 sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
                 ps = this.conn.prepareStatement(sql);
                 ps.setInt(1, s.getRight());
