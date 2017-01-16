@@ -24,6 +24,7 @@ import reimaginedguacamole.profile.ChatServer;
 import reimaginedguacamole.profile.IChatServer;
 import reimaginedguacamole.profile.IGameClient;
 import reimaginedguacamole.profile.IGameServer;
+import reimaginedguacamole.profile.IProfile;
 
 /**
  *
@@ -210,11 +211,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
     
     @Override
-    public void uploadStatistics(IGameRoom room, IMasterServer ms) throws RemoteException {
-        List<IGameClient> players = room.getPlayers();
-        for (IGameClient player : players) {
-            ms.updateStats(player.getProfile());
-        }
+    public void uploadStatistics(IMasterServer ms, IProfile prof) throws RemoteException {
+        ms.updateStats(prof);
     }
     
     @Override 

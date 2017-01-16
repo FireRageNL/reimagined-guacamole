@@ -185,7 +185,7 @@ public interface IGameServer extends Remote {
      * @param room The room with the users to get the statistics
      * @throws RemoteException
      */
-    public void uploadStatistics(IGameRoom room, IMasterServer ms) throws RemoteException;
+    public void uploadStatistics(IMasterServer ms, IProfile prof) throws RemoteException;
     
     /**
      * Getter for the IP address
