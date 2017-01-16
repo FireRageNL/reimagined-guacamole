@@ -76,6 +76,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         } catch (RemoteException ex) {
             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        refreshUI(gameRoom);
+        chatServer.broadcastMessage("GAME: "+ user.getProfile().getNickname() + " has joined the game.");
     }
 
     @Override
