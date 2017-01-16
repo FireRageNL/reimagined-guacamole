@@ -114,10 +114,12 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
         return this.name;
     }
 
+    @Override
     public IGameController getGameController() throws RemoteException{
         return this.gameController;
     }
 
+    @Override
     public List<IGameClient> getPlayers() throws RemoteException{
         return players;
     }

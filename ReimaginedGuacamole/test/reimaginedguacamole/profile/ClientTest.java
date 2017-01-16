@@ -40,6 +40,7 @@ public class ClientTest {
 
     /**
      * Test of sendMessage method, of class Client.
+     * @throws java.lang.Exception
      */
     @Test
     public void testSendMessage() throws Exception {
@@ -53,6 +54,7 @@ public class ClientTest {
 
     /**
      * Test of addMessage method, of class Client.
+     * @throws java.lang.Exception
      */
     @Test
     public void testAddMessage() throws Exception {
@@ -66,6 +68,7 @@ public class ClientTest {
 
     /**
      * Test of getName method, of class Client.
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetName() throws Exception {
@@ -80,6 +83,7 @@ public class ClientTest {
 
     /**
      * Test of leaveChatroom method, of class Client.
+     * @throws java.lang.Exception
      */
     @Test
     public void testLeaveChatroom() throws Exception {
@@ -92,6 +96,7 @@ public class ClientTest {
 
     /**
      * Test of updatePlayerList method, of class Client.
+     * @throws java.lang.Exception
      */
     @Test
     public void testUpdatePlayerList() throws Exception {
@@ -105,6 +110,7 @@ public class ClientTest {
 
     /**
      * Test of enterChatroom method, of class Client.
+     * @throws java.lang.Exception
      */
     @Test
     public void testEnterChatroom() throws Exception {

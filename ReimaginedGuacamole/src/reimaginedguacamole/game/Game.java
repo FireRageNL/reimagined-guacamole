@@ -55,7 +55,7 @@ public class Game extends UnicastRemoteObject implements IGame {
     @Override
     public void setRoundDuration(int roundDuration) {
         this.roundDuration = roundDuration;
-        Logger.getLogger(Game.class.getName()).log(Level.INFO, "Round duration set as: " + roundDuration);
+        Logger.getLogger(Game.class.getName()).log(Level.INFO, "Round duration set as: {0}", roundDuration);
     }
     
     @Override
@@ -67,7 +67,7 @@ public class Game extends UnicastRemoteObject implements IGame {
     public void setAmountOfRounds(int amount) throws RemoteException {
         this.amountOfRounds = amount;
         questionsList = ms.getQuestions(amount);
-        Logger.getLogger(Game.class.getName()).log(Level.INFO, "Amount of rounds set as: " + amount);
+        Logger.getLogger(Game.class.getName()).log(Level.INFO, "Amount of rounds set as: {0}", amount);
     }
     
     @Override
@@ -78,7 +78,7 @@ public class Game extends UnicastRemoteObject implements IGame {
     @Override
     public void endGame(int userID, int score) throws RemoteException {
         ms.endGame(userID, score);
-        Logger.getLogger(Game.class.getCanonicalName()).log(Level.INFO,"Game for user "+ userID+" finished with a score of "+ score);
+        Logger.getLogger(Game.class.getCanonicalName()).log(Level.INFO, "Game for user {0} finished with a score of {1}", new Object[]{userID, score});
     }
     
 }

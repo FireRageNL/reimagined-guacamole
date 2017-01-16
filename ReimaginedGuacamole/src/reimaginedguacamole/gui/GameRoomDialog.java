@@ -23,6 +23,7 @@ public class GameRoomDialog {
      * Constructor for a dialog that lets the user select the amount of rounds
      * and the duration of each round for a game, the constructor builds itself
      * and then launches itself
+     * @throws java.net.UnknownHostException
      */
     public GameRoomDialog() throws UnknownHostException {
         dialog = new Dialog<>();
