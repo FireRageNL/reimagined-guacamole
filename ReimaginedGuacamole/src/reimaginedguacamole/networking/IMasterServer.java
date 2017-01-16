@@ -65,7 +65,7 @@ public interface IMasterServer extends Remote {
      * @param right if the questions answered was answered right or wrong
      * @throws RemoteException
      */
-    public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException;
+    public void updateStats(IProfile prof) throws RemoteException;
 
     /**
      * Function that gets called at the end of the game to update the player
@@ -100,4 +100,5 @@ public interface IMasterServer extends Remote {
      * @throws RemoteException
      */
     public List<IGameServer> sendGameRoomData() throws RemoteException;
+    
 }

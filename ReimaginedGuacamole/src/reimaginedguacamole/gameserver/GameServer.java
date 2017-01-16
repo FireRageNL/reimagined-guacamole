@@ -209,6 +209,14 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         }
     }
     
+    @Override
+    public void uploadStatistics(IGameRoom room, IMasterServer ms) throws RemoteException {
+        List<IGameClient> players = room.getPlayers();
+        for (IGameClient player : players) {
+            ms.updateStats(player.getProfile());
+        }
+    }
+    
     @Override 
     public IChatServer getChatServer(){
         return chatServer;

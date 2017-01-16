@@ -17,6 +17,7 @@ import reimaginedguacamole.game.IQuestion;
 import reimaginedguacamole.profile.IGameServer;
 import reimaginedguacamole.profile.IProfile;
 import reimaginedguacamole.profile.Register;
+import reimaginedguacamolems.database.GameDB;
 import reimaginedguacamolems.database.ProfileDB;
 import reimaginedguacamolems.database.QuestionDB;
 
@@ -64,9 +65,9 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     }
 
     @Override
-    public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException {
-        ProfileDB pdb = new ProfileDB();
-
+    public void updateStats(IProfile prof) throws RemoteException {
+        GameDB gdb = new GameDB();
+        gdb.updateStats(prof);
     }
 
     @Override
@@ -92,5 +93,4 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     public List<IGameServer> sendGameRoomData() throws RemoteException {
         return gameservers;
     }
-
 }

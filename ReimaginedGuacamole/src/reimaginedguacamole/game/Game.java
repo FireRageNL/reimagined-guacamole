@@ -71,8 +71,8 @@ public class Game extends UnicastRemoteObject implements IGame {
     }
     
     @Override
-    public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException {
-        ms.updateStats(prof, cat, right);
+    public void updateStats(IProfile prof) throws RemoteException {
+        ms.updateStats(prof);
     }
     
     @Override

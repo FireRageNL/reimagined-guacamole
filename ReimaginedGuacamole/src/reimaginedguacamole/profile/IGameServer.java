@@ -180,6 +180,14 @@ public interface IGameServer extends Remote {
     public IChatServer getChatServer() throws RemoteException;
     
     /**
+     * Function that uploads the statistics
+     *
+     * @param room The room with the users to get the statistics
+     * @throws RemoteException
+     */
+    public void uploadStatistics(IGameRoom room, IMasterServer ms) throws RemoteException;
+    
+    /**
      * Getter for the IP address
      * @return the IP address
      * @throws RemoteException 

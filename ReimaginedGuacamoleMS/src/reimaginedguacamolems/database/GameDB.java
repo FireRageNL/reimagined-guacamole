@@ -31,60 +31,40 @@ public class GameDB extends Database {
      * or not
      * @throws RemoteException
      */
-    public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException {
-        //Statistic to store the statistic that needs to be updated
-        IStatistic toUpdate = null;
-        //loops through profile statistics until it has the right category and stores it in the statistic
+    public void updateStats(IProfile prof) throws RemoteException {
+        this.initConnection();
+        String sql;
+        PreparedStatement ps;
         for (IStatistic s : prof.getStatistics()) {
-            if (s.getCategory() == cat) {
-                toUpdate = s;
-            }
-        }
-        if (toUpdate == null) {
-            Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, "No statistics have been updated for Profile " + prof.getPid());
-        } else {
-            //checks of question is right or wrong
             try {
-                if (right) {
-                    toUpdate.setRight(1 + toUpdate.getRight());
-                } else {
-                    toUpdate.setWrong(1 + toUpdate.getWrong());
-                }
-            } catch (RemoteException ex) {
-                Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
-
-            }
-            try {
-                //opens the connection
-                this.initConnection();
-                //string to store the sql statement
-                String sql;
-                //sets the sql statement
-                if (right) {
-                    sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
-                } else {
-                    sql = "UPDATE Statistic SET Wrong = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
-                }
-                PreparedStatement ps = this.conn.prepareStatement(sql);
-                //sets the parameters
-                if (right) {
-                    ps.setInt(1, toUpdate.getRight());
-                } else {
-                    ps.setInt(1, toUpdate.getWrong());
-                }
-                ps.setInt(2, cat.ordinal() + 1);
+                sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
+                ps = this.conn.prepareStatement(sql);
+                ps.setInt(1, s.getRight());
+                ps.setInt(2, s.getCategory().ordinal() + 1);
                 ps.setInt(3, prof.getPid());
-                //executes the query
                 ps.executeUpdate();
-                //closes the connection
-                this.closeConnection();
-                Logger.getLogger(GameDB.class.getName()).log(Level.INFO,"Statistics for user : {0} updated", prof.getPid());
+                
+                sql = "UPDATE Statistic SET Wrong = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
+                ps = this.conn.prepareStatement(sql);
+                ps.setInt(1, s.getWrong());
+                ps.setInt(2, s.getCategory().ordinal() + 1);
+                ps.setInt(3, prof.getPid());
+                ps.executeUpdate();
+                
+                
             } catch (SQLException ex) {
                 Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }
-
+        try {
+            this.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
     }
+
 
     /**
      * Function that gets called at the end of a game to save the play data of

@@ -882,6 +882,7 @@ public class FXMLController extends Application implements Initializable {
     @FXML
     public void quitGame() throws RemoteException {
         fillProfileData();
+        gs.uploadStatistics(joinedRoom, ms);
         gs.leaveRoom(gameClient);
         chatClient.enterChatroom();
         if (animationTimer != null) {
@@ -1032,9 +1033,19 @@ public class FXMLController extends Application implements Initializable {
         if (currentAnswer == currentCorrectAnswer) {
             playSound("correct");
             score = 50 + (100 + (int) (timeLeft * 100));
+            for (IStatistic s : this.user.getStatistics()) {
+                if (String.valueOf(s.getCategory()) == this.gs.getCategory(this.joinedRoom)) {
+                    s.setRight(s.getRight() + 1);
+                }
+            }
             chatList.add("GAME: Je had het goed! je krijgt hiervoor " + score + " punten!!");
         } else {
             playSound("incorrect");
+             for (IStatistic s : this.user.getStatistics()) {
+                if (String.valueOf(s.getCategory()) == this.gs.getCategory(this.joinedRoom)) {
+                    s.setWrong(s.getWrong() + 1);
+                }
+            }
             chatList.add("GAME: Je had helaas niet goed..");
         }
         gs.checkAnswers(joinedRoom, userIndex, score);
