@@ -228,7 +228,6 @@ public class FXMLController extends Application implements Initializable {
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(e -> Platform.exit());
-        playSound("guacamole");
     }
 
     /**
@@ -614,9 +613,6 @@ public class FXMLController extends Application implements Initializable {
                     break;
                 case "wait":
                     url = "src\\reimaginedguacamole\\gui\\Images\\wait.wav";
-                    break;
-                case "guacamole":
-                    url = "src\\reimaginedguacamole\\gui\\Images\\Guacamole.wav";
                     break;
                 default:
                     //DoNothing
