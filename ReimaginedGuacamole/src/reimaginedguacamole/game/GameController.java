@@ -194,11 +194,11 @@ public class GameController extends UnicastRemoteObject implements IGameControll
         if (currentRound.getQuestion().getCorrectAnswer() == this.currentAnswer) {
             currentScore += score;
             //Update the stats for this category and user with a +1 to the correct field.
-            game.updateStats(profile, currentRound.getQuestion().getCategory(), true);
+            //game.updateStats(profile, currentRound.getQuestion().getCategory(), true);
             return true;
         } else {
             //Update the stats for this category and user with a +1 to the Wrong field.
-            game.updateStats(profile, currentRound.getQuestion().getCategory(), false);
+            //game.updateStats(profile, currentRound.getQuestion().getCategory(), false);
             return false;
         }
 

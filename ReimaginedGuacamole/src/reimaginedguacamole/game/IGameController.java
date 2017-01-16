@@ -164,5 +164,6 @@ public interface IGameController extends Remote {
      * @throws RemoteException 
      */
     public int getCurrentUser() throws RemoteException;
+    
 
 }

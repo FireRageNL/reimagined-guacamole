@@ -64,7 +64,7 @@ public interface IGame extends Remote {
      * @param right if the question was anwsered correctly
      * @throws RemoteException
      */
-    public void updateStats(IProfile prof, Category cat, boolean right) throws RemoteException;
+    public void updateStats(IProfile prof) throws RemoteException;
 
     /**
      * The function called at the end of the game to create a game history
