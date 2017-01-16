@@ -100,6 +100,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             if (joinedRoom.getGameController().getCurrentRoundIndex() < Integer.parseInt(joinedRoom.getNumberOfRounds()) - 1 ) {
                 joinedRoom.getGameController().startNextRound();
                 joinedRoom.getGameController().setGameState(GameState.WAITINGFORCATEGORY);
+                chatServer.broadcastMessage("Het is tijd voor ronde: "+ (joinedRoom.getGameController().getCurrentRoundIndex() + 1) + "/" + joinedRoom.getNumberOfRounds());
             } else {
                 broadcastGameState(GameState.GAMEFINISHED, joinedRoom);
             }
