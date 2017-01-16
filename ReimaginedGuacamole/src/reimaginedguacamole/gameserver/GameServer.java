@@ -212,7 +212,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
     
     @Override
-    public void uploadStatistics(IMasterServer ms, IProfile prof) throws RemoteException {
+    public synchronized void uploadStatistics(IMasterServer ms, IProfile prof) throws RemoteException {
         ms.updateStats(prof);
     }
     

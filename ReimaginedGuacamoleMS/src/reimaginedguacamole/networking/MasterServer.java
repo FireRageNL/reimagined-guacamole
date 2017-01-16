@@ -67,6 +67,7 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     @Override
     public void updateStats(IProfile prof) throws RemoteException {
         GameDB gdb = new GameDB();
+        System.out.println("Updated stats for "+prof.getNickname());
         gdb.updateStats(prof);
     }
 
