@@ -1038,7 +1038,7 @@ public class FXMLController extends Application implements Initializable {
             playSound("correct");
             score = 50 + (100 + (int) (timeLeft * 100));
             for (IStatistic s : this.user.getStatistics()) {
-                if (String.valueOf(s.getCategory()) == this.gs.getCategory(this.joinedRoom)) {
+                if (s.getCategory().toString().equals(this.gs.getCategory(this.joinedRoom))) {
                     s.setRight(s.getRight() + 1);
                 }
             }
@@ -1046,7 +1046,7 @@ public class FXMLController extends Application implements Initializable {
         } else {
             playSound("incorrect");
              for (IStatistic s : this.user.getStatistics()) {
-                if (String.valueOf(s.getCategory()) == this.gs.getCategory(this.joinedRoom)) {
+                if (s.getCategory().toString().equals(this.gs.getCategory(this.joinedRoom))) {
                     s.setWrong(s.getWrong() + 1);
                 }
             }
