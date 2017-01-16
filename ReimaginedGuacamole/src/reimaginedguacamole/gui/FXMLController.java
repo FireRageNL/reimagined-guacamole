@@ -625,6 +625,11 @@ public class FXMLController extends Application implements Initializable {
                 if(mediaPlayer.getStatus() == Status.STOPPED ){
                     soundThread.interrupt();
                 }
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ex) {
+                    soundThread.interrupt();        
+                }
             }
         });
         soundThread.start();
