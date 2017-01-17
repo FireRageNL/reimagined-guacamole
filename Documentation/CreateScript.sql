@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Gegenereerd op: 18 okt 2016 om 12:52
--- Serverversie: 5.7.15-0ubuntu0.16.04.1
--- PHP-versie: 7.0.8-0ubuntu0.16.04.3
+-- Host: 127.0.0.1
+-- Gegenereerd op: 17 jan 2017 om 14:44
+-- Serverversie: 10.1.19-MariaDB
+-- PHP-versie: 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,16 +17,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `mydb`
+-- Database: `guacamole`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `Achievement`
+-- Tabelstructuur voor tabel `achievement`
 --
 
-CREATE TABLE `Achievement` (
+CREATE TABLE `achievement` (
   `AchievmentID` int(11) NOT NULL,
   `Name` varchar(45) NOT NULL,
   `Description` varchar(45) NOT NULL
@@ -35,20 +35,20 @@ CREATE TABLE `Achievement` (
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `Category`
+-- Tabelstructuur voor tabel `category`
 --
 
-CREATE TABLE `Category` (
+CREATE TABLE `category` (
   `CategoryID` int(11) NOT NULL,
   `Category` varchar(45) NOT NULL,
   `Description` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Gegevens worden geëxporteerd voor tabel `Category`
+-- Gegevens worden geëxporteerd voor tabel `category`
 --
 
-INSERT INTO `Category` (`CategoryID`, `Category`, `Description`) VALUES
+INSERT INTO `category` (`CategoryID`, `Category`, `Description`) VALUES
 (1, 'Geschiedenis', 'Vragen over de wereld van weleer!'),
 (2, 'Kunst', 'Vragen over Kunst en Kitsch'),
 (3, 'Games', 'Vragen over Games.'),
@@ -60,10 +60,10 @@ INSERT INTO `Category` (`CategoryID`, `Category`, `Description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `GameInfo`
+-- Tabelstructuur voor tabel `gameinfo`
 --
 
-CREATE TABLE `GameInfo` (
+CREATE TABLE `gameinfo` (
   `GameInfoID` int(11) NOT NULL,
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Score` int(11) NOT NULL,
@@ -72,11 +72,11 @@ CREATE TABLE `GameInfo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Gegevens worden geëxporteerd voor tabel `GameInfo`
+-- Gegevens worden geëxporteerd voor tabel `gameinfo`
 --
 
-INSERT INTO `GameInfo` (`GameInfoID`, `Date`, `Score`, `Result`, `Profile_ProfileID`) VALUES
-(1, '2016-10-11 11:23:34', 1000, NULL, 2),
+INSERT INTO `gameinfo` (`GameInfoID`, `Date`, `Score`, `Result`, `Profile_ProfileID`) VALUES
+(1, '2016-10-11 11:23:34', 1000, NULL, 38),
 (2, '2016-10-17 15:38:04', 1000, NULL, 2),
 (3, '2016-10-17 15:41:49', 1000, NULL, 2),
 (4, '2016-10-17 15:42:50', 500, NULL, 5),
@@ -104,35 +104,54 @@ INSERT INTO `GameInfo` (`GameInfoID`, `Date`, `Score`, `Result`, `Profile_Profil
 (26, '2016-10-18 10:25:32', 1000, NULL, 2),
 (27, '2016-10-18 10:37:07', 1000, NULL, 2),
 (28, '2016-10-18 10:41:10', 1000, NULL, 2),
-(29, '2016-10-18 10:44:24', 1000, NULL, 2);
+(29, '2016-10-18 10:44:24', 1000, NULL, 2),
+(30, '2016-11-23 14:03:43', 1168, NULL, 38),
+(31, '2016-11-29 10:17:16', 643, NULL, 38),
+(32, '2016-11-29 10:18:34', 685, NULL, 73),
+(33, '2017-01-17 12:56:06', 684, NULL, 38),
+(34, '2017-01-17 12:56:07', 683, NULL, 73),
+(35, '2017-01-17 12:56:07', 675, NULL, 2),
+(36, '2017-01-17 12:56:07', 685, NULL, 42),
+(37, '2017-01-17 13:10:22', 1183, NULL, 38),
+(38, '2017-01-17 13:10:22', 1133, NULL, 73),
+(39, '2017-01-17 13:10:22', 1175, NULL, 42),
+(40, '2017-01-17 13:10:22', 1167, NULL, 77),
+(41, '2017-01-17 13:24:41', 473, NULL, 38),
+(42, '2017-01-17 13:24:41', 473, NULL, 42),
+(43, '2017-01-17 13:24:41', 237, NULL, 73),
+(44, '2017-01-17 13:24:41', 231, NULL, 2),
+(45, '2017-01-17 13:40:46', 1166, NULL, 2),
+(46, '2017-01-17 13:40:46', 1182, NULL, 42),
+(47, '2017-01-17 13:40:46', 1160, NULL, 38),
+(48, '2017-01-17 13:40:46', 1151, NULL, 73);
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `PowerUp`
+-- Tabelstructuur voor tabel `powerup`
 --
 
-CREATE TABLE `PowerUp` (
+CREATE TABLE `powerup` (
   `PowerUpID` int(11) NOT NULL,
   `Name` varchar(45) NOT NULL,
   `Description` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Gegevens worden geëxporteerd voor tabel `PowerUp`
+-- Gegevens worden geëxporteerd voor tabel `powerup`
 --
 
-INSERT INTO `PowerUp` (`PowerUpID`, `Name`, `Description`) VALUES
+INSERT INTO `powerup` (`PowerUpID`, `Name`, `Description`) VALUES
 (1, 'Extra Punten', 'Krijg bij de volgende vraag extra punten'),
 (2, 'Fout Schild', 'Je kan deze ronde niet falen!');
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `Profile`
+-- Tabelstructuur voor tabel `profile`
 --
 
-CREATE TABLE `Profile` (
+CREATE TABLE `profile` (
   `ProfileID` int(11) NOT NULL,
   `Email` varchar(255) NOT NULL,
   `Password` varchar(66) NOT NULL,
@@ -143,12 +162,12 @@ CREATE TABLE `Profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Gegevens worden geëxporteerd voor tabel `Profile`
+-- Gegevens worden geëxporteerd voor tabel `profile`
 --
 
-INSERT INTO `Profile` (`ProfileID`, `Email`, `Password`, `Name`, `Nickname`, `Wins`, `Losses`) VALUES
+INSERT INTO `profile` (`ProfileID`, `Email`, `Password`, `Name`, `Nickname`, `Wins`, `Losses`) VALUES
 (1, 'Henk@email.henk.nl', 'Wachtwoord', 'Henk', 'Henkie01', 10, 20),
-(2, 'test@email.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Test', 'testnickname1234', 11, 21),
+(2, 'test@email.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Test', 'Aaaaaaaaa', 11, 24),
 (3, 'je@moeder.nl', '80178f789b33663830a7d2d5a049e9a14d445c330c43b4eee89bfb26ac3b8059', 'testington', 'testnickname1234', NULL, NULL),
 (4, 'je@mams.nl', 'c1ff7eebbc393133fb9c6114627a3f6960398bb8d5ece9d8f6dce890bcc12d66', 'lol', 'lol', NULL, NULL),
 (5, 'daan_tuller@hotmail.com', '311fe3feed16b9cd8df0f8b1517be5cb86048707df4889ba8dc37d4d68866d02', 'McYolo', 'yoloswag9001', NULL, NULL),
@@ -179,11 +198,11 @@ INSERT INTO `Profile` (`ProfileID`, `Email`, `Password`, `Name`, `Nickname`, `Wi
 (35, '1476173927158@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-1294822666', 'WhatAWeirdNick', 0, 0),
 (36, '1476183144600@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-1285605222', 'WhatAWeirdNick', 0, 0),
 (37, '1476185026496@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-1283723327', 'WhatAWeirdNick', 0, 0),
-(38, 'daan@email.com', '8f447168a4a83aa70f492d927abf96843dc2b33d0e4f45d4199955ba9496135d', 'Daan', 'Daan', 0, 0),
+(38, 'daan@email.com', '8f447168a4a83aa70f492d927abf96843dc2b33d0e4f45d4199955ba9496135d', 'Daan', 'FanboySlim', 2, 2),
 (39, '1476718701563@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-750048258', 'WhatAWeirdNick', 0, 0),
 (40, '1476718981897@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-749767925', 'WhatAWeirdNick', 0, 0),
 (41, '1476719945142@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-748804680', 'WhatAWeirdNick', 0, 0),
-(42, 'daan@daan.nl', '8f447168a4a83aa70f492d927abf96843dc2b33d0e4f45d4199955ba9496135d', 'Daan', 'QuizMaster', 0, 0),
+(42, 'daan@daan.nl', '8f447168a4a83aa70f492d927abf96843dc2b33d0e4f45d4199955ba9496135d', 'Daan', 'QuizDaan', 2, 2),
 (43, '1476778056321@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-690693463', 'WhatAWeirdNick', 0, 0),
 (44, '1476779081322@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-689668502', 'WhatAWeirdNick', 0, 0),
 (45, 'Daan@roy.nl', 'fff5672f689e69fe78a3c1615a55c5df698d85e93760124e14722a3029cacf29', 'Daan', 'DaanInRoy', 0, 0),
@@ -209,15 +228,23 @@ INSERT INTO `Profile` (`ProfileID`, `Email`, `Password`, `Name`, `Nickname`, `Wi
 (67, '1476786335364@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-682414459', 'WhatAWeirdNick', 0, 0),
 (68, '1476787029678@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-681720145', 'WhatAWeirdNick', 0, 0),
 (69, '1476787272732@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-681477087', 'WhatAWeirdNick', 0, 0),
-(70, '1476787467539@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-681282284', 'WhatAWeirdNick', 0, 0);
+(70, '1476787467539@test.com', '690e8ea126c616b60d6572705492457fcd9c1105e597afba9a5153c6f44f2d62', '-681282284', 'WhatAWeirdNick', 0, 0),
+(71, 'test@jong.nl', '520be1a970ab91c5375e7895faa41d718fb07a5e11ad406f8ca7a465cf873343', 'jong', 'jong', 0, 0),
+(72, 'asdfsfasdfsdf@asdjakshd.com', '7bbbdf8216b9965cc1e23eab0cfa8039581627fe88077d7ed4544ffb676e0084', 'hjghjghjg', 'hghjghjg', 0, 0),
+(73, 'marc@email.com', '4697c20f8a70fcad6323e007d553cfe05d4433f81be70884ea3b4834b147f4c1', 'Marc', 'TheMvG', 0, 4),
+(74, 'adasdas@email.com', '56883359185d918ef6c777e296803c2ece18802da22d9079734eebaf9f4cf60f', 'fsadfasdf', 'asdfasd', 0, 0),
+(75, 'asfawefef@ashakjsdj.com', '7e22c8d5a1fee8a5712420bc4f3b426cdc6a172e23bb60d463d75f68b01a17cd', 'gkjhghjsdsc', 'kj', 0, 0),
+(76, 'roy@email.com', 'a59b1da0739609cfd823420304bebb268693eade4ff3e1269fce24548c301240', 'roy', 'NootNoot', 0, 0),
+(77, 'jorrit@email.com', '1f4a8bb667f5f91d868d70324ea92217d50874482a0c54422b643e56b7c4bd14', 'jorrit', 'HansYolo', 0, 1),
+(78, 'jorrit@email.nl', '1f4a8bb667f5f91d868d70324ea92217d50874482a0c54422b643e56b7c4bd14', 'Jorrit', 'Jormungandr', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `ProfileAchievement`
+-- Tabelstructuur voor tabel `profileachievement`
 --
 
-CREATE TABLE `ProfileAchievement` (
+CREATE TABLE `profileachievement` (
   `Profile_ProfileID` int(11) NOT NULL,
   `Achievment_AchievmentID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -225,10 +252,10 @@ CREATE TABLE `ProfileAchievement` (
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `Question`
+-- Tabelstructuur voor tabel `question`
 --
 
-CREATE TABLE `Question` (
+CREATE TABLE `question` (
   `QuestionID` int(11) NOT NULL,
   `Question` varchar(3000) NOT NULL,
   `Answer1` varchar(45) NOT NULL,
@@ -240,158 +267,89 @@ CREATE TABLE `Question` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Gegevens worden geëxporteerd voor tabel `Question`
+-- Gegevens worden geëxporteerd voor tabel `question`
 --
 
-INSERT INTO `Question` (`QuestionID`, `Question`, `Answer1`, `Answer2`, `Answer3`, `Answer4`, `CorrectAnswer`, `Category_CategoryID`) VALUES
-(52, 'In welk jaar was de slag bij Waterloo?', '1789', '1800', '1812', '1815', 4, 1),
-(53, 'Naar wie is Amerika vernoemd?', 'Amerika Belluci', 'Amerigo Vespucci', 'Amerika Bertutti', 'Uncle Sam', 2, 1),
-(54, 'Hoe heten de twee stichters van Rome volgens de legende?', 'Ceasar en Augustus', ' Nero en Constantijn', ' Romulus en Remus', ' Julius en Brutus', 3, 1),
-(55, 'Wat is de voornaam van de ontwerper van de Eiffeltoren?', 'Jean-pierre', 'Eiffel', 'Gustav', 'Ludovico', 2, 1),
-(56, 'Hoe heet de zus van Anne Frank?', 'Marietje', 'Dennis', 'Margot', 'Yentl', 3, 1),
-(57, 'Wanneer eindigde de Eerste Wereldoorlog?', '1918', '1917', '1945', '1939', 1, 1),
-(58, 'Waarvoor staat de afkorting VOC?', 'Verenigde Onderdrukkings Compagnie', 'Verenigde Oost-indische Compagnie', 'Verenigde Oost-Aziatische Compagnie', 'Vijandige onderdrukker Counterstrike', 2, 1),
-(59, 'In welke Griekse stad werden vroeger door de Grieken de Olympische spelen gehouden?', 'Athene', 'Olympia', 'Olympus', 'Sparta', 2, 1),
-(60, 'Welke dictator werd op 30 december 2006 in Bagdad gexecuteerd?', 'Osama Bin Laden', 'Mohammed Atta', 'Saddam Hussein', 'George Bush', 3, 1),
-(61, 'Welk land stuurde de eerste mens de ruimte in?', 'USA', 'USSR', 'Noord-Korea', 'Trinidag & Tobago', 2, 1),
-(62, 'Wie schilderde de Schreeuw?', 'Edvard Munch', 'Karel Appel', 'Rembrandt', 'Van Gogh', 1, 2),
-(63, 'Wie schreef de Illias?', 'Plato', 'Vergillius', 'Homerus', 'Archimedes', 3, 2),
-(64, 'Welk merk soep gebruikte Andy Warhol voor zijn kunstwerk?', 'Uncle Ben\'s', 'Cup-a-Soup', 'Unox', 'Campbell', 4, 2),
-(65, 'Wie schreef Dracula?', 'Bram Stoker', 'Bram de Steker', 'Harry Mulisch', 'Paul van Loon', 1, 2),
-(66, 'Wat is het meest verkochte boek?', 'De Bijbel', ' 50 Shades', ' Harry Potter', ' Lord of the Rings', 1, 2),
-(67, 'Wie Schreef La Divina Commedia?', 'Michelangelo', 'Leonardo da Vinci', ' Dante Alighieri', ' Donatello', 3, 2),
-(68, 'Hoeveel cirkels heeft de hel in de werken van Dante?', '6', '7', '8', '9', 4, 2),
-(69, 'Welke componist was doof?', 'Beethoven', 'Mozart', 'Chopin', 'Schoppenhauer', 1, 2),
-(70, 'Wie van deze schilders maakte surrealistische kunst?', 'Salvador Dali', 'Andy Warhol', 'Rembrandt van Rijn', 'Karel Appel', 1, 2),
-(71, 'Hoe heet het kunstwerk in Brussel wat voor de World Expo geplaatst is?', 'Manneke Pis', 'Het Koninklijk Paleis van Brussel', ' Atomium', 'Eiffel Toren', 3, 2),
-(72, 'Wie is de uitgever van de Call Of Duty franchise?', 'Activision', 'EA', 'Ubisoft', 'Valve', 1, 3),
-(73, 'In welk jaar is de originele Doom game uitgekomen?', '1991', '1992', '1993', '1994', 3, 3),
-(74, 'Wat is geen First Person Shooter?', 'Counterstrike', 'Unreal Tournament', 'Quake', 'Metal Slug', 4, 3),
-(75, 'Naar wie is een achievement genoemd in World of Warcraft?', 'Leeroy Jenkins', 'George Clooney', 'Jack Black', 'Mr. T', 1, 3),
-(76, 'Welk gamekanaal heeft de meeste subscribers op Youtube?', 'Jacksepticeye', 'Markiplier', 'Kwebbelkop', 'Pewdiepie', 4, 3),
-(77, 'Wat is de meest verkochte game ooit?', 'Super Mario Bros', 'GTA5', 'Wii Sports', 'Tetris', 3, 3),
-(78, 'Op welke snelweg race je met het uit 1997 uitgekomen racespel?', 'a2', 'a4', 'n56', 'a325', 1, 3),
-(79, 'Wie zijn de makers van het populaire spel League of Legends?', 'Blizzard', 'Valve', 'S2Games', 'Riot Games', 4, 3),
-(80, 'Hoe heet het populaire gamedistributiesysteem van Valve?', 'Steam', 'Cloud', 'Smoke', 'Origin', 1, 3),
-(81, 'In welke stad speelt het spel GTA5 zich af?', 'Los Angelos', 'Los Santos', 'La Bonita', 'El Bolista', 2, 3),
-(82, 'Hoe wordt de mysterieuze coureur in het programma Top Gear genoemd?', 'The Stag', 'The Stallion', 'The Stig', 'The Stick', 3, 4),
-(83, 'Wat is de naam van de rode race-auto uit de animatiefilm Cars?', 'Lightning McQueen', 'Lightning McKing', 'Thunder McQueen', 'Thunder McKing', 1, 4),
-(84, 'Uit welk Noord-Brabants dorp kwamen de hangjongeren uit New Kids?', 'Schijndel', 'Veghel', 'Maaskantje', 'Erp', 3, 4),
-(85, 'Uit welke film komt de quote: Your mother was a hamster and your father smells of elderberries?', 'Monthy Python and the Holy Grail', 'Life of Brian', 'Grown ups', 'Snatch', 1, 4),
-(86, 'Wat is de dodelijkste vloek uit de Harry Potter Films?', 'Flippendo', 'Wingardium Leviosa', 'Alohomora', 'Avada Kedavra', 4, 4),
-(87, 'Welke kleur heeft de teletubbie Tinky Winky?', 'Rood', 'Paars', 'Geel', 'Groen', 2, 4),
-(88, 'Hoe heet de rechter in het programma De rijdende rechter?', 'Frank Bakker', 'Frank Visser', 'Frank Stucadoor', 'Frank De Wit', 2, 4),
-(89, 'Welk Game of Thrones karakter weet niks?', 'Theon Greyjoy', 'Greyworm', 'Jorah Mormont', 'Jon Snow', 4, 4),
-(90, 'Wie speelt Captain Jack Sparrow in de Pirates of the Carribean films?', 'Johhnie Depp', 'Orlando Bloom', 'Jack Black', 'Daniel Radcliffe', 1, 4),
-(91, 'Uit welk dorpje komt Ash Ketchum uit de Pokemon serie?', 'New Bark Town', 'Vaniville Town', 'Pallet Town', 'Littleroot Town', 3, 4),
-(92, 'Wie bracht de hit Bohemian Rhapsody uit?', 'Queen', 'Prince', 'Kings of Leon', 'Queens of the Stone Age', 1, 5),
-(93, 'Welke rapper heeft niet bij de rapgroep G-Unit gezeten?', '50 Cent', 'Lloyd Banks', 'Tony Yayo', 'Snoop Dogg', 4, 5),
-(94, 'Welke koreaanse artiest scoorde een hit met het nummer Gangnam Style?', 'Pys', 'Psy', 'Syp', 'Spy', 2, 5),
-(95, 'Met welke artiest maakte de groep The Lonely Island het nummer Jack Sparrow?', 'Micheal Bubl', 'Micheal Bay', 'Micheal Bolton', 'Justin Timberlake', 3, 5),
-(96, 'Uit welk land komt de band A-Ha?', 'Zweden', 'Noorwegen', 'Denemarken', 'Ijsland', 2, 5),
-(97, 'Welke Artiest maakte hits als White & Nerdy en Pretty fly for a Rabbi?', 'Weird Al', 'Weirld Pal', 'Crazy Al', 'Crazy Bob', 1, 5),
-(98, 'Van welke band is Bono de leadzanger?', 'Genesis', 'The Animals', 'The Rolling Stones', 'U2', 4, 5),
-(99, 'Wie maakte de muziek voor de animatiefilm Tarzan?', 'Hans Zimmer', 'Phil Collins', 'Sting', 'John Williams', 2, 5),
-(100, 'Welke artiest bracht albums genaamd 19 ,21 en 25?', 'Amy Winehouse', 'Miley Cyrus', 'Selah Sue', 'Adele', 4, 5),
-(101, 'Met welke Film won Hans Zimmer een Oscar voor beste filmmuziek?', 'Rain man', 'The Lion King', 'Gladiator', 'Inception', 2, 5),
-(102, 'Waar werden de Zomerspelen van 1972 gehouden?', 'Frankrijk', 'Oost-Duitsland', 'West-Duitsland', 'Zwitserland', 3, 6),
-(103, 'Wanneer werd Nederland Europees kampioen voetbal?', '1984', '1988', '1992', '1996', 2, 6),
-(104, 'Hoe heet het stadion van NEC', 'Euroborg', 'Rat Verlegh Stadion', 'Goffertstadion', 'De Kuip', 3, 6),
-(105, 'Welke Argentijnse voetballer wordt de kleine Maradonna genoemd?', 'Suarez', 'Aguero', 'Messi', 'Higuain', 3, 6),
-(106, 'Hoeveel nederlanders wonnen ooit de ronde van Frankrijk?', '0', '1', '2', '3', 3, 6),
-(107, 'Welke kleur begint altijd bij het schaken?', 'Wit', 'Zwart', 'Je mag zelf kiezen', 'Maakt niet uit', 1, 6),
-(108, 'Welk land mag in 2022 het WK voetbal organiseren?', 'Irak', 'Arabische Emiraten', 'Qatar', 'Lebanon', 3, 6),
-(109, 'Uit hoeveel veldspelers bestaat een waterpoloteam?', '4', '6', '8', '10', 2, 6),
-(110, 'Op welke ondergrond wordt getennist op Wimbledon?', 'Gravel', 'Hardcourt', 'Tapijt', 'Gras', 2, 6),
-(111, 'Welke sport beoefent Ireen Wst?', 'Atletiek', 'Tennis', 'Wielrennen', 'Schaatsen', 4, 6),
-(112, 'Welk metaal is als enige bij kamertemperatuur vloeibaar?', 'Kwik', 'Kwek', 'Kwak', 'Kwok', 1, 7),
-(113, 'Waarvoor staat de afkorting NFC?', 'Near Force Communication', 'No Firewall Connection', 'Near Field Communication', 'Near Focus Communication', 3, 7),
-(114, 'Hoe heette het supercontinent wat zich tot ongeveer 250 miljoen jaar op aarde bevond?', 'Eurazi', 'Pangea', 'Laurazi', 'MegaWorld', 2, 7),
-(115, 'Welke metaal veroorzaakt de kleur groen in vuurwerk?', 'Magnesium', 'Ijzer', 'Aluminium', 'Koper', 4, 7),
-(116, 'Hoeveel nanometer groeit een nagel in een seconde?', '1', '2', '3', '4', 1, 7),
-(117, 'Wat is de sterkste spier in het menselijk lichaam?', 'De tong', 'Biceps', 'Triceps', 'Quadriceps', 1, 7),
-(118, 'Wat kan afgelezen worden op een altimeter?', 'Luchtdruk', 'Afstand', 'Gewicht', 'Hoogte', 4, 7),
-(119, 'Waarvoor staat c in de vergelijking e = mc?', 'Massa', 'Energie', 'Snelheid van het licht', 'Snelheid van het object', 3, 7),
-(120, 'Wat hebben Jean-Baptiste Olivier en Andr Garnerin uitgevonden?', 'De luchtballon', 'Shampoo', 'Parachute', 'Handzeep', 3, 7),
-(121, 'Welke van onderstaande namen is geen schaal?', 'Richter', 'Beaufort', 'Scoville', 'Edison', 4, 7),
-(122, 'In welk jaar was de slag bij Waterloo?', '1789', '1800', '1812', '1815', 4, 1),
-(123, 'Naar wie is Amerika vernoemd?', 'Amerika Belluci', 'Amerigo Vespucci', 'Amerika Bertutti', 'Uncle Sam', 2, 1),
-(124, 'Hoe heten de twee stichters van Rome volgens de legende?', 'Ceasar en Augustus', ' Nero en Constantijn', ' Romulus en Remus', ' Julius en Brutus', 3, 1),
-(125, 'Wat is de voornaam van de ontwerper van de Eiffeltoren?', 'Jean-pierre', 'Eiffel', 'Gustav', 'Ludovico', 2, 1),
-(126, 'Hoe heet de zus van Anne Frank?', 'Marietje', 'Dennis', 'Margot', 'Yentl', 3, 1),
-(127, 'Wanneer eindigde de Eerste Wereldoorlog?', '1918', '1917', '1945', '1939', 1, 1),
-(128, 'Waarvoor staat de afkorting VOC?', 'Verenigde Onderdrukkings Compagnie', 'Verenigde Oost-indische Compagnie', 'Verenigde Oost-Aziatische Compagnie', 'Vijandige onderdrukker Counterstrike', 2, 1),
-(129, 'In welke Griekse stad werden vroeger door de Grieken de Olympische spelen gehouden?', 'Athene', 'Olympia', 'Olympus', 'Sparta', 2, 1),
-(130, 'Welke dictator werd op 30 december 2006 in Bagdad gexecuteerd?', 'Osama Bin Laden', 'Mohammed Atta', 'Saddam Hussein', 'George Bush', 3, 1),
-(131, 'Welk land stuurde de eerste mens de ruimte in?', 'USA', 'USSR', 'Noord-Korea', 'Trinidag & Tobago', 2, 1),
-(132, 'Wie schilderde de Schreeuw?', 'Edvard Munch', 'Karel Appel', 'Rembrandt', 'Van Gogh', 1, 2),
-(133, 'Wie schreef de Illias?', 'Plato', 'Vergillius', 'Homerus', 'Archimedes', 3, 2),
-(134, 'Welk merk soep gebruikte Andy Warhol voor zijn kunstwerk?', 'Uncle Ben\'s', 'Cup-a-Soup', 'Unox', 'Campbell', 4, 2),
-(135, 'Wie schreef Dracula?', 'Bram Stoker', 'Bram de Steker', 'Harry Mulisch', 'Paul van Loon', 1, 2),
-(136, 'Wat is het meest verkochte boek?', 'De Bijbel', ' 50 Shades', ' Harry Potter', ' Lord of the Rings', 1, 2),
-(137, 'Wie Schreef La Divina Commedia?', 'Michelangelo', 'Leonardo da Vinci', ' Dante Alighieri', ' Donatello', 3, 2),
-(138, 'Hoeveel cirkels heeft de hel in de werken van Dante?', '6', '7', '8', '9', 4, 2),
-(139, 'Welke componist was doof?', 'Beethoven', 'Mozart', 'Chopin', 'Schoppenhauer', 1, 2),
-(140, 'Wie van deze schilders maakte surrealistische kunst?', 'Salvador Dali', 'Andy Warhol', 'Rembrandt van Rijn', 'Karel Appel', 1, 2),
-(141, 'Hoe heet het kunstwerk in Brussel wat voor de World Expo geplaatst is?', 'Manneke Pis', 'Het Koninklijk Paleis van Brussel', ' Atomium', 'Eiffel Toren', 3, 2),
-(142, 'Wie is de uitgever van de Call Of Duty franchise?', 'Activision', 'EA', 'Ubisoft', 'Valve', 1, 3),
-(143, 'In welk jaar is de originele Doom game uitgekomen?', '1991', '1992', '1993', '1994', 3, 3),
-(144, 'Wat is geen First Person Shooter?', 'Counterstrike', 'Unreal Tournament', 'Quake', 'Metal Slug', 4, 3),
-(145, 'Naar wie is een achievement genoemd in World of Warcraft?', 'Leeroy Jenkins', 'George Clooney', 'Jack Black', 'Mr. T', 1, 3),
-(146, 'Welk gamekanaal heeft de meeste subscribers op Youtube?', 'Jacksepticeye', 'Markiplier', 'Kwebbelkop', 'Pewdiepie', 4, 3),
-(147, 'Wat is de meest verkochte game ooit?', 'Super Mario Bros', 'GTA5', 'Wii Sports', 'Tetris', 3, 3),
-(148, 'Op welke snelweg race je met het uit 1997 uitgekomen racespel?', 'a2', 'a4', 'n56', 'a325', 1, 3),
-(149, 'Wie zijn de makers van het populaire spel League of Legends?', 'Blizzard', 'Valve', 'S2Games', 'Riot Games', 4, 3),
-(150, 'Hoe heet het populaire gamedistributiesysteem van Valve?', 'Steam', 'Cloud', 'Smoke', 'Origin', 1, 3),
-(151, 'In welke stad speelt het spel GTA5 zich af?', 'Los Angelos', 'Los Santos', 'La Bonita', 'El Bolista', 2, 3),
-(152, 'Hoe wordt de mysterieuze coureur in het programma Top Gear genoemd?', 'The Stag', 'The Stallion', 'The Stig', 'The Stick', 3, 4),
-(153, 'Wat is de naam van de rode race-auto uit de animatiefilm Cars?', 'Lightning McQueen', 'Lightning McKing', 'Thunder McQueen', 'Thunder McKing', 1, 4),
-(154, 'Uit welk Noord-Brabants dorp kwamen de hangjongeren uit New Kids?', 'Schijndel', 'Veghel', 'Maaskantje', 'Erp', 3, 4),
-(155, 'Uit welke film komt de quote: Your mother was a hamster and your father smells of elderberries?', 'Monthy Python and the Holy Grail', 'Life of Brian', 'Grown ups', 'Snatch', 1, 4),
-(156, 'Wat is de dodelijkste vloek uit de Harry Potter Films?', 'Flippendo', 'Wingardium Leviosa', 'Alohomora', 'Avada Kedavra', 4, 4),
-(157, 'Welke kleur heeft de teletubbie Tinky Winky?', 'Rood', 'Paars', 'Geel', 'Groen', 2, 4),
-(158, 'Hoe heet de rechter in het programma De rijdende rechter?', 'Frank Bakker', 'Frank Visser', 'Frank Stucadoor', 'Frank De Wit', 2, 4),
-(159, 'Welk Game of Thrones karakter weet niks?', 'Theon Greyjoy', 'Greyworm', 'Jorah Mormont', 'Jon Snow', 4, 4),
-(160, 'Wie speelt Captain Jack Sparrow in de Pirates of the Carribean films?', 'Johhnie Depp', 'Orlando Bloom', 'Jack Black', 'Daniel Radcliffe', 1, 4),
-(161, 'Uit welk dorpje komt Ash Ketchum uit de Pokemon serie?', 'New Bark Town', 'Vaniville Town', 'Pallet Town', 'Littleroot Town', 3, 4),
-(162, 'Wie bracht de hit Bohemian Rhapsody uit?', 'Queen', 'Prince', 'Kings of Leon', 'Queens of the Stone Age', 1, 5),
-(163, 'Welke rapper heeft niet bij de rapgroep G-Unit gezeten?', '50 Cent', 'Lloyd Banks', 'Tony Yayo', 'Snoop Dogg', 4, 5),
-(164, 'Welke koreaanse artiest scoorde een hit met het nummer Gangnam Style?', 'Pys', 'Psy', 'Syp', 'Spy', 2, 5),
-(165, 'Met welke artiest maakte de groep The Lonely Island het nummer Jack Sparrow?', 'Micheal Bubl', 'Micheal Bay', 'Micheal Bolton', 'Justin Timberlake', 3, 5),
-(166, 'Uit welk land komt de band A-Ha?', 'Zweden', 'Noorwegen', 'Denemarken', 'Ijsland', 2, 5),
-(167, 'Welke Artiest maakte hits als White & Nerdy en Pretty fly for a Rabbi?', 'Weird Al', 'Weirld Pal', 'Crazy Al', 'Crazy Bob', 1, 5),
-(168, 'Van welke band is Bono de leadzanger?', 'Genesis', 'The Animals', 'The Rolling Stones', 'U2', 4, 5),
-(169, 'Wie maakte de muziek voor de animatiefilm Tarzan?', 'Hans Zimmer', 'Phil Collins', 'Sting', 'John Williams', 2, 5),
-(170, 'Welke artiest bracht albums genaamd 19 ,21 en 25?', 'Amy Winehouse', 'Miley Cyrus', 'Selah Sue', 'Adele', 4, 5),
-(171, 'Met welke Film won Hans Zimmer een Oscar voor beste filmmuziek?', 'Rain man', 'The Lion King', 'Gladiator', 'Inception', 2, 5),
-(172, 'Waar werden de Zomerspelen van 1972 gehouden?', 'Frankrijk', 'Oost-Duitsland', 'West-Duitsland', 'Zwitserland', 3, 6),
-(173, 'Wanneer werd Nederland Europees kampioen voetbal?', '1984', '1988', '1992', '1996', 2, 6),
-(174, 'Hoe heet het stadion van NEC', 'Euroborg', 'Rat Verlegh Stadion', 'Goffertstadion', 'De Kuip', 3, 6),
-(175, 'Welke Argentijnse voetballer wordt de kleine Maradonna genoemd?', 'Suarez', 'Aguero', 'Messi', 'Higuain', 3, 6),
-(176, 'Hoeveel nederlanders wonnen ooit de ronde van Frankrijk?', '0', '1', '2', '3', 3, 6),
-(177, 'Welke kleur begint altijd bij het schaken?', 'Wit', 'Zwart', 'Je mag zelf kiezen', 'Maakt niet uit', 1, 6),
-(178, 'Welk land mag in 2022 het WK voetbal organiseren?', 'Irak', 'Arabische Emiraten', 'Qatar', 'Lebanon', 3, 6),
-(179, 'Uit hoeveel veldspelers bestaat een waterpoloteam?', '4', '6', '8', '10', 2, 6),
-(180, 'Op welke ondergrond wordt getennist op Wimbledon?', 'Gravel', 'Hardcourt', 'Tapijt', 'Gras', 2, 6),
-(181, 'Welke sport beoefent Ireen Wst?', 'Atletiek', 'Tennis', 'Wielrennen', 'Schaatsen', 4, 6),
-(182, 'Welk metaal is als enige bij kamertemperatuur vloeibaar?', 'Kwik', 'Kwek', 'Kwak', 'Kwok', 1, 7),
-(183, 'Waarvoor staat de afkorting NFC?', 'Near Force Communication', 'No Firewall Connection', 'Near Field Communication', 'Near Focus Communication', 3, 7),
-(184, 'Hoe heette het supercontinent wat zich tot ongeveer 250 miljoen jaar op aarde bevond?', 'Eurazi', 'Pangea', 'Laurazi', 'MegaWorld', 2, 7),
-(185, 'Welke metaal veroorzaakt de kleur groen in vuurwerk?', 'Magnesium', 'Ijzer', 'Aluminium', 'Koper', 4, 7),
-(186, 'Hoeveel nanometer groeit een nagel in een seconde?', '1', '2', '3', '4', 1, 7),
-(187, 'Wat is de sterkste spier in het menselijk lichaam?', 'De tong', 'Biceps', 'Triceps', 'Quadriceps', 1, 7),
-(188, 'Wat kan afgelezen worden op een altimeter?', 'Luchtdruk', 'Afstand', 'Gewicht', 'Hoogte', 4, 7),
-(189, 'Waarvoor staat c in de vergelijking e = mc?', 'Massa', 'Energie', 'Snelheid van het licht', 'Snelheid van het object', 3, 7),
-(190, 'Wat hebben Jean-Baptiste Olivier en Andr Garnerin uitgevonden?', 'De luchtballon', 'Shampoo', 'Parachute', 'Handzeep', 3, 7),
-(191, 'Welke van onderstaande namen is geen schaal?', 'Richter', 'Beaufort', 'Scoville', 'Edison', 4, 7);
+INSERT INTO `question` (`QuestionID`, `Question`, `Answer1`, `Answer2`, `Answer3`, `Answer4`, `CorrectAnswer`, `Category_CategoryID`) VALUES
+(1, 'In welk jaar was de slag bij Waterloo?', '1789', '1800', '1812', '1815', 4, 1),
+(2, 'Naar wie is Amerika vernoemd?', 'Amerika Belluci', 'Amerigo Vespucci', 'Amerika Bertutti', 'Uncle Sam', 2, 1),
+(3, 'Hoe heten de twee stichters van Rome volgens de legende?', 'Ceasar en Augustus', ' Nero en Constantijn', ' Romulus en Remus', ' Julius en Brutus', 3, 1),
+(4, 'Wat is de voornaam van de ontwerper van de Eiffeltoren?', 'Jean-pierre', 'Eiffel', 'Gustav', 'Ludovico', 3, 1),
+(5, 'Hoe heet de zus van Anne Frank?', 'Marietje', 'Dennis', 'Margot', 'Yentl', 3, 1),
+(6, 'Wanneer eindigde de Eerste Wereldoorlog?', '1918', '1917', '1945', '1939', 1, 1),
+(7, 'Waarvoor staat de afkorting VOC?', 'Verenigde Onderdrukkings Compagnie', 'Verenigde Oost-indische Compagnie', 'Verenigde Oost-Aziatische Compagnie', 'Vijandige onderdrukker Counterstrike', 2, 1),
+(8, 'In welke Griekse stad werden vroeger door de Grieken de Olympische spelen gehouden?', 'Athene', 'Olympia', 'Olympus', 'Sparta', 2, 1),
+(9, 'Welke dictator werd op 30 december 2006 in Bagdad geëxecuteerd?', 'Osama Bin Laden', 'Mohammed Atta', 'Saddam Hussein', 'George Bush', 3, 1),
+(10, 'Welk land stuurde de eerste mens de ruimte in?', 'USA', 'USSR', 'Noord-Korea', 'Trinidag & Tobago', 2, 1),
+(11, 'Wie was in 2008 premier van Nederland?', 'Jan-Peter Balkenende', 'Wim Kok', 'Mark Rutte', 'Pim Fortuyn', 1, 1),
+(12, 'Wie schilderde de Schreeuw?', 'Edvard Munch', 'Karel Appel', 'Rembrandt', 'Van Gogh', 1, 2),
+(13, 'Wie schreef de Illias?', 'Plato', 'Vergillius', 'Homerus', 'Archimedes', 3, 2),
+(14, 'Welk merk soep gebruikte Andy Warhol voor zijn kunstwerk?', 'Uncle Ben''s', 'Cup-a-Soup', 'Unox', 'Campbell', 4, 2),
+(15, 'Wie schreef Dracula?', 'Bram Stoker', 'Bram de Steker', 'Harry Mulisch', 'Paul van Loon', 1, 2),
+(16, 'Wat is het meest verkochte boek?', 'De Bijbel', ' 50 Shades', ' Harry Potter', ' Lord of the Rings', 1, 2),
+(17, 'Wie Schreef La Divina Commedia?', 'Michelangelo', 'Leonardo da Vinci', ' Dante Alighieri', ' Donatello', 3, 2),
+(18, 'Hoeveel cirkels heeft de hel in de werken van Dante?', '6', '7', '8', '9', 4, 2),
+(19, 'Welke componist was doof?', 'Beethoven', 'Mozart', 'Chopin', 'Schoppenhauer', 1, 2),
+(20, 'Wie van deze schilders maakte surrealistische kunst?', 'Salvador Dali', 'Andy Warhol', 'Rembrandt van Rijn', 'Karel Appel', 1, 2),
+(21, 'Hoe heet het kunstwerk in Brussel wat voor de World Expo geplaatst is?', 'Manneke Pis', 'Het Koninklijk Paleis van Brussel', ' Atomium', 'Eiffel Toren', 3, 2),
+(22, 'Wie is de uitgever van de Call Of Duty franchise?', 'Activision', 'EA', 'Ubisoft', 'Valve', 1, 3),
+(23, 'In welk jaar is de originele Doom game uitgekomen?', '1991', '1992', '1993', '1994', 3, 3),
+(24, 'Wat is geen First Person Shooter?', 'Counterstrike', 'Unreal Tournament', 'Quake', 'Metal Slug', 4, 3),
+(25, 'Naar wie is een achievement genoemd in World of Warcraft?', 'Leeroy Jenkins', 'George Clooney', 'Jack Black', 'Mr. T', 1, 3),
+(26, 'Welk gamekanaal heeft de meeste subscribers op Youtube?', 'Jacksepticeye', 'Markiplier', 'Kwebbelkop', 'Pewdiepie', 4, 3),
+(27, 'Wat is de meest verkochte game ooit?', 'Super Mario Bros', 'GTA5', 'Wii Sports', 'Tetris', 3, 3),
+(28, 'Op welke snelweg race je met het uit 1997 uitgekomen racespel?', 'a2', 'a4', 'n56', 'a325', 1, 3),
+(29, 'Wie zijn de makers van het populaire spel League of Legends?', 'Blizzard', 'Valve', 'S2Games', 'Riot Games', 4, 3),
+(30, 'Hoe heet het populaire gamedistributiesysteem van Valve?', 'Steam', 'Cloud', 'Smoke', 'Origin', 1, 3),
+(31, 'In welke stad speelt het spel GTA5 zich af?', 'Los Angelos', 'Los Santos', 'La Bonita', 'El Bolista', 2, 3),
+(32, 'Hoe wordt de mysterieuze coureur in het programma Top Gear genoemd?', 'The Stag', 'The Stallion', 'The Stig', 'The Stick', 3, 4),
+(33, 'Wat is de naam van de rode race-auto uit de animatiefilm Cars?', 'Lightning McQueen', 'Lightning McKing', 'Thunder McQueen', 'Thunder McKing', 1, 4),
+(34, 'Uit welk Noord-Brabants dorp kwamen de hangjongeren uit New Kids?', 'Schijndel', 'Veghel', 'Maaskantje', 'Erp', 3, 4),
+(35, 'Uit welke film komt de quote: Your mother was a hamster and your father smells of elderberries?', 'Monthy Python and the Holy Grail', 'Life of Brian', 'Grown ups', 'Snatch', 1, 4),
+(36, 'Wat is de dodelijkste vloek uit de Harry Potter Films?', 'Flippendo', 'Wingardium Leviosa', 'Alohomora', 'Avada Kedavra', 4, 4),
+(37, 'Welke kleur heeft de teletubbie Tinky Winky?', 'Rood', 'Paars', 'Geel', 'Groen', 2, 4),
+(38, 'Hoe heet de rechter in het programma De rijdende rechter?', 'Frank Bakker', 'Frank Visser', 'Frank Stucadoor', 'Frank De Wit', 2, 4),
+(39, 'Welk Game of Thrones karakter weet niks?', 'Theon Greyjoy', 'Greyworm', 'Jorah Mormont', 'Jon Snow', 4, 4),
+(40, 'Wie speelt Captain Jack Sparrow in de Pirates of the Carribean films?', 'Johhnie Depp', 'Orlando Bloom', 'Jack Black', 'Daniel Radcliffe', 1, 4),
+(41, 'Uit welk dorpje komt Ash Ketchum uit de Pokemon serie?', 'New Bark Town', 'Vaniville Town', 'Pallet Town', 'Littleroot Town', 3, 4),
+(42, 'Wie bracht de hit Bohemian Rhapsody uit?', 'Queen', 'Prince', 'Kings of Leon', 'Queens of the Stone Age', 1, 5),
+(43, 'Welke rapper heeft niet bij de rapgroep G-Unit gezeten?', '50 Cent', 'Lloyd Banks', 'Tony Yayo', 'Snoop Dogg', 4, 5),
+(44, 'Welke koreaanse artiest scoorde een hit met het nummer Gangnam Style?', 'Pys', 'Psy', 'Syp', 'Spy', 2, 5),
+(45, 'Met welke artiest maakte de groep The Lonely Island het nummer Jack Sparrow?', 'Micheal Bublé', 'Micheal Bay', 'Micheal Bolton', 'Justin Timberlake', 3, 5),
+(46, 'Uit welk land komt de band A-Ha?', 'Zweden', 'Noorwegen', 'Denemarken', 'Ijsland', 2, 5),
+(47, 'Welke Artiest maakte hits als White & Nerdy en Pretty fly for a Rabbi?', 'Weird Al', 'Weirld Pal', 'Crazy Al', 'Crazy Bob', 1, 5),
+(48, 'Van welke band is Bono de leadzanger?', 'Genesis', 'The Animals', 'The Rolling Stones', 'U2', 4, 5),
+(49, 'Wie maakte de muziek voor de animatiefilm Tarzan?', 'Hans Zimmer', 'Phil Collins', 'Sting', 'John Williams', 2, 5),
+(50, 'Welke artiest bracht albums genaamd 19 ,21 en 25?', 'Amy Winehouse', 'Miley Cyrus', 'Selah Sue', 'Adele', 4, 5),
+(51, 'Met welke Film won Hans Zimmer een Oscar voor beste filmmuziek?', 'Rain man', 'The Lion King', 'Gladiator', 'Inception', 2, 5),
+(52, 'Waar werden de Zomerspelen van 1972 gehouden?', 'Frankrijk', 'Oost-Duitsland', 'West-Duitsland', 'Zwitserland', 3, 6),
+(53, 'Wanneer werd Nederland Europees kampioen voetbal?', '1984', '1988', '1992', '1996', 2, 6),
+(54, 'Hoe heet het stadion van NEC', 'Euroborg', 'Rat Verlegh Stadion', 'Goffertstadion', 'De Kuip', 3, 6),
+(55, 'Welke Argentijnse voetballer wordt de kleine Maradonna genoemd?', 'Suarez', 'Aguero', 'Messi', 'Higuain', 3, 6),
+(56, 'Hoeveel nederlanders wonnen ooit de ronde van Frankrijk?', '0', '1', '2', '3', 3, 6),
+(57, 'Welke kleur begint altijd bij het schaken?', 'Wit', 'Zwart', 'Je mag zelf kiezen', 'Maakt niet uit', 1, 6),
+(58, 'Welk land mag in 2022 het WK voetbal organiseren?', 'Irak', 'Arabische Emiraten', 'Qatar', 'Lebanon', 3, 6),
+(59, 'Uit hoeveel veldspelers bestaat een waterpoloteam?', '4', '6', '8', '10', 2, 6),
+(60, 'Op welke ondergrond wordt getennist op Wimbledon?', 'Gravel', 'Hardcourt', 'Tapijt', 'Gras', 2, 6),
+(61, 'Welke sport beoefent Ireen Wüst?', 'Atletiek', 'Tennis', 'Wielrennen', 'Schaatsen', 4, 6),
+(62, 'Welk metaal is als enige bij kamertemperatuur vloeibaar?', 'Kwik', 'Kwek', 'Kwak', 'Kwok', 1, 7),
+(63, 'Waarvoor staat de afkorting NFC?', 'Near Force Communication', 'No Firewall Connection', 'Near Field Communication', 'Near Focus Communication', 3, 7),
+(64, 'Hoe heette het supercontinent wat zich tot ongeveer 250 miljoen jaar op aarde bevond?', 'Eurazië', 'Pangea', 'Laurazië', 'MegaWorld', 2, 7),
+(65, 'Welke metaal veroorzaakt de kleur groen in vuurwerk?', 'Magnesium', 'Ijzer', 'Aluminium', 'Koper', 4, 7),
+(66, 'Hoeveel nanometer groeit een nagel in een seconde?', '1', '2', '3', '4', 1, 7),
+(67, 'Wat is de sterkste spier in het menselijk lichaam?', 'De tong', 'Biceps', 'Triceps', 'Quadriceps', 1, 7),
+(68, 'Wat kan afgelezen worden op een altimeter?', 'Luchtdruk', 'Afstand', 'Gewicht', 'Hoogte', 4, 7),
+(69, 'Waarvoor staat c in de vergelijking e = mc²?', 'Massa', 'Energie', 'Snelheid van het licht', 'Snelheid van het object', 3, 7),
+(70, 'Wat hebben Jean-Baptiste Olivier en André Garnerin uitgevonden?', 'De luchtballon', 'Shampoo', 'Parachute', 'Handzeep', 3, 7),
+(71, 'Welke van onderstaande namen is geen schaal?', 'Richter', 'Beaufort', 'Scoville', 'Edison', 4, 7);
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `Statistic`
+-- Tabelstructuur voor tabel `statistic`
 --
 
-CREATE TABLE `Statistic` (
+CREATE TABLE `statistic` (
   `StatisticID` int(11) NOT NULL,
   `Rights` int(11) DEFAULT '0',
   `Wrong` int(11) DEFAULT '0',
@@ -400,10 +358,10 @@ CREATE TABLE `Statistic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Gegevens worden geëxporteerd voor tabel `Statistic`
+-- Gegevens worden geëxporteerd voor tabel `statistic`
 --
 
-INSERT INTO `Statistic` (`StatisticID`, `Rights`, `Wrong`, `Category_CategoryID`, `Profile_ProfileID`) VALUES
+INSERT INTO `statistic` (`StatisticID`, `Rights`, `Wrong`, `Category_CategoryID`, `Profile_ProfileID`) VALUES
 (1, 1, 2, 1, 22),
 (2, 0, 1, 2, 22),
 (3, 0, 0, 3, 22),
@@ -516,13 +474,13 @@ INSERT INTO `Statistic` (`StatisticID`, `Rights`, `Wrong`, `Category_CategoryID`
 (110, 0, 0, 5, 37),
 (111, 0, 0, 6, 37),
 (112, 0, 0, 7, 37),
-(113, 3, 3, 1, 38),
-(114, 2, 2, 2, 38),
-(115, 1, 3, 3, 38),
-(116, 1, 2, 4, 38),
-(117, 1, 2, 5, 38),
-(118, 0, 3, 6, 38),
-(119, 0, 0, 7, 38),
+(113, 9, 4, 1, 38),
+(114, 9, 3, 2, 38),
+(115, 5, 4, 3, 38),
+(116, 4, 3, 4, 38),
+(117, 8, 3, 5, 38),
+(118, 2, 3, 6, 38),
+(119, 7, 0, 7, 38),
 (120, 0, 0, 1, 40),
 (121, 0, 0, 2, 40),
 (122, 0, 0, 3, 40),
@@ -537,13 +495,13 @@ INSERT INTO `Statistic` (`StatisticID`, `Rights`, `Wrong`, `Category_CategoryID`
 (131, 0, 0, 5, 41),
 (132, 0, 0, 6, 41),
 (133, 0, 0, 7, 41),
-(134, 1, 1, 1, 42),
-(135, 5, 1, 2, 42),
-(136, 3, 1, 3, 42),
-(137, 6, 1, 4, 42),
-(138, 2, 1, 5, 42),
-(139, 7, 3, 6, 42),
-(140, 4, 1, 7, 42),
+(134, 5, 1, 1, 42),
+(135, 10, 2, 2, 42),
+(136, 5, 1, 3, 42),
+(137, 8, 2, 4, 42),
+(138, 8, 2, 5, 42),
+(139, 9, 3, 6, 42),
+(140, 9, 1, 7, 42),
 (141, 0, 0, 1, 43),
 (142, 0, 0, 2, 43),
 (143, 0, 0, 3, 43),
@@ -600,16 +558,16 @@ INSERT INTO `Statistic` (`StatisticID`, `Rights`, `Wrong`, `Category_CategoryID`
 (194, 0, 0, 5, 50),
 (195, 0, 0, 6, 50),
 (196, 0, 0, 7, 50),
-(197, 0, 0, 1, 1),
+(197, 4, 0, 1, 2),
 (198, 0, 0, 2, 1),
 (199, 0, 0, 3, 1),
-(200, 0, 0, 4, 1),
-(201, 0, 0, 5, 1),
-(202, 0, 0, 6, 1),
-(203, 0, 0, 7, 1),
+(200, 1, 2, 4, 2),
+(201, 3, 2, 5, 2),
+(202, 2, 0, 6, 2),
+(203, 4, 0, 7, 2),
 (204, 0, 0, 1, 1),
-(205, 0, 0, 2, 1),
-(206, 0, 0, 3, 1),
+(205, 3, 2, 2, 2),
+(206, 1, 0, 3, 2),
 (207, 0, 0, 4, 1),
 (208, 0, 0, 5, 1),
 (209, 0, 0, 6, 1),
@@ -739,62 +697,132 @@ INSERT INTO `Statistic` (`StatisticID`, `Rights`, `Wrong`, `Category_CategoryID`
 (333, 0, 0, 4, 70),
 (334, 0, 0, 5, 70),
 (335, 0, 0, 6, 70),
-(336, 0, 0, 7, 70);
+(336, 0, 0, 7, 70),
+(337, 0, 0, 1, 71),
+(338, 0, 0, 2, 71),
+(339, 0, 0, 3, 71),
+(340, 0, 0, 4, 71),
+(341, 0, 0, 5, 71),
+(342, 0, 0, 6, 71),
+(343, 0, 0, 7, 71),
+(344, 0, 0, 1, 72),
+(345, 0, 0, 2, 72),
+(346, 0, 0, 3, 72),
+(347, 0, 0, 4, 72),
+(348, 0, 0, 5, 72),
+(349, 0, 0, 6, 72),
+(350, 0, 0, 7, 72),
+(351, 3, 1, 1, 73),
+(352, 4, 3, 2, 73),
+(353, 4, 0, 3, 73),
+(354, 1, 3, 4, 73),
+(355, 5, 3, 5, 73),
+(356, 3, 0, 6, 73),
+(357, 6, 0, 7, 73),
+(358, 0, 0, 1, 74),
+(359, 0, 0, 2, 74),
+(360, 0, 0, 3, 74),
+(361, 0, 0, 4, 74),
+(362, 0, 0, 5, 74),
+(363, 0, 0, 6, 74),
+(364, 0, 0, 7, 74),
+(365, 0, 0, 1, 75),
+(366, 0, 0, 2, 75),
+(367, 0, 0, 3, 75),
+(368, 0, 0, 4, 75),
+(369, 0, 0, 5, 75),
+(370, 0, 0, 6, 75),
+(371, 0, 0, 7, 75),
+(372, 0, 0, 1, 76),
+(373, 0, 0, 2, 76),
+(374, 0, 0, 3, 76),
+(375, 0, 0, 4, 76),
+(376, 0, 0, 5, 76),
+(377, 0, 0, 6, 76),
+(378, 0, 0, 7, 76),
+(379, 0, 0, 1, 77),
+(380, 1, 0, 2, 77),
+(381, 1, 0, 3, 77),
+(382, 0, 0, 4, 77),
+(383, 2, 0, 5, 77),
+(384, 0, 0, 6, 77),
+(385, 1, 0, 7, 77),
+(386, 0, 0, 1, 78),
+(387, 0, 0, 2, 78),
+(388, 0, 0, 3, 78),
+(389, 0, 0, 4, 78),
+(390, 0, 0, 5, 78),
+(391, 0, 0, 6, 78),
+(392, 0, 0, 7, 78),
+(393, 0, 0, 1, 76),
+(394, 0, 0, 2, 76),
+(395, 0, 0, 3, 76),
+(396, 0, 0, 4, 76),
+(397, 0, 0, 5, 76),
+(398, 0, 0, 6, 76),
+(399, 0, 0, 7, 76),
+(400, 0, 0, 1, 76),
+(401, 0, 0, 2, 76),
+(402, 0, 0, 3, 76),
+(403, 0, 0, 4, 76),
+(404, 0, 0, 5, 76),
+(405, 0, 0, 6, 76),
+(406, 0, 0, 7, 76);
 
 --
 -- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexen voor tabel `Achievement`
+-- Indexen voor tabel `achievement`
 --
-ALTER TABLE `Achievement`
+ALTER TABLE `achievement`
   ADD PRIMARY KEY (`AchievmentID`);
 
 --
--- Indexen voor tabel `Category`
+-- Indexen voor tabel `category`
 --
-ALTER TABLE `Category`
+ALTER TABLE `category`
   ADD PRIMARY KEY (`CategoryID`);
 
 --
--- Indexen voor tabel `GameInfo`
+-- Indexen voor tabel `gameinfo`
 --
-ALTER TABLE `GameInfo`
+ALTER TABLE `gameinfo`
   ADD PRIMARY KEY (`GameInfoID`),
   ADD KEY `fk_GameInfo_Profile1_idx` (`Profile_ProfileID`);
 
 --
--- Indexen voor tabel `PowerUp`
+-- Indexen voor tabel `powerup`
 --
-ALTER TABLE `PowerUp`
+ALTER TABLE `powerup`
   ADD PRIMARY KEY (`PowerUpID`);
 
 --
--- Indexen voor tabel `Profile`
+-- Indexen voor tabel `profile`
 --
-ALTER TABLE `Profile`
+ALTER TABLE `profile`
   ADD PRIMARY KEY (`ProfileID`),
   ADD UNIQUE KEY `Email` (`Email`);
 
 --
--- Indexen voor tabel `ProfileAchievement`
+-- Indexen voor tabel `profileachievement`
 --
-ALTER TABLE `ProfileAchievement`
+ALTER TABLE `profileachievement`
   ADD PRIMARY KEY (`Profile_ProfileID`,`Achievment_AchievmentID`),
   ADD KEY `fk_ProfileAchievment_Achievment1_idx` (`Achievment_AchievmentID`);
 
 --
--- Indexen voor tabel `Question`
+-- Indexen voor tabel `question`
 --
-ALTER TABLE `Question`
+ALTER TABLE `question`
   ADD PRIMARY KEY (`QuestionID`),
   ADD KEY `fk_Question_Category_idx` (`Category_CategoryID`);
 
 --
--- Indexen voor tabel `Statistic`
+-- Indexen voor tabel `statistic`
 --
-ALTER TABLE `Statistic`
+ALTER TABLE `statistic`
   ADD PRIMARY KEY (`StatisticID`),
   ADD KEY `fk_Statistic_Category1_idx` (`Category_CategoryID`),
   ADD KEY `fk_Statistic_Profile1_idx` (`Profile_ProfileID`);
@@ -804,74 +832,74 @@ ALTER TABLE `Statistic`
 --
 
 --
--- AUTO_INCREMENT voor een tabel `Achievement`
+-- AUTO_INCREMENT voor een tabel `achievement`
 --
-ALTER TABLE `Achievement`
+ALTER TABLE `achievement`
   MODIFY `AchievmentID` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT voor een tabel `Category`
+-- AUTO_INCREMENT voor een tabel `category`
 --
-ALTER TABLE `Category`
+ALTER TABLE `category`
   MODIFY `CategoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT voor een tabel `GameInfo`
+-- AUTO_INCREMENT voor een tabel `gameinfo`
 --
-ALTER TABLE `GameInfo`
-  MODIFY `GameInfoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+ALTER TABLE `gameinfo`
+  MODIFY `GameInfoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
--- AUTO_INCREMENT voor een tabel `PowerUp`
+-- AUTO_INCREMENT voor een tabel `powerup`
 --
-ALTER TABLE `PowerUp`
+ALTER TABLE `powerup`
   MODIFY `PowerUpID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT voor een tabel `Profile`
+-- AUTO_INCREMENT voor een tabel `profile`
 --
-ALTER TABLE `Profile`
-  MODIFY `ProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+ALTER TABLE `profile`
+  MODIFY `ProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 --
--- AUTO_INCREMENT voor een tabel `ProfileAchievement`
+-- AUTO_INCREMENT voor een tabel `profileachievement`
 --
-ALTER TABLE `ProfileAchievement`
+ALTER TABLE `profileachievement`
   MODIFY `Profile_ProfileID` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT voor een tabel `Question`
+-- AUTO_INCREMENT voor een tabel `question`
 --
-ALTER TABLE `Question`
-  MODIFY `QuestionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=192;
+ALTER TABLE `question`
+  MODIFY `QuestionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 --
--- AUTO_INCREMENT voor een tabel `Statistic`
+-- AUTO_INCREMENT voor een tabel `statistic`
 --
-ALTER TABLE `Statistic`
-  MODIFY `StatisticID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=337;
+ALTER TABLE `statistic`
+  MODIFY `StatisticID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=407;
 --
 -- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- Beperkingen voor tabel `GameInfo`
+-- Beperkingen voor tabel `gameinfo`
 --
-ALTER TABLE `GameInfo`
-  ADD CONSTRAINT `fk_GameInfo_Profile1` FOREIGN KEY (`Profile_ProfileID`) REFERENCES `Profile` (`ProfileID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `gameinfo`
+  ADD CONSTRAINT `fk_GameInfo_Profile1` FOREIGN KEY (`Profile_ProfileID`) REFERENCES `profile` (`ProfileID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Beperkingen voor tabel `ProfileAchievement`
+-- Beperkingen voor tabel `profileachievement`
 --
-ALTER TABLE `ProfileAchievement`
-  ADD CONSTRAINT `fk_ProfileAchievment_Achievment1` FOREIGN KEY (`Achievment_AchievmentID`) REFERENCES `Achievement` (`AchievmentID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_ProfileAchievment_Profile1` FOREIGN KEY (`Profile_ProfileID`) REFERENCES `Profile` (`ProfileID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `profileachievement`
+  ADD CONSTRAINT `fk_ProfileAchievment_Achievment1` FOREIGN KEY (`Achievment_AchievmentID`) REFERENCES `achievement` (`AchievmentID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_ProfileAchievment_Profile1` FOREIGN KEY (`Profile_ProfileID`) REFERENCES `profile` (`ProfileID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Beperkingen voor tabel `Question`
+-- Beperkingen voor tabel `question`
 --
-ALTER TABLE `Question`
-  ADD CONSTRAINT `fk_Question_Category` FOREIGN KEY (`Category_CategoryID`) REFERENCES `Category` (`CategoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `question`
+  ADD CONSTRAINT `fk_Question_Category` FOREIGN KEY (`Category_CategoryID`) REFERENCES `category` (`CategoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Beperkingen voor tabel `Statistic`
+-- Beperkingen voor tabel `statistic`
 --
-ALTER TABLE `Statistic`
-  ADD CONSTRAINT `fk_Statistic_Category1` FOREIGN KEY (`Category_CategoryID`) REFERENCES `Category` (`CategoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Statistic_Profile1` FOREIGN KEY (`Profile_ProfileID`) REFERENCES `Profile` (`ProfileID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `statistic`
+  ADD CONSTRAINT `fk_Statistic_Category1` FOREIGN KEY (`Category_CategoryID`) REFERENCES `category` (`CategoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Statistic_Profile1` FOREIGN KEY (`Profile_ProfileID`) REFERENCES `profile` (`ProfileID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

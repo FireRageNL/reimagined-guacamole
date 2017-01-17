@@ -961,6 +961,7 @@ public class FXMLController extends Application implements Initializable {
         }
         updateRoomList(ms.sendGameRoomData());
         setWindows(2);
+        gs = null;
     }
 
     /**
