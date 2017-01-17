@@ -241,7 +241,9 @@ public class FXMLController extends Application implements Initializable {
 
     @Override
     public void stop() throws RemoteException {
-        mediaPlayer.stop();
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
         if (soundThread != null && soundThread.isAlive()) {
             soundThread.interrupt();
         }
@@ -251,7 +253,7 @@ public class FXMLController extends Application implements Initializable {
         if (serverThread != null && serverThread.isAlive()) {
             serverThread.interrupt();
         }
-        if(gs != null){
+        if (gs != null) {
             gs.leaveRoom(gameClient);
         }
     }
@@ -1078,14 +1080,20 @@ public class FXMLController extends Application implements Initializable {
     }
 
     public void showPlayerLeft() throws RemoteException {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle("Waarschuwing!");
-        alert.setHeaderText(null);
-        alert.setContentText("Een speler heeft het spel verlaten! Het spel kan niet meer doorgaan");
-        alert.showAndWait();
-        if (serverThread != null && serverThread.isAlive()) {
-            serverThread.interrupt();
-        }
-        quitGame();
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Waarschuwing!");
+            alert.setHeaderText(null);
+            alert.setContentText("Een speler heeft het spel verlaten! Het spel kan niet meer doorgaan");
+            alert.showAndWait();
+            if (serverThread != null && serverThread.isAlive()) {
+                serverThread.interrupt();
+            }
+            try {
+                quitGame();
+            } catch (RemoteException ex) {
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 }

@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import reimaginedguacamole.gameserver.GameServer;
 import reimaginedguacamole.networking.IMasterServer;
 import reimaginedguacamole.profile.IGameClient;
+import reimaginedguacamole.profile.IGameServer;
 
 /**
  *
@@ -26,12 +28,12 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
 
     //private IGameController
     private String name;
-    private List<IGameClient> players;
+    private static List<IGameClient> players;
     private IGameController gameController;
     private String ip;
     private int playersDone;
-    private IMasterServer ms;
-    private GameServer gs;
+    private static IMasterServer ms;
+    private static GameServer gs;
 
     public GameRoom() throws RemoteException {
         //Overwrite for default constructor
@@ -52,12 +54,14 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
      * @throws UnknownHostException
      */
     public GameRoom(int rounds, int duration, String roomname, String ip, GameServer gs, IMasterServer ms) throws RemoteException, NotBoundException, UnknownHostException {
-        this.gameController = new GameController(rounds, duration, gs, this,ms);
-        this.players = new ArrayList<>();
+        this.gameController = new GameController(rounds, duration, gs, this, ms);
+        GameRoom.players = new ArrayList<>();
         this.name = roomname;
         playersDone = 0;
         //this.ip = ip; //This has to be overwritten to localhost later on but for testing purposes its set to the client IP that later will have the game server!!
         this.ip = InetAddress.getLocalHost().getHostAddress();
+        GameRoom.gs = gs;
+        GameRoom.ms = ms;
     }
 
     @Override
@@ -75,13 +79,21 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     @Override
     public void leaveRoom(IGameClient profile) throws RemoteException {
         players.remove(profile);
-        if(!ms.sendGameRoomData().contains(gs)){
-            players.forEach((cl) -> {
-                try {
-                    cl.playerLeftIngame();
-                } catch (RemoteException ex) {
-                    Logger.getLogger(GameRoom.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        boolean isGameNotRunning = false;
+        for (IGameServer sv : ms.sendGameRoomData()) {
+            if (sv.getIp() == null ? gs.getIp() == null : sv.getIp().equals(gs.getIp())) {
+                isGameNotRunning = true;
+            }
+        }
+        if (!isGameNotRunning) {
+            players.forEach((IGameClient cl) -> {
+                Platform.runLater(() -> {
+                    try {
+                        cl.playerLeftIngame();
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(GameRoom.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
             });
         }
         gameController.removePlayersCount();
@@ -94,7 +106,7 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     public String getIp() {
         return this.ip;
     }
-    
+
     @Override
     public String getNumberOfRounds() throws RemoteException {
         return Integer.toString(this.gameController.getGame().getAmountOfRounds());
@@ -126,12 +138,12 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     }
 
     @Override
-    public IGameController getGameController() throws RemoteException{
+    public IGameController getGameController() throws RemoteException {
         return this.gameController;
     }
 
     @Override
-    public List<IGameClient> getPlayers() throws RemoteException{
+    public List<IGameClient> getPlayers() throws RemoteException {
         return players;
     }
 
@@ -154,5 +166,5 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     public void setPlayersDone() throws RemoteException {
         playersDone = 0;
     }
-    
+
 }
