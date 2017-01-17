@@ -600,8 +600,7 @@ public class FXMLController extends Application implements Initializable {
                 break;
             case GAMEFINISHED:
                 chatList.add("GAME: De game is afgelopen!");
-                gs.uploadStatistics(ms, this.user);
-
+                
                 Platform.runLater(() -> {
                     Alert alert = new Alert(AlertType.WARNING);
                     try {
@@ -614,6 +613,8 @@ public class FXMLController extends Application implements Initializable {
                             alert.setTitle("Helaas");
                             alert.setContentText("Helaas, je bent geen winnaar.");
                         }
+                        gs.uploadStatistics(ms, this.user);
+
                     } catch (RemoteException ex) {
                     }
                     
