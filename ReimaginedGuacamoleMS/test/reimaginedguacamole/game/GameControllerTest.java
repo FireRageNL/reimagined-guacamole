@@ -12,8 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import reimaginedguacamole.gameserver.GameServer;
 import reimaginedguacamole.profile.Profile;
+import reimaginedguacamole.gameserver.GameServer;
+
 
 /**
  *
@@ -47,6 +48,7 @@ public class GameControllerTest {
         System.out.println("startNextRound");
         GameController instance = new GameController(5,10,gs,gm);
         instance.startNextRound();
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
         /**
@@ -58,6 +60,7 @@ public class GameControllerTest {
         Profile user = new Profile("test@email.com","test","Testie",2,10,20);
         GameController instance = new GameController(5,10,gs,gm);
         instance.endGame(user);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
     /**
@@ -71,6 +74,7 @@ public class GameControllerTest {
         Category expResult = Category.HISTORY;
         Category result = instance.chooseCategory(wheel);
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
         /**
@@ -84,6 +88,7 @@ public class GameControllerTest {
         Category expResult = Category.GAMES;
         Category result = instance.chooseCategory(wheel);
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
             /**
@@ -97,6 +102,7 @@ public class GameControllerTest {
         Category expResult = Category.MUSIC;
         Category result = instance.chooseCategory(wheel);
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
                 /**
@@ -110,6 +116,7 @@ public class GameControllerTest {
         Category expResult = Category.SCIENCE;
         Category result = instance.chooseCategory(wheel);
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
      /**
@@ -123,6 +130,7 @@ public class GameControllerTest {
         Category expResult = Category.ART;
         Category result = instance.chooseCategory(wheel);
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
          /**
@@ -136,6 +144,7 @@ public class GameControllerTest {
         Category expResult = Category.SPORT;
         Category result = instance.chooseCategory(wheel);
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
 
@@ -149,6 +158,7 @@ public class GameControllerTest {
         Round expResult = null;
         Round result = (Round) instance.getCurrentRound();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -160,6 +170,7 @@ public class GameControllerTest {
         Category category = Category.HISTORY;
         GameController instance = new GameController(5,10,gs,gm);
         instance.giveRoundQuestion(category);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -172,6 +183,7 @@ public class GameControllerTest {
         int expResult = 5;
         int result = instance.getGame().getAmountOfRounds();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -185,6 +197,7 @@ public class GameControllerTest {
         GameState expResult = GameState.GAMERUNNING;
         GameState result = instance.getGameState();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -196,6 +209,7 @@ public class GameControllerTest {
         GameState gameState = GameState.GAMERUNNING;
          GameController instance = new GameController(5,10,gs,gm);
         instance.setGameState(gameState);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -209,6 +223,7 @@ public class GameControllerTest {
         int expResult = 1;
         int result = instance.getCurrentAnswer();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -220,6 +235,7 @@ public class GameControllerTest {
         int currentAnswer = 1;
          GameController instance = new GameController(5,10,gs,gm);
         instance.setCurrentAnswer(currentAnswer);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -234,6 +250,7 @@ public class GameControllerTest {
         int expResult = instance.getCurrentRound().getQuestion().getCorrectAnswer();
         int result = instance.getCorrectAnswer();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -246,6 +263,7 @@ public class GameControllerTest {
         int expResult = 0;
         int result = instance.getCurrentScore();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -259,6 +277,7 @@ public class GameControllerTest {
         int expResult = 0;
         int result = instance.getCurrentRoundIndex();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -276,6 +295,7 @@ public class GameControllerTest {
         instance.setCurrentAnswer(1);
         boolean result = instance.checkAnswer(profile, timeTaken);
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
 

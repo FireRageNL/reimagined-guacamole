@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.LinkedHashMap;
-import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.IProfile;
 import reimaginedguacamole.profile.IStatistic;
 

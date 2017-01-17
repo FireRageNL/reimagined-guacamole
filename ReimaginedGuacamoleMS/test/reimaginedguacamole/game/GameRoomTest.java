@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
 import reimaginedguacamole.gameserver.GameServer;
 import reimaginedguacamole.profile.IGameClient;
 
+
 /**
  *
  * @author Jorrit
@@ -56,7 +57,7 @@ public class GameRoomTest {
         int expResult = 0;
         int result = instance.getNrOfPlayers();
         assertEquals(expResult, result);
-        fail("Doesn't work yet");
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -69,7 +70,7 @@ public class GameRoomTest {
         GameRoom instance = new GameRoom();
         instance.joinRoom(profile);
         // TODO review the generated test code and remove the default call to fail.
-        fail("Fails because of rmi");
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -81,7 +82,7 @@ public class GameRoomTest {
         IGameClient profile = null;
         GameRoom instance = new GameRoom();
         instance.leaveRoom(profile);
-         fail("Fails because of rmi");
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -94,6 +95,7 @@ public class GameRoomTest {
         String expResult = "room";
         String result = instance.getName();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -106,6 +108,7 @@ public class GameRoomTest {
         String expResult = "127.0.0.1";
         String result = instance.getIp();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -118,6 +121,7 @@ public class GameRoomTest {
         String expResult = "5";
         String result = instance.getNumberOfRounds();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -130,6 +134,7 @@ public class GameRoomTest {
         int expResult = 0;
         int result = instance.getNicknames().size();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -142,7 +147,8 @@ public class GameRoomTest {
         int rounds = 0;
         GameRoom instance = new GameRoom(5,10,"room","127.0.0.1",gs);
         instance.createGameRoom(duration, rounds);
-    }
+        fail("Faalt door RMI(alleen interface beschikbaar)");
+   }
 
     /**
      * Test of announceRoom method, of class GameRoom.
@@ -152,6 +158,7 @@ public class GameRoomTest {
         System.out.println("announceRoom");
        GameRoom instance = new GameRoom(5,10,"room","127.0.0.1",gs);
         instance.announceRoom();
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -165,7 +172,7 @@ public class GameRoomTest {
         String result = instance.toString();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -179,7 +186,7 @@ public class GameRoomTest {
         IGameController result = instance.getGameController();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -192,6 +199,7 @@ public class GameRoomTest {
         int expResult = 0;
         int result = instance.getPlayers().size();
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -205,7 +213,7 @@ public class GameRoomTest {
         String result = instance.getGameRoomListing();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -216,6 +224,7 @@ public class GameRoomTest {
         System.out.println("getPlayersDone");
         GameRoom instance = new GameRoom(5,10,"room","127.0.0.1",gs);
         instance.getPlayersDone();
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -226,6 +235,7 @@ public class GameRoomTest {
         System.out.println("addPlayerDone");
         GameRoom instance = new GameRoom(5,10,"room","127.0.0.1",gs);
         instance.addPlayerDone();
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -236,6 +246,7 @@ public class GameRoomTest {
         System.out.println("setPlayersDone");
         GameRoom instance = new GameRoom(5,10,"room","127.0.0.1",gs);
         instance.setPlayersDone();
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
     
 }
