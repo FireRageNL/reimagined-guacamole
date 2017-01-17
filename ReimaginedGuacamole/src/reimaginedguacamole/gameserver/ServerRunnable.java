@@ -5,6 +5,7 @@
  */
 package reimaginedguacamole.gameserver;
 
+import static java.lang.Thread.sleep;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,11 +55,12 @@ public class ServerRunnable implements Runnable {
             gs.createGameRoom(duration, rounds, roomName, ip, ms);
             ms.regNewGame(gs);
             while (!Thread.currentThread().isInterrupted()) {
-                //Loop to keep the thread running until it is interrupted
+                sleep(20);
             }
-
         } catch (RemoteException ex) {
             Logger.getLogger(ServerRunnable.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ServerRunnable.class.getName()).log(Level.INFO, null, "So I'm GlaD, I got burned...");
         }
     }
 
