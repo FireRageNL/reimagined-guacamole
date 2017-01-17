@@ -67,26 +67,41 @@ public interface IGameClient extends Remote {
 
     /**
      * Function to set the current user index
+     *
      * @param i the index to set
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     public void setUserIndex(int i) throws RemoteException;
 
     /**
      * Function to spin the wheel when the spin button is clicked
+     *
      * @param wheelspeed the amount of pixels the wheel has to turn each tick
      * @param time the time that the wheel has to spin
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     public void spinWheel(int wheelspeed, int time) throws RemoteException;
 
     /**
      * Function to refresh the current gameUI
+     *
      * @param scores a list of scores
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     public void refreshUI(List<Score> scores) throws RemoteException;
-    
-    
+
+    /**
+     * Getter for the chat client inside a game client
+     *
+     * @return the chat client
+     * @throws RemoteException
+     */
     public IClient getChatClient() throws RemoteException;
+
+    /**
+     * Function that gets called when a player leaves a game while the game is
+     * running
+     * @throws java.rmi.RemoteException
+     */
+    public void playerLeftIngame() throws RemoteException;
 }

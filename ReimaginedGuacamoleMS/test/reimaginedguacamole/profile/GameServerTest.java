@@ -5,7 +5,7 @@
  */
 package reimaginedguacamole.profile;
 
-import reimaginedguacamole.gameserver.GameServer;
+import reimaginedguacamole.gameserver.IGameServer;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import reimaginedguacamole.game.GameRoom;
 import reimaginedguacamole.game.GameState;
 import reimaginedguacamole.game.IGameRoom;
 import reimaginedguacamole.tooling.Hashing;
@@ -57,6 +56,7 @@ public class GameServerTest {
         boolean expResult = true;
         boolean result = instance.tryLogin(username, password);
         assertEquals(expResult, result);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -70,6 +70,7 @@ public class GameServerTest {
         String expResult = "Daan";
         IProfile result = instance.getCurrentProfile(email);
         assertEquals(expResult, result.getName());
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -86,6 +87,7 @@ public class GameServerTest {
         profileData.put("Name", Integer.toString((int) System.currentTimeMillis()));
         GameServer instance = new GameServer();
         instance.registerNewUser(profileData);
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -101,6 +103,7 @@ public class GameServerTest {
         GameServer instance = new GameServer();
         IGameRoom result = instance.createGameRoom(duration, rounds, roomname, ip);
         assertEquals(roomname, result.toString());
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**
@@ -112,6 +115,7 @@ public class GameServerTest {
         GameServer instance = new GameServer();
         List<IGameRoom> result = instance.sendGameRoomData();
         assertEquals(true, result.isEmpty());
+        fail("Faalt door RMI(alleen interface beschikbaar)");
     }
 
     /**

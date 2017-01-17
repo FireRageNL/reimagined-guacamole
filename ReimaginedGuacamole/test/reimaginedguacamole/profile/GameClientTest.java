@@ -67,6 +67,7 @@ public class GameClientTest {
 
     /**
      * Test of getProfile method, of class GameClient.
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetProfile() throws Exception {
@@ -81,6 +82,7 @@ public class GameClientTest {
 
     /**
      * Test of joinGame method, of class GameClient.
+     * @throws java.lang.Exception
      */
     @Test
     public void testJoinGame() throws Exception {
@@ -93,6 +95,7 @@ public class GameClientTest {
 
     /**
      * Test of disableStartButton method, of class GameClient.
+     * @throws java.lang.Exception
      */
     @Test
     public void testDisableStartButton() throws Exception {
@@ -106,6 +109,7 @@ public class GameClientTest {
 
     /**
      * Test of disableButtons method, of class GameClient.
+     * @throws java.lang.Exception
      */
     @Test
     public void testDisableButtons() throws Exception {
@@ -119,6 +123,7 @@ public class GameClientTest {
 
     /**
      * Test of disableSpinButton method, of class GameClient.
+     * @throws java.lang.Exception
      */
     @Test
     public void testDisableSpinButton() throws Exception {
@@ -132,6 +137,7 @@ public class GameClientTest {
 
     /**
      * Test of checkGameState method, of class GameClient.
+     * @throws java.lang.Exception
      */
     @Test
     public void testCheckGameState() throws Exception {
@@ -145,6 +151,7 @@ public class GameClientTest {
 
     /**
      * Test of setUserIndex method, of class GameClient.
+     * @throws java.lang.Exception
      */
     @Test
     public void testSetUserIndex() throws Exception {
@@ -158,6 +165,7 @@ public class GameClientTest {
 
     /**
      * Test of spinWheel method, of class GameClient.
+     * @throws java.lang.Exception
      */
     @Test
     public void testSpinWheel() throws Exception {
