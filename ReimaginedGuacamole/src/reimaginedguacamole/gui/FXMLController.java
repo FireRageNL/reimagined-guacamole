@@ -654,16 +654,16 @@ public class FXMLController extends Application implements Initializable {
             String url = "";
             switch (sound) {
                 case "correct":
-                    url = "src\\reimaginedguacamole\\gui\\Images\\happykids.wav";
+                    url = "src/reimaginedguacamole/gui/Images/happykids.wav";
                     break;
                 case "incorrect":
-                    url = "src\\reimaginedguacamole\\gui\\Images\\boo.wav";
+                    url = "src/reimaginedguacamole/gui/Images/boo.wav";
                     break;
                 case "spin":
-                    url = "src\\reimaginedguacamole\\gui\\Images\\takethewheel.wav";
+                    url = "src/reimaginedguacamole/gui/Images/takethewheel.wav";
                     break;
                 case "wait":
-                    url = "src\\reimaginedguacamole\\gui\\Images\\wait.wav";
+                    url = "src/reimaginedguacamole/gui/Images/wait.wav";
                     break;
                 default:
                     //DoNothing
