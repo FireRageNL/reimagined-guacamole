@@ -77,7 +77,11 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
         players.remove(profile);
         if(!ms.sendGameRoomData().contains(gs)){
             players.forEach((cl) -> {
-                cl.playerLeftIngame();
+                try {
+                    cl.playerLeftIngame();
+                } catch (RemoteException ex) {
+                    Logger.getLogger(GameRoom.class.getName()).log(Level.SEVERE, null, ex);
+                }
             });
         }
         gameController.removePlayersCount();
