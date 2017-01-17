@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import reimaginedguacamole.game.Category;
 import reimaginedguacamole.game.IQuestion;
 import reimaginedguacamole.profile.IGameServer;
 import reimaginedguacamole.profile.IProfile;

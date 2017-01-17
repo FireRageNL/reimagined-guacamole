@@ -132,17 +132,6 @@ public interface IGameController extends Remote {
     public int checkPlayers() throws RemoteException;
 
     /**
-     * Checks the answer given and adds the score based on time.
-     *
-     * @param profile the profile the anwser has to be checked for
-     * @param timeLeft the time the user had remaning when they anwsered the
-     * question
-     * @return
-     * @throws java.rmi.RemoteException
-     */
-    public boolean checkAnswer(IProfile profile, double timeLeft) throws RemoteException;
-
-    /**
      * Adds a player to the game controller when someone joins, to be able to
      * easily checked in other functions
      *

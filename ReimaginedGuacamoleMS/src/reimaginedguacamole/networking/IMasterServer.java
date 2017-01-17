@@ -9,7 +9,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
-import reimaginedguacamole.game.Category;
 import reimaginedguacamole.game.IQuestion;
 import reimaginedguacamole.profile.IGameServer;
 import reimaginedguacamole.profile.IProfile;

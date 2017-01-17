@@ -25,9 +25,6 @@ public class GameDB extends Database {
      * has been anwsered
      *
      * @param prof the profile to update the statistic of
-     * @param cat The catergory the anwsered question was about
-     * @param right a boolean declaring if the question was anwsered correctly
-     * or not
      * @throws RemoteException
      */
     public void updateStats(IProfile prof) throws RemoteException {
@@ -36,7 +33,6 @@ public class GameDB extends Database {
         PreparedStatement ps;
         for (IStatistic s : prof.getStatistics()) {
             try {
-                System.out.println("Updating one statistic for: "+prof.getNickname());
                 sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
                 ps = this.conn.prepareStatement(sql);
                 ps.setInt(1, s.getRight());

@@ -60,8 +60,6 @@ public interface IGame extends Remote {
      * Update the statistics after a player anwsered a question
      *
      * @param prof the profile of the player who anwsered
-     * @param cat the category of the anwsered question
-     * @param right if the question was anwsered correctly
      * @throws RemoteException
      */
     public void updateStats(IProfile prof) throws RemoteException;
