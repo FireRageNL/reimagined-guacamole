@@ -886,6 +886,16 @@ public class FXMLController extends Application implements Initializable {
     }
 
     /**
+     * Function that gets called by the quit game button in a game.
+     * @throws RemoteException 
+     */
+    @FXML
+    public void quitGameButton() throws RemoteException {
+        gs.leaveRoom(gameClient);
+        quitGame();
+    }
+
+    /**
      * Quit game. reset all timers and controllers to null. reset windows to
      * Profile page
      *
@@ -894,7 +904,6 @@ public class FXMLController extends Application implements Initializable {
     @FXML
     public void quitGame() throws RemoteException {
         fillProfileData();
-        gs.leaveRoom(gameClient);
         chatClient.enterChatroom();
         if (animationTimer != null) {
             animationTimer.stop();
