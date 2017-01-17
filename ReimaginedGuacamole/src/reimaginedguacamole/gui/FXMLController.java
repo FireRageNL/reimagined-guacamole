@@ -584,6 +584,12 @@ public class FXMLController extends Application implements Initializable {
             case GAMEFINISHED:
                 chatList.add("GAME: De game is afgelopen!");
                 gs.uploadStatistics(ms, this.user);
+                if (this.user.equals(gs.getHighestUser())) {
+                    user.addWin();
+                }
+                else{
+                    user.addLoss();
+                }
                 gs.refreshUI(joinedRoom);
                 break;
             default:

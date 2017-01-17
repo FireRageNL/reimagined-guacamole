@@ -118,6 +118,17 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     public int getCurrentUser(IGameRoom joinedRoom) throws RemoteException {
         return joinedRoom.getGameController().getCurrentUser();
     }
+    
+    @Override
+    public IProfile getHighestUser() throws RemoteException {
+         IProfile profileWithHighestScore = gameRoom.getPlayers().get(0).getProfile();
+         for (IGameClient c : gameRoom.getPlayers()) {
+             if (c.getProfile().getScore() > profileWithHighestScore.getScore()) {
+                 profileWithHighestScore = c.getProfile();
+             }
+         }
+        return profileWithHighestScore;
+    }
 
     @Override
     public void getUserIndex(IGameRoom joinedRoom) throws RemoteException {
