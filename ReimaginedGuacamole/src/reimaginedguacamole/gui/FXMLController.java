@@ -363,6 +363,16 @@ public class FXMLController extends Application implements Initializable {
         switch (index) {
             case 0:
                 gamePane.setVisible(true);
+                lblPlayer1.setText("Player 1");
+                lblScore1.setText("0");
+                lblPlayer2.setText("Player 2");
+                lblScore2.setText("0");
+                lblPlayer3.setText("Player 3");
+                lblScore3.setText("0");
+                lblPlayer4.setText("Player 4");
+                lblScore4.setText("0");
+                wheel.setRotate(0);
+
                 break;
             case 1:
                 loginPane.setVisible(true);
@@ -887,7 +897,8 @@ public class FXMLController extends Application implements Initializable {
 
     /**
      * Function that gets called by the quit game button in a game.
-     * @throws RemoteException 
+     *
+     * @throws RemoteException
      */
     @FXML
     public void quitGameButton() throws RemoteException {
