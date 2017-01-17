@@ -56,6 +56,8 @@ public class GameDB extends Database {
         ps.executeUpdate();
         
         this.closeConnection();
+        
+        this.endGame(prof.getPid(), prof.getScore());
         }
         catch (SQLException ex) {
             Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
