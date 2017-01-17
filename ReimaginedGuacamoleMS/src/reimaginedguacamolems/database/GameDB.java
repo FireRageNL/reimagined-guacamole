@@ -48,7 +48,7 @@ public class GameDB extends Database {
                 ps.executeUpdate();
         }
         
-        sql = "UPDATE Profile SET Wins = ?, Losses = ? WHERE Profile_ProfileID = ? ";
+        sql = "UPDATE Profile SET Wins = ?, Losses = ? WHERE ProfileID = ? ";
         ps = this.conn.prepareStatement(sql);
         ps.setInt(1, prof.getWins());
         ps.setInt(2, prof.getLosses());
