@@ -283,7 +283,7 @@ public class FXMLController extends Application implements Initializable {
                     user = ms.getCurrentProfile(username);
                     gameClient.setProf(user);
                     chatClient = new Client(user, lobbyChat, this, ip);
-                    updateRoomList(ms.sendGameRoomData());
+                    refreshGameRooms();
                     fillProfileData();
                     setWindows(2);
                 } else {
@@ -396,6 +396,18 @@ public class FXMLController extends Application implements Initializable {
         new RegisterDialog(ip);
     }
 
+    /**
+     * Refreshes gameroomlist
+     */
+    public void refreshGameRooms(){
+        try {
+            updateRoomList(ms.sendGameRoomData());
+        } catch (RemoteException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     @FXML
     private void clickCreateGame(ActionEvent event) throws UnknownHostException, NotBoundException, InterruptedException {
         GameRoomDialog gamedialog = new GameRoomDialog();

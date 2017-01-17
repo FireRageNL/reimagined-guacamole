@@ -89,13 +89,20 @@ public class Client extends UnicastRemoteObject implements IClient {
     @Override
     public void leaveChatroom() throws RemoteException {
         server.clientExit(this);
+
     }
 
     @Override
     public void updatePlayerList(List<String> playerData) throws RemoteException {
-        Platform.runLater(() -> 
-            application.updatePlayerList(playerData)
-        );
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                application.updatePlayerList(playerData);
+                application.refreshGameRooms();
+            }
+        
+        
+        });
     }
 
     @Override
