@@ -601,12 +601,27 @@ public class FXMLController extends Application implements Initializable {
             case GAMEFINISHED:
                 chatList.add("GAME: De game is afgelopen!");
                 gs.uploadStatistics(ms, this.user);
-                if (this.user.equals(gs.getHighestUser())) {
-                    user.addWin();
-                }
-                else{
-                    user.addLoss();
-                }
+
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(AlertType.WARNING);
+                    try {
+                        if (this.user.equals(gs.getHighestUser())) {
+                            user.addWin();
+                            alert.setTitle("Winnaar");
+                            alert.setContentText("Het spel is afgelopen. Je hebt gewonnen!");
+                        } else {
+                            user.addLoss();
+                            alert.setTitle("Helaas");
+                            alert.setContentText("Helaas, je bent geen winnaar.");
+                        }
+                    } catch (RemoteException ex) {
+                    }
+                    
+                    alert.setHeaderText(null);
+                    
+                    alert.showAndWait();
+                });
+
                 gs.refreshUI(joinedRoom);
                 break;
             default:
