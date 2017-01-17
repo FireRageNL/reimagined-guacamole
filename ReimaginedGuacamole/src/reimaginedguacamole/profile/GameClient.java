@@ -111,6 +111,11 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
         return chatClient;
         
     }
+
+    @Override
+    public void playerLeftIngame() throws RemoteException {
+        application.showPlayerLeft();
+    }
     
     
 }

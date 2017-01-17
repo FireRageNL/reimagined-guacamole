@@ -63,6 +63,8 @@ import reimaginedguacamole.game.Score;
 import reimaginedguacamole.gameserver.ServerRunnable;
 import reimaginedguacamole.tooling.Hashing;
 import static javafx.application.Application.launch;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.media.MediaPlayer.Status;
 
 /**
@@ -194,12 +196,12 @@ public class FXMLController extends Application implements Initializable {
 
     //Global variables
     private IProfile user;
-    private GameClient gameClient;
+    private static GameClient gameClient;
     private ObservableList<String> chatList;
     private ObservableList<String> lobbyChat;
     private ObservableList<IGameServer> lobbyRooms;
     private ObservableList<String> players;
-    private IGameServer gs;
+    private static IGameServer gs;
     private IGameRoom joinedRoom;
     private IMasterServer ms;
     int wheelRotation = 0;
@@ -249,6 +251,9 @@ public class FXMLController extends Application implements Initializable {
         if (serverThread != null && serverThread.isAlive()) {
             serverThread.interrupt();
         }
+        if(gs != null){
+            gs.leaveRoom(gameClient);
+        }
     }
 
     /**
@@ -256,7 +261,7 @@ public class FXMLController extends Application implements Initializable {
      * succesull, else error message is displayed.
      */
     @FXML
-    private  void loginUser() {
+    private void loginUser() {
         playSound("wait");
         //Gets information from textfields
         String username = txtUsername.getText();
@@ -622,13 +627,13 @@ public class FXMLController extends Application implements Initializable {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
             while (!Thread.currentThread().isInterrupted()) {
-                if(mediaPlayer.getStatus() == Status.STOPPED ){
+                if (mediaPlayer.getStatus() == Status.STOPPED) {
                     soundThread.interrupt();
                 }
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException ex) {
-                    soundThread.interrupt();        
+                    soundThread.interrupt();
                 }
             }
         });
@@ -1045,7 +1050,7 @@ public class FXMLController extends Application implements Initializable {
             chatList.add("GAME: Je had het goed! je krijgt hiervoor " + score + " punten!!");
         } else {
             playSound("incorrect");
-             for (IStatistic s : this.user.getStatistics()) {
+            for (IStatistic s : this.user.getStatistics()) {
                 if (s.getCategory().toString().equals(this.gs.getCategory(this.joinedRoom))) {
                     s.setWrong(s.getWrong() + 1);
                 }
@@ -1070,5 +1075,17 @@ public class FXMLController extends Application implements Initializable {
             }
 
         }, 10000);
+    }
+
+    public void showPlayerLeft() throws RemoteException {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Waarschuwing!");
+        alert.setHeaderText(null);
+        alert.setContentText("Een speler heeft het spel verlaten! Het spel kan niet meer doorgaan");
+        alert.showAndWait();
+        if (serverThread != null && serverThread.isAlive()) {
+            serverThread.interrupt();
+        }
+        quitGame();
     }
 }

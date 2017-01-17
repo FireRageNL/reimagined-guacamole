@@ -30,6 +30,8 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     private IGameController gameController;
     private String ip;
     private int playersDone;
+    private IMasterServer ms;
+    private GameServer gs;
 
     public GameRoom() throws RemoteException {
         //Overwrite for default constructor
@@ -73,6 +75,11 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
     @Override
     public void leaveRoom(IGameClient profile) throws RemoteException {
         players.remove(profile);
+        if(!ms.sendGameRoomData().contains(gs)){
+            players.forEach((cl) -> {
+                cl.playerLeftIngame();
+            });
+        }
         gameController.removePlayersCount();
     }
 
