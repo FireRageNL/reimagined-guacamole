@@ -79,6 +79,13 @@ public interface IGameServer extends Remote {
     public int getCurrentUser(IGameRoom joinedRoom) throws RemoteException;
 
     /**
+     * Get the user with the highest score
+     * @return an profile representation of the user with the highest score
+     * @throws RemoteException
+     */
+    public IProfile getHighestUser() throws RemoteException;
+    
+    /**
      * get all the current user indexes from a certain room
      *
      * @param joinedRoom the room to get the indexes from

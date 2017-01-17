@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.LinkedHashMap;
+import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.IProfile;
 import reimaginedguacamole.profile.IStatistic;
 
@@ -25,37 +26,38 @@ public class GameDB extends Database {
      * has been anwsered
      *
      * @param prof the profile to update the statistic of
+     * @param cat The catergory the anwsered question was about
+     * @param right a boolean declaring if the question was anwsered correctly
+     * or not
      * @throws RemoteException
      */
     public void updateStats(IProfile prof) throws RemoteException {
         this.initConnection();
         String sql;
         PreparedStatement ps;
+        try {
         for (IStatistic s : prof.getStatistics()) {
-            try {
-                sql = "UPDATE Statistic SET Rights = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
+            
+                System.out.println("Updating one statistic for: "+prof.getNickname());
+                sql = "UPDATE Statistic SET Rights = ?, Wrong = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
                 ps = this.conn.prepareStatement(sql);
                 ps.setInt(1, s.getRight());
-                ps.setInt(2, s.getCategory().ordinal() + 1);
-                ps.setInt(3, prof.getPid());
+                ps.setInt(2, s.getWrong());
+                ps.setInt(3, s.getCategory().ordinal() + 1);
+                ps.setInt(4, prof.getPid());
                 ps.executeUpdate();
-                
-                sql = "UPDATE Statistic SET Wrong = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ? ";
-                ps = this.conn.prepareStatement(sql);
-                ps.setInt(1, s.getWrong());
-                ps.setInt(2, s.getCategory().ordinal() + 1);
-                ps.setInt(3, prof.getPid());
-                ps.executeUpdate();
-                
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
         }
-        try {
-            this.closeConnection();
-        } catch (SQLException ex) {
+        
+        sql = "UPDATE Profile SET Wins = ?, Losses = ? WHERE Profile_ProfileID = ? ";
+        ps = this.conn.prepareStatement(sql);
+        ps.setInt(1, prof.getWins());
+        ps.setInt(2, prof.getLosses());
+        ps.setInt(3, prof.getPid());
+        ps.executeUpdate();
+        
+        this.closeConnection();
+        }
+        catch (SQLException ex) {
             Logger.getLogger(GameDB.class.getName()).log(Level.SEVERE, null, ex);
         }
  

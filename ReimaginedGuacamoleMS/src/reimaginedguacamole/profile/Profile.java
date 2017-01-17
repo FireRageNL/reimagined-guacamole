@@ -91,13 +91,13 @@ public class Profile extends UnicastRemoteObject implements IProfile, Serializab
     @Override
     public void addWin() {
         wins++;
-        pdb.addWin(this);
+        //pdb.addWin(this);
     }
 
     @Override
     public void addLoss() {
         losses++;
-        pdb.addLoss(this);
+        //pdb.addLoss(this);
     }
 
     @Override
