@@ -195,7 +195,7 @@ public class FXMLController extends Application implements Initializable {
     private TableColumn colScores;
 
     //Global variables
-    private IProfile user;
+    private static IProfile user;
     private static GameClient gameClient;
     private ObservableList<String> chatList;
     private ObservableList<String> lobbyChat;
@@ -203,7 +203,7 @@ public class FXMLController extends Application implements Initializable {
     private ObservableList<String> players;
     private static IGameServer gs;
     private IGameRoom joinedRoom;
-    private IMasterServer ms;
+    private static IMasterServer ms;
     int wheelRotation = 0;
     double progress;
     private static Client chatClient;
@@ -241,6 +241,9 @@ public class FXMLController extends Application implements Initializable {
 
     @Override
     public void stop() throws RemoteException {
+        if(user != null){
+            ms.logOut(user);
+        }
         if (mediaPlayer != null) {
             mediaPlayer.stop();
         }
@@ -281,14 +284,20 @@ public class FXMLController extends Application implements Initializable {
                 if (loggedin) {
                     //gets user date from database and sets the window to the profile page.
                     user = ms.getCurrentProfile(username);
-                    gameClient.setProf(user);
-                    chatClient = new Client(user, lobbyChat, this, ip);
-                    refreshGameRooms();
-                    fillProfileData();
-                    setWindows(2);
+                    if (user != null) {
+                        gameClient.setProf(user);
+                        chatClient = new Client(user, lobbyChat, this, ip);
+                        refreshGameRooms();
+                        fillProfileData();
+                        setWindows(2);
+                    } else {
+                        errorlabel.setText("Je bent al ingelogd!");
+                    }
                 } else {
                     errorlabel.setText("Gebruikersnaam/Wachtwoord fout");
                 }
+                txtUsername.setText("");
+                txtPassword.setText("");
             } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -399,15 +408,14 @@ public class FXMLController extends Application implements Initializable {
     /**
      * Refreshes gameroomlist
      */
-    public void refreshGameRooms(){
+    public void refreshGameRooms() {
         try {
             updateRoomList(ms.sendGameRoomData());
         } catch (RemoteException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     @FXML
     private void clickCreateGame(ActionEvent event) throws UnknownHostException, NotBoundException, InterruptedException {
         GameRoomDialog gamedialog = new GameRoomDialog();
@@ -612,7 +620,7 @@ public class FXMLController extends Application implements Initializable {
                 break;
             case GAMEFINISHED:
                 chatList.add("GAME: De game is afgelopen!");
-                
+
                 Platform.runLater(() -> {
                     Alert alert = new Alert(AlertType.WARNING);
                     try {
@@ -629,9 +637,9 @@ public class FXMLController extends Application implements Initializable {
 
                     } catch (RemoteException ex) {
                     }
-                    
+
                     alert.setHeaderText(null);
-                    
+
                     alert.showAndWait();
                 });
 
@@ -971,6 +979,7 @@ public class FXMLController extends Application implements Initializable {
      */
     @FXML
     public void logOut() throws RemoteException {
+        ms.logOut(user);
         user = null;
         errorlabel.setText("");
         chatClient.leaveChatroom();
