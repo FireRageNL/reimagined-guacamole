@@ -60,6 +60,8 @@ public interface IMasterServer extends Remote {
      * Update the users' statiscics
      *
      * @param prof the profile to update
+     * @param cat the category to update
+     * @param right if the questions answered was answered right or wrong
      * @throws RemoteException
      */
     public void updateStats(IProfile prof) throws RemoteException;
@@ -98,4 +100,10 @@ public interface IMasterServer extends Remote {
      */
     public List<IGameServer> sendGameRoomData() throws RemoteException;
     
+    /**
+     * Function to logout a player
+     * @param prof the profile of the player to be logged out
+     * @throws RemoteException 
+     */
+    public void logOut(IProfile prof) throws RemoteException;
 }

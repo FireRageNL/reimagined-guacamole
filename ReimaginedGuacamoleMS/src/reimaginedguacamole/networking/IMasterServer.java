@@ -99,4 +99,11 @@ public interface IMasterServer extends Remote {
      * @throws RemoteException
      */
     public List<IGameServer> sendGameRoomData() throws RemoteException;
+    
+    /**
+     * Function to logout a player
+     * @param prof the profile of the player to be logged out
+     * @throws RemoteException 
+     */
+    public void logOut(IProfile prof) throws RemoteException;
 }

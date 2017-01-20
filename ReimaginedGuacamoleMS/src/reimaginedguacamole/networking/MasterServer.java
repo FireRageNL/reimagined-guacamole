@@ -27,6 +27,7 @@ import reimaginedguacamolems.database.QuestionDB;
 public class MasterServer extends UnicastRemoteObject implements IMasterServer {
 
     private final List<IGameServer> gameservers = new ArrayList<>();
+    private final List<IProfile> profiles = new ArrayList<>();
 
     public MasterServer() throws RemoteException {
         //Empty constructor because of reasons
@@ -47,7 +48,14 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     @Override
     public IProfile getCurrentProfile(String email) throws RemoteException {
         ProfileDB pdb = new ProfileDB();
-        return pdb.getProfileData(email);
+        for (IProfile p : profiles) {
+            if (p.getEmail() == null ? email == null : p.getEmail().equals(email)) {
+                return null;
+            }
+        }
+        IProfile prof = pdb.getProfileData(email);
+        profiles.add(prof);
+        return prof;
     }
 
     @Override
@@ -66,7 +74,7 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     @Override
     public void updateStats(IProfile prof) throws RemoteException {
         GameDB gdb = new GameDB();
-        System.out.println("Updated stats for "+prof.getNickname());
+        System.out.println("Updated stats for " + prof.getNickname());
         gdb.updateStats(prof);
     }
 
@@ -79,18 +87,23 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     @Override
     public void regNewGame(IGameServer gs) throws RemoteException {
         gameservers.add(gs);
-        Logger.getLogger(MasterServer.class.getCanonicalName()).log(Level.INFO,"New room registered! -- Now these points of data make a beautiful line");
-        
+        Logger.getLogger(MasterServer.class.getCanonicalName()).log(Level.INFO, "New room registered! -- Now these points of data make a beautiful line");
+
     }
 
     @Override
     public void unregGameServer(IGameServer gs) throws RemoteException {
         gameservers.remove(gs);
-        Logger.getLogger(MasterServer.class.getCanonicalName()).log(Level.INFO,"Room removed from listing! -- Go ahead and leave me");
+        Logger.getLogger(MasterServer.class.getCanonicalName()).log(Level.INFO, "Room removed from listing! -- Go ahead and leave me");
     }
 
     @Override
     public List<IGameServer> sendGameRoomData() throws RemoteException {
         return gameservers;
+    }
+
+    @Override
+    public void logOut(IProfile prof) throws RemoteException {
+        profiles.remove(prof);
     }
 }
