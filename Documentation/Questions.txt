@@ -17,7 +17,7 @@ In welke kleur was de eerste Model T van Ford beschikbaar?;Groen;Grijs;Blauw;Zwa
 Wie schilderde de Schreeuw?;Edvard Munch;Karel Appel;Rembrandt;Van Gogh;1;2
 Wie schreef de Aeneis?;Seneca;Vergillius;Homerus;Augustus;2;2
 Wie schreef de Ontdekking van de Hemel?;Harry Mulisch;Boudewijn Buch;Herman Brusselmans;Jan Cremer;1;2
-Uit welke stroming is het Postimpressionisme ontstaan?Modernisme;Realisme;Dadaisme;Impressionisme;4;2
+Uit welke stroming is het Postimpressionisme ontstaan?;Modernisme;Realisme;Dadaisme;Impressionisme;4;2
 Hoeveel schilderijen heeft Vincent van Gogh verkocht terwijl hij nog leefde;2;5;1;0;3;2
 Wie heeft de Moulin Rouge geschilderd?;Henri de Toulouse-Lautrec;Georges Braque;Henri Rousseau;Camille Pissarro;1;2
 Wie schreef de Illias?;Plato;Vergillius;Homerus;Archimedes;3;2
@@ -51,7 +51,7 @@ Waar is de Fifty Shades triologie op gebaseerd?;Twilight;Harry Potter;The Hunger
 Van wie komt de bekende uitspraak 'Man man man'?;Rob Geus;Gerard Joling;Roy Donders;Sylvana Simons;1;4
 Hoe heet de One Punch Man?;Inaba;Yasogami;Saitama;Sasuke;3;4
 Welk van deze bekende Nederlanders komt niet uit Brabant?;Roy Donders;Patrick Lodiers;Jeroen van Koningsbrugge;Guus Meeuwis;2;4
-
+Wat is geen film van studio Ghibli?;Spirited Away;Grave of the Fireflies;Hachi;Porco Rosso;3;4
 Uit welke film komt de quote: Your mother was a hamster and your father smells of elderberries?;Monthy Python and the Holy Grail;Life of Brian;Grown ups;Snatch;1;4
 Wat is de dodelijkste vloek uit de Harry Potter Films?;Flippendo;Wingardium Leviosa;Alohomora;Avada Kedavra;4;4
 Welke kleur heeft de teletubbie Tinky Winky?;Rood;Paars;Geel;Groen;2;4
@@ -61,11 +61,11 @@ Wie speelt Captain Jack Sparrow in de Pirates of the Carribean films?;Johhnie De
 Uit welk dorpje komt Ash Ketchum uit de Pokemon serie?;New Bark Town;Vaniville Town;Pallet Town;Littleroot Town;3;4
 Wie bracht de hit Bohemian Rhapsody uit?;Queen;Prince;Kings of Leon;Queens of the Stone Age;1;5
 Welke rapper heeft niet bij de rapgroep G-Unit gezeten?;50 Cent;Lloyd Banks;Tony Yayo;Snoop Dogg;4;5
-Welke Nederlandse artiest stond in 2016 in de top 100 van verkochte concertkaarten van de hele wereld?;Racoon;Marco Borsato;Andre Rieu;Nick en Simon;3;4
-
-
-
-
+Welke Nederlandse artiest stond in 2016 in de top 100 van meest verkochte concertkaarten over de hele wereld?;Racoon;Marco Borsato;Andre Rieu;Nick en Simon;3;4
+Wat is de grootste concerthal van Nederland?;Ziggo Dome;ArenA;GelreDome;013;2;4
+Welk lied stond als langste op nummer 1 in de Nederlandse Top 40?;Balada;Rood;Blijf Bij Mij;Ai se eu to pego!;1;4
+Wie was geen onderdeel van de oorspronkelijke bezetting van K3?;Karen;Kristel;Klaasje;Kathleen;3;4
+Wie bracht Fire Water Burn uit?;Blink-182;The Offspring;Bloodhound Gang; Weird Al Yankovic;3;4
 Welke koreaanse artiest scoorde een hit met het nummer Gangnam Style?;Pys;Psy;Syp;Spy;2;5
 Met welke artiest maakte de groep The Lonely Island het nummer Jack Sparrow?;Micheal Bublé;Micheal Bay;Micheal Bolton;Justin Timberlake;3;5
 Uit welk land komt de band A-Ha?;Zweden;Noorwegen;Denemarken;Ijsland;2;5
@@ -77,10 +77,10 @@ Met welke Film won Hans Zimmer een Oscar voor beste filmmuziek?;Rain man;The Lio
 Waar werden de Zomerspelen van 1972 gehouden?;Frankrijk;Oost-Duitsland;West-Duitsland;Zwitserland;3;6
 Wanneer werd Nederland Europees kampioen voetbal?;1984;1988;1992;1996;2;6
 Hoe lang is een officieel wedstrijdbad?;25;75;20;50;4;6
-
-
-
-
+Hoeveel olympische medailles heeft Nederland gewonnen in 2016?;20;18;15;19;4;6
+Welke sport is in Nederland bedacht?;Korfbal;Voetbal;Handbal;Waterpolo;1;6
+Wie heeft het wereldrecord 10km schaatsen op zijn naam staan?;Sven Kramer;Jochem Uytdehage;Ted-Jan Bloemen;Gianni Romme;3;6
+Uit welke stad komt MVV?;Maaskantje;Meppel;Moergestel;Maastricht;4;6
 Hoe heet het stadion van NEC;Euroborg;Rat Verlegh Stadion;Goffertstadion;De Kuip;3;6
 Welke Argentijnse voetballer wordt de kleine Maradonna genoemd?;Suarez;Aguero;Messi;Higuain;3;6
 Hoeveel nederlanders wonnen ooit de ronde van Frankrijk?;0;1;2;3;3;6
@@ -96,11 +96,11 @@ Welke metaal veroorzaakt de kleur groen in vuurwerk?;Magnesium;Ijzer;Aluminium;K
 Hoeveel nanometer groeit een nagel in een seconde?;1;2;3;4;1;7
 Wat is de sterkste spier in het menselijk lichaam?;De tong;Biceps;Triceps;Quadriceps;1;7
 Wat kan afgelezen worden op een altimeter?;Luchtdruk;Afstand;Gewicht;Hoogte;4;7
-
-
-
-
-
+Wie heeft de spontane radioactiviteit ontdekt?;Henri Becquerel;Marie Curie;Pierre Curie;Albert Einstein;1;7
+Wat is geen type straling?;Alfastraling;Gammastraling;Deltastraling;Betastraling;3;7
+Wat is de krachtigste werkende deeltjesversneller?;ILC;LHC;Tevatron;KEKB;2;7
+Uit welk element bestaat een diamant?;Ijzer;Platina;Argon;Koolstof;4;7
+Wat is het grootste orgaan van een mens?;Huid;Lever;Longen;Hersenen;1;7
 Waarvoor staat c in de vergelijking e = mc²?;Massa;Energie;Snelheid van het licht;Snelheid van het object;3;7
 Wat hebben Jean-Baptiste Olivier en André Garnerin uitgevonden?;De luchtballon;Shampoo;Parachute;Handzeep;3;7
 Welke van onderstaande namen is geen schaal?;Richter;Beaufort;Scoville;Edison;4;7
