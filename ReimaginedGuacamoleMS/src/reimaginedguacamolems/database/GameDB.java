@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.LinkedHashMap;
-import reimaginedguacamole.game.Category;
 import reimaginedguacamole.profile.IProfile;
 import reimaginedguacamole.profile.IStatistic;
 
@@ -38,7 +37,6 @@ public class GameDB extends Database {
         try {
         for (IStatistic s : prof.getStatistics()) {
             
-                System.out.println("Updating one statistic for: "+prof.getNickname());
                 sql = "UPDATE Statistic SET Rights = ?, Wrong = ? WHERE Category_CategoryID = ? AND Profile_ProfileID = ?";
                 ps = this.conn.prepareStatement(sql);
                 ps.setInt(1, s.getRight());

@@ -77,7 +77,6 @@ public class Game extends UnicastRemoteObject implements IGame {
     
     @Override
     public void endGame(int userID, int score) throws RemoteException {
-        ms.endGame(userID, score);
         Logger.getLogger(Game.class.getCanonicalName()).log(Level.INFO, "Game for user {0} finished with a score of {1}", new Object[]{userID, score});
     }
     

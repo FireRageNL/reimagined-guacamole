@@ -61,6 +61,7 @@ public class ServerRunnable implements Runnable {
             Logger.getLogger(ServerRunnable.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
             Logger.getLogger(ServerRunnable.class.getName()).log(Level.INFO, null, "So I'm GlaD, I got burned...");
+            Thread.currentThread().interrupt();
         }
     }
 

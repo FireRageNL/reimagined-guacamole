@@ -79,12 +79,6 @@ public class MasterServer extends UnicastRemoteObject implements IMasterServer {
     }
 
     @Override
-    public void endGame(int userID, int score) throws RemoteException {
-        ProfileDB pdb = new ProfileDB();
-
-    }
-
-    @Override
     public void regNewGame(IGameServer gs) throws RemoteException {
         gameservers.add(gs);
         Logger.getLogger(MasterServer.class.getCanonicalName()).log(Level.INFO, "New room registered! -- Now these points of data make a beautiful line");

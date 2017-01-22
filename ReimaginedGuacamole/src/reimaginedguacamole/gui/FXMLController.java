@@ -241,7 +241,7 @@ public class FXMLController extends Application implements Initializable {
 
     @Override
     public void stop() throws RemoteException {
-        if(user != null){
+        if (user != null) {
             ms.logOut(user);
         }
         if (mediaPlayer != null) {
@@ -372,14 +372,7 @@ public class FXMLController extends Application implements Initializable {
         switch (index) {
             case 0:
                 gamePane.setVisible(true);
-                lblPlayer1.setText("Player 1");
-                lblScore1.setText("0");
-                lblPlayer2.setText("Player 2");
-                lblScore2.setText("0");
-                lblPlayer3.setText("Player 3");
-                lblScore3.setText("0");
-                lblPlayer4.setText("Player 4");
-                lblScore4.setText("0");
+                resetGameUI();
                 wheel.setRotate(0);
 
                 break;
@@ -624,7 +617,7 @@ public class FXMLController extends Application implements Initializable {
                 Platform.runLater(() -> {
                     Alert alert = new Alert(AlertType.WARNING);
                     try {
-                        if (this.user.equals(gs.getHighestUser())) {
+                        if (FXMLController.user.equals(gs.getHighestUser())) {
                             user.addWin();
                             alert.setTitle("Winnaar");
                             alert.setContentText("Het spel is afgelopen. Je hebt gewonnen!");
@@ -633,9 +626,11 @@ public class FXMLController extends Application implements Initializable {
                             alert.setTitle("Helaas");
                             alert.setContentText("Helaas, je bent geen winnaar.");
                         }
-                        gs.uploadStatistics(ms, this.user);
+                        gs.uploadStatistics(ms, FXMLController.user);
 
                     } catch (RemoteException ex) {
+                        Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
 
                     alert.setHeaderText(null);
@@ -1108,16 +1103,16 @@ public class FXMLController extends Application implements Initializable {
         if (currentAnswer == currentCorrectAnswer) {
             playSound("correct");
             score = 50 + (100 + (int) (timeLeft * 100));
-            for (IStatistic s : this.user.getStatistics()) {
-                if (s.getCategory().toString().equals(this.gs.getCategory(this.joinedRoom))) {
+            for (IStatistic s : FXMLController.user.getStatistics()) {
+                if (s.getCategory().toString().equals(FXMLController.gs.getCategory(this.joinedRoom))) {
                     s.setRight(s.getRight() + 1);
                 }
             }
             chatList.add("GAME: Je had het goed! je krijgt hiervoor " + score + " punten!!");
         } else {
             playSound("incorrect");
-            for (IStatistic s : this.user.getStatistics()) {
-                if (s.getCategory().toString().equals(this.gs.getCategory(this.joinedRoom))) {
+            for (IStatistic s : FXMLController.user.getStatistics()) {
+                if (s.getCategory().toString().equals(FXMLController.gs.getCategory(this.joinedRoom))) {
                     s.setWrong(s.getWrong() + 1);
                 }
             }
@@ -1159,5 +1154,19 @@ public class FXMLController extends Application implements Initializable {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+    }
+
+    /**
+     * Function that resets the player names and scores
+     */
+    private void resetGameUI() {
+        lblPlayer1.setText("Player 1");
+        lblScore1.setText("0");
+        lblPlayer2.setText("Player 2");
+        lblScore2.setText("0");
+        lblPlayer3.setText("Player 3");
+        lblScore3.setText("0");
+        lblPlayer4.setText("Player 4");
+        lblScore4.setText("0");
     }
 }

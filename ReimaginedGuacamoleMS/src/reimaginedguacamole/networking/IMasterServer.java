@@ -66,15 +66,6 @@ public interface IMasterServer extends Remote {
      */
     public void updateStats(IProfile prof) throws RemoteException;
 
-    /**
-     * Function that gets called at the end of the game to update the player
-     * score
-     *
-     * @param userID The UserID to update the score of
-     * @param score The score
-     * @throws RemoteException
-     */
-    public void endGame(int userID, int score) throws RemoteException;
 
     /**
      * Register a new gameserver on the masterserver

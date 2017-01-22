@@ -94,14 +94,9 @@ public class Client extends UnicastRemoteObject implements IClient {
 
     @Override
     public void updatePlayerList(List<String> playerData) throws RemoteException {
-        Platform.runLater(new Runnable(){
-            @Override
-            public void run() {
-                application.updatePlayerList(playerData);
-                application.refreshGameRooms();
-            }
-        
-        
+        Platform.runLater(() -> {
+            application.updatePlayerList(playerData);
+            application.refreshGameRooms();
         });
     }
 
