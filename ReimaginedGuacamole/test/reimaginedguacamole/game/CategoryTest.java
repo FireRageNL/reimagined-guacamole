@@ -22,7 +22,7 @@ public class CategoryTest {
      */
     @Test
     public void testValuesEntertaintment() {
-        System.out.println("values");
+        System.out.println("Entertainment");
         Category expResult = Category.ENTERTAINMENT;
         Category result = Category.values()[3];
         assertEquals(expResult, result);
@@ -33,7 +33,7 @@ public class CategoryTest {
      */
     @Test
     public void testValuesSport() {
-        System.out.println("values");
+        System.out.println("Sport");
         Category expResult = Category.SPORT;
         Category result = Category.values()[5];
         assertEquals(expResult, result);
@@ -44,10 +44,9 @@ public class CategoryTest {
      */
     @Test
     public void testValueOfHistory() {
-        System.out.println("valueOf");
-        String expResult = "Geschiedenis";
-        Category.valueOf("History");
-        String result = Category.HISTORY.toString();
+        System.out.println("History");
+        Category expResult = Category.HISTORY;
+        Category result = Category.values()[0];
         assertEquals(expResult, result);
     }
     
@@ -56,10 +55,9 @@ public class CategoryTest {
      */
     @Test
     public void testValueOfArt() {
-        System.out.println("valueOf");
-        String expResult = "Kunst";
-        Category.valueOf("Art");
-        String result = Category.ART.toString();
+        System.out.println("Art");
+        Category expResult = Category.values()[1];
+        Category  result = Category.ART;
         assertEquals(expResult, result);
     }
     
@@ -68,10 +66,9 @@ public class CategoryTest {
      */
     @Test
     public void testValueOfGames() {
-        System.out.println("valueOf");
-        String expResult = "Spellen";
-        Category.valueOf("Games");
-        String result = Category.GAMES.toString();
+        System.out.println("Games");
+        Category  expResult = Category.GAMES;
+        Category  result = Category.values()[2];
         assertEquals(expResult, result);
     }
     
@@ -80,10 +77,9 @@ public class CategoryTest {
      */
     @Test
     public void testValueOfMusic() {
-        System.out.println("valueOf");
-        String expResult = "Muziek";
-        Category.valueOf("Music");
-        String result = Category.MUSIC.toString();
+        System.out.println("Music");
+        Category expResult = Category.MUSIC;
+        Category result = Category.values()[4];
         assertEquals(expResult, result);
 
     }
@@ -93,10 +89,9 @@ public class CategoryTest {
      */
     @Test
     public void testValueOfScience() {
-        System.out.println("valueOf");
-        String expResult = "Wetenschap";
-        Category.valueOf("Science");
-        String result = Category.SCIENCE.toString();
+        System.out.println("Science");
+        Category expResult = Category.SCIENCE;
+        Category result = Category.values()[6];
         assertEquals(expResult, result);
     }
     
