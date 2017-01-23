@@ -86,15 +86,14 @@ public class GameRoom extends UnicastRemoteObject implements IGameRoom {
             }
         }
         if (!isGameNotRunning) {
-            players.forEach((IGameClient cl) -> {
+            players.forEach((IGameClient cl) -> 
                 Platform.runLater(() -> {
                     try {
                         cl.playerLeftIngame();
                     } catch (RemoteException ex) {
                         Logger.getLogger(GameRoom.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                });
-            });
+                }));
         }
         gameController.removePlayersCount();
     }

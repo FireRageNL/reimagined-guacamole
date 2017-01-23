@@ -267,7 +267,6 @@ public class FXMLController extends Application implements Initializable {
      */
     @FXML
     private void loginUser() {
-        playSound("wait");
         //Gets information from textfields
         String username = txtUsername.getText();
         String pass = txtPassword.getText();
@@ -285,6 +284,7 @@ public class FXMLController extends Application implements Initializable {
                     //gets user date from database and sets the window to the profile page.
                     user = ms.getCurrentProfile(username);
                     if (user != null) {
+                        playSound("wait");
                         gameClient.setProf(user);
                         chatClient = new Client(user, lobbyChat, this, ip);
                         refreshGameRooms();
@@ -656,12 +656,10 @@ public class FXMLController extends Application implements Initializable {
         soundThread = new Thread(() -> {
             String url = "";
             switch (sound) {
-                case "correct":
-                    url = "src/reimaginedguacamole/gui/Images/happykids.wav";
-                    break;
                 case "incorrect":
                     url = "src/reimaginedguacamole/gui/Images/boo.wav";
                     break;
+                case "correct":
                 case "spin":
                     url = "src/reimaginedguacamole/gui/Images/happykids.wav";
                     break;
